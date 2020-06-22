@@ -1,5 +1,9 @@
-MiniKeePass
+IOSKeePass
 ===========
+
+IOSKeePass ist a fork of MiniKeePass, i do it, because i find that this Software is great stuff for password storing
+and sensible data to a local file, and not in cloud, also i mean, it was free and it should be keep for free in future.
+I have create a new repo on Github, because the original Github project was seting to read only, and i can´t support the original Software development.
 
 MiniKeePass provides secure password storage on your phone that's compatible with KeePass.
 
