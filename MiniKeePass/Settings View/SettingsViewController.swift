@@ -267,6 +267,7 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
     @IBAction func rememberDatabasePasswordsEnabledChanged(_ sender: UISwitch) {
         self.appSettings?.setRememberPasswordsEnabled(rememberDatabasePasswordsEnabledSwitch.isOn)
         
+        
         KeychainUtils.deleteAll(forServiceName: KEYCHAIN_PASSWORDS_SERVICE)
         KeychainUtils.deleteAll(forServiceName: KEYCHAIN_KEYFILES_SERVICE)
     }

@@ -197,7 +197,7 @@ static DatabaseManager *sharedInstance;
     NSString *keyFile = [KeychainUtils stringForKey:self.selectedFilename
                                      andServiceName:KEYCHAIN_KEYFILES_SERVICE];
 
-   /* if(password == nil){
+   /*if(password == nil){
         if([KTouchIDAuthentication canAuthenticateWithError:&error]){
             [[KTouchIDAuthentication sharedInstance] authenticateBiometricsWithSuccess:^(){
                 //[self presentAlertControllerWithMessage:@"Successfully Authenticated!"];
@@ -295,7 +295,7 @@ static DatabaseManager *sharedInstance;
                 [[KTouchIDAuthentication sharedInstance] authenticateBiometricsWithSuccess:^(){
                     //[self presentAlertControllerWithMessage:@"Successfully Authenticated!"];
                     NSString *password = [KeychainUtils stringForKey:self.selectedFilename
-                    andServiceName:KEYCHAIN_FACEID_SERVICE];
+                    andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
                     // Get the absolute path to the database
                     NSString *path = [documentsDirectory stringByAppendingPathComponent:self.selectedFilename];
                     if(password == nil){
@@ -311,7 +311,7 @@ static DatabaseManager *sharedInstance;
                     // Load the database
                     @try {
                         DatabaseDocument *dd = [[DatabaseDocument alloc] initWithFilename:path password:password keyFile:keyFilePath];
-                        [KeychainUtils setString:password forKey:path andServiceName:KEYCHAIN_FACEID_SERVICE];
+                        [KeychainUtils setString:password forKey:path andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
                         // Set the database document in the application delegate
                         appDelegate.databaseDocument = dd;
                         return;
@@ -426,7 +426,7 @@ static DatabaseManager *sharedInstance;
             appDelegate.databaseDocument = dd;
             NSError *error;
             if([KTouchIDAuthentication canAuthenticateWithError:&error]){
-                [KeychainUtils setString:password forKey:self.selectedFilename andServiceName:KEYCHAIN_FACEID_SERVICE];
+                [KeychainUtils setString:password forKey:self.selectedFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
             }
         }];
     } @catch (NSException *exception) {

@@ -151,6 +151,7 @@
     [KeychainUtils deleteStringForKey:@"PIN" andServiceName:KEYCHAIN_PIN_SERVICE];
 
     // Delete all database passwords from the keychain
+    
     [KeychainUtils deleteAllForServiceName:KEYCHAIN_PASSWORDS_SERVICE];
     [KeychainUtils deleteAllForServiceName:KEYCHAIN_KEYFILES_SERVICE];
 }
