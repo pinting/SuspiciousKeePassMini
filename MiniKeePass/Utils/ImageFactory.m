@@ -17,7 +17,7 @@
 
 #import "ImageFactory.h"
 
-#define NUM_IMAGES 69
+#define NUM_IMAGES 73
 
 @interface ImageFactory ()
 @property (nonatomic, strong) NSMutableArray *standardImages;
