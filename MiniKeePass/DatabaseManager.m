@@ -260,7 +260,7 @@ static DatabaseManager *sharedInstance;
     }*/
     
     // Try and load the database with the cached password from the keychain
-    if ([[AppSettings sharedInstance] touchIdEnabled]) {
+/*    if ([[AppSettings sharedInstance] touchIdEnabled]) {
            
         if (password != nil || keyFile != nil) {
             // Get the absolute path to the database
@@ -280,14 +280,14 @@ static DatabaseManager *sharedInstance;
 
                 /*if([KTouchIDAuthentication canAuthenticateWithError:&error]){
                     [KeychainUtils setString:password forKey:filename andServiceName:KEYCHAIN_FACEID_SERVICE];
-                }*/
+                }*
                 // Set the database document in the application delegate
                 appDelegate.databaseDocument = dd;
             } @catch (NSException *exception) {
                 // Ignore
             }
         }
-    }
+    }*/
     // Prompt the user for the password if we haven't loaded the database yet
     if (!databaseLoaded) {
         if ([[AppSettings sharedInstance] touchIdEnabled]) {

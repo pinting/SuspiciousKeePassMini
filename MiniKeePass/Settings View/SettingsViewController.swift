@@ -148,8 +148,8 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
         
          // Enable/disable the components dependant on settings
         setCellEnabled(pinLockTimeoutCell, enabled: pinEnabled)
-        setCellEnabled(touchIdEnabledCell, enabled: pinEnabled && touchIdSupported)
-        touchIdEnabledSwitch.isEnabled = pinEnabled && touchIdSupported
+        setCellEnabled(touchIdEnabledCell, enabled: touchIdSupported)
+        touchIdEnabledSwitch.isEnabled = touchIdSupported
         setCellEnabled(deleteAllDataEnabledCell, enabled: pinEnabled)
         setCellEnabled(deleteAllDataAttemptsCell, enabled: pinEnabled && deleteOnFailureEnabled)
         setCellEnabled(closeDatabaseTimeoutCell, enabled: closeEnabled)
@@ -247,7 +247,12 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
     }
     
     @IBAction func touchIdEnabledChanged(_ sender: UISwitch) {
-        self.appSettings?.setTouchIdEnabled(touchIdEnabledSwitch.isOn)
+        if(touchIdEnabledSwitch.isOn){
+            self.appSettings?.setTouchIdEnabled(touchIdEnabledSwitch.isOn)
+        }else{
+            self.appSettings?.setTouchIdEnabled(false);
+            KeychainUtils.deleteAll(forServiceName: KEYCHAIN_PASSWORDS_SERVICE)
+        }
     }
     
     @IBAction func deleteAllDataEnabledChanged(_ sender: UISwitch) {
