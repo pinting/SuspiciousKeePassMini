@@ -24,6 +24,9 @@
 - (NSDate *)exitTime;
 - (void)setExitTime:(NSDate *)exitTime;
 
+- (BOOL)darkEnabled;
+- (void)setDarkEnabled:(BOOL)darkEnabled;
+
 - (BOOL)pinEnabled;
 - (void)setPinEnabled:(BOOL)pinEnabled;
 

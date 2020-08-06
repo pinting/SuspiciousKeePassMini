@@ -27,6 +27,7 @@
 #define PIN                        @"PIN"
 #define PIN_LOCK_TIMEOUT           @"pinLockTimeout"
 #define PIN_FAILED_ATTEMPTS        @"pinFailedAttempts"
+#define DARK_ENABLED               @"darkEnabled"
 #define TOUCH_ID_ENABLED           @"touchIdEnabled"
 #define DELETE_ON_FAILURE_ENABLED  @"deleteOnFailureEnabled"
 #define DELETE_ON_FAILURE_ATTEMPTS @"deleteOnFailureAttempts"
@@ -113,6 +114,7 @@ static AppSettings *sharedInstance;
 
         // Register the default values
         NSMutableDictionary *defaultsDict = [NSMutableDictionary dictionary];
+        [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:DARK_ENABLED];
         [defaultsDict setValue:[NSNumber numberWithBool:YES] forKey:TOUCH_ID_ENABLED];
         [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:DELETE_ON_FAILURE_ENABLED];
         [defaultsDict setValue:[NSNumber numberWithInt:1] forKey:DELETE_ON_FAILURE_ATTEMPTS];
@@ -196,6 +198,14 @@ static AppSettings *sharedInstance;
 - (void)setExitTime:(NSDate *)exitTime {
     NSNumber *number = [NSNumber numberWithDouble:[exitTime timeIntervalSinceReferenceDate]];
     [KeychainUtils setString:[number stringValue] forKey:EXIT_TIME andServiceName:KEYCHAIN_PIN_SERVICE];
+}
+
+- (BOOL)darkEnabled {
+    return [userDefaults boolForKey:DARK_ENABLED];
+}
+
+- (void)setDarkEnabled:(BOOL)darkEnabled {
+    [userDefaults setBool:darkEnabled forKey:DARK_ENABLED];
 }
 
 - (BOOL)pinEnabled {

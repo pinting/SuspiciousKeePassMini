@@ -23,6 +23,9 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
     @IBOutlet weak var pinEnabledSwitch: UISwitch!
     @IBOutlet weak var pinLockTimeoutCell: UITableViewCell!
     
+    @IBOutlet weak var darkModeEnabledCell: UITableViewCell!
+    @IBOutlet weak var darkModeEnabledSwitch: UISwitch!
+    
     @IBOutlet weak var touchIdEnabledCell: UITableViewCell!
     @IBOutlet weak var touchIdEnabledSwitch: UISwitch!
     
@@ -106,6 +109,7 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
             pinEnabledSwitch.isOn = appSettings.pinEnabled()
             pinLockTimeoutCell.detailTextLabel!.text = pinLockTimeouts[appSettings.pinLockTimeoutIndex()]
             
+            darkModeEnabledSwitch.isOn = appSettings.darkEnabled()
             touchIdEnabledSwitch.isOn = touchIdSupported && appSettings.touchIdEnabled()
             
             deleteAllDataEnabledSwitch.isOn = appSettings.deleteOnFailureEnabled()
@@ -244,6 +248,28 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
             // Update which controls are enabled
             updateEnabledControls()
         }
+    }
+    @IBAction func darkEnabledChanged(_ sender: UISwitch) {
+        if(darkModeEnabledSwitch.isOn){
+                   self.appSettings?.setDarkEnabled(darkModeEnabledSwitch.isOn)
+               }else{
+                   self.appSettings?.setDarkEnabled(false);
+                   
+               }
+        
+        if #available(iOS 13.0, *) {
+            if (self.appSettings?.darkEnabled() == true) {
+                       UIApplication.shared.windows.forEach { window in
+                           window.overrideUserInterfaceStyle = .dark
+                           print("Dark mode")
+                       }
+                   }else{
+                       UIApplication.shared.windows.forEach { window in
+                           window.overrideUserInterfaceStyle = .light
+                           print("Light mode")
+                       }
+                   }
+               }
     }
     
     @IBAction func touchIdEnabledChanged(_ sender: UISwitch) {

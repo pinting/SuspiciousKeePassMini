@@ -130,6 +130,7 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
         super.viewWillAppear(animated)
     }
     
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 

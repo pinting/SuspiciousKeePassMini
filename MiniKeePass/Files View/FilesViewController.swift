@@ -37,8 +37,29 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     
     override func viewDidLoad() {
         super.viewDidLoad();
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        
+        if #available(iOS 13.0, *) {
+            if (appSettings.darkEnabled()) {
+                UIApplication.shared.windows.forEach { window in
+                    window.overrideUserInterfaceStyle = .dark
+                    print("Dark mode")
+                    self.navigationController?.overrideUserInterfaceStyle = .dark
+                }
+            }else{
+                UIApplication.shared.windows.forEach { window in
+                    window.overrideUserInterfaceStyle = .light
+                    print("Light mode")
+                }
+            }
+        }
+   
+        
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+       
     }
+    
+   
     
     override func viewWillAppear(_ animated: Bool) {
         updateFiles();
@@ -266,15 +287,65 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     func importDatabaseCreated(fileURL: URL) {
       
        
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        // Move database file from bundle to documents folder
+            
+            let fileManager = FileManager.default
+            
+            let documentsUrl = fileManager.urls(for: .documentDirectory,
+                                                        in: .userDomainMask)
+            
+            guard documentsUrl.count != 0 else {
+                return // Could not find documents URL
+            }
+            
+            let finalDatabaseURL = documentsUrl.first!.appendingPathComponent(fileURL.lastPathComponent)
+        
+            if !( (try? finalDatabaseURL.checkResourceIsReachable()) ?? false) {
+                print("DB does not exist in documents folder")
+                
+               // let documentsURL = Bundle.main.resourceURL?.appendingPathComponent("SQL.sqlite")
+                
+                do {
+                    let didStartAccessing = fileURL.startAccessingSecurityScopedResource()
+                       defer {
+                         if didStartAccessing {
+                           fileURL.stopAccessingSecurityScopedResource()
+                         }
+                       }
+                    try fileManager.copyItem(atPath: (fileURL.path), toPath: finalDatabaseURL.path)
+                      if(fileManager.fileExists(atPath: finalDatabaseURL.path)){
+                      
+                           let index = self.databaseFiles.insertionIndexOf(fileURL.lastPathComponent) {
+                               $0.localizedCaseInsensitiveCompare($1) == ComparisonResult.orderedAscending
+                           }
+                           self.databaseFiles.insert(fileURL.lastPathComponent, at: index)
+                           
+                           // Notify the table of the new row
+                           if (self.databaseFiles.count == 1) {
+                               // Reload the section if it was previously empty
+                               let indexSet = IndexSet(integer: Section.databases.rawValue)
+                               self.tableView.reloadSections(indexSet, with: .right)
+                           } else {
+                               let indexPath = IndexPath(row: index, section: Section.databases.rawValue)
+                               self.tableView.insertRows(at: [indexPath], with: .right)
+                           }
+                    }
+                    } catch let error as NSError {
+                        print("Couldn't copy file to final location! Error:\(error.description)")
+                }
+
+            } else {
+                print("Database file found at path: \(finalDatabaseURL.path)")
+            }
+       /* let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
         let path = documentsPath+"/"+fileURL.lastPathComponent
-        let ori = fileURL.path
+        //let ori = fileURL.path
          let fileManager = FileManager.default
         if(!fileManager.fileExists(atPath: ori)){
             print(ori)
         }
         do{
-         try fileManager.copyItem(atPath: ori, toPath: path)
+         try fileManager.copyItem(at: URL, to: path)
         
             if(fileManager.fileExists(atPath: path)){
            
@@ -294,8 +365,8 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 }
             }
         }catch {
-            print("Copy operation failed . Abort with error: \(error)")
-        }
+            print("Copy operation failed . Abort with error: \(error.localizedDescription)")
+        }*/
         
        }
     

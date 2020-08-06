@@ -62,6 +62,24 @@ class PasswordEntryViewController: UITableViewController, UITextFieldDelegate {
         passwordTextField.becomeFirstResponder()
     }
     
+    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+       // view.tintColor = UIColor.red
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        
+        if #available(iOS 13.0, *) {
+            if (appSettings.darkEnabled()) {
+                let header = view as! UITableViewHeaderFooterView
+                header.textLabel?.textColor = UIColor.white
+                    
+               
+            }else{
+                let header = view as! UITableViewHeaderFooterView
+                header.textLabel?.textColor = UIColor.black
+               
+            }
+        }
+        
+    }
     // MARK: - UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
