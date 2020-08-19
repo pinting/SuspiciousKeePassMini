@@ -7,7 +7,7 @@ I have create a new repo on Github, because the original Github project was sett
 
 *New
 - IOS Darkmode Support (Aug. 2020)
-- One Time password support secure secret key storing
+- One Time password support secure secret key storing (Sept. 2020)
 - open key db file from ios local storage
 - support open db by FaecID using LAPolicyDeviceOwnerAuthenticationWithBiometrics
 
