@@ -6,6 +6,8 @@ and sensible data to a local file, and not in the cloud, also i mean, it was fre
 I have create a new repo on Github, because the original Github project was setting to read only, and i can´t support the original Software development.
 
 *New
+- IOS Darkmode Support (Aug. 2020)
+- One Time password support secure secret key storing
 - open key db file from ios local storage
 - support open db by FaecID using LAPolicyDeviceOwnerAuthenticationWithBiometrics
 
