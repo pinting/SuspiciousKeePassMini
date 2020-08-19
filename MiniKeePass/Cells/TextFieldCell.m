@@ -122,8 +122,24 @@
             [self.editAccessoryButton setImage:editAccessoryImage forState:UIControlStateNormal];
             break;
         }
+        case TextFieldCellStyleOTP: {
+                
+                self.textField.font = [UIFont fontWithName:@"Andale Mono" size:24 ];
+                self.textField.textColor = [UIColor orangeColor];
+                UIImage *accessoryImage = [UIImage imageNamed:@"onetime"];
+                UIImage *editAccessoryImage = [UIImage imageNamed:@"OTP"];
+                
+                self.accessoryButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                self.accessoryButton.frame = CGRectMake(0.0, 0.0, 40, 40);
+                [self.accessoryButton setImage:accessoryImage forState:UIControlStateNormal];
+                
+                self.editAccessoryButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                self.editAccessoryButton.frame = CGRectMake(0.0, 0.0, 40, 40);
+                [self.editAccessoryButton setImage:editAccessoryImage forState:UIControlStateNormal];
+                break;
+            }
         case TextFieldCellStyleUrl:
-            self.textField.textColor = [UIColor blueColor];
+            self.textField.textColor = [UIColor colorWithRed: 0.01 green: 0.64 blue: 1.00 alpha: 1.00];;//[UIColor blueColor];
             self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
             self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
             self.textField.keyboardType = UIKeyboardTypeURL;

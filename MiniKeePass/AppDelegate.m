@@ -69,6 +69,12 @@
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+     [self importUrl:url];
+    
+    return YES;
+}
+
 + (AppDelegate *)getDelegate {
     return [[UIApplication sharedApplication] delegate];
 }

@@ -75,7 +75,7 @@
 	<key>CFBundleSignature</key>
 	<string>Catalina</string>
 	<key>CFBundleVersion</key>
-	<string>483</string>
+	<string>622</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
@@ -85,6 +85,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Please allow before to use the Camera</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>We want use Biometric features</string>
 	<key>UIAppFonts</key>

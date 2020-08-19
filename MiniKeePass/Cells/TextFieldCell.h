@@ -24,7 +24,8 @@ typedef NS_ENUM(NSInteger, TextFieldCellStyle) {
     TextFieldCellStylePlain,
     TextFieldCellStyleTitle,
     TextFieldCellStylePassword,
-    TextFieldCellStyleUrl
+    TextFieldCellStyleUrl,
+    TextFieldCellStyleOTP
 };
 
 @interface TextFieldCell : UITableViewCell <UITextFieldDelegate>

@@ -7,7 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		010E0FAE24E8353D00DFF443 /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010E0FA624E8353C00DFF443 /* Generator.swift */; };
+		010E0FAF24E8353D00DFF443 /* Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010E0FA724E8353C00DFF443 /* Crypto.swift */; };
+		010E0FB024E8353D00DFF443 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010E0FA824E8353C00DFF443 /* Keychain.swift */; };
+		010E0FB224E8353D00DFF443 /* PersistentToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010E0FAA24E8353C00DFF443 /* PersistentToken.swift */; };
+		010E0FB324E8353D00DFF443 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010E0FAC24E8353C00DFF443 /* Token.swift */; };
+		010E0FBF24E843D900DFF443 /* MF_Base32Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 010E0FBE24E843D800DFF443 /* MF_Base32Additions.m */; };
 		010EA826248CE6A50020C492 /* KTouchIDAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EA825248CE6A50020C492 /* KTouchIDAuthentication.m */; };
+		01D8BA0324E9355A00E0E70B /* SwiftQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8BA0124E9355A00E0E70B /* SwiftQRScanner.swift */; };
+		01D8BA0424E9355A00E0E70B /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8BA0224E9355A00E0E70B /* SquareView.swift */; };
 		01D94F0F2455CFB80026F7F1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D94F0D2455CFB70026F7F1 /* MBProgressHUD.m */; };
 		01E05D902483C23000429A65 /* DocumentBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E05D8F2483C23000429A65 /* DocumentBrowserViewController.swift */; };
 		4E8C169316B3E871004195A1 /* fr-createdb.html in Resources */ = {isa = PBXBuildFile; fileRef = 4E8C168E16B3E871004195A1 /* fr-createdb.html */; };
@@ -148,8 +156,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		010E0FA624E8353C00DFF443 /* Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
+		010E0FA724E8353C00DFF443 /* Crypto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Crypto.swift; sourceTree = "<group>"; };
+		010E0FA824E8353C00DFF443 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		010E0FAA24E8353C00DFF443 /* PersistentToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentToken.swift; sourceTree = "<group>"; };
+		010E0FAC24E8353C00DFF443 /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		010E0FAD24E8353D00DFF443 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		010E0FBD24E843D800DFF443 /* MF_Base32Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MF_Base32Additions.h; sourceTree = "<group>"; };
+		010E0FBE24E843D800DFF443 /* MF_Base32Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MF_Base32Additions.m; sourceTree = "<group>"; };
 		010EA824248CE6A50020C492 /* KTouchIDAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KTouchIDAuthentication.h; path = MiniKeePass/KTouchIDAuthentication.h; sourceTree = "<group>"; };
 		010EA825248CE6A50020C492 /* KTouchIDAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KTouchIDAuthentication.m; path = MiniKeePass/KTouchIDAuthentication.m; sourceTree = "<group>"; };
+		01D8BA0124E9355A00E0E70B /* SwiftQRScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftQRScanner.swift; sourceTree = "<group>"; };
+		01D8BA0224E9355A00E0E70B /* SquareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
 		01D94F0D2455CFB70026F7F1 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		01D94F0E2455CFB80026F7F1 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		01E05D8F2483C23000429A65 /* DocumentBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentBrowserViewController.swift; path = MiniKeePass/DocumentBrowserViewController.swift; sourceTree = "<group>"; };
@@ -396,6 +414,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		010E0FA524E8353C00DFF443 /* OneTimePassword */ = {
+			isa = PBXGroup;
+			children = (
+				01D8BA0224E9355A00E0E70B /* SquareView.swift */,
+				01D8BA0124E9355A00E0E70B /* SwiftQRScanner.swift */,
+				010E0FA624E8353C00DFF443 /* Generator.swift */,
+				010E0FA724E8353C00DFF443 /* Crypto.swift */,
+				010E0FA824E8353C00DFF443 /* Keychain.swift */,
+				010E0FAA24E8353C00DFF443 /* PersistentToken.swift */,
+				010E0FAC24E8353C00DFF443 /* Token.swift */,
+				010E0FAD24E8353D00DFF443 /* Info.plist */,
+			);
+			name = OneTimePassword;
+			path = MiniKeePass/OneTimePassword;
+			sourceTree = "<group>";
+		};
 		4E8C168D16B3E871004195A1 /* fr */ = {
 			isa = PBXGroup;
 			children = (
@@ -661,6 +695,7 @@
 		689DFFCA13A4273F005EBD36 = {
 			isa = PBXGroup;
 			children = (
+				010E0FA524E8353C00DFF443 /* OneTimePassword */,
 				010EA824248CE6A50020C492 /* KTouchIDAuthentication.h */,
 				010EA825248CE6A50020C492 /* KTouchIDAuthentication.m */,
 				01E05D8F2483C23000429A65 /* DocumentBrowserViewController.swift */,
@@ -741,8 +776,10 @@
 			isa = PBXGroup;
 			children = (
 				687AAA991889F8B400AB8AC5 /* AppStore.txt */,
+				010E0FBD24E843D800DFF443 /* MF_Base32Additions.h */,
 				68E08314146F2749001C4EDF /* InfoPlist.strings */,
 				68EA62DA1CC972F300B33E42 /* LaunchScreen.storyboard */,
+				010E0FBE24E843D800DFF443 /* MF_Base32Additions.m */,
 				68E0830E146F24E3001C4EDF /* Localizable.strings */,
 				68AB0F4D1CCA82B300CFE78D /* MiniKeePass-Bridging-Header.h */,
 				689DFFE113A4273F005EBD36 /* IOSKeePass-Info.plist */,
@@ -933,6 +970,7 @@
 				pt,
 				nl,
 				tr,
+				Base,
 			);
 			mainGroup = 689DFFCA13A4273F005EBD36;
 			productRefGroup = 689DFFD613A4273F005EBD36 /* Products */;
@@ -1059,6 +1097,7 @@
 				689D03D613A42B63005EBD36 /* Kdb3Date.m in Sources */,
 				689EA6821D67F8D500CF445E /* UIViewController+AlertController.swift in Sources */,
 				689D03D713A42B63005EBD36 /* Kdb3Node.m in Sources */,
+				010E0FB024E8353D00DFF443 /* Keychain.swift in Sources */,
 				689D03DA13A42B63005EBD36 /* Kdb3Reader.m in Sources */,
 				689D03DB13A42B63005EBD36 /* Kdb3Writer.m in Sources */,
 				689D03DC13A42B63005EBD36 /* Kdb4Node.m in Sources */,
@@ -1081,6 +1120,7 @@
 				689EA6951D67F94600CF445E /* SettingsViewController.swift in Sources */,
 				01E05D902483C23000429A65 /* DocumentBrowserViewController.swift in Sources */,
 				689EA67B1D67F8B500CF445E /* ImageSelectorViewController.swift in Sources */,
+				010E0FAE24E8353D00DFF443 /* Generator.swift in Sources */,
 				689D03E913A42B63005EBD36 /* DDXMLElementAdditions.m in Sources */,
 				689D03EA13A42B63005EBD36 /* NSString+DDXML.m in Sources */,
 				688038981D6BB33A001424CA /* WebBrowserViewController.swift in Sources */,
@@ -1090,15 +1130,20 @@
 				689D03ED13A42B63005EBD36 /* DDXMLNode.m in Sources */,
 				689D044F13A42C82005EBD36 /* DatabaseDocument.m in Sources */,
 				68BFDBE71D7646B400EFACB3 /* MoveItemsViewController.swift in Sources */,
+				010E0FB224E8353D00DFF443 /* PersistentToken.swift in Sources */,
 				689D045013A42C82005EBD36 /* DatabaseManager.m in Sources */,
 				68767B651D6F23350039EFE0 /* FilesViewController.swift in Sources */,
 				689D045113A42C82005EBD36 /* EntryViewController.m in Sources */,
+				01D8BA0424E9355A00E0E70B /* SquareView.swift in Sources */,
 				680C9D7C1D69EB540040FB43 /* HelpWebViewController.swift in Sources */,
 				68A7F3951D76708000467354 /* GroupViewController.swift in Sources */,
 				680C9D771D69E2A70040FB43 /* HelpViewController.swift in Sources */,
 				689D045513A42C82005EBD36 /* AppDelegate.m in Sources */,
+				010E0FB324E8353D00DFF443 /* Token.swift in Sources */,
+				010E0FAF24E8353D00DFF443 /* Crypto.swift in Sources */,
 				689FBE791AB27228005CB6BD /* PasswordUtils.m in Sources */,
 				689EA6701D67F88500CF445E /* KeyFileViewController.swift in Sources */,
+				01D8BA0324E9355A00E0E70B /* SwiftQRScanner.swift in Sources */,
 				689FBE641AB271C6005CB6BD /* KeypadButton.m in Sources */,
 				689A4D1314046B8200AA897D /* RandomStream.m in Sources */,
 				682D450D1603883900156830 /* AesInputStream.m in Sources */,
@@ -1118,6 +1163,7 @@
 				682D45181603883900156830 /* InputStream.m in Sources */,
 				682D45191603883900156830 /* OutputStream.m in Sources */,
 				68767B691D70B0830039EFE0 /* Array+Extensions.swift in Sources */,
+				010E0FBF24E843D900DFF443 /* MF_Base32Additions.m in Sources */,
 				682D451A1603883900156830 /* Sha256OutputStream.m in Sources */,
 				685D9D951603F8EE00D739D3 /* Kdb3Utils.m in Sources */,
 				689FBE931AB27283005CB6BD /* TextFieldCell.m in Sources */,
@@ -1306,13 +1352,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 483;
+				CURRENT_PROJECT_VERSION = 622;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				INFOPLIST_FILE = "MiniKeePass/IOSKeePass-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.7.8;
+				MARKETING_VERSION = 1.8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1334,13 +1380,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 483;
+				CURRENT_PROJECT_VERSION = 622;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				INFOPLIST_FILE = "MiniKeePass/IOSKeePass-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.7.8;
+				MARKETING_VERSION = 1.8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

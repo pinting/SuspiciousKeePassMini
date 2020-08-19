@@ -16,3 +16,4 @@
 #import "Kdb4Node.h"
 #import "DatabaseManager.h"
 #import "EntryViewController.h"
+#import "MF_Base32Additions.h"

@@ -23,6 +23,7 @@
 
 #import "MBProgressHUD.h"
 
+
 #define SECTION_HEADER_HEIGHT 46.0f
 
 enum {
@@ -38,6 +39,7 @@ enum {
     TextFieldCell *passwordCell;
     TextFieldCell *urlCell;
     TextViewCell *commentsCell;
+    TextFieldCell *otpCell;
 }
 
 @property (nonatomic) BOOL isKdb4;
@@ -58,8 +60,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+   
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"TextFieldCell" bundle:nil] forCellReuseIdentifier:TextFieldCellIdentifier];
@@ -108,9 +109,59 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     commentsCell.textView.editable = NO;
     commentsCell.textView.text = self.entry.notes;
     
-    _defaultCells = @[titleCell, usernameCell, passwordCell, urlCell];
+    otpCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
+    otpCell.style = TextFieldCellStyleOTP;
+    otpCell.title = @"OTP";//NSLocalizedString(@"URL", nil);
+    otpCell.delegate = self;
+    otpCell.textField.placeholder = @"OneTimePassword";//NSLocalizedString(@"URL", nil)
+    otpCell.textField.enabled = NO;
+    otpCell.textField.returnKeyType = UIReturnKeyDone;
+    otpCell.textField.text = @"";
+    [otpCell.editAccessoryButton addTarget:self action:@selector(openScanBarcodePressed) forControlEvents:UIControlEventTouchUpInside];
+   
+    
+    _defaultCells = @[titleCell, usernameCell, passwordCell, urlCell,otpCell];
     
     _editingStringFields = [NSMutableArray array];
+    
+    
+    Kdb4Entry *kdb4Entry = (Kdb4Entry *)self.entry;
+    
+    NSInteger count = kdb4Entry.stringFields.count;
+    for (NSInteger i = 0; i < count; i++) {
+        StringField *sf = kdb4Entry.stringFields[i];
+        if ([sf.key isEqualToString:@"OTPURL:"])
+        {
+            NSURL *url = [[NSURL alloc] initWithString:sf.value];
+            Token *tok = [[Token alloc] initWithUrl:url secret:nil error:nil];
+            //otpCell.textField.enabled = YES;
+            otpCell.textField.text = tok.currentPasswordmoreReadable;
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+               while(1){
+                    
+                    [NSThread sleepForTimeInterval:1.0f];
+                
+                // update UI on the main thread
+                dispatch_async(dispatch_get_main_queue(), ^{
+                   [self doOntimeRefresh:tok];
+                });
+                }
+                
+            });
+        }
+    }
+    
+    //Simulator Test
+    /*NSURL *url = [[NSURL alloc] initWithString:@"otpauth://totp/Google%3Afeldkanzel%40gmail.com?secret=g6mt5xyedustibndaao5z5a5rbni33uz&issuer=Google"];
+    Token *tok = [[Token alloc] initWithUrl:url secret:nil error:nil];*/
+    
+   
+   
+    
+   
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -158,8 +209,31 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     [passwordCell.textField resignFirstResponder];
     [urlCell.textField resignFirstResponder];
     [commentsCell.textView resignFirstResponder];
+    [otpCell.textField resignFirstResponder];
 }
 
+- (void)doOntimeRefresh:(Token*)tok {
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+     [dateFormatter setDateFormat:@"ss"];
+     // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
+     //NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
+    
+         NSInteger sec = [[dateFormatter stringFromDate:[NSDate date]] integerValue];
+         
+        if(sec >= 30){
+            NSString *tt = [[NSString alloc] initWithFormat:@"%@ (%ldsec)",tok.currentPasswordmoreReadable,60-sec];
+            otpCell.textField.text = tt;// tok.currentPassword;
+            //NSLog(@"OTP %d valid",60-sec);
+         }else{
+             NSString *tt = [[NSString alloc] initWithFormat:@"%@ (%ldsec)",tok.currentPasswordmoreReadable,30-sec];
+             otpCell.textField.text = tt;// tok.currentPassword;
+             //NSLog(@"OTP %d valid",30-sec);
+         }
+    
+        
+      
+    
+}
 - (void)setEntry:(KdbEntry *)e {
     _entry = e;
     self.isKdb4 = [self.entry isKindOfClass:[Kdb4Entry class]];
@@ -172,6 +246,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     passwordCell.textField.text = self.entry.password;
     urlCell.textField.text = self.entry.url;
     commentsCell.textView.text = self.entry.notes;
+    //otpCell.textField.text = @"123 456";
 }
 
 - (NSArray *)cells {
@@ -417,6 +492,11 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 
                 cell.style = TextFieldCellStylePlain;
                 cell.title = stringField.key;
+                if ([stringField.key isEqualToString:@"OTPURL:"])
+                {
+                    
+                }
+                
                 cell.textField.text = stringField.value;
                 cell.textField.enabled = self.editing;
 
@@ -556,9 +636,16 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     self.tableView.allowsSelection = NO;
 
     TextFieldCell *cell = (TextFieldCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = cell.textField.text;
+    
+    if ([cell.title isEqualToString:@"OTP"])
+    {
+        pasteboard.string = [cell.textField.text substringToIndex:7];
+    }else{
+        pasteboard.string = cell.textField.text;
+    }
+    
+   
     
     // Construct label
     UILabel *copiedLabel = [[UILabel alloc] initWithFrame:cell.bounds];
@@ -634,6 +721,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     }
 }
 
+
 #pragma mark - Password Display
 
 - (void)showPasswordPressed {
@@ -662,6 +750,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     passwordGeneratorViewController.cancelPressed = ^(PasswordGeneratorViewController *passwordGeneratorViewController) {
         [passwordGeneratorViewController dismissViewControllerAnimated:YES completion:nil];
     };
+    
 
     [self presentViewController:navigationController animated:YES completion:nil];
 }
@@ -670,6 +759,72 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     passwordCell.textField.text = password;
 }
 
+- (void)openScanBarcodePressed {
+    // Display the qr scanner
+  // UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"QRCode" bundle:nil];
+  // UINavigationController *navigationController = [storyboard instantiateInitialViewController];
+    
+    //QRCode scanner without Camera switch and Torch
+    QRCodeScannerController *scanner = [[QRCodeScannerController alloc] init]; //[QRCodeScannerController: in];
+    //QRCodeScannerController *scanner = (QRCodeScannerController *)navigationController.topViewController;
+    //QRCodeScannerController *scanner =
+    
+    //QRCode with Camera switch and Torch
+    //let scanner = QRCodeScannerController(cameraImage: UIImage(named: "camera"), cancelImage: UIImage(named: "cancel"), flashOnImage: UIImage(named: "flash-on"), flashOffImage: UIImage(named: "flash-off"))
+    scanner.delegate = self;
+  
+    [self presentViewController:scanner animated:YES completion:nil];
+    //self.present(scanner, animated: true, completion: nil)
+    
+}
+
+- (void)qrScannerDidFail:(UIViewController * _Nonnull)controller error:(NSString * _Nonnull)error {
+    NSLog(@"%@",error);
+}
+
+- (void)qrScanner:(UIViewController * _Nonnull)controller scanDidComplete:(NSString * _Nonnull)result {
+    //This comes back
+    // ->  otpauth://totp/Google%3Afeldkanzel%40gmail.com?secret=g6mt5xyedustibndaao5z5a5rbni33uz&issuer=Google
+    //
+    
+   /* if let token = Token(url: url) {
+        print("Password: \(token.currentPassword)")
+    } else {
+        print("Invalid token URL")
+    }*/
+    
+    NSURL *url = [[NSURL alloc] initWithString:result];
+    
+    Token *tok = [[Token alloc] initWithUrl:url secret:nil error:nil];
+
+    
+    StringField *issuerField = [[StringField alloc] initWithKey:@"OTP Aussteller:" andValue:tok.issuer andProtected:NO];
+    StringField *nameField = [[StringField alloc] initWithKey:@"Name:" andValue:tok.name andProtected:NO];
+    StringField *secretField = [[StringField alloc] initWithKey:@"OTPURL:" andValue:result andProtected:YES];
+   
+    //[self.editingStringFields addObject:nameField];
+    //[self.editingStringFields addObject:secretField];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.editingStringFields.count inSection:1];
+    [self.editingStringFields addObject:issuerField];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    indexPath = [NSIndexPath indexPathForRow:self.editingStringFields.count inSection:1];
+    [self.editingStringFields addObject:nameField];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    indexPath = [NSIndexPath indexPathForRow:self.editingStringFields.count inSection:1];
+    [self.editingStringFields addObject:secretField];
+    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    
+    
+    //NSLog(@"%@",result);
+}
+
+- (void)qrScannerDidCancel:(UIViewController * _Nonnull)controller{
+    NSLog(@"Cancel");
+}
 - (void)openUrlPressed {
     NSString *text = urlCell.textField.text;
     
@@ -694,5 +849,10 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         [[UIApplication sharedApplication] openURL:url];
     }
 }
+
+
+    
+   
+
 
 @end
