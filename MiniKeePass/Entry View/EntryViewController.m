@@ -152,12 +152,6 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         }
     }
     
-    //Simulator Test
-    /*NSURL *url = [[NSURL alloc] initWithString:@"otpauth://totp/Google%3Afeldkanzel%40gmail.com?secret=g6mt5xyedustibndaao5z5a5rbni33uz&issuer=Google"];
-    Token *tok = [[Token alloc] initWithUrl:url secret:nil error:nil];*/
-    
-   
-   
     
    
     
