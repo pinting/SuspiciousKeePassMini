@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2011 Jason Rush and John Flanagan. All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -62,6 +62,7 @@
 "Backup" = "Резервирование";
 
 // General Messages
+"Align QR code within frame to scan" = "Совместите QR-код в рамке для сканирования";
 "Enter your PIN to unlock" = "Введите PIN-код для разблокировки";
 "Unlock MiniKeePass" = "Разблокировать MiniKeePass";
 "Enter the password and/or select the keyfile for the %@ database." = "Введите пароль и/или выберите файл ключа для базы данных %@.";

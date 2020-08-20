@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2011 Jason Rush and John Flanagan. All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -60,6 +60,7 @@
 "Backup" = "Backup";
 
 // General Messages
+"Align QR code within frame to scan" = "Align QR code within frame to scan";
 "Enter your PIN to unlock" = "Enter your PIN to unlock";
 "Unlock MiniKeePass" = "Unlock MiniKeePass";
 "Enter the password and/or select the keyfile for the %@ database." = "Enter the password and/or select the keyfile for the %@ database.";

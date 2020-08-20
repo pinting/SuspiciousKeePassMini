@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2011 Jason Rush and John Flanagan. All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -60,6 +60,7 @@
 "Backup" = "Backup"; // FIXME
 
 // General Messages
+"Align QR code within frame to scan" = "Allinea il codice QR all'interno del frame per eseguire la scansione";
 "Enter your PIN to unlock" = "Inserisci il tuo PIN per sbloccare";
 "Unlock MiniKeePass" = "Unlock MiniKeePass"; // FIXME
 "Enter the password and/or select the keyfile for the %@ database." = "Inserisci la password e/o seleziona il file chiave per il database %@.";

@@ -60,6 +60,7 @@
 "Backup" = "Yedekle";
 
 // General Messages
+"Align QR code within frame to scan" = "Taramak için QR kodunu çerçeve içinde hizalayın";
 "Enter your PIN to unlock" = "Kilidini açmak için PIN'inizi girin";
 "Unlock MiniKeePass" = "Kilidi aç";
 "Enter the password and/or select the keyfile for the %@ database." = "Veritabanının şifresini girin ve anahtar dosyasını seçin. ";

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright 2011 Jason Rush and John Flanagan. All rights reserved.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -60,6 +60,7 @@
 "Backup" = "备份";
 
 // General Messages
+"Align QR code within frame to scan" = "将QR码对准框架以进行扫描";
 "Enter your PIN to unlock" = "请输入 PIN 码以解锁应用";
 "Unlock MiniKeePass" = "解锁MiniKeePass应用";
 "Enter the password and/or select the keyfile for the %@ database." = "请输入密码和（或）选定密钥文件以访问“%@”数据库";

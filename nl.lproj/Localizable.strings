@@ -62,6 +62,7 @@
 "Backup" = "Backup";
 
 // General Messages
+"Align QR code within frame to scan" = "Lijn de QR-code uit binnen het frame om te scannen";
 "Enter your PIN to unlock" = "Voer uw PIN in om te ontgrendelen";
 "Unlock MiniKeePass" = "Unlock MiniKeePass"; // FIXME
 "Enter the password and/or select the keyfile for the %@ database." = "Voer uw wachtwoord in en/of selecteer het sleutelbestand voor de %@ database.";

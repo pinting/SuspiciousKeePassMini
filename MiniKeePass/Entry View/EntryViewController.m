@@ -639,6 +639,16 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         pasteboard.string = cell.textField.text;
     }
     
+    if ([cell.title isEqualToString:@"OTPURL:"])
+    {
+        NSString *title = NSLocalizedString(@"Forbidden", comment: "");
+        NSString *message = NSLocalizedString(@"There is a potential risk to Copy OTP URL to ClipBoard", comment: "");
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return;
+    }
    
     
     // Construct label
