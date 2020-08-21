@@ -7,9 +7,12 @@ I have create a new repo on Github, because the original Github project was sett
 
 *New
 - IOS Darkmode Support (Aug. 2020)
-- One Time password support secure secret key storing (Sept. 2020)
+- One Time password support secure secret key storing (Released in 1.80)
+  The Time-based One-time Password algorithm (TOTP) is an extension of the HMAC-based One-time Password algorithm (HOTP) that generates a one-time password (OTP) by instead taking         
+  uniqueness from the current time. It has been adopted as Internet Engineering Task Force (IETF)[1] standard RFC 6238,
+  [1] is the cornerstone of Initiative for Open Authentication (OATH), and is used in a number of two-factor authentication (2FA) systems. 
 - open key db file from ios local storage
-- support open db by FaecID using LAPolicyDeviceOwnerAuthenticationWithBiometrics
+- support open db by FaceID using LAPolicyDeviceOwnerAuthenticationWithBiometrics
 
 *Older Stuff from Original
 MiniKeePass provides secure password storage on your phone that's compatible with KeePass.
