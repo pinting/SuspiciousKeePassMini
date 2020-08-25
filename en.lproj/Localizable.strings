@@ -58,8 +58,10 @@
 "Add new…" = "Add new…";
 "Choose Group" = "Choose Group";
 "Backup" = "Backup";
+"Not Supported" = "Not Supported";
 
 // General Messages
+"This is an KDB in Verion 1, and has no support for One Time Passwords" = "This is an KDB in Verion 1, and has no support for One Time Passwords";
 "Align QR code within frame to scan" = "Align QR code within frame to scan";
 "Enter your PIN to unlock" = "Enter your PIN to unlock";
 "Unlock MiniKeePass" = "Unlock MiniKeePass";

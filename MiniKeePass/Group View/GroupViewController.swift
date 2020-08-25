@@ -142,15 +142,22 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       
+        
         guard let indexPath = self.tableView.indexPathForSelectedRow else {
             return
         }
+        
         
         if let destination = segue.destination as? GroupViewController {
             let group = groups[indexPath.row]
             selectedItem = KdbItem.group(group)
             destination.parentGroup = group
             destination.title = group.name
+            if(group.name == "UniCom Enterprise"){
+                print("UniCom Enterprise calling")
+                
+            }
         }
         else if let destination = segue.destination as? EntryViewController {
             let entry = entries[indexPath.row]
@@ -287,6 +294,11 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (isEditing) {
             updateEditingToolbar()
+        }else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell", for: indexPath) as UITableViewCell
+            if(cell.textLabel?.text == "UniCom Enterprise"){
+                
+            }
         }
     }
 

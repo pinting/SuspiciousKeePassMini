@@ -127,31 +127,35 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     
     Kdb4Entry *kdb4Entry = (Kdb4Entry *)self.entry;
     
-    NSInteger count = kdb4Entry.stringFields.count;
-    for (NSInteger i = 0; i < count; i++) {
-        StringField *sf = kdb4Entry.stringFields[i];
-        if ([sf.key isEqualToString:@"OTPURL:"])
-        {
-            NSURL *url = [[NSURL alloc] initWithString:sf.value];
-            Token *tok = [[Token alloc] initWithUrl:url secret:nil error:nil];
-            //otpCell.textField.enabled = YES;
-            otpCell.textField.text = tok.currentPasswordmoreReadable;
-            
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-               while(1){
+    if (self.isKdb4) {
+           
+        NSInteger count = kdb4Entry.stringFields.count;
+        for (NSInteger i = 0; i < count; i++) {
+            StringField *sf = kdb4Entry.stringFields[i];
+            if ([sf.key isEqualToString:@"OTPURL:"])
+            {
+                
+                NSURL *url = [[NSURL alloc] initWithString:sf.value];
+                Token *tok = [[Token alloc] initWithUrl:url secret:nil error:nil];
+                //otpCell.textField.enabled = YES;
+                otpCell.textField.text = tok.currentPasswordmoreReadable;
+                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+                   while(1){
+                        
+                        [NSThread sleepForTimeInterval:1.0f];
                     
-                    [NSThread sleepForTimeInterval:1.0f];
-                
-                // update UI on the main thread
-                dispatch_async(dispatch_get_main_queue(), ^{
-                   [self doOntimeRefresh:tok];
+                    // update UI on the main thread
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                       [self doOntimeRefresh:tok];
+                    });
+                    }
+                    
                 });
-                }
-                
-            });
+            }
         }
-    }
     
+    }
     
    
     
@@ -309,6 +313,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                 NSInteger count = [self.tableView numberOfRowsInSection:SECTION_CUSTOM_FIELDS] - 1;
                 for (NSInteger i = 0; i < count; i++) {
                     TextFieldCell *cell = (TextFieldCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:SECTION_CUSTOM_FIELDS]];
+                    
                     [cell.textField resignFirstResponder];
                 }
 
@@ -488,7 +493,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                 cell.title = stringField.key;
                 if ([stringField.key isEqualToString:@"OTPURL:"])
                 {
-                    
+                    cell.textField.secureTextEntry = true;
                 }
                 
                 cell.textField.text = stringField.value;
@@ -644,6 +649,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         NSString *title = NSLocalizedString(@"Forbidden", comment: "");
         NSString *message = NSLocalizedString(@"There is a potential risk to Copy OTP URL to ClipBoard", comment: "");
         
+        
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
@@ -796,30 +802,44 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     } else {
         print("Invalid token URL")
     }*/
-    
-    NSURL *url = [[NSURL alloc] initWithString:result];
-    
-    Token *tok = [[Token alloc] initWithUrl:url secret:nil error:nil];
+    if (!self.isKdb4) {
+        
+        [controller dismissViewControllerAnimated:YES completion:^{
 
-    
-    StringField *issuerField = [[StringField alloc] initWithKey:@"OTP Aussteller:" andValue:tok.issuer andProtected:NO];
-    StringField *nameField = [[StringField alloc] initWithKey:@"Name:" andValue:tok.name andProtected:NO];
-    StringField *secretField = [[StringField alloc] initWithKey:@"OTPURL:" andValue:result andProtected:YES];
-   
-    //[self.editingStringFields addObject:nameField];
-    //[self.editingStringFields addObject:secretField];
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.editingStringFields.count inSection:1];
-    [self.editingStringFields addObject:issuerField];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    indexPath = [NSIndexPath indexPathForRow:self.editingStringFields.count inSection:1];
-    [self.editingStringFields addObject:nameField];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    indexPath = [NSIndexPath indexPathForRow:self.editingStringFields.count inSection:1];
-    [self.editingStringFields addObject:secretField];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            NSString *title = NSLocalizedString(@"Not Supported", nil);
+            NSString *message = NSLocalizedString(@"This is an KDB in Verion 1, and has no support for One Time Passwords", nil);
+               
+               UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+               [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+               [self presentViewController:alertController animated:YES completion:nil];
+        }];
+        
+           
+    }else{
+        NSURL *url = [[NSURL alloc] initWithString:result];
+         
+         Token *tok = [[Token alloc] initWithUrl:url secret:nil error:nil];
+
+         
+         StringField *issuerField = [[StringField alloc] initWithKey:@"OTP Aussteller:" andValue:tok.issuer andProtected:NO];
+         StringField *nameField = [[StringField alloc] initWithKey:@"Name:" andValue:tok.name andProtected:NO];
+         StringField *secretField = [[StringField alloc] initWithKey:@"OTPURL:" andValue:result andProtected:YES];
+        
+         //[self.editingStringFields addObject:nameField];
+         //[self.editingStringFields addObject:secretField];
+         
+         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.editingStringFields.count inSection:1];
+         [self.editingStringFields addObject:issuerField];
+         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+         
+         indexPath = [NSIndexPath indexPathForRow:self.editingStringFields.count inSection:1];
+         [self.editingStringFields addObject:nameField];
+         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+         
+         indexPath = [NSIndexPath indexPathForRow:self.editingStringFields.count inSection:1];
+         [self.editingStringFields addObject:secretField];
+         [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
     
     
     

@@ -58,8 +58,10 @@
 "Add new…" = "Hinzufügen…";
 "Choose Group" = "Gruppe auswählen";
 "Backup" = "Backup";
+"Not Supported" = "Nicht Unterstützt";
 
 // General Messages
+"This is an KDB in Verion 1, and has no support for One Time Passwords" = "Dies ist die KDB in Verion 1, diese hat keine Unterstützung für Zeit basierte Einmal passwörter";
 "Align QR code within frame to scan" = "Richten Sie den zu scannenden QR-Code aus";
 "Enter your PIN to unlock" = "Geben Sie zum Entsperren Ihre PIN ein";
 "Unlock MiniKeePass" = "Unlock MiniKeePass"; // FIXME

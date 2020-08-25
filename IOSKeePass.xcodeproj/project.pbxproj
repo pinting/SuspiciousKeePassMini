@@ -14,6 +14,7 @@
 		010E0FB324E8353D00DFF443 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010E0FAC24E8353C00DFF443 /* Token.swift */; };
 		010E0FBF24E843D900DFF443 /* MF_Base32Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 010E0FBE24E843D800DFF443 /* MF_Base32Additions.m */; };
 		010EA826248CE6A50020C492 /* KTouchIDAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EA825248CE6A50020C492 /* KTouchIDAuthentication.m */; };
+		01BED40624F2EB1E00690A12 /* EnterPriseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BED40524F2EB1E00690A12 /* EnterPriseViewController.swift */; };
 		01D8BA0324E9355A00E0E70B /* SwiftQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8BA0124E9355A00E0E70B /* SwiftQRScanner.swift */; };
 		01D8BA0424E9355A00E0E70B /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8BA0224E9355A00E0E70B /* SquareView.swift */; };
 		01D94F0F2455CFB80026F7F1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D94F0D2455CFB70026F7F1 /* MBProgressHUD.m */; };
@@ -166,6 +167,7 @@
 		010E0FBE24E843D800DFF443 /* MF_Base32Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MF_Base32Additions.m; sourceTree = "<group>"; };
 		010EA824248CE6A50020C492 /* KTouchIDAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KTouchIDAuthentication.h; path = MiniKeePass/KTouchIDAuthentication.h; sourceTree = "<group>"; };
 		010EA825248CE6A50020C492 /* KTouchIDAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KTouchIDAuthentication.m; path = MiniKeePass/KTouchIDAuthentication.m; sourceTree = "<group>"; };
+		01BED40524F2EB1E00690A12 /* EnterPriseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPriseViewController.swift; sourceTree = "<group>"; };
 		01D8BA0124E9355A00E0E70B /* SwiftQRScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftQRScanner.swift; sourceTree = "<group>"; };
 		01D8BA0224E9355A00E0E70B /* SquareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
 		01D94F0D2455CFB70026F7F1 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
@@ -695,6 +697,7 @@
 		689DFFCA13A4273F005EBD36 = {
 			isa = PBXGroup;
 			children = (
+				01BED40524F2EB1E00690A12 /* EnterPriseViewController.swift */,
 				010E0FA524E8353C00DFF443 /* OneTimePassword */,
 				010EA824248CE6A50020C492 /* KTouchIDAuthentication.h */,
 				010EA825248CE6A50020C492 /* KTouchIDAuthentication.m */,
@@ -1158,6 +1161,7 @@
 				010EA826248CE6A50020C492 /* KTouchIDAuthentication.m in Sources */,
 				01D94F0F2455CFB80026F7F1 /* MBProgressHUD.m in Sources */,
 				682D45151603883900156830 /* GZipOutputStream.m in Sources */,
+				01BED40624F2EB1E00690A12 /* EnterPriseViewController.swift in Sources */,
 				682D45161603883900156830 /* HashedInputStream.m in Sources */,
 				682D45171603883900156830 /* HashedOutputStream.m in Sources */,
 				682D45181603883900156830 /* InputStream.m in Sources */,
@@ -1352,7 +1356,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 627;
+				CURRENT_PROJECT_VERSION = 670;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				INFOPLIST_FILE = "MiniKeePass/IOSKeePass-Info.plist";
@@ -1380,7 +1384,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 627;
+				CURRENT_PROJECT_VERSION = 670;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				INFOPLIST_FILE = "MiniKeePass/IOSKeePass-Info.plist";
