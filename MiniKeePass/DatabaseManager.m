@@ -197,7 +197,8 @@ static DatabaseManager *sharedInstance;
     NSString *keyFile = [KeychainUtils stringForKey:self.selectedFilename
                                      andServiceName:KEYCHAIN_KEYFILES_SERVICE];
 
-   /*if(password == nil){
+    // Check if TouchID is supported
+      /*if(password == nil){
         if([KTouchIDAuthentication canAuthenticateWithError:&error]){
             [[KTouchIDAuthentication sharedInstance] authenticateBiometricsWithSuccess:^(){
                 //[self presentAlertControllerWithMessage:@"Successfully Authenticated!"];
@@ -355,6 +356,8 @@ static DatabaseManager *sharedInstance;
                     //[self presentAlertControllerWithMessage:authErrorString];
                         NSLog(@"%@",authErrorString);
                 }];
+            }else{
+                [self pwdController:filename animated:animated];
             }
         }else{
             [self pwdController:filename animated:animated];

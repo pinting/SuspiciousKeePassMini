@@ -137,6 +137,8 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                 
                 NSURL *url = [[NSURL alloc] initWithString:sf.value];
                 Token *tok = [[Token alloc] initWithUrl:url secret:nil error:nil];
+                if(tok == nil)
+                    break;
                 //otpCell.textField.enabled = YES;
                 otpCell.textField.text = tok.currentPasswordmoreReadable;
                 
@@ -820,7 +822,18 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
          
          Token *tok = [[Token alloc] initWithUrl:url secret:nil error:nil];
 
-         
+        if(tok == nil){
+            [controller dismissViewControllerAnimated:YES completion:^{
+
+                       NSString *title = NSLocalizedString(@"Not Supported", nil);
+                       NSString *message = NSLocalizedString(@"This is OTP Metod is not supported", nil);
+                          
+                          UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+                          [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+                          [self presentViewController:alertController animated:YES completion:nil];
+                   }];
+            return;
+        }
          StringField *issuerField = [[StringField alloc] initWithKey:@"OTP Aussteller:" andValue:tok.issuer andProtected:NO];
          StringField *nameField = [[StringField alloc] initWithKey:@"Name:" andValue:tok.name andProtected:NO];
          StringField *secretField = [[StringField alloc] initWithKey:@"OTPURL:" andValue:result andProtected:YES];

@@ -49,12 +49,7 @@
 
     [self checkFileProtection];
 
-    // Initialize the lock screen manager
-    [LockScreenManager sharedInstance];
 
-    [[KTouchIDAuthentication sharedInstance] setReason:@"IOSKeePass FaceID support"];
-    [[KTouchIDAuthentication sharedInstance] setFallbackButtonTitle:@"Enter Passcode"];
-    [[KTouchIDAuthentication sharedInstance] setUseDefaultFallbackTitle:YES];
     return YES;
 }
 

@@ -49,6 +49,9 @@ static KTouchIDAuthentication *sharedInstance;
             self.hideFallbackButton = NO;
         }
     }
+    if(self.reason == nil)
+        self.reason = @"You uing ToucId/FacID";
+    
     return self;
 }
 
@@ -62,6 +65,7 @@ static KTouchIDAuthentication *sharedInstance;
             self.context.localizedFallbackTitle = @"";
         }
         if ([self.context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&authError]) {
+            
             [self.context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
                          localizedReason:self.reason
                                    reply:^(BOOL authenticated, NSError *error) {
