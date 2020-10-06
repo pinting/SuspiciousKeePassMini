@@ -225,6 +225,7 @@ static LockScreenManager *sharedInstance = nil;
     }
 }
 
+
 #pragma mark - Closing the database
 
 - (BOOL)shouldCloseDatabase {

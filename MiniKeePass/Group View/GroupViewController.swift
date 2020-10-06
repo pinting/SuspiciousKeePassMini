@@ -37,11 +37,12 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
         case Rename = 4
     }
 
+    private var failedAttemps = 0
     private var standardToolbarItems: [UIBarButtonItem]!
     private var editingToolbarItems: [UIBarButtonItem]!
 
     private var documentInteractionController: UIDocumentInteractionController?
-
+    private var blurEffectView: UIVisualEffectView?
     private var groups: [KdbGroup]!
     private var entries: [KdbEntry]!
 
@@ -61,6 +62,8 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
         }
     }
 
+    var tagid: Int? //unique id of grouviewcontroller
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -99,6 +102,19 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             searchController?.searchBar.sizeToFit()
             tableView.tableHeaderView = searchController?.searchBar
         }
+        
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView?.frame = view.bounds
+        blurEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView?.tag = 3101
+        
+       let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIScene.didEnterBackgroundNotification, object: nil)
+            
+            notificationCenter.addObserver(self, selector: #selector(appCameToForeground), name: UIScene.willEnterForegroundNotification, object: nil)
+            
+        failedAttemps = 0
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -127,14 +143,20 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
         
         self.setEditing(false, animated: false)
         
+        
+        tagid = 1;
+        
         super.viewWillAppear(animated)
+        
+        
     }
     
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-
+        
         documentInteractionController?.dismissMenu(animated: false)
+        tagid = 0;
     }
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -154,6 +176,8 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             selectedItem = KdbItem.group(group)
             destination.parentGroup = group
             destination.title = group.name
+            tagid = 0
+            destination.tagid = 1;
             if(group.name == "UniCom Enterprise"){
                 print("UniCom Enterprise calling")
                 
@@ -164,6 +188,7 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             selectedItem = KdbItem.entry(entry)
             destination.entry = entry
             destination.title = entry.title()
+            tagid = 0;
         }
     }
     
@@ -610,5 +635,79 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
         // Update table
         updateViewModel()
         tableView.reloadData()
+    }
+    
+    
+    @objc func appMovedToBackground() {
+        
+        if(tagid == 0){
+            return
+        }
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        if (appSettings.pinEnabled()) {
+            print("IOSKEEPass enters background")
+            view.addSubview(blurEffectView!)
+        }
+        
+        
+    }
+
+    @objc func appCameToForeground() {
+        if(tagid == 0){
+            return
+        }
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        if (appSettings.pinEnabled()) {
+            print("IOSKEEPass enters foreground")
+            
+            let mode = ALMode.validate
+            let appSettings = AppSettings.sharedInstance() as AppSettings
+            var col = UIColor.white
+           
+            if #available(iOS 13.0, *) {
+                if (appSettings.darkEnabled()) {
+                    
+                    col = UIColor.black
+                }
+            }
+            
+            let options = ALOptions()
+                options.image = UIImage(named: "AppIcon")!
+                options.title = "IOSKeepass Locked"
+                options.isSensorsEnabled = appSettings.touchIdEnabled()
+                options.color = col
+                options.onSuccessfulDismiss = { (mode: ALMode?) in
+                    if let mode = mode {
+                        print("Password \(String(describing: mode))d successfully")
+                        if let viewWithTag = self.view.viewWithTag(3101) {
+                                viewWithTag.removeFromSuperview()
+                                print("Remove blureffect")
+                            }else{
+                                print("No!")
+                            }
+                    } else {
+                        print("User Cancelled")
+                    }
+                }
+                options.onFailedAttempt = { (mode: ALMode?) in
+                    self.failedAttemps += 1
+                    
+                   
+                    let cnt = 3//appSettings.deleteOnFailureAttemptsIndex()
+                    if(self.failedAttemps >= cnt)
+                    {
+                        //Shutdown the APP
+                      
+                        print("Exit App with warning")
+                        exit(0)
+                        
+                    }
+                    
+                    print("Failed to \(String(describing: mode))")
+                }
+
+            AppLocker.present(with: mode, and: options)
+        }
+        
     }
 }

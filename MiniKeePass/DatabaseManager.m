@@ -21,6 +21,8 @@
 #import "AppSettings.h"
 #import "IOSKeePass-Swift.h"
 #import "KTouchIDAuthentication.h"
+#import "Kdb3Writer.h"
+#import "Kdb4Writer.h"
 
 @implementation DatabaseManager
 
@@ -197,98 +199,7 @@ static DatabaseManager *sharedInstance;
     NSString *keyFile = [KeychainUtils stringForKey:self.selectedFilename
                                      andServiceName:KEYCHAIN_KEYFILES_SERVICE];
 
-    // Check if TouchID is supported
-      /*if(password == nil){
-        if([KTouchIDAuthentication canAuthenticateWithError:&error]){
-            [[KTouchIDAuthentication sharedInstance] authenticateBiometricsWithSuccess:^(){
-                //[self presentAlertControllerWithMessage:@"Successfully Authenticated!"];
-                NSString *tmppassword = [KeychainUtils stringForKey:self.selectedFilename
-                andServiceName:KEYCHAIN_FACEID_SERVICE];
-                // Get the absolute path to the database
-                NSString *path = [documentsDirectory stringByAppendingPathComponent:self.selectedFilename];
-
-                // Get the absolute path to the keyfile
-                NSString *keyFilePath = nil;
-                if (keyFile != nil) {
-                    keyFilePath = [documentsDirectory stringByAppendingPathComponent:keyFile];
-                }
-
-                // Load the database
-                @try {
-                    DatabaseDocument *dd = [[DatabaseDocument alloc] initWithFilename:path password:password keyFile:keyFilePath];
-
-                    // Set the database document in the application delegate
-                    appDelegate.databaseDocument = dd;
-                    return;
-                } @catch (NSException *exception) {
-                    // Ignore
-                }
-            } andFailure:^(long errorCode){
-                NSString * authErrorString;
-                switch (errorCode) {
-                    case KTouchIDAuthenticationErrorSystemCancel:
-                        authErrorString = @"System canceled auth request due to app coming to foreground or background.";
-                        break;
-                    case KTouchIDAuthenticationErrorAuthenticationFailed:
-                        authErrorString = @"User failed after a few attempts.";
-                        break;
-                    case KTouchIDAuthenticationErrorUserCancel:
-                        authErrorString = @"User cancelled.";
-                        break;
-                    case KTouchIDAuthenticationErrorUserFallback:
-                       authErrorString = @"Fallback auth method should be implemented here.";
-                        //authErrorString = nil;
-                        //[self authenticateDevicePasscode];
-                        break;
-                    case KTouchIDAuthenticationErrorTouchIDNotEnrolled:
-                        authErrorString = @"No Touch ID fingers enrolled.";
-                        break;
-                    case KTouchIDAuthenticationErrorTouchIDNotAvailable:
-                        authErrorString = @"Touch ID not available on your device.";
-                        break;
-                    case KTouchIDAuthenticationErrorPasscodeNotSet:
-                        authErrorString = @"Need a passcode set to use Touch ID.";
-                        break;
-                    default:
-                        authErrorString = @"Check your Touch ID Settings.";
-                        break;
-                }
-                if(authErrorString)
-                //[self presentAlertControllerWithMessage:authErrorString];
-                    NSLog(@"%@",authErrorString);
-            }];
-        }
-    }*/
-    
-    // Try and load the database with the cached password from the keychain
-/*    if ([[AppSettings sharedInstance] touchIdEnabled]) {
-           
-        if (password != nil || keyFile != nil) {
-            // Get the absolute path to the database
-            NSString *path = [documentsDirectory stringByAppendingPathComponent:self.selectedFilename];
-
-            // Get the absolute path to the keyfile
-            NSString *keyFilePath = nil;
-            if (keyFile != nil) {
-                keyFilePath = [documentsDirectory stringByAppendingPathComponent:keyFile];
-            }
-
-            // Load the database
-            @try {
-                DatabaseDocument *dd = [[DatabaseDocument alloc] initWithFilename:path password:password keyFile:keyFilePath];
-
-                databaseLoaded = YES;
-
-                /*if([KTouchIDAuthentication canAuthenticateWithError:&error]){
-                    [KeychainUtils setString:password forKey:filename andServiceName:KEYCHAIN_FACEID_SERVICE];
-                }*
-                // Set the database document in the application delegate
-                appDelegate.databaseDocument = dd;
-            } @catch (NSException *exception) {
-                // Ignore
-            }
-        }
-    }*/
+   
     // Prompt the user for the password if we haven't loaded the database yet
     if (!databaseLoaded) {
         if ([[AppSettings sharedInstance] touchIdEnabled]) {
@@ -357,6 +268,7 @@ static DatabaseManager *sharedInstance;
                         NSLog(@"%@",authErrorString);
                 }];
             }else{
+                [[AppSettings sharedInstance] setTouchIdEnabled:NO];
                 [self pwdController:filename animated:animated];
             }
         }else{

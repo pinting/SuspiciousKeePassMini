@@ -19,9 +19,8 @@ import UIKit
 import AudioToolbox
 import LocalAuthentication
 
-class SettingsViewController: UITableViewController, PinViewControllerDelegate {
+class SettingsViewController: UITableViewController {
     @IBOutlet weak var pinEnabledSwitch: UISwitch!
-    @IBOutlet weak var pinLockTimeoutCell: UITableViewCell!
     
     @IBOutlet weak var darkModeEnabledCell: UITableViewCell!
     @IBOutlet weak var darkModeEnabledSwitch: UISwitch!
@@ -55,11 +54,6 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
     
     @IBOutlet weak var versionLabel: UILabel!
     
-    fileprivate let pinLockTimeouts = [NSLocalizedString("Immediately", comment: ""),
-                                   NSLocalizedString("30 Seconds", comment: ""),
-                                   NSLocalizedString("1 Minute", comment: ""),
-                                   NSLocalizedString("2 Minutes", comment: ""),
-                                   NSLocalizedString("5 Minutes", comment: "")]
     
     fileprivate let deleteAllDataAttempts = ["3", "5", "10", "15"]
     
@@ -107,7 +101,7 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
         if let appSettings = appSettings {
             // Initialize all the controls with their settings
             pinEnabledSwitch.isOn = appSettings.pinEnabled()
-            pinLockTimeoutCell.detailTextLabel!.text = pinLockTimeouts[appSettings.pinLockTimeoutIndex()]
+           
             
             darkModeEnabledSwitch.isOn = appSettings.darkEnabled()
             touchIdEnabledSwitch.isOn = touchIdSupported && appSettings.touchIdEnabled()
@@ -151,7 +145,6 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
         let clearClipboardEnabled = appSettings.clearClipboardEnabled()
         
          // Enable/disable the components dependant on settings
-        setCellEnabled(pinLockTimeoutCell, enabled: pinEnabled)
         setCellEnabled(touchIdEnabledCell, enabled: touchIdSupported)
         touchIdEnabledSwitch.isEnabled = touchIdSupported
         setCellEnabled(deleteAllDataEnabledCell, enabled: pinEnabled)
@@ -183,14 +176,7 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let selectionViewController = segue.destination as! SelectionViewController
-        if (segue.identifier == "PIN Lock Timeout") {
-            selectionViewController.items = pinLockTimeouts
-            selectionViewController.selectedIndex = (appSettings?.pinLockTimeoutIndex())!
-            selectionViewController.itemSelected = { (selectedIndex) in
-                self.appSettings?.setPinLockTimeoutIndex(selectedIndex)
-                self.navigationController?.popViewController(animated: true)
-            }
-        } else if (segue.identifier == "Delete All Data Attempts") {
+        if (segue.identifier == "Delete All Data Attempts") {
             selectionViewController.items = deleteAllDataAttempts
             selectionViewController.selectedIndex = (appSettings?.deleteOnFailureAttemptsIndex())!
             selectionViewController.itemSelected = { (selectedIndex) in
@@ -231,23 +217,85 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
     
     @IBAction func pinEnabledChanged(_ sender: UISwitch) {
         if (pinEnabledSwitch.isOn) {
-            let pinViewController = PinViewController()
+            self.appSettings?.setPinEnabled(true)
+           /* let pinViewController = PinViewController()
             pinViewController.titleLabel.text = NSLocalizedString("Set PIN", comment: "")
             pinViewController.delegate = self
             
             // Background is clear for lock screen blur, set to white to set the pin.
             pinViewController.view.backgroundColor = UIColor.white
             
-            present(pinViewController, animated: true, completion: nil)
+            present(pinViewController, animated: true, completion: nil)*/
+            let mode = ALMode.create
+            let appSettings = AppSettings.sharedInstance() as AppSettings
+            var col = UIColor.white
+           
+            if #available(iOS 13.0, *) {
+                if (appSettings.darkEnabled()) {
+                    
+                    col = UIColor.black
+                }
+            }
+            
+            var options = ALOptions()
+                options.image = UIImage(named: "AppIcon")!
+                options.title = "IOSKeepass Pin creation"
+                options.isSensorsEnabled = false
+                options.color = col
+                options.onSuccessfulDismiss = { (mode: ALMode?) in
+                    if let mode = mode {
+                        self.appSettings?.setPinEnabled(true)
+                        self.updateEnabledControls()
+                        print("Password \(String(describing: mode))d successfully")
+                    } else {
+                        print("User Cancelled")
+                    }
+                }
+                options.onFailedAttempt = { (mode: ALMode?) in
+                    print("Failed to \(String(describing: mode))")
+                }
+
+                AppLocker.present(with: mode, and: options, over: self)
+            
         } else {
             self.appSettings?.setPinEnabled(false)
             
             // Delete the PIN from the keychain
-            KeychainUtils.deleteString(forKey: "PIN", andServiceName: KEYCHAIN_PIN_SERVICE)
+            //KeychainUtils.deleteString(forKey: "PIN", andServiceName: KEYCHAIN_PIN_SERVICE)
+            let mode = ALMode.deactive
+            let appSettings = AppSettings.sharedInstance() as AppSettings
+            var col = UIColor.white
+           
+            if #available(iOS 13.0, *) {
+                if (appSettings.darkEnabled()) {
+                    
+                    col = UIColor.black
+                }
+            }
             
+            var options = ALOptions()
+                options.image = UIImage(named: "AppIcon")!
+                options.title = "IOSKeepass Pin deletion"
+                options.isSensorsEnabled = false
+                options.color = col
+                options.onSuccessfulDismiss = { (mode: ALMode?) in
+                    if let mode = mode {
+                        self.appSettings?.setPinEnabled(false)
+                        self.updateEnabledControls()
+                        print("Password \(String(describing: mode))d successfully")
+                    } else {
+                        print("User Cancelled")
+                    }
+                }
+                options.onFailedAttempt = { (mode: ALMode?) in
+                    print("Failed to \(String(describing: mode))")
+                }
+
+                AppLocker.present(with: mode, and: options, over: self)
             // Update which controls are enabled
-            updateEnabledControls()
+            //updateEnabledControls()
         }
+        updateEnabledControls()
     }
     @IBAction func darkEnabledChanged(_ sender: UISwitch) {
         if(darkModeEnabledSwitch.isOn){
@@ -331,7 +379,7 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
     }
     
     // MARK: - Pin view delegate
-    func pinViewController(_ pinViewController: PinViewController!, pinEntered: String!) {
+ /*   func pinViewController(_ pinViewController: PinViewController!, pinEntered: String!) {
         if (tempPin == nil) {
             tempPin = pinEntered
             
@@ -366,5 +414,5 @@ class SettingsViewController: UITableViewController, PinViewControllerDelegate {
             // Clear the PIN entry to let them try again
             pinViewController.clearPin()
         }
-    }
+    }*/
 }

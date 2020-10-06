@@ -25,7 +25,6 @@
 #define EXIT_TIME                  @"exitTime"
 #define PIN_ENABLED                @"pinEnabled"
 #define PIN                        @"PIN"
-#define PIN_LOCK_TIMEOUT           @"pinLockTimeout"
 #define PIN_FAILED_ATTEMPTS        @"pinFailedAttempts"
 #define DARK_ENABLED               @"darkEnabled"
 #define TOUCH_ID_ENABLED           @"touchIdEnabled"
@@ -52,13 +51,6 @@
 
 @implementation AppSettings
 
-static NSInteger pinLockTimeoutValues[] = {
-    0,
-    30,
-    60,
-    120,
-    300
-};
 
 static NSInteger deleteOnFailureAttemptsValues[] = {
     3,
@@ -157,9 +149,6 @@ static AppSettings *sharedInstance;
     BOOL pinEnabled = [userDefaults boolForKey:PIN_ENABLED];
     [self setPinEnabled:pinEnabled];
     
-    // Migrate the pin lock timeout setting
-    NSInteger pinLockTimeoutIndex = [userDefaults boolForKey:PIN_LOCK_TIMEOUT];
-    [self setPinLockTimeoutIndex:pinLockTimeoutIndex];
     
     // Migrate the pin failed attempts setting
     NSInteger pinFailedAttempts = [userDefaults boolForKey:PIN_FAILED_ATTEMPTS];
@@ -175,7 +164,6 @@ static AppSettings *sharedInstance;
     // Remove the old keys
     [userDefaults removeObjectForKey:EXIT_TIME];
     [userDefaults removeObjectForKey:PIN_ENABLED];
-    [userDefaults removeObjectForKey:PIN_LOCK_TIMEOUT];
     [userDefaults removeObjectForKey:PIN_FAILED_ATTEMPTS];
 }
 
@@ -229,23 +217,6 @@ static AppSettings *sharedInstance;
     [KeychainUtils setString:pin forKey:PIN andServiceName:KEYCHAIN_PIN_SERVICE];
 }
 
-- (NSInteger)pinLockTimeout {
-    NSInteger pinLockTimeoutIndex = [self pinLockTimeoutIndex];
-    return pinLockTimeoutValues[pinLockTimeoutIndex];
-}
-
-- (NSInteger)pinLockTimeoutIndex {
-    NSString *string = [KeychainUtils stringForKey:PIN_LOCK_TIMEOUT andServiceName:KEYCHAIN_PIN_SERVICE];
-    if (string == nil) {
-        return 1; // Default Value
-    }
-    return [string intValue];
-}
-
-- (void)setPinLockTimeoutIndex:(NSInteger)pinLockTimeoutIndex {
-    NSNumber *number = [NSNumber numberWithInteger:pinLockTimeoutIndex];
-    [KeychainUtils setString:[number stringValue] forKey:PIN_LOCK_TIMEOUT andServiceName:KEYCHAIN_PIN_SERVICE];
-}
 
 - (NSInteger)pinFailedAttempts {
     NSString *string = [KeychainUtils stringForKey:PIN_FAILED_ATTEMPTS andServiceName:KEYCHAIN_PIN_SERVICE];

@@ -8,7 +8,7 @@
 #import "RandomStream.h"
 #import "KeychainUtils.h"
 #import "PasswordUtils.h"
-#import "PinViewController.h"
+//#import "PinViewController.h"
 #import "ImageFactory.h"
 #import "KdbLib.h"
 #import "Kdb3Writer.h"

@@ -43,6 +43,7 @@ enum {
 }
 
 @property (nonatomic) BOOL isKdb4;
+@property (nonatomic) UIVisualEffectView *blurEffectView;
 @property (nonatomic, readonly) NSMutableArray *editingStringFields;
 @property (nonatomic, readonly) NSArray *entryStringFields;
 @property (nonatomic, readonly) NSArray *currentStringFields;
@@ -158,11 +159,37 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         }
     
     }
+    /*UIBlurEffect *blurEffect = [[UIBlurEffect alloc] init];// (style: UIBlurEffect.Style.light)
+    _blurEffectView = [[UIVisualEffectView alloc] init]; // [effect: blurEffect)
+    _blurEffectView.effect = blurEffect;
+    _blurEffectView.frame = self.view.bounds;
+    _blurEffectView.autoresizingMask = self.view.autoresizingMask;
+    //.flexibleWidth, self.view.autoresizingMask.flexibleHeight];
+    _blurEffectView.tag = 1801;
+    // Add a pasteboard notification listener to support clearing the clipboard*/
+   
+  
+}
+
+- (void)appCameToForeground:(NSNotification *)notification {
+    NSLog(@"EntryViewController enters foreground");
+    
+    
+
+    
+}
+
+- (void)didEnterBackgroundNotification:(NSNotification *)notification {
+    NSLog(@"EntryViewController enters background");
+    if ([[AppSettings sharedInstance] pinEnabled]) {
+        [self.navigationController popViewControllerAnimated:YES];
+
+    }
     
    
     
-    
 }
+
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -173,6 +200,14 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     // Add listeners to the keyboard
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [notificationCenter addObserver:self
+                            selector:@selector(didEnterBackgroundNotification:)
+                               name:UISceneDidEnterBackgroundNotification
+                              object:nil];
+    [notificationCenter addObserver:self
+                            selector:@selector(appCameToForeground:)
+                                name:UISceneWillEnterForegroundNotification
+                              object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -737,6 +772,8 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 #pragma mark - Password Display
 
 - (void)showPasswordPressed {
+    
+
 	MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 
 	hud.mode = MBProgressHUDModeText;
@@ -797,7 +834,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 - (void)qrScanner:(UIViewController * _Nonnull)controller scanDidComplete:(NSString * _Nonnull)result {
     //This comes back
     
-    //
+    //// ->  otpauth://totp/Google%3Afeldkanzel%40gmail.com?secret=g6mt5xyedustibndaao5z5a5rbni33uz&issuer=Google
     
    /* if let token = Token(url: url) {
         print("Password: \(token.currentPassword)")
@@ -809,7 +846,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         [controller dismissViewControllerAnimated:YES completion:^{
 
             NSString *title = NSLocalizedString(@"Not Supported", nil);
-            NSString *message = NSLocalizedString(@"This is an KDB in Verion 1, and has no support for One Time Passwords", nil);
+            NSString *message = NSLocalizedString(@"This is an KDB in Version 1, and has no support for One Time Passwords", nil);
                
                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
                [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];

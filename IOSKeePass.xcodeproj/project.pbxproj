@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,10 +14,13 @@
 		010E0FB324E8353D00DFF443 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 010E0FAC24E8353C00DFF443 /* Token.swift */; };
 		010E0FBF24E843D900DFF443 /* MF_Base32Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 010E0FBE24E843D800DFF443 /* MF_Base32Additions.m */; };
 		010EA826248CE6A50020C492 /* KTouchIDAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EA825248CE6A50020C492 /* KTouchIDAuthentication.m */; };
-		01BED40624F2EB1E00690A12 /* EnterPriseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BED40524F2EB1E00690A12 /* EnterPriseViewController.swift */; };
 		01D8BA0324E9355A00E0E70B /* SwiftQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8BA0124E9355A00E0E70B /* SwiftQRScanner.swift */; };
 		01D8BA0424E9355A00E0E70B /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8BA0224E9355A00E0E70B /* SquareView.swift */; };
 		01D94F0F2455CFB80026F7F1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D94F0D2455CFB70026F7F1 /* MBProgressHUD.m */; };
+		01DB147A25264CC3004451B5 /* AppLocker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01DB147725264CC3004451B5 /* AppLocker.xib */; };
+		01DB147B25264CC3004451B5 /* AppLocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB147825264CC3004451B5 /* AppLocker.swift */; };
+		01DB147C25264CC3004451B5 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB147925264CC3004451B5 /* UI.swift */; };
+		01DB1480252650DC004451B5 /* Valet in Frameworks */ = {isa = PBXBuildFile; productRef = 01DB147F252650DC004451B5 /* Valet */; };
 		01E05D902483C23000429A65 /* DocumentBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E05D8F2483C23000429A65 /* DocumentBrowserViewController.swift */; };
 		4E8C169316B3E871004195A1 /* fr-createdb.html in Resources */ = {isa = PBXBuildFile; fileRef = 4E8C168E16B3E871004195A1 /* fr-createdb.html */; };
 		4E8C169416B3E871004195A1 /* fr-dropbox.html in Resources */ = {isa = PBXBuildFile; fileRef = 4E8C168F16B3E871004195A1 /* fr-dropbox.html */; };
@@ -124,10 +127,6 @@
 		689EA6931D67F94600CF445E /* SelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689EA6901D67F94600CF445E /* SelectionViewController.swift */; };
 		689EA6941D67F94600CF445E /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 689EA6911D67F94600CF445E /* Settings.storyboard */; };
 		689EA6951D67F94600CF445E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 689EA6921D67F94600CF445E /* SettingsViewController.swift */; };
-		689FBE641AB271C6005CB6BD /* KeypadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 689FBE5B1AB271C6005CB6BD /* KeypadButton.m */; };
-		689FBE651AB271C6005CB6BD /* KeypadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 689FBE5D1AB271C6005CB6BD /* KeypadView.m */; };
-		689FBE661AB271C6005CB6BD /* LockScreenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 689FBE5F1AB271C6005CB6BD /* LockScreenManager.m */; };
-		689FBE681AB271C6005CB6BD /* PinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 689FBE631AB271C6005CB6BD /* PinViewController.m */; };
 		689FBE781AB27228005CB6BD /* KeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 689FBE751AB27228005CB6BD /* KeychainUtils.m */; };
 		689FBE791AB27228005CB6BD /* PasswordUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 689FBE771AB27228005CB6BD /* PasswordUtils.m */; };
 		689FBE8F1AB27283005CB6BD /* ImageButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 689FBE7F1AB27283005CB6BD /* ImageButtonCell.m */; };
@@ -167,11 +166,13 @@
 		010E0FBE24E843D800DFF443 /* MF_Base32Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MF_Base32Additions.m; sourceTree = "<group>"; };
 		010EA824248CE6A50020C492 /* KTouchIDAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KTouchIDAuthentication.h; path = MiniKeePass/KTouchIDAuthentication.h; sourceTree = "<group>"; };
 		010EA825248CE6A50020C492 /* KTouchIDAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KTouchIDAuthentication.m; path = MiniKeePass/KTouchIDAuthentication.m; sourceTree = "<group>"; };
-		01BED40524F2EB1E00690A12 /* EnterPriseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPriseViewController.swift; sourceTree = "<group>"; };
 		01D8BA0124E9355A00E0E70B /* SwiftQRScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftQRScanner.swift; sourceTree = "<group>"; };
 		01D8BA0224E9355A00E0E70B /* SquareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
 		01D94F0D2455CFB70026F7F1 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		01D94F0E2455CFB80026F7F1 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		01DB147725264CC3004451B5 /* AppLocker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppLocker.xib; sourceTree = "<group>"; };
+		01DB147825264CC3004451B5 /* AppLocker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLocker.swift; sourceTree = "<group>"; };
+		01DB147925264CC3004451B5 /* UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
 		01E05D8F2483C23000429A65 /* DocumentBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentBrowserViewController.swift; path = MiniKeePass/DocumentBrowserViewController.swift; sourceTree = "<group>"; };
 		4E8C168E16B3E871004195A1 /* fr-createdb.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "fr-createdb.html"; sourceTree = "<group>"; };
 		4E8C168F16B3E871004195A1 /* fr-dropbox.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "fr-dropbox.html"; sourceTree = "<group>"; };
@@ -351,14 +352,6 @@
 		689EA6901D67F94600CF445E /* SelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionViewController.swift; sourceTree = "<group>"; };
 		689EA6911D67F94600CF445E /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		689EA6921D67F94600CF445E /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		689FBE5A1AB271C6005CB6BD /* KeypadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadButton.h; sourceTree = "<group>"; };
-		689FBE5B1AB271C6005CB6BD /* KeypadButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeypadButton.m; sourceTree = "<group>"; };
-		689FBE5C1AB271C6005CB6BD /* KeypadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeypadView.h; sourceTree = "<group>"; };
-		689FBE5D1AB271C6005CB6BD /* KeypadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeypadView.m; sourceTree = "<group>"; };
-		689FBE5E1AB271C6005CB6BD /* LockScreenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LockScreenManager.h; sourceTree = "<group>"; };
-		689FBE5F1AB271C6005CB6BD /* LockScreenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LockScreenManager.m; sourceTree = "<group>"; };
-		689FBE621AB271C6005CB6BD /* PinViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinViewController.h; sourceTree = "<group>"; };
-		689FBE631AB271C6005CB6BD /* PinViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinViewController.m; sourceTree = "<group>"; };
 		689FBE741AB27228005CB6BD /* KeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainUtils.h; sourceTree = "<group>"; };
 		689FBE751AB27228005CB6BD /* KeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainUtils.m; sourceTree = "<group>"; };
 		689FBE761AB27228005CB6BD /* PasswordUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordUtils.h; sourceTree = "<group>"; };
@@ -402,6 +395,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				689D000D13A42765005EBD36 /* AudioToolbox.framework in Frameworks */,
+				01DB1480252650DC004451B5 /* Valet in Frameworks */,
 				689DFFDE13A4273F005EBD36 /* CoreGraphics.framework in Frameworks */,
 				689DFFDC13A4273F005EBD36 /* Foundation.framework in Frameworks */,
 				6802C36F1A425D7300595AC9 /* LocalAuthentication.framework in Frameworks */,
@@ -430,6 +424,24 @@
 			);
 			name = OneTimePassword;
 			path = MiniKeePass/OneTimePassword;
+			sourceTree = "<group>";
+		};
+		01DB147525264CC3004451B5 /* AppLocker */ = {
+			isa = PBXGroup;
+			children = (
+				01DB147625264CC3004451B5 /* AppLocker */,
+				01DB147925264CC3004451B5 /* UI.swift */,
+			);
+			path = AppLocker;
+			sourceTree = "<group>";
+		};
+		01DB147625264CC3004451B5 /* AppLocker */ = {
+			isa = PBXGroup;
+			children = (
+				01DB147725264CC3004451B5 /* AppLocker.xib */,
+				01DB147825264CC3004451B5 /* AppLocker.swift */,
+			);
+			path = AppLocker;
 			sourceTree = "<group>";
 		};
 		4E8C168D16B3E871004195A1 /* fr */ = {
@@ -697,7 +709,6 @@
 		689DFFCA13A4273F005EBD36 = {
 			isa = PBXGroup;
 			children = (
-				01BED40524F2EB1E00690A12 /* EnterPriseViewController.swift */,
 				010E0FA524E8353C00DFF443 /* OneTimePassword */,
 				010EA824248CE6A50020C492 /* KTouchIDAuthentication.h */,
 				010EA825248CE6A50020C492 /* KTouchIDAuthentication.m */,
@@ -742,6 +753,7 @@
 		689DFFDF13A4273F005EBD36 /* MiniKeePass */ = {
 			isa = PBXGroup;
 			children = (
+				01DB147525264CC3004451B5 /* AppLocker */,
 				01D94F0E2455CFB80026F7F1 /* MBProgressHUD.h */,
 				01D94F0D2455CFB70026F7F1 /* MBProgressHUD.m */,
 				689D043213A42C81005EBD36 /* AppDelegate.h */,
@@ -767,7 +779,6 @@
 				689D042913A42C81005EBD36 /* DatabaseManager.m */,
 				68CBC1461A4A0F0E004A3553 /* MiniKeePass.entitlements */,
 				689FBE7B1AB27283005CB6BD /* Cells */,
-				689FBE591AB271C6005CB6BD /* Lock Screen */,
 				68496E701AB34F8800370876 /* Settings */,
 				689DFFE013A4273F005EBD36 /* Supporting Files */,
 				689FBE731AB27228005CB6BD /* Utils */,
@@ -852,21 +863,6 @@
 			path = "Settings View";
 			sourceTree = "<group>";
 		};
-		689FBE591AB271C6005CB6BD /* Lock Screen */ = {
-			isa = PBXGroup;
-			children = (
-				689FBE5A1AB271C6005CB6BD /* KeypadButton.h */,
-				689FBE5B1AB271C6005CB6BD /* KeypadButton.m */,
-				689FBE5C1AB271C6005CB6BD /* KeypadView.h */,
-				689FBE5D1AB271C6005CB6BD /* KeypadView.m */,
-				689FBE5E1AB271C6005CB6BD /* LockScreenManager.h */,
-				689FBE5F1AB271C6005CB6BD /* LockScreenManager.m */,
-				689FBE621AB271C6005CB6BD /* PinViewController.h */,
-				689FBE631AB271C6005CB6BD /* PinViewController.m */,
-			);
-			path = "Lock Screen";
-			sourceTree = "<group>";
-		};
 		689FBE731AB27228005CB6BD /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -931,6 +927,9 @@
 			dependencies = (
 			);
 			name = IOSKeePass;
+			packageProductDependencies = (
+				01DB147F252650DC004451B5 /* Valet */,
+			);
 			productName = MiniKeePass;
 			productReference = 689DFFD513A4273F005EBD36 /* IOSKeePass.app */;
 			productType = "com.apple.product-type.application";
@@ -941,7 +940,7 @@
 		689DFFCC13A4273F005EBD36 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = Self;
 				TargetAttributes = {
 					689DFFD413A4273F005EBD36 = {
@@ -976,6 +975,9 @@
 				Base,
 			);
 			mainGroup = 689DFFCA13A4273F005EBD36;
+			packageReferences = (
+				01DB147E252650DC004451B5 /* XCRemoteSwiftPackageReference "Valet" */,
+			);
 			productRefGroup = 689DFFD613A4273F005EBD36 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -1021,6 +1023,7 @@
 				689D033113A42B63005EBD36 /* style.css in Resources */,
 				68E08310146F24E3001C4EDF /* Localizable.strings in Resources */,
 				68E08316146F2749001C4EDF /* InfoPlist.strings in Resources */,
+				01DB147A25264CC3004451B5 /* AppLocker.xib in Resources */,
 				689EA6881D67F90800CF445E /* PasswordGenerator.storyboard in Resources */,
 				52491D0C14D8F3FB00F8CBC8 /* de-createdb.html in Resources */,
 				689EA6801D67F8D500CF445E /* NewDatabase.storyboard in Resources */,
@@ -1092,9 +1095,7 @@
 				689DFFE713A4273F005EBD36 /* main.m in Sources */,
 				689D03CD13A42B63005EBD36 /* Base64.m in Sources */,
 				689FBE781AB27228005CB6BD /* KeychainUtils.m in Sources */,
-				689FBE681AB271C6005CB6BD /* PinViewController.m in Sources */,
 				689D03D513A42B63005EBD36 /* Kdb.m in Sources */,
-				689FBE661AB271C6005CB6BD /* LockScreenManager.m in Sources */,
 				6895D2F41D68FE00003D8C44 /* CustomFieldViewController.swift in Sources */,
 				689EA6811D67F8D500CF445E /* NewDatabaseViewController.swift in Sources */,
 				689D03D613A42B63005EBD36 /* Kdb3Date.m in Sources */,
@@ -1111,6 +1112,7 @@
 				689D03E013A42B63005EBD36 /* Kdb4Writer.m in Sources */,
 				689D03E113A42B63005EBD36 /* KdbPassword.m in Sources */,
 				689EA6781D67F8B500CF445E /* CheckMark.swift in Sources */,
+				01DB147C25264CC3004451B5 /* UI.swift in Sources */,
 				689D03E213A42B63005EBD36 /* KdbReaderFactory.m in Sources */,
 				689FBE991AB272BD005CB6BD /* ImageFactory.m in Sources */,
 				689EA6931D67F94600CF445E /* SelectionViewController.swift in Sources */,
@@ -1118,6 +1120,7 @@
 				6895D2EA1D68F95D003D8C44 /* RenameItemViewController.swift in Sources */,
 				689D03E313A42B63005EBD36 /* KdbWriterFactory.m in Sources */,
 				689D03E513A42B63005EBD36 /* Salsa20RandomStream.m in Sources */,
+				01DB147B25264CC3004451B5 /* AppLocker.swift in Sources */,
 				689D03E713A42B63005EBD36 /* Utils.m in Sources */,
 				689D03E813A42B63005EBD36 /* UUID.m in Sources */,
 				689EA6951D67F94600CF445E /* SettingsViewController.swift in Sources */,
@@ -1147,7 +1150,6 @@
 				689FBE791AB27228005CB6BD /* PasswordUtils.m in Sources */,
 				689EA6701D67F88500CF445E /* KeyFileViewController.swift in Sources */,
 				01D8BA0324E9355A00E0E70B /* SwiftQRScanner.swift in Sources */,
-				689FBE641AB271C6005CB6BD /* KeypadButton.m in Sources */,
 				689A4D1314046B8200AA897D /* RandomStream.m in Sources */,
 				682D450D1603883900156830 /* AesInputStream.m in Sources */,
 				682D450E1603883900156830 /* AesOutputStream.m in Sources */,
@@ -1161,7 +1163,6 @@
 				010EA826248CE6A50020C492 /* KTouchIDAuthentication.m in Sources */,
 				01D94F0F2455CFB80026F7F1 /* MBProgressHUD.m in Sources */,
 				682D45151603883900156830 /* GZipOutputStream.m in Sources */,
-				01BED40624F2EB1E00690A12 /* EnterPriseViewController.swift in Sources */,
 				682D45161603883900156830 /* HashedInputStream.m in Sources */,
 				682D45171603883900156830 /* HashedOutputStream.m in Sources */,
 				682D45181603883900156830 /* InputStream.m in Sources */,
@@ -1174,7 +1175,6 @@
 				689EA6871D67F90800CF445E /* CharacterSetsViewController.swift in Sources */,
 				680C277616050C7A009403DE /* DDXMLDocument+MKPAdditions.m in Sources */,
 				689FBE8F1AB27283005CB6BD /* ImageButtonCell.m in Sources */,
-				689FBE651AB271C6005CB6BD /* KeypadView.m in Sources */,
 				689EA6891D67F90800CF445E /* PasswordGeneratorViewController.swift in Sources */,
 				689FBE941AB27283005CB6BD /* TextViewCell.m in Sources */,
 				689EA6791D67F8B500CF445E /* ImageCell.swift in Sources */,
@@ -1263,6 +1263,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1289,7 +1290,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				METAL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1319,6 +1320,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1338,11 +1340,12 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				METAL_ENABLE_DEBUG_INFO = NO;
 				PROVISIONING_PROFILE = "4758DC3A-B5A3-47FC-BA60-308A27C51D17";
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1356,12 +1359,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 729;
+				CURRENT_PROJECT_VERSION = 934;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				INFOPLIST_FILE = "MiniKeePass/IOSKeePass-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.8.2;
 				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1384,12 +1390,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 729;
+				CURRENT_PROJECT_VERSION = 934;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				INFOPLIST_FILE = "MiniKeePass/IOSKeePass-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.8.2;
 				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1425,6 +1434,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		01DB147E252650DC004451B5 /* XCRemoteSwiftPackageReference "Valet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Square/Valet";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		01DB147F252650DC004451B5 /* Valet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01DB147E252650DC004451B5 /* XCRemoteSwiftPackageReference "Valet" */;
+			productName = Valet;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 689DFFCC13A4273F005EBD36 /* Project object */;
 }

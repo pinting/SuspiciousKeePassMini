@@ -20,7 +20,7 @@
 #import "AppSettings.h"
 #import "DatabaseManager.h"
 #import "KeychainUtils.h"
-#import "LockScreenManager.h"
+//#import "LockScreenManager.h"
 #import "IOSKeePass-Swift.h"
 #import "KTouchIDAuthentication.h"
 
@@ -46,10 +46,11 @@
                            selector:@selector(handlePasteboardNotification:)
                                name:UIPasteboardChangedNotification
                              object:nil];
-
+    
+   
     [self checkFileProtection];
 
-
+    
     return YES;
 }
 
@@ -201,6 +202,7 @@
         }
     }
 }
+
 
 - (void)handlePasteboardNotification:(NSNotification *)notification {
     // Check if the clipboard has any contents

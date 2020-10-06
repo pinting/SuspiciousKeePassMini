@@ -33,10 +33,6 @@
 - (NSString *)pin;
 - (void)setPin:(NSString *)pin;
 
-- (NSInteger)pinLockTimeout;
-- (NSInteger)pinLockTimeoutIndex;
-- (void)setPinLockTimeoutIndex:(NSInteger)pinLockTimeoutIndex;
-
 - (NSInteger)pinFailedAttempts;
 - (void)setPinFailedAttempts:(NSInteger)pinFailedAttempts;
 

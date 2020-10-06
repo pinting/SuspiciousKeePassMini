@@ -85,6 +85,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             
             groupViewController.parentGroup = document?.kdbTree.root
             groupViewController.title = URL(fileURLWithPath: document!.filename).lastPathComponent
+            groupViewController.tagid = 1;
             
         case "importDatabase"?:
            displayDocumentBrowser()
