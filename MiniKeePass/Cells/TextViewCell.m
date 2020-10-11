@@ -43,4 +43,16 @@
     textView.frame = CGRectMake(rect.origin.x + 3, rect.origin.y + 3, rect.size.width - 6, rect.size.height - 6);
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+
+    UITouch *touch = [[event allTouches] anyObject];
+    if ([textView isFirstResponder] && [touch view] != textView) {
+        [textView resignFirstResponder];
+    }else{
+        [textView becomeFirstResponder];
+    }
+    [super touchesBegan:touches withEvent:event];
+}
+
+
 @end

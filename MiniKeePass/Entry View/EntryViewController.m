@@ -386,6 +386,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         self.navigationItem.leftBarButtonItem = cancelButton;
 
         commentsCell.textView.editable = YES;
+        //commentsCell.textView.userInteractionEnabled = true;
 
         [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationFade];
     } else {
@@ -674,23 +675,25 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     TextFieldCell *cell = (TextFieldCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     
-    if ([cell.title isEqualToString:@"OTP"])
-    {
-        pasteboard.string = [cell.textField.text substringToIndex:7];
-    }else{
-        pasteboard.string = cell.textField.text;
-    }
-    
-    if ([cell.title isEqualToString:@"OTPURL:"])
-    {
-        NSString *title = NSLocalizedString(@"Forbidden", comment: "");
-        NSString *message = NSLocalizedString(@"There is a potential risk to Copy OTP URL to ClipBoard", comment: "");
+    if([cell isKindOfClass:[TextFieldCell class]]){
+        if ([cell.title isEqualToString:@"OTP"])
+        {
+            pasteboard.string = [cell.textField.text substringToIndex:7];
+        }else{
+            pasteboard.string = cell.textField.text;
+        }
         
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
-        [self presentViewController:alertController animated:YES completion:nil];
-        return;
+        if ([cell.title isEqualToString:@"OTPURL:"])
+        {
+            NSString *title = NSLocalizedString(@"Forbidden", comment: "");
+            NSString *message = NSLocalizedString(@"There is a potential risk to Copy OTP URL to ClipBoard", comment: "");
+            
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alertController animated:YES completion:nil];
+            return;
+        }
     }
    
     
@@ -810,20 +813,14 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 
 - (void)openScanBarcodePressed {
     // Display the qr scanner
-  // UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"QRCode" bundle:nil];
-  // UINavigationController *navigationController = [storyboard instantiateInitialViewController];
-    
+  
     //QRCode scanner without Camera switch and Torch
     QRCodeScannerController *scanner = [[QRCodeScannerController alloc] init]; //[QRCodeScannerController: in];
-    //QRCodeScannerController *scanner = (QRCodeScannerController *)navigationController.topViewController;
-    //QRCodeScannerController *scanner =
-    
-    //QRCode with Camera switch and Torch
-    //let scanner = QRCodeScannerController(cameraImage: UIImage(named: "camera"), cancelImage: UIImage(named: "cancel"), flashOnImage: UIImage(named: "flash-on"), flashOffImage: UIImage(named: "flash-off"))
+   
     scanner.delegate = self;
   
     [self presentViewController:scanner animated:YES completion:nil];
-    //self.present(scanner, animated: true, completion: nil)
+   
     
 }
 
