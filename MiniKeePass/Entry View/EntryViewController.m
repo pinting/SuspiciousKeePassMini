@@ -66,6 +66,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"TextFieldCell" bundle:nil] forCellReuseIdentifier:TextFieldCellIdentifier];
     
+    
     titleCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
     titleCell.style = TextFieldCellStyleTitle;
     titleCell.title = NSLocalizedString(@"Title", nil);
@@ -109,6 +110,9 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     commentsCell = [[TextViewCell alloc] init];
     commentsCell.textView.editable = NO;
     commentsCell.textView.text = self.entry.notes;
+    commentsCell.textView.scrollEnabled = TRUE;
+    commentsCell.textView.userInteractionEnabled = TRUE;
+   
     
     otpCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
     otpCell.style = TextFieldCellStyleOTP;
@@ -120,6 +124,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     otpCell.textField.text = @"";
     [otpCell.editAccessoryButton addTarget:self action:@selector(openScanBarcodePressed) forControlEvents:UIControlEventTouchUpInside];
    
+    
     
     _defaultCells = @[titleCell, usernameCell, passwordCell, urlCell,otpCell];
     
@@ -173,10 +178,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 
 - (void)appCameToForeground:(NSNotification *)notification {
     NSLog(@"EntryViewController enters foreground");
-    
-    
-
-    
+     
 }
 
 - (void)didEnterBackgroundNotification:(NSNotification *)notification {
@@ -186,14 +188,13 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 
     }
     
-   
-    
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
+    
     // Hide the toolbar
     [self.navigationController setToolbarHidden:YES animated:animated];
 
@@ -386,6 +387,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         self.navigationItem.leftBarButtonItem = cancelButton;
 
         commentsCell.textView.editable = YES;
+        
         //commentsCell.textView.userInteractionEnabled = true;
 
         [self.tableView insertRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationFade];
@@ -616,12 +618,26 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     switch (indexPath.section) {
         case SECTION_DEFAULT_FIELDS:
         case SECTION_CUSTOM_FIELDS:
             return 40.0f;
         case SECTION_COMMENTS:
-            return 228.0f;
+            return commentsCell.getCellHeight; //2048.0f; //calculate dynamic
+    }
+
+    return 40.0f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAt:(NSIndexPath *)indexPath {
+    
+    switch (indexPath.section) {
+        case SECTION_DEFAULT_FIELDS:
+        case SECTION_CUSTOM_FIELDS:
+            return 40.0f;
+        case SECTION_COMMENTS:
+            return 2048.0f;
     }
 
     return 40.0f;

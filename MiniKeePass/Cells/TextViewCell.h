@@ -19,8 +19,13 @@
 
 @interface TextViewCell : UITableViewCell <UITextViewDelegate> {
 	UITextView *textView;
+    UILongPressGestureRecognizer *longPress;
+   
 }
 
 @property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPress;
+//@property (nonatomic, strong) UIGestureRecognizer *normalPress;
 
+- (CGFloat)getCellHeight;
 @end
