@@ -847,13 +847,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 - (void)qrScanner:(UIViewController * _Nonnull)controller scanDidComplete:(NSString * _Nonnull)result {
     //This comes back
     
-    //// ->  otpauth://totp/Google%3Afeldkanzel%40gmail.com?secret=g6mt5xyedustibndaao5z5a5rbni33uz&issuer=Google
     
-   /* if let token = Token(url: url) {
-        print("Password: \(token.currentPassword)")
-    } else {
-        print("Invalid token URL")
-    }*/
     if (!self.isKdb4) {
         
         [controller dismissViewControllerAnimated:YES completion:^{
