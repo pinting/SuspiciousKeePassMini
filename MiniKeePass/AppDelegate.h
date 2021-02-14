@@ -22,7 +22,11 @@
 
 @property (nonatomic, strong) UIWindow *window;
 @property (nonatomic, strong) DatabaseDocument *databaseDocument;
+@property (nonatomic, retain) NSTimer *silenceTimer;
+@property (nonatomic) UIBackgroundTaskIdentifier bgTask;
 
++ (NSTimer *)silenceTimer;
++ (UIBackgroundTaskIdentifier)bgTask;
 + (AppDelegate *)getDelegate;
 + (NSString *)documentsDirectory;
 + (NSURL *)documentsDirectoryUrl;

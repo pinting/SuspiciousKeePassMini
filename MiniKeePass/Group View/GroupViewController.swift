@@ -50,6 +50,7 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
         case group(KdbGroup)
         case entry(KdbEntry)
     }
+    var bgTask: UIBackgroundTaskIdentifier? = nil
     
     private var selectedItem: KdbItem?
     
@@ -643,13 +644,28 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
         if(tagid == 0){
             return
         }
+        
         let appSettings = AppSettings.sharedInstance() as AppSettings
+        
+        print("GroupviewController enters background")
+        
+       
+        
+        
         if (appSettings.pinEnabled()) {
-            print("IOSKEEPass enters background")
+            
             view.addSubview(blurEffectView!)
         }
         
         
+    }
+    
+    @objc func startShutdown(){
+        print("GroupviewController Closedatabase time reached");
+        
+        // Get the application delegate
+        let appDelegate = AppDelegate.getDelegate()
+        appDelegate?.closeDatabase()
     }
 
     @objc func appCameToForeground() {

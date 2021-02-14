@@ -183,6 +183,19 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 
 - (void)didEnterBackgroundNotification:(NSNotification *)notification {
     NSLog(@"EntryViewController enters background");
+    
+    /*if ([[AppSettings sharedInstance] closeEnabled]) {
+        //Get Time
+        
+        UIApplication  *app = [UIApplication sharedApplication];
+        self.bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+            [app endBackgroundTask:self.bgTask];
+        }];
+        NSLog(@"Closed enabled timout:30sec");
+        self.silenceTimer = [NSTimer scheduledTimerWithTimeInterval:[[AppSettings sharedInstance] closeTimeout] target:self
+        selector:@selector(startShutdown) userInfo:nil repeats:YES];
+    }*/
+    
     if ([[AppSettings sharedInstance] pinEnabled]) {
         [self.navigationController popViewControllerAnimated:YES];
 

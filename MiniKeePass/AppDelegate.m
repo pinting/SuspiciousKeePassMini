@@ -59,6 +59,29 @@
     [self checkFileProtection];
 }
 
+-(void)applicationDidEnterBackground:(UIApplication *)application {
+        
+        if ([[AppSettings sharedInstance] closeEnabled]) {
+            //Get Time
+            
+            UIApplication  *app = [UIApplication sharedApplication];
+            self.bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+                [app endBackgroundTask:self.bgTask];
+            }];
+            NSLog(@"Closed enabled timout:30sec");
+            self.silenceTimer = [NSTimer scheduledTimerWithTimeInterval:[[AppSettings sharedInstance] closeTimeout] target:self
+            selector:@selector(startShutdown) userInfo:nil repeats:YES];
+        }
+}
+
+- (void)startShutdown{
+    NSLog(@"App Closedatabase time reached");
+    // Get the application delegate
+    AppDelegate *appDelegate = [AppDelegate getDelegate];
+    [appDelegate closeDatabase];
+    [self.silenceTimer invalidate];
+}
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     [self importUrl:url];
 
