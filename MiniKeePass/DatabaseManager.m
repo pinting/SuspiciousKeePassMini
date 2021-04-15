@@ -1,6 +1,6 @@
 /*
  * Copyright 2011-2012 Jason Rush and John Flanagan. All rights reserved.
- *
+ * Mdified by Frank Hausmann 2020-2021
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -21,8 +21,11 @@
 #import "AppSettings.h"
 #import "IOSKeePass-Swift.h"
 #import "KTouchIDAuthentication.h"
+
+#ifdef USE_KDB
 #import "Kdb3Writer.h"
 #import "Kdb4Writer.h"
+#endif
 
 @implementation DatabaseManager
 
@@ -132,6 +135,7 @@ static DatabaseManager *sharedInstance;
 
 - (void)newDatabase:(NSURL *)url password:(NSString *)password version:(NSInteger)version {
     // Create the KdbWriter for the requested version
+#ifdef USE_KDB
     id<KdbWriter> writer;
     if (version == 1) {
         writer = [[Kdb3Writer alloc] init];
@@ -146,7 +150,41 @@ static DatabaseManager *sharedInstance;
     
     // Create the new database
     [writer newFile:url.path withPassword:kdbPassword];
+#else
+    NSError __autoreleasing *error = nil;
+    KPKFileVersion kdbversion;
+   
+    switch(version){
+        case 1:
+            kdbversion.format = KPKDatabaseFormatKdb;
+            kdbversion.version = kKPKKdbFileVersion;
+            break;
+        case 2:
+            kdbversion.format = KPKDatabaseFormatKdbx;
+            kdbversion.version = kKPKKdbxFileVersion3;
+
+            break;
+        case 3:
+            kdbversion.format = KPKDatabaseFormatKdbx;
+            kdbversion.version = kKPKKdbxFileVersion4;
+
+            break;
+            
+    }
     
+    KPKCompositeKey *key = [[KPKCompositeKey alloc] initWithKeys:@[[KPKKey keyWithPassword:password]]];
+    
+    //KPKTree *tree = [[KPKTree alloc] initWithContentsOfUrl:url key:key error:&error];
+    //tree = [tree initWithTemplateContents];
+    KPKTree *tree = [[KPKTree alloc]initWithTemplateContents];
+    NSData *data = [tree encryptWithKey:key format:kdbversion.format error:&error];
+    if(data == nil)
+        NSLog(@"Error cant get Data %@",error);
+    else
+        NSLog(@"Saved to %@", url.path);
+    [data writeToFile:url.path atomically:YES];
+    
+#endif
     // Store the password in the keychain
     if ([[AppSettings sharedInstance] rememberPasswordsEnabled]) {
         NSString *filename = url.lastPathComponent;
@@ -347,8 +385,9 @@ static DatabaseManager *sharedInstance;
     } @catch (NSException *exception) {
         NSLog(@"%@", exception);
         
-        NSString *title = NSLocalizedString(@"Error", comment: "");
-        NSString *message = NSLocalizedString(@"Could not open database", comment: "");
+        //NSString *title = NSLocalizedString(@"Error", comment: "");
+        NSString *title = NSLocalizedString(@"Could not open database", comment: "");
+        NSString *message = [[NSString alloc] initWithFormat:@"%@",exception];
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];

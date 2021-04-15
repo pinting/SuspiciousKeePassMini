@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="sHd-VR-6rV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="sHd-VR-6rV">
     <device id="retina4_7" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -49,7 +50,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="663-pU-YMA">
-                                                    <rect key="frame" x="16" y="12.5" width="343" height="19"/>
+                                                    <rect key="frame" x="16" y="13.5" width="343" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
                                                     <connections>
@@ -72,7 +73,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1zc-53-WNl">
-                                                    <rect key="frame" x="16" y="12.5" width="343" height="19"/>
+                                                    <rect key="frame" x="16" y="13.5" width="343" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                                     <connections>
@@ -97,17 +98,17 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xa3-Wq-8Wl">
                                                     <rect key="frame" x="16" y="12" width="235" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="DbA-51-Ekb">
-                                                    <rect key="frame" x="259" y="6.5" width="100" height="32"/>
+                                                    <rect key="frame" x="152" y="7" width="200" height="32"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="1Rx-lX-jEL"/>
+                                                        <constraint firstAttribute="width" constant="200" id="1Rx-lX-jEL"/>
                                                     </constraints>
                                                     <segments>
-                                                        <segment title="1.x"/>
-                                                        <segment title="2.x"/>
+                                                        <segment title="KDB"/>
+                                                        <segment title="KDBx3"/>
+                                                        <segment title="KDBx4"/>
                                                     </segments>
                                                 </segmentedControl>
                                             </subviews>
@@ -115,8 +116,8 @@
                                                 <constraint firstItem="DbA-51-Ekb" firstAttribute="centerY" secondItem="9l2-ej-aMf" secondAttribute="centerY" id="MIV-ZJ-dVa"/>
                                                 <constraint firstItem="Xa3-Wq-8Wl" firstAttribute="centerY" secondItem="9l2-ej-aMf" secondAttribute="centerY" id="P5D-q7-HPf"/>
                                                 <constraint firstItem="Xa3-Wq-8Wl" firstAttribute="leading" secondItem="9l2-ej-aMf" secondAttribute="leadingMargin" id="WNg-PO-qcW"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="DbA-51-Ekb" secondAttribute="trailing" id="s42-Mc-07v"/>
-                                                <constraint firstItem="DbA-51-Ekb" firstAttribute="leading" secondItem="Xa3-Wq-8Wl" secondAttribute="trailing" constant="8" id="sXA-Yg-fLf"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="DbA-51-Ekb" secondAttribute="trailing" constant="7" id="s42-Mc-07v"/>
+                                                <constraint firstItem="DbA-51-Ekb" firstAttribute="leading" secondItem="Xa3-Wq-8Wl" secondAttribute="trailing" constant="-99" id="sXA-Yg-fLf"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -149,7 +150,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="da7-wm-7Ed" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="101" y="264"/>
+            <point key="canvasLocation" x="100" y="263.11844077961024"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xoJ-sG-eF5">

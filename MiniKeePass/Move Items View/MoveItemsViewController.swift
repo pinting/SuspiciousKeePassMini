@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Jason Rush and John Flanagan. All rights reserved.
+ * Mdified by Frank Hausmann 2020-2021
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +19,7 @@
 import UIKit
 
 struct GroupModel {
-    var group: KdbGroup
+    var group: KPKGroup
     var name: String
     var indent: Int
     var selectable: Bool
@@ -32,7 +33,7 @@ class MoveItemsViewController: UITableViewController {
     fileprivate var groupModels: [GroupModel] = []
 
     var itemsToMove: [AnyObject] = []
-    var groupSelected: ((_ moveItemsViewController: MoveItemsViewController, _ group: KdbGroup) -> Void)?
+    var groupSelected: ((_ moveItemsViewController: MoveItemsViewController, _ group: KPKGroup) -> Void)?
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -51,21 +52,21 @@ class MoveItemsViewController: UITableViewController {
         addGroup(rootGroup!, name: url.lastPathComponent, indent: 0)
     }
 
-    func isSelectable(_ group: KdbGroup) -> Bool {
+    func isSelectable(_ group: KPKGroup) -> Bool {
         var containsEntry = false
 
         // Check if group is a subgroup of any groups to be moved
         for obj in itemsToMove {
-            if (obj is KdbGroup) {
-                let movingGroup = obj as! KdbGroup
+            if (obj is KPKGroup) {
+                let movingGroup = obj as! KPKGroup
 
                 if (movingGroup.parent == group || movingGroup.containsGroup(group)) {
                     return false
                 }
-            } else if (obj is KdbEntry) {
+            } else if (obj is KPKEntry) {
                 containsEntry = true
 
-                let movingEntry = obj as! KdbEntry
+                let movingEntry = obj as! KPKEntry
                 if (movingEntry.parent == group) {
                     return false
                 }
@@ -75,14 +76,14 @@ class MoveItemsViewController: UITableViewController {
         // Check if trying to move entries to top level in 1.x database
         let appDelegate = AppDelegate.getDelegate()
         let tree = appDelegate?.databaseDocument.kdbTree
-        if (containsEntry && group == tree?.root && tree is Kdb3Tree) {
+        if (containsEntry && group == tree?.root && tree != nil) {
             return false
         }
 
         return true
     }
 
-    func addGroup(_ group: KdbGroup, name: String, indent: Int) {
+    func addGroup(_ group: KPKGroup, name: String, indent: Int) {
         // Check if this group is selectable
         let selectable = isSelectable(group)
 
@@ -91,12 +92,12 @@ class MoveItemsViewController: UITableViewController {
 
         // Sort all the sub-groups
         let subGroups = group.groups.sorted {
-            ($0 as AnyObject).name.localizedCaseInsensitiveCompare(($1 as AnyObject).name) == ComparisonResult.orderedAscending
-        } as! [KdbGroup]
+            ($0 as AnyObject).title.localizedCaseInsensitiveCompare(($1 as AnyObject).title) == ComparisonResult.orderedAscending
+        } 
 
         // Add sub-groups
         for subGroup in subGroups {
-            addGroup(subGroup, name: subGroup.name, indent: indent + 1)
+            addGroup(subGroup, name: subGroup.title, indent: indent + 1)
         }
     }
 
@@ -136,12 +137,15 @@ class MoveItemsViewController: UITableViewController {
 
         // Move all the items
         for obj in itemsToMove {
-            if (obj is KdbGroup) {
-                let movingGroup = obj as! KdbGroup
-                movingGroup.parent.moveGroup(movingGroup, to:selectedGroup)
-            } else if (obj is KdbEntry) {
-                let movingEntry = obj as! KdbEntry
-                movingEntry.parent.moveEntry(movingEntry, to:selectedGroup)
+            if (obj is KPKGroup) {
+                let movingGroup = obj as! KPKGroup
+                //movingGroup.parent.move(to: selectedGroup) Error
+                movingGroup.move(to: selectedGroup)
+            } else if (obj is KPKEntry) {
+                let movingEntry = obj as! KPKEntry
+                //movingEntry.parent.move( to:selectedGroup) Error
+                movingEntry.move( to:selectedGroup)
+                
             }
         }
 

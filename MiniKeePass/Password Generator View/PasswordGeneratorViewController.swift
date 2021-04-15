@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Jason Rush and John Flanagan. All rights reserved.
+ * Mdified by Frank Hausmann 2020-2021
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,11 +96,11 @@ class PasswordGeneratorViewController: UITableViewController, UIPickerViewDataSo
             return
         }
         
-        let cryptoRandomStream = Salsa20RandomStream()
+        let cryptoRandomStream = KPKSalsa20RandomStream()
 
         var password = ""
         for _ in 1...length {
-            let idx = Int((cryptoRandomStream?.getInt())! % UInt32(charSet.count))
+            let idx = Int((cryptoRandomStream.getInt()) % UInt32(charSet.count))
             password.append(charSet[charSet.index(charSet.startIndex, offsetBy: idx)])
         }
     

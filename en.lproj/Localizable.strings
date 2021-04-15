@@ -35,7 +35,7 @@
 "Password" = "Password";
 "Confirm Password" = "Confirm Password";
 "URL" = "URL";
-"Comments" = "Comments";
+"Comments" = "Comments (return for more)";
 "OK" = "OK";
 "Cancel" = "Cancel";
 "Add" = "Add";
@@ -84,6 +84,7 @@
 "Tap the + button to add a new KeePass file." = "Tap the + button to add a new KeePass file.";
 "No password or keyfile specified" = "No password or keyfile specified";
 "Error Checking PIN" = "Error Checking PIN";
+"Wrong Databae Data"= "Wrong Databae Data";
 
 // Settings Page
 "Settings" = "Settings";

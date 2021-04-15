@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Jason Rush and John Flanagan. All rights reserved.
+ * Mdified by Frank Hausmann 2020-2021
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +28,7 @@ class WebBrowserViewController: UIViewController, WKNavigationDelegate {
     fileprivate var webView: WKWebView!
     
     @objc var url: URL?
-    @objc var entry: KdbEntry?
+    @objc var entry: KPKEntry?
 
     override func loadView() {
         super.loadView()
@@ -112,11 +113,11 @@ class WebBrowserViewController: UIViewController, WKNavigationDelegate {
     }
     
     @IBAction func pasteUsernamePressed(_ sender: UIBarButtonItem) {
-        autotypeString(entry!.username())
+        autotypeString(entry!.username)
     }
     
     @IBAction func pastePasswordPressed(_ sender: UIBarButtonItem) {
-        autotypeString(entry!.password())
+        autotypeString(entry!.password)
     }
     
     @IBAction func backPressed(_ sender: UIBarButtonItem) {

@@ -1,5 +1,6 @@
 /*
  * Copyright 2011-2013 Jason Rush and John Flanagan. All rights reserved.
+ * Mdified by Frank Hausmann 2020-2021
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +17,7 @@
  */
 
 #import "EntryViewController.h"
-#import "Kdb4Node.h"
+//#import "Kdb4Node.h"
 #import "AppSettings.h"
 #import "ImageFactory.h"
 #import "IOSKeePass-Swift.h"
@@ -75,7 +76,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     titleCell.textField.enabled = NO;
     titleCell.textField.text = self.entry.title;
     [titleCell.editAccessoryButton addTarget:self action:@selector(imageButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self setSelectedImageIndex:self.entry.image];
+    [self setSelectedImageIndex:self.entry.iconId];
     
     usernameCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
     usernameCell.style = TextFieldCellStylePlain;
@@ -131,13 +132,13 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     _editingStringFields = [NSMutableArray array];
     
     
-    Kdb4Entry *kdb4Entry = (Kdb4Entry *)self.entry;
+    KPKEntry *kdb4Entry = (KPKEntry *)self.entry;
     
     if (self.isKdb4) {
            
-        NSInteger count = kdb4Entry.stringFields.count;
+        NSInteger count = kdb4Entry.attributes.count;
         for (NSInteger i = 0; i < count; i++) {
-            StringField *sf = kdb4Entry.stringFields[i];
+            KPKAttribute *sf = kdb4Entry.attributes[i];
             if ([sf.key isEqualToString:@"OTPURL:"])
             {
                 
@@ -283,14 +284,14 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
       
     
 }
-- (void)setEntry:(KdbEntry *)e {
+- (void)setEntry:(KPKEntry *)e {
     _entry = e;
-    self.isKdb4 = [self.entry isKindOfClass:[Kdb4Entry class]];
+    self.isKdb4 = [self.entry isKindOfClass:[KPKEntry class]];
 
     // Update the fields
     self.title = self.entry.title;
     titleCell.textField.text = self.entry.title;
-    [self setSelectedImageIndex:self.entry.image];
+    [self setSelectedImageIndex:self.entry.iconId];
     usernameCell.textField.text = self.entry.username;
     passwordCell.textField.text = self.entry.password;
     urlCell.textField.text = self.entry.url;
@@ -320,14 +321,15 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     if (self.editing) {
         return self.editingStringFields;
     } else {
-        return ((Kdb4Entry *)self.entry).stringFields;
+        return ((KPKEntry *)self.entry).customAttributes;
+        //((Kdb4Entry *)self.entry).stringFields;
     }
 }
 
 - (NSArray *)entryStringFields {
     if (self.isKdb4) {
-        Kdb4Entry *entry = (Kdb4Entry *)self.entry;
-        return entry.stringFields;
+        KPKEntry *entry = (KPKEntry *)self.entry;
+        return entry.customAttributes;
     } else {
         return nil;
     }
@@ -352,12 +354,12 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
             [self setEntry:self.entry];
         } else {
             self.entry.title = titleCell.textField.text;
-            self.entry.image = self.selectedImageIndex;
+            self.entry.iconId = self.selectedImageIndex;
             self.entry.username = usernameCell.textField.text;
             self.entry.password = passwordCell.textField.text;
             self.entry.url = urlCell.textField.text;
             self.entry.notes = commentsCell.textView.text;
-            self.entry.lastModificationTime = [NSDate date];
+            self.entry.timeInfo.modificationDate  = [NSDate date];
 
             if (self.isKdb4) {
                 // Ensure any textfield currently being edited is saved
@@ -368,9 +370,21 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                     [cell.textField resignFirstResponder];
                 }
 
-                Kdb4Entry *kdb4Entry = (Kdb4Entry *)self.entry;
-                [kdb4Entry.stringFields removeAllObjects];
-                [kdb4Entry.stringFields addObjectsFromArray:self.editingStringFields];
+                KPKEntry *kdb4Entry = (KPKEntry *)self.entry;
+                for (id attr in kdb4Entry.customAttributes) {
+                    // do something with object
+                    [self.entry removeCustomAttribute:attr];
+                }
+                
+                for (id newattr in self.editingStringFields) {
+                    // do something with object
+                    [self.entry addCustomAttribute:newattr];
+                }
+                
+                //Kdb4Entry *kdb4Entry = (Kdb4Entry *)self.entry;
+                //[kdb4Entry.stringFields removeAllObjects];
+                //kdb4Entry.customAttributes = [[NSArray alloc]init];
+                //[kdb4Entry.customAttributes addObjectsFromArray:self.editingStringFields];
             }
 
             // Save the database document
@@ -430,7 +444,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         }
         case SECTION_CUSTOM_FIELDS: {
             if (indexPath.row < self.editingStringFields.count) {
-                StringField *stringField = [self.editingStringFields objectAtIndex:indexPath.row];
+                KPKAttribute *stringField = [self.editingStringFields objectAtIndex:indexPath.row];
                 stringField.value = textFieldCell.textField.text;
             }
             break;
@@ -540,7 +554,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                     cell.textField.returnKeyType = UIReturnKeyDone;
                 }
 
-                StringField *stringField = [self.currentStringFields objectAtIndex:indexPath.row];
+                KPKAttribute *stringField = [self.currentStringFields objectAtIndex:indexPath.row];
 
                 cell.style = TextFieldCellStylePlain;
                 cell.title = stringField.key;
@@ -596,7 +610,8 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 }
 
 - (void)addPressed {
-    StringField *stringField = [StringField stringFieldWithKey:@"" andValue:@""];
+    KPKAttribute *stringField = [[KPKAttribute alloc] initWithKey:@"" value:@""];
+    //KPKAttribute *stringField = [KPKAttribute initWithKey:@"" value:@""];
     
     // Display the Rename Database view
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CustomField" bundle:nil];
@@ -755,7 +770,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 #pragma mark - StringField related
 
 - (void)editStringField:(NSIndexPath *)indexPath {
-    StringField *stringField = [self.editingStringFields objectAtIndex:indexPath.row];
+    KPKAttribute *stringField = [self.editingStringFields objectAtIndex:indexPath.row];
     
     // Display the custom field editing view
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"CustomField" bundle:nil];
@@ -891,9 +906,9 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                    }];
             return;
         }
-         StringField *issuerField = [[StringField alloc] initWithKey:@"OTP Aussteller:" andValue:tok.issuer andProtected:NO];
-         StringField *nameField = [[StringField alloc] initWithKey:@"Name:" andValue:tok.name andProtected:NO];
-         StringField *secretField = [[StringField alloc] initWithKey:@"OTPURL:" andValue:result andProtected:YES];
+         KPKAttribute *issuerField = [[KPKAttribute alloc] initWithKey:@"OTP Aussteller:" value:tok.issuer isProtected:NO];
+         KPKAttribute *nameField = [[KPKAttribute alloc] initWithKey:@"Name:" value:tok.name isProtected:NO];
+         KPKAttribute *secretField = [[KPKAttribute alloc] initWithKey:@"OTPURL:" value:result isProtected:YES];
         
          //[self.editingStringFields addObject:nameField];
          //[self.editingStringFields addObject:secretField];

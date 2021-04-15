@@ -1,5 +1,6 @@
 /*
  * Copyright 2011-2012 Jason Rush and John Flanagan. All rights reserved.
+ * Mdified by Frank Hausmann 2020-2021
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +17,17 @@
  */
 
 #import <Foundation/Foundation.h>
+
+#ifdef USE_KDB
 #import "KdbLib.h"
+#else
+#import "KeePassKit.h"
+#endif
 
 @interface DatabaseDocument : NSObject
 
-@property (nonatomic, strong) KdbTree *kdbTree;
+//@property (nonatomic, strong) KdbTree *kdbTree;
+@property (nonatomic, strong) KPKTree *kdbTree;
 @property (nonatomic, copy) NSString *filename;
 
 /// Create a KeePass Database
@@ -36,6 +43,6 @@
 /// Search a KeePass group for the supplied text
 /// @param searchText The text for which you're searching
 /// @param results A Dictionary to store the matching results
-+ (void)searchGroup:(KdbGroup *)group searchText:(NSString *)searchText results:(NSMutableArray *)results;
++ (void)searchGroup:(KPKGroup *)group searchText:(NSString *)searchText results:(NSMutableArray *)results;
 
 @end

@@ -27,7 +27,8 @@
 #import "UUID.h"
 
 #define VERSION_CRITICAL_MAX_32 0x00030000
-#define VERSION_CRITICAL_MASK 0xFFFF0000
+#define VERSION_CRITICAL_MAX_V4_32 0x00400000
+#define VERSION_CRITICAL_MASK 0xFFFF0000l
 
 @interface Kdb4Reader (PrivateMethods)
 - (void)readHeader:(InputStream*)inputStream;
@@ -82,7 +83,10 @@
 }
 
 - (void)readHeader:inputStream {
+   
     uint8_t buffer[16];
+    uint8_t inner_buffer[1024];
+    
 
     uint32_t sig1 = [inputStream readInt32];
     sig1 = CFSwapInt32LittleToHost(sig1);
@@ -96,16 +100,29 @@
     uint32_t version = [inputStream readInt32];
     version = CFSwapInt32LittleToHost(version);
 
-    if ((version & VERSION_CRITICAL_MASK) > (VERSION_CRITICAL_MAX_32 & VERSION_CRITICAL_MASK)) {
-        @throw [NSException exceptionWithName:@"IOException" reason:@"Unsupported version" userInfo:nil];
+    if ((version & VERSION_CRITICAL_MASK) > (VERSION_CRITICAL_MAX_V4_32 & VERSION_CRITICAL_MASK)) {
+       @throw [NSException exceptionWithName:@"IOException" reason:@"Unsupported version" userInfo:nil];
     }
-
+    
     BOOL eoh = NO;
+    
     while (!eoh) {
         uint8_t fieldType = [inputStream readInt8];
 
         uint16_t fieldSize = [inputStream readInt16];
         fieldSize = CFSwapInt16LittleToHost(fieldSize);
+        
+        if(fieldSize>32){
+            //[inputStream read:inner_buffer length:fieldSize];
+            //Seems to be an inner header
+            
+            //NSData *dt = [inputStream readData:fieldSize];
+           
+            
+            
+            NSLog(@"Seems to be an Inner header");
+            continue;
+        }
         
         switch (fieldType) {
             case HEADER_EOH:
@@ -124,6 +141,7 @@
                 }
                 [inputStream read:buffer length:fieldSize];
                 cipherUuid = [[UUID alloc] initWithBytes:buffer];
+                NSLog(@"UUID:%@",cipherUuid.getData);
                 break;
             
             case HEADER_MASTERSEED:
@@ -175,7 +193,10 @@
                 break;
             
             default:
+                //[inputStream read:inner_buffer length:fieldSize];
+                //NSLog(@"Unknown FieldType %d valid buffer:%s",fieldType,buffer);
                 @throw [NSException exceptionWithName:@"InvalidHeader" reason:@"InvalidField" userInfo:nil];
+                break;
         }
     }
 }

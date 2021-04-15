@@ -16,15 +16,21 @@
  */
 
 #import <UIKit/UIKit.h>
+
+#ifdef USE_KDB
 #import "Kdb.h"
+#else
+#import "KeePassKit.h"
+#endif
+
 
 @interface ImageFactory : NSObject
 
 + (ImageFactory *)sharedInstance;
 
 - (NSArray *)images;
-- (UIImage *)imageForGroup:(KdbGroup *)group;
-- (UIImage *)imageForEntry:(KdbEntry *)entry;
+- (UIImage *)imageForGroup:(KPKGroup *)group;
+- (UIImage *)imageForEntry:(KPKEntry *)entry;
 - (UIImage *)imageForIndex:(NSInteger)index;
 
 @end

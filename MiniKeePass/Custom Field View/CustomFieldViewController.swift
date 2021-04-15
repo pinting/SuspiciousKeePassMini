@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Jason Rush and John Flanagan. All rights reserved.
+ * Mdified by Frank Hausmann 2020-2021
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +23,7 @@ class CustomFieldViewController: UITableViewController {
     @IBOutlet weak var valueTextField: UITextField!
     @IBOutlet weak var inMemoryProtectionSwitch: UISwitch!
     
-    @objc var stringField: StringField?
+    @objc var stringField: KPKAttribute?
 
     @objc var donePressed: ((_ customFieldViewController: CustomFieldViewController) -> Void)?
     @objc var cancelPressed: ((_ customFieldViewController: CustomFieldViewController) -> Void)?
@@ -36,7 +37,7 @@ class CustomFieldViewController: UITableViewController {
         
         nameTextField.text = stringField.key
         valueTextField.text = stringField.value
-        inMemoryProtectionSwitch.isOn = stringField.protected
+        inMemoryProtectionSwitch.isOn = stringField.protect
     }
     
     // MARK: - UITextFieldDelegate
@@ -61,7 +62,7 @@ class CustomFieldViewController: UITableViewController {
         if let stringField = stringField {
             stringField.key = nameTextField.text
             stringField.value = valueTextField.text
-            stringField.protected = inMemoryProtectionSwitch.isOn
+            stringField.protect = inMemoryProtectionSwitch.isOn
         }
 
         donePressed?(self)

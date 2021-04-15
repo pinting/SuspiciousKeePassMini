@@ -4,6 +4,7 @@
 //
 //  Created by Rohit Nisal on 7/21/16.
 //  Copyright © 2016 Rohit Nisal. All rights reserved.
+//* Mdified by Frank Hausmann 2020-2021
 //
 
 #import "KTouchIDAuthentication.h"

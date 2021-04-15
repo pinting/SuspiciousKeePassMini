@@ -1,5 +1,6 @@
 /*
  * Copyright 2011-2013 Jason Rush and John Flanagan. All rights reserved.
+ * Mdified by Frank Hausmann 2020-2021
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,13 +20,19 @@
 
 #import "TextFieldCell.h"
 #import "TextViewCell.h"
+
+#ifdef USE_KDB
 #import "KdbLib.h"
+#else
+#import"KeePassKit.h"
+#endif
+
 #import "AppDelegate.h"
 
 @interface EntryViewController : UITableViewController <UIGestureRecognizerDelegate, TextFieldCellDelegate>
 
 @property (nonatomic, assign) NSUInteger selectedImageIndex;
-@property (nonatomic, strong) KdbEntry *entry;
+@property (nonatomic, strong) KPKEntry *entry;
 @property (nonatomic) BOOL isNewEntry;
 
 

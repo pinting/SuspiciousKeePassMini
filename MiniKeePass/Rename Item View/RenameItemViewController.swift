@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Jason Rush and John Flanagan. All rights reserved.
+ * Mdified by Frank Hausmann 2020-2021
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +25,8 @@ class RenameItemViewController: UITableViewController {
     var donePressed: ((_ renameItemViewController: RenameItemViewController) -> Void)?
     var cancelPressed: ((_ renameItemViewController: RenameItemViewController) -> Void)?
 
-    var group: KdbGroup?
-    var entry: KdbEntry?
+    var group: KPKGroup?
+    var entry: KPKEntry?
     
     fileprivate var selectedImageIndex: Int = -1 {
         didSet {
@@ -38,11 +39,11 @@ class RenameItemViewController: UITableViewController {
         super.viewDidLoad()
 
         if (group != nil) {
-            nameTextField.text = group!.name
-            selectedImageIndex = group!.image
+            nameTextField.text = group!.title
+            selectedImageIndex = group!.iconId
         } else if (entry != nil) {
-            nameTextField.text = entry!.title()
-            selectedImageIndex = entry!.image
+            nameTextField.text = entry!.title
+            selectedImageIndex = entry!.iconId
         }
     }
     
@@ -75,13 +76,13 @@ class RenameItemViewController: UITableViewController {
 
         // Update the group/entry
         if group != nil {
-            group!.name = name
-            group!.image = selectedImageIndex
-            group!.lastModificationTime = Date()
+            group!.title = name
+            group!.iconId = selectedImageIndex
+            group!.timeInfo.modificationDate = Date()
         } else if entry != nil {
-            entry!.setTitle(name)
-            entry!.image = selectedImageIndex
-            entry!.lastModificationTime = Date()
+            entry!.title = name
+            entry!.iconId = selectedImageIndex
+            entry!.timeInfo.modificationDate  = Date()
         }
 
         // Save the database

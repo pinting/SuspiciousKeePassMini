@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Jason Rush and John Flanagan. All rights reserved.
+ * Mdified by Frank Hausmann 2020-2021
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,21 +44,21 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
 
     private var documentInteractionController: UIDocumentInteractionController?
     private var blurEffectView: UIVisualEffectView?
-    private var groups: [KdbGroup]!
-    private var entries: [KdbEntry]!
+    private var groups: [KPKGroup]!
+    private var entries: [KPKEntry]!
 
     private enum KdbItem {
-        case group(KdbGroup)
-        case entry(KdbEntry)
+        case group(KPKGroup)
+        case entry(KPKEntry)
     }
     var bgTask: UIBackgroundTaskIdentifier? = nil
     
     private var selectedItem: KdbItem?
     
     private var searchController: UISearchController?
-    private var searchResults: [KdbEntry] = []
+    private var searchResults: [KPKEntry] = []
 
-    var parentGroup: KdbGroup! {
+    var parentGroup: KPKGroup! {
         didSet {
             updateViewModel()
         }
@@ -176,10 +177,10 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             let group = groups[indexPath.row]
             selectedItem = KdbItem.group(group)
             destination.parentGroup = group
-            destination.title = group.name
+            destination.title = group.title
             tagid = 0
             destination.tagid = 1;
-            if(group.name == "UniCom Enterprise"){
+            if(group.title == "UniCom Enterprise"){
                 print("UniCom Enterprise calling")
                 
             }
@@ -188,7 +189,7 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             let entry = entries[indexPath.row]
             selectedItem = KdbItem.entry(entry)
             destination.entry = entry
-            destination.title = entry.title()
+            destination.title = entry.title
             tagid = 0;
         }
     }
@@ -198,16 +199,16 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             groups = []
             entries = searchResults
         } else {
-            groups = parentGroup.groups as! [KdbGroup]
-            entries = parentGroup.entries as! [KdbEntry]
+            groups = parentGroup.groups as! [KPKGroup]
+            entries = parentGroup.entries as! [KPKEntry]
         }
 
         if let appSettings = AppSettings.sharedInstance(), appSettings.sortAlphabetically() {
             groups.sort {
-                $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+                $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
             }
             entries.sort {
-                $0.title().localizedCaseInsensitiveCompare($1.title()) == .orderedAscending
+                $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
             }
         }
     }
@@ -285,25 +286,25 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             let group = groups[indexPath.row]
 
             cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell")!
-            cell.textLabel?.text = group.name
+            cell.textLabel?.text = group.title
             cell.imageView?.image = imageFactory?.image(for: group)
 
         case .entries:
             let entry = entries[indexPath.row]
 
             cell = tableView.dequeueReusableCell(withIdentifier: "EntryCell")!
-            cell.textLabel?.text = entry.title()
+            cell.textLabel?.text = entry.title
             cell.imageView?.image = imageFactory?.image(for: entry)
 
             // Detail text is a combination of username and url
             var accountDescription = ""
             var usernameSet = false
-            if let username = entry.username(), !(username.isEmpty) {
+            if let username = entry.username, !(username.isEmpty) {
                 usernameSet = true
                 accountDescription += username
             }
             
-            if let url = entry.url(), !(url.isEmpty) {
+            if let url = entry.url, !(url.isEmpty) {
                 if usernameSet {
                     accountDescription += " @ "
                 }
@@ -352,8 +353,8 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
 
     func deleteItems(indexPaths: [IndexPath]) -> Void {
         // Create a list of everything to delete
-        var groupsToDelete: [KdbGroup] = []
-        var entriesToDelete: [KdbEntry] = []
+        var groupsToDelete: [KPKGroup] = []
+        var entriesToDelete: [KPKEntry] = []
         for indexPath in indexPaths {
             switch Section.AllValues[indexPath.section] {
             case .groups:
@@ -366,13 +367,15 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
         // Remove the groups
         for group in groupsToDelete {
             groups.removeObject(group)
-            parentGroup.removeGroup(group)
+            group.remove()
+            //parentGroup.removeGroup(group)
         }
 
         // Remove the entries
         for entry in entriesToDelete {
             entries.removeObject(entry)
-            parentGroup.removeEntry(entry)
+            entry.remove()
+            //parentGroup.removeEntry(entry)
         }
 
         // Save the database
@@ -430,7 +433,7 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
         alertController.addAction(groupAction)
 
         // Only add an action to add a new entry if the parent group supports entries
-        if (parentGroup.canAddEntries) {
+        if (parentGroup.tree.isEditable) {
             let entryAction = UIAlertAction(title: NSLocalizedString("Entry", comment: ""), style: .default, handler: { (alertAction: UIAlertAction) in
                 self.addNewEntry()
             })
@@ -454,23 +457,27 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             return
         }
         
-        group.name = NSLocalizedString("New Group", comment: "")
-        group.image = parentGroup.image
+        group.title = NSLocalizedString("New Group", comment: "")
+        group.iconId = parentGroup.iconId
 
         // Display the Rename Item view
         let storyboard = UIStoryboard(name: "RenameItem", bundle: nil)
         let navigationController = storyboard.instantiateInitialViewController() as! UINavigationController
 
         let viewController = navigationController.topViewController as! RenameItemViewController
-        viewController.donePressed = { (renameItemViewController: RenameItemViewController) in
-            self.parentGroup.addGroup(group)
+        
+        viewController.donePressed = {
+            (renameItemViewController: RenameItemViewController) in
+            
+            //self.parentGroup.add(to:group) //Her are an error
+            group.add(to: self.parentGroup)
 
             // Save the database
             databaseDocument?.save()
 
             // Add the group to the model
             let index = self.groups.insertionIndexOf(group) {
-                $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+                $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
             }
             self.groups.insert(group, at: index)
 
@@ -499,16 +506,17 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             return
         }
         
-        entry.setTitle(NSLocalizedString("New Entry", comment: ""))
-        entry.image = parentGroup.image
-        parentGroup.addEntry(entry)
+        entry.title = NSLocalizedString("New Entry", comment: "")
+        entry.iconId = parentGroup.iconId
+        entry.add(to: parentGroup)
+        //parentGroup.addEntry(entry)
 
         // Save the database
         databaseDocument?.save()
 
         // Add the entry to the model
         let index = self.entries.insertionIndexOf(entry) {
-            $0.title().localizedCaseInsensitiveCompare($1.title()) == .orderedAscending
+            $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
         }
         self.entries.insert(entry, at: index)
 
@@ -526,7 +534,7 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
         // Show the Entry view controller
         let viewController = EntryViewController(style: .grouped)
         viewController.entry = entry
-        viewController.title = entry.title()
+        viewController.title = entry.title
         viewController.isNewEntry = true
         navigationController?.pushViewController(viewController, animated: true)
     }
@@ -560,12 +568,12 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
 
         let viewController = navigationController.topViewController as! MoveItemsViewController
         viewController.itemsToMove = itemsToMove;
-        viewController.groupSelected = { (moveItemsViewController: MoveItemsViewController, selectedGroup: KdbGroup) -> Void in
+        viewController.groupSelected = { (moveItemsViewController: MoveItemsViewController, selectedGroup: KPKGroup) -> Void in
             // Delete the items from the model
             for obj in itemsToMove {
-                if let group = obj as? KdbGroup {
+                if let group = obj as? KPKGroup {
                     self.groups.removeObject(group)
-                } else if let entry = obj as? KdbEntry {
+                } else if let entry = obj as? KPKEntry {
                     self.entries.removeObject(entry)
                 }
             }
@@ -628,9 +636,9 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
         // Find results
         let results = NSMutableArray()
         DatabaseDocument.search(parentGroup, searchText: searchController.searchBar.text, results: results)
-        searchResults = results as! [KdbEntry]
+        searchResults = results as! [KPKEntry]
         searchResults.sort {
-            $0.title().localizedCaseInsensitiveCompare($1.title()) == .orderedAscending
+            $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
         }
         
         // Update table

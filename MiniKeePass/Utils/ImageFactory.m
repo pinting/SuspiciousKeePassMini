@@ -1,5 +1,6 @@
 /*
  * Copyright 2011-2013 Jason Rush and John Flanagan. All rights reserved.
+ * Mdified by Frank Hausmann 2020-2021
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,12 +54,12 @@
     return self.standardImages;
 }
 
-- (UIImage *)imageForGroup:(KdbGroup *)group {
-    return [self imageForIndex:group.image];
+- (UIImage *)imageForGroup:(KPKGroup *)group {
+    return [self imageForIndex:group.iconId];
 }
 
-- (UIImage *)imageForEntry:(KdbEntry *)entry {
-    return [self imageForIndex:entry.image];
+- (UIImage *)imageForEntry:(KPKEntry *)entry {
+    return [self imageForIndex:entry.iconId];
 }
 
 - (UIImage *)imageForIndex:(NSInteger)index {

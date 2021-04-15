@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Jason Rush and John Flanagan. All rights reserved.
+ * Mdified by Frank Hausmann 2020-2021
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -193,12 +194,12 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         let databaseManager = DatabaseManager.sharedInstance()
         let url = databaseManager?.getFileUrl(filename)
         let date = databaseManager?.getFileLastModificationDate(url)
-
+        let nowdate = Date()
         // Format the last modified time as the subtitle of the cell
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .short
-        cell.detailTextLabel!.text = NSLocalizedString("Last Modified", comment: "") + ": " + dateFormatter.string(from: date!)
+        cell.detailTextLabel!.text = NSLocalizedString("Last Modified", comment: "") + ": " + dateFormatter.string(from: date ?? nowdate)
 
         return cell
     }

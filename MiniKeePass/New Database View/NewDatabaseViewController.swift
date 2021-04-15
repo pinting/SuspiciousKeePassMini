@@ -1,5 +1,6 @@
 /*
  * Copyright 2016 Jason Rush and John Flanagan. All rights reserved.
+ * Mdified by Frank Hausmann 2020-2021
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,13 +89,35 @@ class NewDatabaseViewController: UITableViewController, UITextFieldDelegate {
         var version: Int
         var extention: String
 
-        if (versionSegmentedControl.selectedSegmentIndex == 0) {
+        switch(versionSegmentedControl.selectedSegmentIndex)
+        {
+        case 0:
+            version = 1
+            extention = "kdb"
+            break
+            
+        case 1:
+            version = 2
+            extention = "kdbx"
+            break;
+            
+        case 2:
+            version = 3
+            extention = "kdbx"
+            break;
+        default:
+            version = 3
+            extention = "kdbx"
+            break;
+        }
+        
+        /*if (versionSegmentedControl.selectedSegmentIndex == 0) {
             version = 1
             extention = "kdb"
         } else {
             version = 2
-            extention = "kdbx"
-        }
+            extention = "kdbx3"
+        }*/
         
         // Create a URL to the file
         var url = AppDelegate.documentsDirectoryUrl()
