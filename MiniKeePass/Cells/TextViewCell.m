@@ -21,7 +21,7 @@
 
 @synthesize textView;
 @synthesize longPress;
-//@synthesize normalPress;
+@synthesize normalPress;
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -32,11 +32,10 @@
         
         [self addGestureRecognizer:self.longPress];
         
-      /* self.normalPress = [[UIGestureRecognizer alloc] initWithTarget:self action:@selector(normalPress:)];
+      self.normalPress = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(normalPress:)];
         
-        [self addGestureRecognizer:self.normalPress];*/
-        
-        
+        [self addGestureRecognizer:self.normalPress];
+                
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         textView = [[UITextView alloc] initWithFrame:CGRectZero];
@@ -129,18 +128,48 @@
 - (void) normalPress:(UIGestureRecognizer *)gesture{
     if (gesture.state == UIGestureRecognizerStateBegan)
     {
-        
+        NSLog(@"Tap press");
     }
     if (gesture.state == UIGestureRecognizerStateEnded)
     {
-        textView.editable = YES;
-        textView.dataDetectorTypes = UIDataDetectorTypeNone;
-        [textView becomeFirstResponder];
+        if(!self.textView.isEditable){
+            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+            pasteboard.string = self.textView.text;
+            
+            // Construct label
+            UILabel *copiedLabel = [[UILabel alloc] initWithFrame:self.bounds];
+            copiedLabel.text = NSLocalizedString(@"Copied", nil);
+            copiedLabel.font = [UIFont boldSystemFontOfSize:18];
+            copiedLabel.textAlignment = NSTextAlignmentCenter;
 
-        //Consider replacing self.view here with whatever view you want the point within
-        CGPoint point = [gesture locationInView:self.contentView];
-        UITextPosition * position=[textView closestPositionToPoint:point];
-        [textView setSelectedTextRange:[textView textRangeFromPosition:position toPosition:position]];
+            copiedLabel.textColor = [UIColor whiteColor];
+            copiedLabel.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:0.4];
+
+            // Put cell into "Copied" state
+            [self addSubview:copiedLabel];
+
+            int64_t delayInSeconds = 1.0;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [UIView animateWithDuration:0.5 animations:^{
+                    // Return to normal state
+                    copiedLabel.alpha = 0;
+                    [self setSelected:NO animated:YES];
+                } completion:^(BOOL finished) {
+                    [copiedLabel removeFromSuperview];
+                  
+                }];
+            });
+        }else{
+            textView.editable = YES;
+            textView.dataDetectorTypes = UIDataDetectorTypeNone;
+            [textView becomeFirstResponder];
+
+            //Consider replacing self.view here with whatever view you want the point within
+            CGPoint point = [gesture locationInView:self.contentView];
+            UITextPosition * position=[textView closestPositionToPoint:point];
+            [textView setSelectedTextRange:[textView textRangeFromPosition:position toPosition:position]];
+        }
     }
 }
     
@@ -148,7 +177,8 @@
     if (gesture.state == UIGestureRecognizerStateBegan)
     {
         NSLog(@"long press");
-         
+        
+       
             
     }
     

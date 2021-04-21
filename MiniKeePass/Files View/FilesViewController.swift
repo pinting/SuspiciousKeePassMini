@@ -29,7 +29,6 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     private enum Section : Int {
         case databases = 0
         case keyFiles = 1
-
         static let AllValues = [Section.databases, Section.keyFiles]
     }
 
@@ -209,6 +208,10 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Load the database
         let databaseManager = DatabaseManager.sharedInstance()
+         
+        //let hud = MBProgressHUD.showAdded(to: self.view,animated:true)
+        //hud.label.text = "loading...";
+        
         databaseManager?.openDatabaseDocument(databaseFiles[indexPath.row], animated: true)
     }
     

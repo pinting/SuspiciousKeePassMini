@@ -27,6 +27,8 @@
 #import "Kdb4Writer.h"
 #endif
 
+#import "YubiKit.h"
+
 @implementation DatabaseManager
 
 static DatabaseManager *sharedInstance;
@@ -73,6 +75,58 @@ static DatabaseManager *sharedInstance;
 
     return files;
 }
+
+/*
+- (NSArray *)getYubikeySlots {
+    NSMutableArray *slots = [[NSMutableArray alloc] init];
+    
+    
+    
+    // NFC scanning is available
+    if (YubiKitDeviceCapabilities.supportsISO7816NFCTags) {
+        // Provide additional setup when NFC is available on this device
+        [slots addObject:@"NFC Available!"];
+        YubiKitManager *ykm = YubiKitManager.shared;
+        [ykm startNFCConnection];
+        [NSThread sleepForTimeInterval:0.5];
+        
+        //Thread.sleep(forTimeInterval: 0.5) // Wait for accessory to connect
+        
+        
+        /*
+        func runYubiKitTest(completion: @escaping (_ connection: YKFConnectionProtocol, _ completion: @escaping () -> Void) -> Void) {
+            let connectionExpectation = expectation(description: "Get a YubiKey Connection")
+            let connection = YubiKeyConnection()
+            connection.connection { connection in
+                let testCompletion = {
+                    if connection as? YKFNFCConnection != nil {
+                        YubiKitManager.shared.stopNFCConnection()
+                        Thread.sleep(forTimeInterval: 4.0) // Approximate time it takes for the NFC modal to dismiss
+                    } else {
+                        YubiKitManager.shared.stopAccessoryConnection()
+                    }
+                    connectionExpectation.fulfill();
+                }
+                completion(connection, testCompletion)
+            }
+            waitForExpectations(timeout: 30.0) { error in
+                // If we get an error then the expectation has timed out and we need to stop all connections
+                if error != nil {
+                    YubiKitManager.shared.stopAccessoryConnection()
+                    YubiKitManager.shared.stopNFCConnection()
+                    Thread.sleep(forTimeInterval: 5.0) // In case it was a NFC connection wait for the modal to dismiss
+                }
+            }
+        }*
+        
+    } else {
+        // Handle the missing NFC support
+        [slots addObject:@"No NFC available on this Device!"];
+    }
+    
+    
+    return slots;
+}*/
 
 - (NSArray *)getKeyFiles {
     NSMutableArray *files = [[NSMutableArray alloc] init];
@@ -237,6 +291,7 @@ static DatabaseManager *sharedInstance;
     NSString *keyFile = [KeychainUtils stringForKey:self.selectedFilename
                                      andServiceName:KEYCHAIN_KEYFILES_SERVICE];
 
+    
    
     // Prompt the user for the password if we haven't loaded the database yet
     if (!databaseLoaded) {
@@ -333,10 +388,16 @@ static DatabaseManager *sharedInstance;
 
     // Initialize the filename
     passwordEntryViewController.filename = filename;
-
+    
     // Load the key files
     passwordEntryViewController.keyFiles = [self getKeyFiles];
 
+    //Init yubikey if needed
+    passwordEntryViewController.yubislot = @"Test the West";
+    
+    //load yubi key slots
+    //passwordEntryViewController.YubikeySlots = [self getYubikeySlots];
+    
     [appDelegate.window.rootViewController presentViewController:navigationController animated:animated completion:nil];
     
 }

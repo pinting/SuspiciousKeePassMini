@@ -17,6 +17,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "YKFNFCConnection+Private.h"
 
 @interface DatabaseManager : NSObject
 

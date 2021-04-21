@@ -23,7 +23,9 @@ class PasswordEntryViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var showImageView: UIImageView!
     @IBOutlet weak var keyFileLabel: UILabel!
 
+    @IBOutlet weak var YubikeyHMACLabe: UILabel!
     @objc var filename: String!
+    @objc var yubislot: String!
     
     @objc var keyFiles: [String]!
     fileprivate var selectedKeyFileIndex: Int? = nil {
@@ -36,6 +38,7 @@ class PasswordEntryViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
+    
     @objc var keyFile: String? {
         guard let selectedKeyFileIndex = selectedKeyFileIndex else {
             return nil
@@ -43,6 +46,7 @@ class PasswordEntryViewController: UITableViewController, UITextFieldDelegate {
         
         return keyFiles[selectedKeyFileIndex]
     }
+    
 
     @objc var password: String! {
         return passwordTextField.text
@@ -56,8 +60,12 @@ class PasswordEntryViewController: UITableViewController, UITextFieldDelegate {
         
         if (keyFileLabel.text == "") {
             let keyFile = ((filename as NSString).deletingPathExtension as NSString).appendingPathExtension("key")
-            let idx = keyFiles.index(of: keyFile!)
+            let idx = keyFiles.firstIndex(of: keyFile!)
             selectedKeyFileIndex = idx
+        }
+        
+        if (YubikeyHMACLabe.text == "") {
+            YubikeyHMACLabe.text = NSLocalizedString("None", comment: "") + "COMMING SOON"
         }
         
         passwordTextField.becomeFirstResponder()
@@ -94,19 +102,33 @@ class PasswordEntryViewController: UITableViewController, UITextFieldDelegate {
         if (section == 1) {
             return String(format:NSLocalizedString("Enter the password and/or select the keyfile for the %@ database.", comment: ""), filename)
         }
+        
+        if (section == 2) {
+            return String(format:NSLocalizedString("If your Database secured with an Yubikey HMAC-SHA1 challenge response please select your slot here, wait while open db and put in you Yubikey to your Accessory", comment: ""), yubislot)
+        }
         return nil
     }
 
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let keyFileViewController = segue.destination as! KeyFileViewController
-        keyFileViewController.keyFiles = keyFiles
-        keyFileViewController.selectedKeyIndex = selectedKeyFileIndex
-        keyFileViewController.keyFileSelected = { (selectedIndex) in
-            self.selectedKeyFileIndex = selectedIndex
+        //if let destination = segue.destination as? GroupViewController {
+        if let keyFileViewController = segue.destination as? KeyFileViewController{
+            keyFileViewController.keyFiles = keyFiles
+            keyFileViewController.selectedKeyIndex = selectedKeyFileIndex
+            keyFileViewController.keyFileSelected = { (selectedIndex) in
+                self.selectedKeyFileIndex = selectedIndex
 
-            keyFileViewController.navigationController?.popViewController(animated: true)
+                keyFileViewController.navigationController?.popViewController(animated: true)
+            }
+        }else if let yubikeyViewController = segue.destination as? YubiKeyViewController{
+            //yubikeyViewController.YubikeySlots = YubikeySlots
+            //yubikeyViewController.selectedYubikeySlotIndex = selectedKeyFileIndex
+           /* yubikeyViewController.YubikeySelected = { (selectedIndex) in
+                self.selectedYubikeySlotIndex = selectedIndex
+
+                yubikeyViewController.navigationController?.popViewController(animated: true)
+            }*/
         }
     }
     

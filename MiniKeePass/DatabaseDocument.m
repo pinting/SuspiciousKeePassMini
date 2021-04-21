@@ -40,7 +40,7 @@
         }
 
         self.filename = filename;
-
+        
        
 #ifdef USE_KDB
         
@@ -54,7 +54,7 @@
         self.kpkkey = [[KPKCompositeKey alloc] initWithKeys:@[[KPKKey keyWithPassword:password]]];
         
       
-        NSData *data = [self _loadTestDataBase:self.filename];// extension:@"kdb"];
+        NSData *data = [self _loadDataBase:self.filename];// extension:@"kdb"];
         if(data ==nil)
             @throw [NSException exceptionWithName:@"IllegalData"
                                            reason:NSLocalizedString(@"Wrong Databae Data", nil)
@@ -65,21 +65,49 @@
             @throw [NSException exceptionWithName:@"IllegalData"
                                            reason:NSLocalizedString(@"Passwords do not match", nil)
                                          userInfo:nil];
+        
+        /*KPKMetaData *meta = self.kdbTree.metaData;
+        if(meta!=nil)
+        {
+            NSLog(@"%@",meta);
+        }*/
 #endif
     }
     return self;
 }
 
-- (NSData *)_loadTestDataBase:(NSString *)name{
-  NSURL *url = [NSURL fileURLWithPath:name];
-  return [NSData dataWithContentsOfURL:url];
+- (NSData *)_loadDataBase:(NSString *)name{
+  self.url = [NSURL fileURLWithPath:name];
+  return [NSData dataWithContentsOfURL:self.url];
 }
 
 
-- (NSData *)_loadTestDataBase:(NSString *)name extension:(NSString *)extension {
+- (NSData *)_loadDataBase:(NSString *)name extension:(NSString *)extension {
   NSBundle *myBundle = [NSBundle bundleForClass:self.class];
   NSURL *url = [myBundle URLForResource:name withExtension:extension];
   return [NSData dataWithContentsOfURL:url];
+}
+
+- (NSString *)getFileFormat
+{
+    NSData *fileData = [NSData dataWithContentsOfURL:self.url];
+    if(!fileData) {
+      return NSLocalizedString(@"UNKNOWN_FORMAT_FILE_NOT_SAVED_YET", "Database format is unknown since the file is not saved yet");
+    }
+    else {
+      KPKFileVersion version = [[KPKFormat sharedFormat] fileVersionForData:fileData];
+      NSDictionary *nameMappings = @{
+                                     @(KPKDatabaseFormatKdb): @"Kdb",
+                                     @(KPKDatabaseFormatKdbx): @"Kdbx",
+                                     @(KPKDatabaseFormatUnknown): NSLocalizedString(@"UNKNOWN_FORMAT", "Unknown database format.")
+                                     };
+      
+      NSUInteger mayor = (version.version >> 16);
+      NSUInteger minor = (version.version & 0xFFFF);
+      
+        return [NSString stringWithFormat:@"%@ (Version %ld.%ld)", nameMappings[@(version.format)], mayor, minor];
+        
+    }
 }
 
 - (void)save {

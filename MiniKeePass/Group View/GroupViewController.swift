@@ -79,9 +79,10 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
 
         // Create the standard toolbar
         let settingsButton = UIBarButtonItem(image: UIImage(named: "gear"), style: .plain, target: self, action: #selector(settingsPressed))
+        let propButton = UIBarButtonItem(image: UIImage(named: "wrench"), style: .plain, target: self, action: #selector(propertiesPressed))
         let actionButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(actionPressed))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPressed))
-        standardToolbarItems = [settingsButton, spacer, actionButton, spacer, addButton]
+        standardToolbarItems = [settingsButton, spacer, propButton,actionButton, spacer, addButton]
 
         // Create the editing toolbar
         let deleteButton = UIBarButtonItem(title: NSLocalizedString("Delete", comment: ""), style: .plain, target: self, action: #selector(deletePressed))
@@ -131,10 +132,10 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             switch selectedItem! {
             case .entry(let entry):
                 section = Section.entries.rawValue
-                row = entries.index(of: entry)
+                row = entries.firstIndex(of: entry)
             case .group(let group):
                 section = Section.groups.rawValue
-                row = groups.index(of: group)
+                row = groups.firstIndex(of: group)
             }
             selectedItem = nil
             
@@ -199,8 +200,8 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             groups = []
             entries = searchResults
         } else {
-            groups = parentGroup.groups as! [KPKGroup]
-            entries = parentGroup.entries as! [KPKEntry]
+            groups = parentGroup.groups!
+            entries = parentGroup.entries!
         }
 
         if let appSettings = AppSettings.sharedInstance(), appSettings.sortAlphabetically() {
@@ -395,7 +396,16 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
     }
 
     // MARK: - Actions
+    
+    @objc func propertiesPressed(sender: UIBarButtonItem) {
+        let storyboard = UIStoryboard(name: "Properties", bundle: nil)
+        guard let viewController = storyboard.instantiateInitialViewController() else {
+            return
+        }
 
+        present(viewController, animated: true, completion: nil)
+    }
+    
     @objc func settingsPressed(sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Settings", bundle: nil)
         guard let viewController = storyboard.instantiateInitialViewController() else {

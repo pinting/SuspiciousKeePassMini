@@ -21,7 +21,6 @@
 #import "AppSettings.h"
 #import "ImageFactory.h"
 #import "IOSKeePass-Swift.h"
-
 #import "MBProgressHUD.h"
 
 
@@ -113,6 +112,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     commentsCell.textView.text = self.entry.notes;
     commentsCell.textView.scrollEnabled = TRUE;
     commentsCell.textView.userInteractionEnabled = TRUE;
+    
    
     
     otpCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
@@ -353,6 +353,13 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         if (canceled) {
             [self setEntry:self.entry];
         } else {
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            hud.label.Text = @"saving...";
+            // Change the background view style and color.
+            hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+            hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
+            hud.contentColor = [UIColor colorWithRed:0.f green:0.9f blue:0.4f alpha:1.f];
+            
             self.entry.title = titleCell.textField.text;
             self.entry.iconId = self.selectedImageIndex;
             self.entry.username = usernameCell.textField.text;
@@ -387,8 +394,15 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                 //[kdb4Entry.customAttributes addObjectsFromArray:self.editingStringFields];
             }
 
-            // Save the database document
-            [[AppDelegate getDelegate].databaseDocument save];
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+                    // Do something useful in the background and update the HUD periodically.
+                // Save the database document
+                [[AppDelegate getDelegate].databaseDocument save];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [hud hideAnimated:YES];
+                    });
+                });
+            
         }
     }
 
@@ -719,6 +733,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     TextFieldCell *cell = (TextFieldCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     
+    
     if([cell isKindOfClass:[TextFieldCell class]]){
         if ([cell.title isEqualToString:@"OTP"])
         {
@@ -748,7 +763,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     copiedLabel.textAlignment = NSTextAlignmentCenter;
 
     copiedLabel.textColor = [UIColor whiteColor];
-    copiedLabel.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:1];
+    copiedLabel.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:0.4];
 
     // Put cell into "Copied" state
     [cell addSubview:copiedLabel];
@@ -824,11 +839,11 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 	MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 
 	hud.mode = MBProgressHUDModeText;
-    hud.detailsLabelText = self.entry.password;
-    hud.detailsLabelFont = [UIFont fontWithName:@"Andale Mono" size:24];
+    hud.detailsLabel.text = self.entry.password;
+    hud.detailsLabel.font = [UIFont fontWithName:@"Andale Mono" size:24];
 	hud.margin = 10.f;
 	hud.removeFromSuperViewOnHide = YES;
-    [hud addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:hud action:@selector(hide:)]];
+    [hud addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:hud action:@selector(hideAnimated:)]];
 }
 
 #pragma mark - Password Generation
@@ -840,7 +855,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     
     PasswordGeneratorViewController *passwordGeneratorViewController = (PasswordGeneratorViewController *)navigationController.topViewController;
     passwordGeneratorViewController.donePressed = ^(PasswordGeneratorViewController *passwordGeneratorViewController, NSString *password) {
-        passwordCell.textField.text = password;
+        self->passwordCell.textField.text = password;
         [passwordGeneratorViewController dismissViewControllerAnimated:YES completion:nil];
     };
     passwordGeneratorViewController.cancelPressed = ^(PasswordGeneratorViewController *passwordGeneratorViewController) {

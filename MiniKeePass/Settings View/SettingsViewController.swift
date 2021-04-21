@@ -238,7 +238,7 @@ class SettingsViewController: UITableViewController {
                 }
             }
             
-            var options = ALOptions()
+            let options = ALOptions()
                 options.image = UIImage(named: "AppIcon")!
                 options.title = "IOSKeepass Pin creation"
                 options.isSensorsEnabled = false
@@ -274,7 +274,7 @@ class SettingsViewController: UITableViewController {
                 }
             }
             
-            var options = ALOptions()
+            let options = ALOptions()
                 options.image = UIImage(named: "AppIcon")!
                 options.title = "IOSKeepass Pin deletion"
                 options.isSensorsEnabled = false

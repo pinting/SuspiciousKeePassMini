@@ -26,3 +26,8 @@
 #import "DatabaseManager.h"
 #import "EntryViewController.h"
 #import "MF_Base32Additions.h"
+#import "MBProgressHUD.h"
+
+#import "YubiKit.h"
+#import "YKFAccessoryConnectionController.h"
+#import <CommonCrypto/CommonCrypto.h>

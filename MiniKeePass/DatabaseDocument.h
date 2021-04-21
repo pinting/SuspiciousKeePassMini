@@ -29,6 +29,7 @@
 //@property (nonatomic, strong) KdbTree *kdbTree;
 @property (nonatomic, strong) KPKTree *kdbTree;
 @property (nonatomic, copy) NSString *filename;
+@property (nonatomic, strong) NSURL *url;
 
 /// Create a KeePass Database
 /// @param filename Database filename
@@ -39,6 +40,9 @@
 
 /// Save the current KeePass DatabaseDocument
 - (void)save;
+
+/// Get Fileformat from Metatdata
+- (NSString *)getFileFormat;
 
 /// Search a KeePass group for the supplied text
 /// @param searchText The text for which you're searching
