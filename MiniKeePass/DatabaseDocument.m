@@ -30,7 +30,8 @@
 
 @implementation DatabaseDocument
 
-- (id)initWithFilename:(NSString *)filename password:(NSString *)password keyFile:(NSString *)keyFile {
+- (id)initWithFilename:(NSString *)filename password:(NSString *)password keyFile:(NSString *)keyFile
+{
     self = [super init];
     if (self) {
         if (password == nil && keyFile == nil) {
@@ -53,7 +54,15 @@
 #else
         self.kpkkey = [[KPKCompositeKey alloc] initWithKeys:@[[KPKKey keyWithPassword:password]]];
         
-      
+        NSData *keyFileData = nil;
+       
+        
+        if(keyFile != nil)
+           keyFileData =  [self _loadDataBase:keyFile];
+        
+        if(keyFileData !=nil)
+            [self.kpkkey addKey:[KPKKey keyWithKeyFileData:keyFileData]];
+       
         NSData *data = [self _loadDataBase:self.filename];// extension:@"kdb"];
         if(data ==nil)
             @throw [NSException exceptionWithName:@"IllegalData"

@@ -26,6 +26,7 @@
 import Foundation
 
 
+
 /// A `Token` contains a password generator and information identifying the corresponding account.
 @objc public class Token: NSObject {//Equatable {
     /// A string indicating the account represented by the token.

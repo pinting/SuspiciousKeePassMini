@@ -16,16 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import UIKit
+/*A HMAC takes two inputs: the key and the data. What PS does wirth the ubikey is take your input as data and send it to the UbiKey. The key is in the UbiKey itself ans stays there.
+ 
+ So, the sequence of event is the following:
 
+     You enter your passphrase.
+     The software sends that passphrase to the ubikey
+     The UbiKey performs a HMAC using your passphrase as input and the (internally stored) secret key.
+     The resulting value is sent back to the application and is used for unlocking your database.
+
+ So the system is still safe as long as the various crypto elements are safe: the database REAL passphrase is the result of the HMAC operation, the HMAC is made of the secret key, which stays on your 2FA device and your own master password, which you enter through your computer.
+*/
+
+import UIKit
+    
 class PasswordEntryViewController: UITableViewController, UITextFieldDelegate {
+    
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var showImageView: UIImageView!
     @IBOutlet weak var keyFileLabel: UILabel!
 
-    @IBOutlet weak var YubikeyHMACLabe: UILabel!
     @objc var filename: String!
-    @objc var yubislot: String!
+    
     
     @objc var keyFiles: [String]!
     fileprivate var selectedKeyFileIndex: Int? = nil {
@@ -52,6 +64,10 @@ class PasswordEntryViewController: UITableViewController, UITextFieldDelegate {
         return passwordTextField.text
     }
 
+    @objc var hmac: String! {
+        return passwordTextField.text
+    }
+    
     @objc var donePressed: ((PasswordEntryViewController) -> Void)?
     @objc var cancelPressed: ((PasswordEntryViewController) -> Void)?
     
@@ -64,12 +80,10 @@ class PasswordEntryViewController: UITableViewController, UITextFieldDelegate {
             selectedKeyFileIndex = idx
         }
         
-        if (YubikeyHMACLabe.text == "") {
-            YubikeyHMACLabe.text = NSLocalizedString("None", comment: "") + "COMMING SOON"
-        }
-        
+       
         passwordTextField.becomeFirstResponder()
     }
+    
     
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
        // view.tintColor = UIColor.red
@@ -103,9 +117,6 @@ class PasswordEntryViewController: UITableViewController, UITextFieldDelegate {
             return String(format:NSLocalizedString("Enter the password and/or select the keyfile for the %@ database.", comment: ""), filename)
         }
         
-        if (section == 2) {
-            return String(format:NSLocalizedString("If your Database secured with an Yubikey HMAC-SHA1 challenge response please select your slot here, wait while open db and put in you Yubikey to your Accessory", comment: ""), yubislot)
-        }
         return nil
     }
 
@@ -121,14 +132,6 @@ class PasswordEntryViewController: UITableViewController, UITextFieldDelegate {
 
                 keyFileViewController.navigationController?.popViewController(animated: true)
             }
-        }else if let yubikeyViewController = segue.destination as? YubiKeyViewController{
-            //yubikeyViewController.YubikeySlots = YubikeySlots
-            //yubikeyViewController.selectedYubikeySlotIndex = selectedKeyFileIndex
-           /* yubikeyViewController.YubikeySelected = { (selectedIndex) in
-                self.selectedYubikeySlotIndex = selectedIndex
-
-                yubikeyViewController.navigationController?.popViewController(animated: true)
-            }*/
         }
     }
     
@@ -141,6 +144,7 @@ class PasswordEntryViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func cancelPressedAction(_ sender: UIBarButtonItem?) {
         cancelPressed?(self)
     }
+    
     
     @IBAction func showPressed(_ sender: UITapGestureRecognizer) {
         if (!passwordTextField.isSecureTextEntry) {

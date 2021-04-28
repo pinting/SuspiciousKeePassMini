@@ -56,6 +56,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
    
         
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+      
        
     }
     

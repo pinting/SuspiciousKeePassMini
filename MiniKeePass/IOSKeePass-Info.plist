@@ -59,6 +59,23 @@
 				<string>com.jflan.MiniKeePass.key</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array>
+				<string>icon.png</string>
+				<string>icon@2</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>KeePass Keyfile X</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSHandlerRank</key>
+			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.jflan.MiniKeePass.keyx</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
@@ -75,13 +92,11 @@
 	<key>CFBundleSignature</key>
 	<string>Catalina</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>1254</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
-	<key>NFCReaderUsageDescription</key>
-	<string>Yubikey want access to your NFC</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -107,10 +122,6 @@
 	<false/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleDefault</string>
-	<key>UISupportedExternalAccessoryProtocols</key>
-	<array>
-		<string>Yubikey NFC Device</string>
-	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -183,14 +194,23 @@
 				</array>
 			</dict>
 		</dict>
-	</array>
-	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
-	<array>
-		<string>A000000527471117</string>
-		<string>A0000006472F0001</string>
-		<string>A0000005272101</string>
-		<string>A000000308</string>
-		<string>A000000527200101</string>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>KeePass Keyfile X</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.jflan.MiniKeePass.keyx</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>keyx</string>
+				</array>
+			</dict>
+		</dict>
 	</array>
 </dict>
 </plist>
