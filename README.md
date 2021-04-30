@@ -93,16 +93,13 @@ KeePassKit - Cocoa KeePass Library Copyright (c) 2012-2016 Michael Starke, Hickn
 
 References
 -------
-KeePassKit uses code from the following projects
-Argon2 Copyright (c) 2015 Daniel Dinu, Dmitry Khovratovich (main authors), Jean-Philippe Aumasson and Samuel Neves
-ChaCha20 Simple Copyright (c) 2014 insane coder (http://insanecoding.blogspot.com/, http://chacha20.insanecoding.org/)
-Twofish Copyright (c) 2002 by Niels Ferguson.
-KissXML Copyright (c) 2012 Robbie Hanson. All rights reserved.
-MiniKeePass Copyright (c) 2011 Jason Rush and John Flanagan. All rights reserved.
-KeePass Database Library Copyright (c) 2010 Qiang Yu. All rights reserved.
-
-KeepassX Copyright (c) 2012 Felix Geyer debfx@fobos.de
-
-NSData Gzip Category from the CocoaDev Wiki
-
-NSData CommonCrypto Category Copyright (c) 2008-2009 Jim Dovey, All rights reserved.
+- KeePassKit uses code from the following projects
+- Argon2 Copyright (c) 2015 Daniel Dinu, Dmitry Khovratovich (main authors), Jean-Philippe Aumasson and Samuel Neves
+- ChaCha20 Simple Copyright (c) 2014 insane coder (http://insanecoding.blogspot.com/, http://chacha20.insanecoding.org/)
+- Twofish Copyright (c) 2002 by Niels Ferguson.
+- KissXML Copyright (c) 2012 Robbie Hanson. All rights reserved.
+- MiniKeePass Copyright (c) 2011 Jason Rush and John Flanagan. All rights reserved.
+- KeePass Database Library Copyright (c) 2010 Qiang Yu. All rights reserved.
+- KeepassX Copyright (c) 2012 Felix Geyer debfx@fobos.de
+- NSData Gzip Category from the CocoaDev Wiki
+- NSData CommonCrypto Category Copyright (c) 2008-2009 Jim Dovey, All rights reserved.
