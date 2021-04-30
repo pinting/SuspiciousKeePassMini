@@ -6,6 +6,7 @@ and sensible data to a local file, and not in the cloud, also i mean, it was fre
 I have create a new repo on Github, because the original Github project was setting to read only, and i can´t support the original Software development.
 
 *New
+- Support for KDBx Version 4 (Mar. 2021)
 - IOS Darkmode Support (Aug. 2020)
 - One Time password support secure secret key storing (Released in 1.80)
   The Time-based One-time Password algorithm (TOTP) is an extension of the HMAC-based One-time Password algorithm (HOTP) that generates a one-time password (OTP) by instead taking         
@@ -86,3 +87,22 @@ http://www.gnu.org/licenses/lgpl-2.1.html
 
 KeePass Database Library
 Copyright 2010 Qiang Yu. All rights reserved.
+
+KeePassKit DB Library
+KeePassKit - Cocoa KeePass Library Copyright (c) 2012-2016 Michael Starke, HicknHack Software GmbH
+
+References
+-------
+KeePassKit uses code from the following projects
+Argon2 Copyright (c) 2015 Daniel Dinu, Dmitry Khovratovich (main authors), Jean-Philippe Aumasson and Samuel Neves
+ChaCha20 Simple Copyright (c) 2014 insane coder (http://insanecoding.blogspot.com/, http://chacha20.insanecoding.org/)
+Twofish Copyright (c) 2002 by Niels Ferguson.
+KissXML Copyright (c) 2012 Robbie Hanson. All rights reserved.
+MiniKeePass Copyright (c) 2011 Jason Rush and John Flanagan. All rights reserved.
+KeePass Database Library Copyright (c) 2010 Qiang Yu. All rights reserved.
+
+KeepassX Copyright (c) 2012 Felix Geyer debfx@fobos.de
+
+NSData Gzip Category from the CocoaDev Wiki
+
+NSData CommonCrypto Category Copyright (c) 2008-2009 Jim Dovey, All rights reserved.
