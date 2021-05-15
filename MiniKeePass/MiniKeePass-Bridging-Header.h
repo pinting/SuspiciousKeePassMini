@@ -27,6 +27,6 @@
 #import "EntryViewController.h"
 #import "MF_Base32Additions.h"
 #import "MBProgressHUD.h"
-
+#import "ObjcEditorViewController.h"
 
 #import <CommonCrypto/CommonCrypto.h>

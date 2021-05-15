@@ -112,7 +112,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     commentsCell.textView.text = self.entry.notes;
     commentsCell.textView.scrollEnabled = TRUE;
     commentsCell.textView.userInteractionEnabled = TRUE;
-    
+    commentsCell.parentView = self;
    
     
     otpCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
@@ -340,12 +340,14 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+   
     [self setEditing:editing animated:animated canceled:NO];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated canceled:(BOOL)canceled {
     [super setEditing:editing animated:animated];
-
+    
+    
     // Ensure that all updates happen at once
     [self.tableView beginUpdates];
 
@@ -353,12 +355,6 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         if (canceled) {
             [self setEntry:self.entry];
         } else {
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-            hud.label.Text = @"saving...";
-            // Change the background view style and color.
-            hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
-            hud.backgroundView.color = [UIColor colorWithWhite:0.f alpha:0.1f];
-            hud.contentColor = [UIColor colorWithRed:0.f green:0.9f blue:0.4f alpha:1.f];
             
             self.entry.title = titleCell.textField.text;
             self.entry.iconId = self.selectedImageIndex;
@@ -380,11 +376,13 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                 KPKEntry *kdb4Entry = (KPKEntry *)self.entry;
                 for (id attr in kdb4Entry.customAttributes) {
                     // do something with object
+                    //NSLog(@"%@",attr);
                     [self.entry removeCustomAttribute:attr];
                 }
                 
                 for (id newattr in self.editingStringFields) {
                     // do something with object
+                    //NSLog(@"%@",newattr);
                     [self.entry addCustomAttribute:newattr];
                 }
                 
@@ -393,15 +391,16 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                 //kdb4Entry.customAttributes = [[NSArray alloc]init];
                 //[kdb4Entry.customAttributes addObjectsFromArray:self.editingStringFields];
             }
-
+            [AppDelegate showGlobalProgressHUDWithTitle:@"saving..."];
             dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-                    // Do something useful in the background and update the HUD periodically.
-                // Save the database document
+                
                 [[AppDelegate getDelegate].databaseDocument save];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [hud hideAnimated:YES];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [AppDelegate dismissGlobalHUD];
+                        });
                     });
-                });
+           
+                
             
         }
     }
@@ -442,6 +441,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 
     // Commit all updates
     [self.tableView endUpdates];
+   
 }
 
 #pragma mark - TextFieldCell delegate
@@ -511,7 +511,12 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                 return nil;
             }
         case SECTION_COMMENTS:
-            return NSLocalizedString(@"Comments", nil);
+            if (self.editing == NO) {
+                return NSLocalizedString(@"Comments", nil);
+            }else{
+                return NSLocalizedString(@"Comments_Edit", nil);
+            }
+         
     }
 
     return nil;
@@ -576,7 +581,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                 {
                     cell.textField.secureTextEntry = true;
                 }
-                
+                cell.delegate = self;
                 cell.textField.text = stringField.value;
                 cell.textField.enabled = self.editing;
 
@@ -624,6 +629,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 }
 
 - (void)addPressed {
+    
     KPKAttribute *stringField = [[KPKAttribute alloc] initWithKey:@"" value:@""];
     //KPKAttribute *stringField = [KPKAttribute initWithKey:@"" value:@""];
     
@@ -666,7 +672,10 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         case SECTION_CUSTOM_FIELDS:
             return 40.0f;
         case SECTION_COMMENTS:
+        {
+           
             return commentsCell.getCellHeight; //2048.0f; //calculate dynamic
+        }
     }
 
     return 40.0f;
@@ -756,15 +765,23 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     }
    
     
+    
+    UIColor *col=[UIColor whiteColor];
+    UIColor *back=[UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:0.4];
+    if (![[AppSettings sharedInstance] darkEnabled]) {
+        
+        col =[UIColor blackColor];
+        back=[UIColor colorWithRed:0.25 green:0.25 blue:0.25 alpha:0.4];
+    }
+   
     // Construct label
     UILabel *copiedLabel = [[UILabel alloc] initWithFrame:cell.bounds];
     copiedLabel.text = NSLocalizedString(@"Copied", nil);
     copiedLabel.font = [UIFont boldSystemFontOfSize:18];
     copiedLabel.textAlignment = NSTextAlignmentCenter;
 
-    copiedLabel.textColor = [UIColor whiteColor];
-    copiedLabel.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:0.4];
-
+    copiedLabel.textColor = col;
+    copiedLabel.backgroundColor = back;
     // Put cell into "Copied" state
     [cell addSubview:copiedLabel];
 
@@ -970,7 +987,9 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         
         [self presentViewController:navigationController animated:YES completion:nil];
     } else {
-        [[UIApplication sharedApplication] openURL:url];
+        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success){
+            
+        }];
     }
 }
 

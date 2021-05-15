@@ -17,6 +17,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DatabaseDocument.h"
+#import "MBProgressHUD.h"
 
 @interface AppDelegate : NSObject <UIApplicationDelegate>
 
@@ -30,9 +31,12 @@
 + (AppDelegate *)getDelegate;
 + (NSString *)documentsDirectory;
 + (NSURL *)documentsDirectoryUrl;
++ (MBProgressHUD *)showGlobalProgressHUDWithTitle:(NSString *)title;
++ (void)dismissGlobalHUD;
 
 - (void)closeDatabase;
 - (void)deleteAllData;
+- (UIViewController *)topViewController;
 
 
 @end

@@ -26,7 +26,6 @@
 #else
 #import"KeePassKit.h"
 #endif
-
 #import "AppDelegate.h"
 
 @interface EntryViewController : UITableViewController <UIGestureRecognizerDelegate, TextFieldCellDelegate>

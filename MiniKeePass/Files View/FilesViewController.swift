@@ -17,6 +17,7 @@
  */
 
 import UIKit
+import KeyboardGuide
 
 class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportDatabaseDelegate, UIDocumentBrowserViewControllerDelegate {
     private let databaseReuseIdentifier = "DatabaseCell"
@@ -37,6 +38,9 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     
     override func viewDidLoad() {
         super.viewDidLoad();
+        // Activate KeyboardGuide at the beginning of application life cycle.
+        KeyboardGuide.shared.activate()
+        
         let appSettings = AppSettings.sharedInstance() as AppSettings
         
         if #available(iOS 13.0, *) {
@@ -80,7 +84,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             guard let groupViewController = segue.destination as? GroupViewController else {
                 return
             }
-
+            
             let appDelegate = AppDelegate.getDelegate()
             let document = appDelegate?.databaseDocument
             
@@ -88,6 +92,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             groupViewController.title = URL(fileURLWithPath: document!.filename).lastPathComponent
             groupViewController.tagid = 1;
             
+           
         case "importDatabase"?:
            displayDocumentBrowser()
             
@@ -209,11 +214,17 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Load the database
         let databaseManager = DatabaseManager.sharedInstance()
-         
-        //let hud = MBProgressHUD.showAdded(to: self.view,animated:true)
-        //hud.label.text = "loading...";
+        // Move to a background thread to do some long running work
+        //AppDelegate.showGlobalProgressHUD(withTitle:"loading..")
+        //DispatchQueue.global(qos: .userInitiated).async {
+            databaseManager?.openDatabaseDocument(self.databaseFiles[indexPath.row], animated: true)
+            
+            /*DispatchQueue.main.async {
+                AppDelegate.dismissGlobalHUD()
+            }
+        }*/
         
-        databaseManager?.openDatabaseDocument(databaseFiles[indexPath.row], animated: true)
+         
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

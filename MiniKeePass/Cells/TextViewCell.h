@@ -16,15 +16,18 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "ObjcEditorViewController.h"
 
-@interface TextViewCell : UITableViewCell <UITextViewDelegate> {
+@interface TextViewCell : UITableViewCell <UITextViewDelegate,ObjcEditorViewControllerDelegate> {
 	UITextView *textView;
+    UITableViewController *parentView;
     UILongPressGestureRecognizer *longPress;
     UITapGestureRecognizer *normalPress;
    
 }
 
 @property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) UITableViewController *parentView;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPress;
 @property (nonatomic, strong) UITapGestureRecognizer *normalPress;
 

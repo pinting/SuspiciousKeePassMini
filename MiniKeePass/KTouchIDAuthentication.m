@@ -51,7 +51,7 @@ static KTouchIDAuthentication *sharedInstance;
         }
     }
     if(self.reason == nil)
-        self.reason = @"You uing ToucId/FacID";
+        self.reason = @"You using TouchId/FaceID";
     
     return self;
 }

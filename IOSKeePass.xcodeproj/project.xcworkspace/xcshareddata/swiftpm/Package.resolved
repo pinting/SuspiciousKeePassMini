@@ -2,6 +2,24 @@
   "object": {
     "pins": [
       {
+        "package": "KeyboardGuide",
+        "repositoryURL": "https://github.com/niw/KeyboardGuide.git",
+        "state": {
+          "branch": null,
+          "revision": "f52e9881d8aa9b93dd76b9596e4d2c40a9b99308",
+          "version": "0.2.0"
+        }
+      },
+      {
+        "package": "TwitterTextEditor",
+        "repositoryURL": "https://github.com/twitter/TwitterTextEditor.git",
+        "state": {
+          "branch": null,
+          "revision": "dfe0edc3bcb6703ee2fd0e627f95e726b63e732a",
+          "version": "1.1.0"
+        }
+      },
+      {
         "package": "Valet",
         "repositoryURL": "https://github.com/Square/Valet",
         "state": {

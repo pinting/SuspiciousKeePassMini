@@ -25,6 +25,7 @@
 #import "IOSKeePass-Swift.h"
 #import "KTouchIDAuthentication.h"
 
+
 @interface AppDelegate ()
 
 @property (nonatomic, strong) FilesViewController *filesViewController;;
@@ -200,6 +201,26 @@
     }
 }
 
+- (UIViewController *)topViewController{
+  return [self topViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
+
+- (UIViewController *)topViewController:(UIViewController *)rootViewController
+{
+  if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+    UINavigationController *navigationController = (UINavigationController *)rootViewController;
+    return [self topViewController:[navigationController.viewControllers lastObject]];
+  }
+  if ([rootViewController isKindOfClass:[UITabBarController class]]) {
+    UITabBarController *tabController = (UITabBarController *)rootViewController;
+    return [self topViewController:tabController.selectedViewController];
+  }
+  if (rootViewController.presentedViewController) {
+    return [self topViewController:rootViewController];
+  }
+  return rootViewController;
+}
+
 - (void)checkFileProtection {
     // Get the document's directory
     NSString *documentsDirectory = [AppDelegate documentsDirectory];
@@ -227,6 +248,29 @@
     }
 }
 
++ (MBProgressHUD *)showGlobalProgressHUDWithTitle:(NSString *)title {
+    UIWindow *window = [[[UIApplication sharedApplication] windows] lastObject];
+    
+    if (![[AppSettings sharedInstance] darkEnabled]) {
+        window.overrideUserInterfaceStyle=UIUserInterfaceStyleLight;
+    }else{
+        window.overrideUserInterfaceStyle=UIUserInterfaceStyleDark;
+    }
+    //window.overrideUserInterfaceStyle = .dark;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:window animated:YES];
+    hud.label.text = title;
+    hud.backgroundView.style = MBProgressHUDBackgroundStyleSolidColor;
+    hud.backgroundView.color = [UIColor colorWithRed:0.2f green:0.2f blue:0.5f alpha:0.2f];
+    hud.contentColor = [UIColor systemBlueColor]; 
+    hud.removeFromSuperViewOnHide = YES;
+    hud.mode = MBProgressHUDModeIndeterminate;
+    return hud;
+}
+
++ (void)dismissGlobalHUD {
+    UIWindow *window = [[[UIApplication sharedApplication] windows] lastObject];
+    [MBProgressHUD hideHUDForView:window animated:YES];
+}
 
 - (void)handlePasteboardNotification:(NSNotification *)notification {
     // Check if the clipboard has any contents

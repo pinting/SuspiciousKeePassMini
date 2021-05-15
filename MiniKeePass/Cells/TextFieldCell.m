@@ -79,6 +79,8 @@
         self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         self.textField.returnKeyType = UIReturnKeyNext;
     }
+    
+    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {

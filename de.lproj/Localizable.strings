@@ -35,7 +35,8 @@
 "Password" = "Passwort";
 "Confirm Password" = "Passwort bestätigen";
 "URL" = "URL";
-"Comments" = "Kommentare (return für mehr)";
+"Comments" = "Kommentare (tap zum editieren)";
+"Comments_Edit" = "Kommentare (tap zum editieren)";
 "OK" = "OK";
 "Cancel" = "Abbrechen";
 "Add" = "Hinzufügen";

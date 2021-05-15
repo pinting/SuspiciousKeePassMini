@@ -15,6 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#import "IOSKeePass-Swift.h"
+#import "AppDelegate.h"
+#import "AppSettings.h"
+#import "ObjcEditorViewController.h"
 #import "TextViewCell.h"
 
 @implementation TextViewCell
@@ -66,7 +70,10 @@
                                                      attributes:attributes
                                                         context:nil];
     CGFloat height = ceilf(textViewBounds.size.height);
-    return height+44;
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    return screenHeight-320;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
@@ -135,15 +142,22 @@
         if(!self.textView.isEditable){
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
             pasteboard.string = self.textView.text;
-            
+            UIColor *col=[UIColor whiteColor];
+            UIColor *back=[UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:0.4];
+            if (![[AppSettings sharedInstance] darkEnabled]) {
+                
+                col =[UIColor blackColor];
+                back=[UIColor colorWithRed:0.25 green:0.25 blue:0.25 alpha:0.4];
+            }
+           
             // Construct label
             UILabel *copiedLabel = [[UILabel alloc] initWithFrame:self.bounds];
             copiedLabel.text = NSLocalizedString(@"Copied", nil);
             copiedLabel.font = [UIFont boldSystemFontOfSize:18];
             copiedLabel.textAlignment = NSTextAlignmentCenter;
 
-            copiedLabel.textColor = [UIColor whiteColor];
-            copiedLabel.backgroundColor = [UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:0.4];
+            copiedLabel.textColor = col;
+            copiedLabel.backgroundColor = back;
 
             // Put cell into "Copied" state
             [self addSubview:copiedLabel];
@@ -161,18 +175,37 @@
                 }];
             });
         }else{
-            textView.editable = YES;
+            [NSUserDefaults standardUserDefaults];
+           
+            ObjcEditorViewController *textedit =  [[ObjcEditorViewController alloc] init];
+            
+            //textedit.useCustomDropInteraction=YES;
+            textedit.delegate = self;
+            textedit.text = self.textView.text;
+            //[textedit.delegate self]
+            // See `Settings.bundle`.
+            //[textedit [useCustomDropInteraction:YES]];
+
+            [self.parentView presentViewController:textedit animated:YES completion:nil];
+            //self.present(navController, animated: true, completion: nil)
+            /*textView.editable = YES;
             textView.dataDetectorTypes = UIDataDetectorTypeNone;
             [textView becomeFirstResponder];
 
             //Consider replacing self.view here with whatever view you want the point within
             CGPoint point = [gesture locationInView:self.contentView];
             UITextPosition * position=[textView closestPositionToPoint:point];
-            [textView setSelectedTextRange:[textView textRangeFromPosition:position toPosition:position]];
+            [textView setSelectedTextRange:[textView textRangeFromPosition:position toPosition:position]];*/
         }
     }
 }
+- (void)ObjcEditorViewControllerDidTapDone:(ObjcEditorViewController *)editor
+{
     
+    //NSLog(@"String received at FirstVC: %@",editor.text);
+    self.textView.text = editor.text;
+}
+ 
 - (void) longPress:(UILongPressGestureRecognizer *)gesture{
     if (gesture.state == UIGestureRecognizerStateBegan)
     {
@@ -210,3 +243,6 @@
     }
 }*/
 @end
+
+// MARK: - ObjcViewControllerDelegate
+

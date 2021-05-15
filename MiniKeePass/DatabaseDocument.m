@@ -17,7 +17,9 @@
  */
 
 #import "DatabaseDocument.h"
+#import "AppDelegate.h"
 #import "AppSettings.h"
+#import "MBProgressHUD.h"
 
 
 @interface DatabaseDocument ()
@@ -52,6 +54,7 @@
 
         self.kdbTree = [KdbReaderFactory load:self.filename withPassword:self.kdbPassword];
 #else
+            
         self.kpkkey = [[KPKCompositeKey alloc] initWithKeys:@[[KPKKey keyWithPassword:password]]];
         
         NSData *keyFileData = nil;
@@ -70,16 +73,26 @@
                                          userInfo:nil];
         self.kdbTree = [[KPKTree alloc] initWithData:data key:self.kpkkey error:NULL];
         
-        if(self.kdbTree == nil)
+          
+            
+       
+              
+            
+        
+        if(self.kdbTree == nil){
+            
             @throw [NSException exceptionWithName:@"IllegalData"
                                            reason:NSLocalizedString(@"Passwords do not match", nil)
                                          userInfo:nil];
+            
+        }
         
         /*KPKMetaData *meta = self.kdbTree.metaData;
         if(meta!=nil)
         {
             NSLog(@"%@",meta);
         }*/
+        
 #endif
     }
     return self;
@@ -92,6 +105,7 @@
 
 
 - (NSData *)_loadDataBase:(NSString *)name extension:(NSString *)extension {
+    
   NSBundle *myBundle = [NSBundle bundleForClass:self.class];
   NSURL *url = [myBundle URLForResource:name withExtension:extension];
   return [NSData dataWithContentsOfURL:url];
@@ -120,14 +134,17 @@
 }
 
 - (void)save {
+    
 #ifdef USE_KDB
     [KdbWriterFactory persist:self.kdbTree file:self.filename withPassword:self.kdbPassword];
 #else
-    NSError __autoreleasing *error = nil;
-    NSData *data = [self.kdbTree encryptWithKey:self.kpkkey format:KPKDatabaseFormatKdbx error:&error];
-    NSLog(@"%@",error);
     
-    [data writeToFile:self.filename atomically:YES];
+        NSError __autoreleasing *error = nil;
+        NSData *data = [self.kdbTree encryptWithKey:self.kpkkey format:KPKDatabaseFormatKdbx error:&error];
+        
+        [data writeToFile:self.filename atomically:YES];
+        
+    
 #endif
 }
 

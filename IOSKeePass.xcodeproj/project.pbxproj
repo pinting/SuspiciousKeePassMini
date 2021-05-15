@@ -116,6 +116,15 @@
 		01DB147C25264CC3004451B5 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01DB147925264CC3004451B5 /* UI.swift */; };
 		01DB1480252650DC004451B5 /* Valet in Frameworks */ = {isa = PBXBuildFile; productRef = 01DB147F252650DC004451B5 /* Valet */; };
 		01E05D902483C23000429A65 /* DocumentBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E05D8F2483C23000429A65 /* DocumentBrowserViewController.swift */; };
+		01FAD34D26447D070007A888 /* ObjcEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FAD34B26447D070007A888 /* ObjcEditorViewController.m */; };
+		01FAD361264483780007A888 /* KeyboardGuide in Frameworks */ = {isa = PBXBuildFile; productRef = 01FAD360264483780007A888 /* KeyboardGuide */; };
+		01FAD36C264484E90007A888 /* TwitterTextEditor-Auto in Frameworks */ = {isa = PBXBuildFile; productRef = 01FAD36B264484E90007A888 /* TwitterTextEditor-Auto */; };
+		01FAD36E264485B00007A888 /* SuggestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FAD36D264485B00007A888 /* SuggestViewController.swift */; };
+		01FAD370264486290007A888 /* ImagePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FAD36F264486290007A888 /* ImagePreviewViewController.swift */; };
+		01FAD3732644869F0007A888 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FAD3712644869F0007A888 /* UIColor.swift */; };
+		01FAD3742644869F0007A888 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FAD3722644869F0007A888 /* UIImage.swift */; };
+		01FAD376264487D30007A888 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FAD375264487D30007A888 /* String.swift */; };
+		01FAD37826448ABF0007A888 /* TextEditorBridgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FAD37726448ABF0007A888 /* TextEditorBridgeView.swift */; };
 		4E8C169316B3E871004195A1 /* fr-createdb.html in Resources */ = {isa = PBXBuildFile; fileRef = 4E8C168E16B3E871004195A1 /* fr-createdb.html */; };
 		4E8C169416B3E871004195A1 /* fr-dropbox.html in Resources */ = {isa = PBXBuildFile; fileRef = 4E8C168F16B3E871004195A1 /* fr-dropbox.html */; };
 		4E8C169516B3E871004195A1 /* fr-itunes.html in Resources */ = {isa = PBXBuildFile; fileRef = 4E8C169016B3E871004195A1 /* fr-itunes.html */; };
@@ -204,6 +213,19 @@
 		68EA62DB1CC972F300B33E42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68EA62DA1CC972F300B33E42 /* LaunchScreen.storyboard */; };
 		68EBC2D61613394D00E8E799 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68EBC2D51613394D00E8E799 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		01FAD369264483F90007A888 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		010E0FA624E8353C00DFF443 /* Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
@@ -520,6 +542,14 @@
 		01DB147825264CC3004451B5 /* AppLocker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLocker.swift; sourceTree = "<group>"; };
 		01DB147925264CC3004451B5 /* UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
 		01E05D8F2483C23000429A65 /* DocumentBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentBrowserViewController.swift; path = MiniKeePass/DocumentBrowserViewController.swift; sourceTree = "<group>"; };
+		01FAD34A26447D070007A888 /* ObjcEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjcEditorViewController.h; sourceTree = "<group>"; };
+		01FAD34B26447D070007A888 /* ObjcEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjcEditorViewController.m; sourceTree = "<group>"; };
+		01FAD36D264485B00007A888 /* SuggestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestViewController.swift; sourceTree = "<group>"; };
+		01FAD36F264486290007A888 /* ImagePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewViewController.swift; sourceTree = "<group>"; };
+		01FAD3712644869F0007A888 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		01FAD3722644869F0007A888 /* UIImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
+		01FAD375264487D30007A888 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		01FAD37726448ABF0007A888 /* TextEditorBridgeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditorBridgeView.swift; sourceTree = "<group>"; };
 		4E8C168E16B3E871004195A1 /* fr-createdb.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "fr-createdb.html"; sourceTree = "<group>"; };
 		4E8C168F16B3E871004195A1 /* fr-dropbox.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "fr-dropbox.html"; sourceTree = "<group>"; };
 		4E8C169016B3E871004195A1 /* fr-itunes.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "fr-itunes.html"; sourceTree = "<group>"; };
@@ -671,8 +701,10 @@
 				689D000D13A42765005EBD36 /* AudioToolbox.framework in Frameworks */,
 				01DB1480252650DC004451B5 /* Valet in Frameworks */,
 				689DFFDE13A4273F005EBD36 /* CoreGraphics.framework in Frameworks */,
+				01FAD36C264484E90007A888 /* TwitterTextEditor-Auto in Frameworks */,
 				689DFFDC13A4273F005EBD36 /* Foundation.framework in Frameworks */,
 				6802C36F1A425D7300595AC9 /* LocalAuthentication.framework in Frameworks */,
+				01FAD361264483780007A888 /* KeyboardGuide in Frameworks */,
 				68EBC2D61613394D00E8E799 /* QuartzCore.framework in Frameworks */,
 				689D000F13A42777005EBD36 /* Security.framework in Frameworks */,
 				689DFFDA13A4273F005EBD36 /* UIKit.framework in Frameworks */,
@@ -1669,6 +1701,14 @@
 		689FBE7B1AB27283005CB6BD /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				01FAD37726448ABF0007A888 /* TextEditorBridgeView.swift */,
+				01FAD375264487D30007A888 /* String.swift */,
+				01FAD3712644869F0007A888 /* UIColor.swift */,
+				01FAD3722644869F0007A888 /* UIImage.swift */,
+				01FAD36F264486290007A888 /* ImagePreviewViewController.swift */,
+				01FAD36D264485B00007A888 /* SuggestViewController.swift */,
+				01FAD34A26447D070007A888 /* ObjcEditorViewController.h */,
+				01FAD34B26447D070007A888 /* ObjcEditorViewController.m */,
 				689FBE7E1AB27283005CB6BD /* ImageButtonCell.h */,
 				689FBE7F1AB27283005CB6BD /* ImageButtonCell.m */,
 				689FBE861AB27283005CB6BD /* TextFieldCell.h */,
@@ -1710,6 +1750,7 @@
 				68C17C9C1A3E1774008DD56B /* Increment Build Number */,
 				689DFFD313A4273F005EBD36 /* Resources */,
 				01DD3D5024A277A300C57487 /* ShellScript */,
+				01FAD369264483F90007A888 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1718,6 +1759,8 @@
 			name = IOSKeePass;
 			packageProductDependencies = (
 				01DB147F252650DC004451B5 /* Valet */,
+				01FAD360264483780007A888 /* KeyboardGuide */,
+				01FAD36B264484E90007A888 /* TwitterTextEditor-Auto */,
 			);
 			productName = MiniKeePass;
 			productReference = 689DFFD513A4273F005EBD36 /* IOSKeePass.app */;
@@ -1767,6 +1810,8 @@
 			mainGroup = 689DFFCA13A4273F005EBD36;
 			packageReferences = (
 				01DB147E252650DC004451B5 /* XCRemoteSwiftPackageReference "Valet" */,
+				01FAD35F264483780007A888 /* XCRemoteSwiftPackageReference "KeyboardGuide" */,
+				01FAD36A264484E90007A888 /* XCRemoteSwiftPackageReference "TwitterTextEditor" */,
 			);
 			productRefGroup = 689DFFD613A4273F005EBD36 /* Products */;
 			projectDirPath = "";
@@ -1873,9 +1918,11 @@
 				01507BFE26234E61004EE497 /* ref.c in Sources */,
 				689DFFE713A4273F005EBD36 /* main.m in Sources */,
 				01507BB226234A32004EE497 /* KPKAESCipher.m in Sources */,
+				01FAD370264486290007A888 /* ImagePreviewViewController.swift in Sources */,
 				01507BA226234A0E004EE497 /* KPKKdbTreeReader.m in Sources */,
 				689FBE781AB27228005CB6BD /* KeychainUtils.m in Sources */,
 				01507BC626234A60004EE497 /* KPKFileKey.m in Sources */,
+				01FAD37826448ABF0007A888 /* TextEditorBridgeView.swift in Sources */,
 				01507BD526234A8F004EE497 /* NSData+KPKBase32.m in Sources */,
 				01507BDE26234A8F004EE497 /* NSDictionary+KPKVariant.m in Sources */,
 				01507BBF26234A4E004EE497 /* KPKXmlUtilities.m in Sources */,
@@ -1885,6 +1932,7 @@
 				01507BB126234A32004EE497 /* KPKChaCha20Cipher.m in Sources */,
 				689EA6811D67F8D500CF445E /* NewDatabaseViewController.swift in Sources */,
 				01507B92262349C5004EE497 /* KPKHmacOTPGenerator.m in Sources */,
+				01FAD3732644869F0007A888 /* UIColor.swift in Sources */,
 				016073EC2639CBC6008BC24D /* MF_Base32Additions.m in Sources */,
 				01507BAA26234A1E004EE497 /* KPKKdbxArchiver.m in Sources */,
 				689EA6821D67F8D500CF445E /* UIViewController+AlertController.swift in Sources */,
@@ -1903,6 +1951,7 @@
 				01507BAE26234A32004EE497 /* KPKSalsa20Cipher.m in Sources */,
 				68496E751AB34F8800370876 /* AppSettings.m in Sources */,
 				6895D2EA1D68F95D003D8C44 /* RenameItemViewController.swift in Sources */,
+				01FAD376264487D30007A888 /* String.swift in Sources */,
 				01507B8C26233C4D004EE497 /* KPKAttribute.m in Sources */,
 				01DB147B25264CC3004451B5 /* AppLocker.swift in Sources */,
 				689EA6951D67F94600CF445E /* SettingsViewController.swift in Sources */,
@@ -1910,6 +1959,7 @@
 				01507BEA26234CAD004EE497 /* core.c in Sources */,
 				01E05D902483C23000429A65 /* DocumentBrowserViewController.swift in Sources */,
 				01507BCF26234A8F004EE497 /* NSData+KPKHashedData.m in Sources */,
+				01FAD36E264485B00007A888 /* SuggestViewController.swift in Sources */,
 				01507B8B26233C4D004EE497 /* KPKEntry.m in Sources */,
 				01507B8D26233C4D004EE497 /* KPKTimeInfo.m in Sources */,
 				01507B8E26233C4D004EE497 /* KPKWindowAssociation.m in Sources */,
@@ -1956,7 +2006,9 @@
 				01507BD026234A8F004EE497 /* NSData+KPKKeyComputation.m in Sources */,
 				01507BBA26234A4E004EE497 /* KPKData.m in Sources */,
 				689D045113A42C82005EBD36 /* EntryViewController.m in Sources */,
+				01FAD34D26447D070007A888 /* ObjcEditorViewController.m in Sources */,
 				01D8BA0424E9355A00E0E70B /* SquareView.swift in Sources */,
+				01FAD3742644869F0007A888 /* UIImage.swift in Sources */,
 				01507BC226234A55004EE497 /* KPKFormat.m in Sources */,
 				680C9D7C1D69EB540040FB43 /* HelpWebViewController.swift in Sources */,
 				01507BD126234A8F004EE497 /* NSString+KPKXmlUtilities.m in Sources */,
@@ -2218,7 +2270,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1150;
+				CURRENT_PROJECT_VERSION = 1175;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				INFOPLIST_FILE = "MiniKeePass/IOSKeePass-Info.plist";
@@ -2227,7 +2279,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.5;
+				MARKETING_VERSION = 2.0.6;
 				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2250,7 +2302,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1150;
+				CURRENT_PROJECT_VERSION = 1175;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				INFOPLIST_FILE = "MiniKeePass/IOSKeePass-Info.plist";
@@ -2259,7 +2311,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.5;
+				MARKETING_VERSION = 2.0.6;
 				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2304,6 +2356,22 @@
 				minimumVersion = 4.1.1;
 			};
 		};
+		01FAD35F264483780007A888 /* XCRemoteSwiftPackageReference "KeyboardGuide" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/niw/KeyboardGuide.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+		01FAD36A264484E90007A888 /* XCRemoteSwiftPackageReference "TwitterTextEditor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twitter/TwitterTextEditor.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2311,6 +2379,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01DB147E252650DC004451B5 /* XCRemoteSwiftPackageReference "Valet" */;
 			productName = Valet;
+		};
+		01FAD360264483780007A888 /* KeyboardGuide */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01FAD35F264483780007A888 /* XCRemoteSwiftPackageReference "KeyboardGuide" */;
+			productName = KeyboardGuide;
+		};
+		01FAD36B264484E90007A888 /* TwitterTextEditor-Auto */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 01FAD36A264484E90007A888 /* XCRemoteSwiftPackageReference "TwitterTextEditor" */;
+			productName = "TwitterTextEditor-Auto";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
