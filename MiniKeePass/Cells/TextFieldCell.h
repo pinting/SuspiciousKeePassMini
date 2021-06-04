@@ -25,7 +25,8 @@ typedef NS_ENUM(NSInteger, TextFieldCellStyle) {
     TextFieldCellStyleTitle,
     TextFieldCellStylePassword,
     TextFieldCellStyleUrl,
-    TextFieldCellStyleOTP
+    TextFieldCellStyleOTP,
+    TextFieldCellStyleAutoFill
 };
 
 @interface TextFieldCell : UITableViewCell <UITextFieldDelegate>
@@ -37,6 +38,7 @@ typedef NS_ENUM(NSInteger, TextFieldCellStyle) {
 
 @property (nonatomic, strong) UIButton *accessoryButton;
 @property (nonatomic, strong) UIButton *editAccessoryButton;
+@property (nonatomic, strong) UISwitch *editAutoFill;
 
 @property (nonatomic, assign) TextFieldCellStyle style;
 

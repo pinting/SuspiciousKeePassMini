@@ -72,6 +72,9 @@
 - (BOOL)clearClipboardEnabled;
 - (void)setClearClipboardEnabled:(BOOL)clearClipboardEnabled;
 
+- (BOOL)autofillEnabled;
+- (void)setAutofillEnabled:(BOOL)autofillEnabled;
+
 - (BOOL)backupDisabled;
 - (void)setBackupDisabled:(BOOL)backupDisabled;
 

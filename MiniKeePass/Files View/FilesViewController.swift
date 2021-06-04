@@ -213,6 +213,32 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Load the database
+        /*let keychainItemQuery = [
+          kSecValueData: "Pullip2020".data(using: .utf8)!,
+          kSecClass: kSecClassGenericPassword
+        ] as CFDictionary
+        
+        var status = SecItemAdd(keychainItemQuery, nil)
+        print("Keychain Operation finished with status: \(status)")
+        
+        let keychainItem = [
+          kSecValueData: "Pullip2020".data(using: .utf8)!,
+          kSecAttrAccount: "andyibanez",
+          kSecAttrServer: "pullipstyle.com",
+          kSecClass: kSecClassInternetPassword
+        ] as CFDictionary
+
+        status = SecItemAdd(keychainItem, nil)
+        print("Operation finished with status: \(status)")*/
+        
+        /*let keychain = KeychainSwift(server: "mumpitz.com", protocolType: .https)
+
+     
+        let items = keychain.allItems()
+        for item in items {
+          print("Keychain item: \(item)")
+        }
+        */
         let databaseManager = DatabaseManager.sharedInstance()
         // Move to a background thread to do some long running work
         //AppDelegate.showGlobalProgressHUD(withTitle:"loading..")
@@ -224,7 +250,6 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             }
         }*/
         
-         
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
@@ -350,7 +375,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     } catch let error as NSError {
                         print("Couldn't copy file to final location! Error:\(error.description)")
                 }
-
+ 
             } else {
                 print("Database file found at path: \(finalDatabaseURL.path)")
             }

@@ -8,9 +8,5 @@
 	<array>
 		<string>group.de.unicomedv.KeePass</string>
 	</array>
-	<key>keychain-access-groups</key>
-	<array>
-		<string>$(AppIdentifierPrefix)de.unicomedv.IOSKeePass</string>
-	</array>
 </dict>
 </plist>

@@ -62,6 +62,11 @@
     self.grayBar.hidden = !showGrayBar;
 }
 
+- (void)setAutoFill:(UISwitch *)editAutoFill {
+    _editAutoFill = editAutoFill;
+    self.editingAccessoryView = editAutoFill;
+}
+
 - (void)setAccessoryButton:(UIButton *)accessoryButton {
     _accessoryButton = accessoryButton;
     self.accessoryView = accessoryButton;
@@ -81,6 +86,16 @@
     }
     
     
+}
+
+-(void) switchAutoFillChanged:(id)sender {
+    UISwitch* switcher = (UISwitch*)sender;
+    BOOL value = switcher.on;
+    // Store the value and/or respond appropriately
+    if(value==YES){
+        self.textField.text = @"IOS Autofill is On";
+    }else
+        self.textField.text = @"IOS Autofill is Off";
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -124,6 +139,27 @@
             [self.editAccessoryButton setImage:editAccessoryImage forState:UIControlStateNormal];
             break;
         }
+        case TextFieldCellStyleAutoFill: {
+                
+                self.textField.font = [UIFont fontWithName:@"Andale Mono" size:16 ];
+            self.editAutoFill = [[UISwitch alloc] init];
+                    CGSize switchSize = [self.editAutoFill  sizeThatFits:CGSizeZero];
+
+            self.editAutoFill.frame = CGRectMake(self.contentView.bounds.size.width - switchSize.width - 5.0f,
+                                 (self.contentView.bounds.size.height - switchSize.height) / 2.0f,
+                                 switchSize.width,
+                                 switchSize.height);
+
+                //UISwitch *editAutoFill = [UISwitch init];
+            self.editAutoFill.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+            self.editAutoFill.tag = 100;
+                    [self.editAutoFill addTarget:self action:@selector(switchAutoFillChanged:) forControlEvents:UIControlEventValueChanged];
+                    [self.contentView addSubview:self.editAutoFill];
+
+                [self.editAutoFill setOn:NO];
+                
+                break;
+            }
         case TextFieldCellStyleOTP: {
                 
                 self.textField.font = [UIFont fontWithName:@"Andale Mono" size:24 ];

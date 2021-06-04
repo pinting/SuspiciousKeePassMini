@@ -23,6 +23,8 @@ import LocalAuthentication
 class SettingsViewController: UITableViewController {
     @IBOutlet weak var pinEnabledSwitch: UISwitch!
     
+    @IBOutlet weak var enableAutofillExtension: UISwitch!
+    
     @IBOutlet weak var darkModeEnabledCell: UITableViewCell!
     @IBOutlet weak var darkModeEnabledSwitch: UISwitch!
     
@@ -82,7 +84,7 @@ class SettingsViewController: UITableViewController {
     fileprivate var touchIdSupported = false
     fileprivate var tempPin: String? = nil
     
-    override func viewDidLoad() {
+    override func viewDidLoad() { 
         super.viewDidLoad()
         
         // Get the version number
@@ -105,6 +107,7 @@ class SettingsViewController: UITableViewController {
            
             
             darkModeEnabledSwitch.isOn = appSettings.darkEnabled()
+            enableAutofillExtension.isOn = appSettings.autofillEnabled()
             touchIdEnabledSwitch.isOn = touchIdSupported && appSettings.touchIdEnabled()
             
             deleteAllDataEnabledSwitch.isOn = appSettings.deleteOnFailureEnabled()
@@ -146,6 +149,7 @@ class SettingsViewController: UITableViewController {
         let clearClipboardEnabled = appSettings.clearClipboardEnabled()
         
          // Enable/disable the components dependant on settings
+       
         setCellEnabled(touchIdEnabledCell, enabled: touchIdSupported)
         touchIdEnabledSwitch.isEnabled = touchIdSupported
         setCellEnabled(deleteAllDataEnabledCell, enabled: pinEnabled)
@@ -318,7 +322,7 @@ class SettingsViewController: UITableViewController {
                            print("Light mode")
                        }
                    }
-               }
+               } 
     }
     
     @IBAction func touchIdEnabledChanged(_ sender: UISwitch) {
@@ -369,6 +373,18 @@ class SettingsViewController: UITableViewController {
         
         // Update which controls are enabled
         updateEnabledControls()
+    }
+    
+    @IBAction func autfillExtensionEnabledChanged(_ sender: UISwitch) {
+        self.appSettings?.setAutofillEnabled(enableAutofillExtension.isOn)
+        
+        if(enableAutofillExtension.isOn == false){
+            //Remove Autfille.DB if is possible
+            let abd = AutoFillDB()
+            abd.RemoveDB()
+            
+            
+        }
     }
     
     @IBAction func excludeFromBackupEnabledChanged(_ sender: UISwitch) {

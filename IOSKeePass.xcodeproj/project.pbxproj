@@ -15,6 +15,9 @@
 		010EA826248CE6A50020C492 /* KTouchIDAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 010EA825248CE6A50020C492 /* KTouchIDAuthentication.m */; };
 		0118DF5D262B5B1A00A78850 /* Properties.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0118DF5C262B5B1A00A78850 /* Properties.storyboard */; };
 		0118DF62262B703500A78850 /* PropertiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0118DF61262B703500A78850 /* PropertiesTableViewController.swift */; };
+		013D647F265BBF5700161D6B /* AutoFillDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013D647E265BBF5700161D6B /* AutoFillDB.swift */; };
+		013D6482265BC00900161D6B /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 013D6481265BC00900161D6B /* CryptoSwift */; };
+		013D6485265BC04E00161D6B /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 013D6484265BC04E00161D6B /* SQLite */; };
 		01507B7726233BDC004EE497 /* KPKToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 014B38F32622379400E46F27 /* KPKToken.m */; };
 		01507B7826233BDC004EE497 /* KPKTokenStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 014B38F22622379400E46F27 /* KPKTokenStream.m */; };
 		01507B7A26233C14004EE497 /* KPKTree+Synchronization.m in Sources */ = {isa = PBXBuildFile; fileRef = 014B38F92622379400E46F27 /* KPKTree+Synchronization.m */; };
@@ -108,6 +111,28 @@
 		01507BF526234CEE004EE497 /* twofish.c in Sources */ = {isa = PBXBuildFile; fileRef = 014B387A2622371800E46F27 /* twofish.c */; };
 		01507BFE26234E61004EE497 /* ref.c in Sources */ = {isa = PBXBuildFile; fileRef = 014B38E12622377300E46F27 /* ref.c */; };
 		016073EC2639CBC6008BC24D /* MF_Base32Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 016073EB2639CBC6008BC24D /* MF_Base32Additions.m */; };
+		01723AE626504433000BC997 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01723AE526504433000BC997 /* AuthenticationServices.framework */; };
+		01934AA3266141B600C385E8 /* KeychainSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01934AA2266141B600C385E8 /* KeychainSwift.swift */; };
+		019F692A2668C7EA00D44032 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 522D8F9D17E35B0E00BCA329 /* Images.xcassets */; };
+		01A207DF266406E400DB0E66 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01723AE526504433000BC997 /* AuthenticationServices.framework */; };
+		01A207E2266406E400DB0E66 /* CredentialProviderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A207E1266406E400DB0E66 /* CredentialProviderViewController.swift */; };
+		01A207E5266406E400DB0E66 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01A207E3266406E400DB0E66 /* MainInterface.storyboard */; };
+		01A207EA266406E400DB0E66 /* IKPAutoFill.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 01A207DE266406E400DB0E66 /* IKPAutoFill.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		01A207EF26640A0900DB0E66 /* CredentialProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A207EE26640A0900DB0E66 /* CredentialProvider.swift */; };
+		01A207F626640D2500DB0E66 /* UsenameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A207F126640D2500DB0E66 /* UsenameCell.swift */; };
+		01A207F726640D2500DB0E66 /* DirectoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A207F226640D2500DB0E66 /* DirectoryCell.swift */; };
+		01A207F926640D2500DB0E66 /* ViewPasswordDirectoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A207F526640D2500DB0E66 /* ViewPasswordDirectoriesController.swift */; };
+		01A207FD26640D6100DB0E66 /* Directory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A207FB26640D6100DB0E66 /* Directory.swift */; };
+		01A207FE26640D6100DB0E66 /* Username.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A207FC26640D6100DB0E66 /* Username.swift */; };
+		01A2080626640DE700DB0E66 /* DirectoriesTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2080126640DE700DB0E66 /* DirectoriesTableViewDataSource.swift */; };
+		01A2080726640DE700DB0E66 /* BiometricAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2080226640DE700DB0E66 /* BiometricAuth.swift */; };
+		01A2080F266410CF00DB0E66 /* PasswordSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2080C266410CF00DB0E66 /* PasswordSelectionDelegate.swift */; };
+		01A20810266410CF00DB0E66 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A2080D266410CF00DB0E66 /* Navigator.swift */; };
+		01A208122664115400DB0E66 /* FSReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A208112664115400DB0E66 /* FSReader.swift */; };
+		01A208152664120D00DB0E66 /* FindPasswordFlow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01A208132664120D00DB0E66 /* FindPasswordFlow.storyboard */; };
+		01BDB29D2668145A008251F0 /* AutoFillDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BDB29C2668145A008251F0 /* AutoFillDB.swift */; };
+		01BDB29F26681545008251F0 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 01BDB29E26681545008251F0 /* SQLite */; };
+		01BDB2A126681575008251F0 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 01BDB2A026681575008251F0 /* CryptoSwift */; };
 		01D8BA0324E9355A00E0E70B /* SwiftQRScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8BA0124E9355A00E0E70B /* SwiftQRScanner.swift */; };
 		01D8BA0424E9355A00E0E70B /* SquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D8BA0224E9355A00E0E70B /* SquareView.swift */; };
 		01D94F0F2455CFB80026F7F1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D94F0D2455CFB70026F7F1 /* MBProgressHUD.m */; };
@@ -214,7 +239,28 @@
 		68EBC2D61613394D00E8E799 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68EBC2D51613394D00E8E799 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		01A207E8266406E400DB0E66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 689DFFCC13A4273F005EBD36 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 01A207DD266406E400DB0E66;
+			remoteInfo = IKPAutoFill;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		01723F0526504BE2000BC997 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				01A207EA266406E400DB0E66 /* IKPAutoFill.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		01FAD369264483F90007A888 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -238,6 +284,7 @@
 		010EA825248CE6A50020C492 /* KTouchIDAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KTouchIDAuthentication.m; path = MiniKeePass/KTouchIDAuthentication.m; sourceTree = "<group>"; };
 		0118DF5C262B5B1A00A78850 /* Properties.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Properties.storyboard; sourceTree = "<group>"; };
 		0118DF61262B703500A78850 /* PropertiesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesTableViewController.swift; sourceTree = "<group>"; };
+		013D647E265BBF5700161D6B /* AutoFillDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoFillDB.swift; sourceTree = "<group>"; };
 		014B387A2622371800E46F27 /* twofish.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = twofish.c; sourceTree = "<group>"; };
 		014B387B2622371800E46F27 /* twofish.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = twofish.h; sourceTree = "<group>"; };
 		014B38802622374A00E46F27 /* chacha20_simple.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = chacha20_simple.c; sourceTree = "<group>"; };
@@ -532,8 +579,28 @@
 		01507BE226234BC5004EE497 /* KissXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KissXML.h; sourceTree = "<group>"; };
 		016073EA2639CBC6008BC24D /* MF_Base32Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MF_Base32Additions.h; sourceTree = "<group>"; };
 		016073EB2639CBC6008BC24D /* MF_Base32Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MF_Base32Additions.m; sourceTree = "<group>"; };
+		01723AE526504433000BC997 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		01928BFB262C273800DC312E /* MultilineTextFileld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MultilineTextFileld.swift; path = ../../../../MultilineTextFileld.swift; sourceTree = "<group>"; };
 		01928E9E262E166C00DC312E /* IOSKeePass.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IOSKeePass.entitlements; sourceTree = "<group>"; };
+		01934AA2266141B600C385E8 /* KeychainSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainSwift.swift; sourceTree = "<group>"; };
+		01A207DE266406E400DB0E66 /* IKPAutoFill.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IKPAutoFill.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		01A207E1266406E400DB0E66 /* CredentialProviderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialProviderViewController.swift; sourceTree = "<group>"; };
+		01A207E4266406E400DB0E66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		01A207E6266406E400DB0E66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		01A207E7266406E400DB0E66 /* IKPAutoFill.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = IKPAutoFill.entitlements; sourceTree = "<group>"; };
+		01A207EE26640A0900DB0E66 /* CredentialProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialProvider.swift; sourceTree = "<group>"; };
+		01A207F126640D2500DB0E66 /* UsenameCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsenameCell.swift; sourceTree = "<group>"; };
+		01A207F226640D2500DB0E66 /* DirectoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectoryCell.swift; sourceTree = "<group>"; };
+		01A207F526640D2500DB0E66 /* ViewPasswordDirectoriesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPasswordDirectoriesController.swift; sourceTree = "<group>"; };
+		01A207FB26640D6100DB0E66 /* Directory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Directory.swift; sourceTree = "<group>"; };
+		01A207FC26640D6100DB0E66 /* Username.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Username.swift; sourceTree = "<group>"; };
+		01A2080126640DE700DB0E66 /* DirectoriesTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectoriesTableViewDataSource.swift; sourceTree = "<group>"; };
+		01A2080226640DE700DB0E66 /* BiometricAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BiometricAuth.swift; sourceTree = "<group>"; };
+		01A2080C266410CF00DB0E66 /* PasswordSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordSelectionDelegate.swift; sourceTree = "<group>"; };
+		01A2080D266410CF00DB0E66 /* Navigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		01A208112664115400DB0E66 /* FSReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSReader.swift; sourceTree = "<group>"; };
+		01A208142664120D00DB0E66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/FindPasswordFlow.storyboard; sourceTree = "<group>"; };
+		01BDB29C2668145A008251F0 /* AutoFillDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoFillDB.swift; sourceTree = "<group>"; };
 		01D8BA0124E9355A00E0E70B /* SwiftQRScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftQRScanner.swift; sourceTree = "<group>"; };
 		01D8BA0224E9355A00E0E70B /* SquareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SquareView.swift; sourceTree = "<group>"; };
 		01D94F0D2455CFB70026F7F1 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
@@ -694,10 +761,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		01A207DB266406E400DB0E66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01BDB29F26681545008251F0 /* SQLite in Frameworks */,
+				01A207DF266406E400DB0E66 /* AuthenticationServices.framework in Frameworks */,
+				01BDB2A126681575008251F0 /* CryptoSwift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		689DFFD213A4273F005EBD36 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				013D6485265BC04E00161D6B /* SQLite in Frameworks */,
 				689D000D13A42765005EBD36 /* AudioToolbox.framework in Frameworks */,
 				01DB1480252650DC004451B5 /* Valet in Frameworks */,
 				689DFFDE13A4273F005EBD36 /* CoreGraphics.framework in Frameworks */,
@@ -707,9 +785,11 @@
 				01FAD361264483780007A888 /* KeyboardGuide in Frameworks */,
 				68EBC2D61613394D00E8E799 /* QuartzCore.framework in Frameworks */,
 				689D000F13A42777005EBD36 /* Security.framework in Frameworks */,
+				01723AE626504433000BC997 /* AuthenticationServices.framework in Frameworks */,
 				689DFFDA13A4273F005EBD36 /* UIKit.framework in Frameworks */,
 				689D001113A4277E005EBD36 /* libxml2.dylib in Frameworks */,
 				689D001313A42784005EBD36 /* libz.dylib in Frameworks */,
+				013D6482265BC00900161D6B /* CryptoSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1334,6 +1414,70 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		01A207E0266406E400DB0E66 /* IKPAutoFill */ = {
+			isa = PBXGroup;
+			children = (
+				01A208132664120D00DB0E66 /* FindPasswordFlow.storyboard */,
+				01A208112664115400DB0E66 /* FSReader.swift */,
+				01BDB29C2668145A008251F0 /* AutoFillDB.swift */,
+				01A2080A266410CF00DB0E66 /* Protocols */,
+				01A207FF26640DE700DB0E66 /* Services */,
+				01A207FA26640D6100DB0E66 /* Models */,
+				01A207F326640D2500DB0E66 /* ViewControllers */,
+				01A207F026640D2500DB0E66 /* Views */,
+				01A207EE26640A0900DB0E66 /* CredentialProvider.swift */,
+				01A207E1266406E400DB0E66 /* CredentialProviderViewController.swift */,
+				01A207E3266406E400DB0E66 /* MainInterface.storyboard */,
+				01A207E6266406E400DB0E66 /* Info.plist */,
+				01A207E7266406E400DB0E66 /* IKPAutoFill.entitlements */,
+			);
+			path = IKPAutoFill;
+			sourceTree = "<group>";
+		};
+		01A207F026640D2500DB0E66 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				01A207F126640D2500DB0E66 /* UsenameCell.swift */,
+				01A207F226640D2500DB0E66 /* DirectoryCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		01A207F326640D2500DB0E66 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				01A207F526640D2500DB0E66 /* ViewPasswordDirectoriesController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		01A207FA26640D6100DB0E66 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				01A207FB26640D6100DB0E66 /* Directory.swift */,
+				01A207FC26640D6100DB0E66 /* Username.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		01A207FF26640DE700DB0E66 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				01A2080126640DE700DB0E66 /* DirectoriesTableViewDataSource.swift */,
+				01A2080226640DE700DB0E66 /* BiometricAuth.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		01A2080A266410CF00DB0E66 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				01A2080C266410CF00DB0E66 /* PasswordSelectionDelegate.swift */,
+				01A2080D266410CF00DB0E66 /* Navigator.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		01DB147525264CC3004451B5 /* AppLocker */ = {
 			isa = PBXGroup;
 			children = (
@@ -1379,8 +1523,10 @@
 		5271A98E1EDA16D200B9AF2C /* Entry View */ = {
 			isa = PBXGroup;
 			children = (
+				013D647E265BBF5700161D6B /* AutoFillDB.swift */,
 				689D042A13A42C81005EBD36 /* EntryViewController.h */,
 				689D042B13A42C81005EBD36 /* EntryViewController.m */,
+				01934AA2266141B600C385E8 /* KeychainSwift.swift */,
 			);
 			path = "Entry View";
 			sourceTree = "<group>";
@@ -1538,6 +1684,7 @@
 				689D030413A42B63005EBD36 /* README.md */,
 				689DFFDF13A4273F005EBD36 /* MiniKeePass */,
 				689D02F313A42B63005EBD36 /* KissXML */,
+				01A207E0266406E400DB0E66 /* IKPAutoFill */,
 				689DFFD813A4273F005EBD36 /* Frameworks */,
 				689D041413A42B85005EBD36 /* Resources */,
 				689DFFD613A4273F005EBD36 /* Products */,
@@ -1548,6 +1695,7 @@
 			isa = PBXGroup;
 			children = (
 				689DFFD513A4273F005EBD36 /* IOSKeePass.app */,
+				01A207DE266406E400DB0E66 /* IKPAutoFill.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1555,6 +1703,7 @@
 		689DFFD813A4273F005EBD36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				01723AE526504433000BC997 /* AuthenticationServices.framework */,
 				6802C36E1A425D7300595AC9 /* LocalAuthentication.framework */,
 				689D000C13A42765005EBD36 /* AudioToolbox.framework */,
 				689DFFDD13A4273F005EBD36 /* CoreGraphics.framework */,
@@ -1741,6 +1890,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		01A207DD266406E400DB0E66 /* IKPAutoFill */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 01A207EB266406E400DB0E66 /* Build configuration list for PBXNativeTarget "IKPAutoFill" */;
+			buildPhases = (
+				01A207DA266406E400DB0E66 /* Sources */,
+				01A207DB266406E400DB0E66 /* Frameworks */,
+				01A207DC266406E400DB0E66 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IKPAutoFill;
+			packageProductDependencies = (
+				01BDB29E26681545008251F0 /* SQLite */,
+				01BDB2A026681575008251F0 /* CryptoSwift */,
+			);
+			productName = IKPAutoFill;
+			productReference = 01A207DE266406E400DB0E66 /* IKPAutoFill.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		689DFFD413A4273F005EBD36 /* IOSKeePass */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 689D000613A42740005EBD36 /* Build configuration list for PBXNativeTarget "IOSKeePass" */;
@@ -1751,16 +1921,20 @@
 				689DFFD313A4273F005EBD36 /* Resources */,
 				01DD3D5024A277A300C57487 /* ShellScript */,
 				01FAD369264483F90007A888 /* Embed Frameworks */,
+				01723F0526504BE2000BC997 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				01A207E9266406E400DB0E66 /* PBXTargetDependency */,
 			);
 			name = IOSKeePass;
 			packageProductDependencies = (
 				01DB147F252650DC004451B5 /* Valet */,
 				01FAD360264483780007A888 /* KeyboardGuide */,
 				01FAD36B264484E90007A888 /* TwitterTextEditor-Auto */,
+				013D6481265BC00900161D6B /* CryptoSwift */,
+				013D6484265BC04E00161D6B /* SQLite */,
 			);
 			productName = MiniKeePass;
 			productReference = 689DFFD513A4273F005EBD36 /* IOSKeePass.app */;
@@ -1772,13 +1946,15 @@
 		689DFFCC13A4273F005EBD36 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = Self;
 				TargetAttributes = {
+					01A207DD266406E400DB0E66 = {
+						CreatedOnToolsVersion = 12.5;
+					};
 					689DFFD413A4273F005EBD36 = {
-						DevelopmentTeam = WRR6GY9WK6;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.iCloud = {
 								enabled = 0;
@@ -1806,23 +1982,54 @@
 				Base,
 				es,
 				pl,
+				sv,
+				he,
+				"zh-TW",
+				sq,
+				"en-CA",
+				co,
+				uk,
+				kab,
+				nb,
+				"en-GB",
+				sk,
+				cs,
+				hu,
+				ia,
+				cy,
+				"zh-CN",
+				nn,
+				"pt-PT",
 			);
 			mainGroup = 689DFFCA13A4273F005EBD36;
 			packageReferences = (
 				01DB147E252650DC004451B5 /* XCRemoteSwiftPackageReference "Valet" */,
 				01FAD35F264483780007A888 /* XCRemoteSwiftPackageReference "KeyboardGuide" */,
 				01FAD36A264484E90007A888 /* XCRemoteSwiftPackageReference "TwitterTextEditor" */,
+				013D6480265BC00900161D6B /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+				013D6483265BC04E00161D6B /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 			);
 			productRefGroup = 689DFFD613A4273F005EBD36 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				689DFFD413A4273F005EBD36 /* IOSKeePass */,
+				01A207DD266406E400DB0E66 /* IKPAutoFill */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		01A207DC266406E400DB0E66 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				019F692A2668C7EA00D44032 /* Images.xcassets in Resources */,
+				01A208152664120D00DB0E66 /* FindPasswordFlow.storyboard in Resources */,
+				01A207E5266406E400DB0E66 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		689DFFD313A4273F005EBD36 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1903,11 +2110,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		01A207DA266406E400DB0E66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				01A2080626640DE700DB0E66 /* DirectoriesTableViewDataSource.swift in Sources */,
+				01BDB29D2668145A008251F0 /* AutoFillDB.swift in Sources */,
+				01A207FD26640D6100DB0E66 /* Directory.swift in Sources */,
+				01A207FE26640D6100DB0E66 /* Username.swift in Sources */,
+				01A2080726640DE700DB0E66 /* BiometricAuth.swift in Sources */,
+				01A207E2266406E400DB0E66 /* CredentialProviderViewController.swift in Sources */,
+				01A207F926640D2500DB0E66 /* ViewPasswordDirectoriesController.swift in Sources */,
+				01A20810266410CF00DB0E66 /* Navigator.swift in Sources */,
+				01A208122664115400DB0E66 /* FSReader.swift in Sources */,
+				01A2080F266410CF00DB0E66 /* PasswordSelectionDelegate.swift in Sources */,
+				01A207EF26640A0900DB0E66 /* CredentialProvider.swift in Sources */,
+				01A207F626640D2500DB0E66 /* UsenameCell.swift in Sources */,
+				01A207F726640D2500DB0E66 /* DirectoryCell.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		689DFFD113A4273F005EBD36 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2007,6 +2234,7 @@
 				01507BBA26234A4E004EE497 /* KPKData.m in Sources */,
 				689D045113A42C82005EBD36 /* EntryViewController.m in Sources */,
 				01FAD34D26447D070007A888 /* ObjcEditorViewController.m in Sources */,
+				01934AA3266141B600C385E8 /* KeychainSwift.swift in Sources */,
 				01D8BA0424E9355A00E0E70B /* SquareView.swift in Sources */,
 				01FAD3742644869F0007A888 /* UIImage.swift in Sources */,
 				01507BC226234A55004EE497 /* KPKFormat.m in Sources */,
@@ -2051,6 +2279,7 @@
 				01507BA826234A1E004EE497 /* KPKXmlTreeReader.m in Sources */,
 				01507B8026233C1D004EE497 /* KPKIcon.m in Sources */,
 				01507BCE26234A8F004EE497 /* NSData+KPKKeyfile.m in Sources */,
+				013D647F265BBF5700161D6B /* AutoFillDB.swift in Sources */,
 				01507BB626234A3C004EE497 /* KPKArgon2DKeyDerivation.m in Sources */,
 				01507BB726234A3C004EE497 /* KPKArgon2IDKeyDerivation.m in Sources */,
 				01507BAF26234A32004EE497 /* KPKTwofishCipher.m in Sources */,
@@ -2068,6 +2297,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		01A207E9266406E400DB0E66 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 01A207DD266406E400DB0E66 /* IKPAutoFill */;
+			targetProxy = 01A207E8266406E400DB0E66 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		014B38EF2622379400E46F27 /* InfoPlist.strings */ = {
@@ -2092,6 +2329,22 @@
 				014B39CF2622379400E46F27 /* nl */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		01A207E3266406E400DB0E66 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01A207E4266406E400DB0E66 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		01A208132664120D00DB0E66 /* FindPasswordFlow.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01A208142664120D00DB0E66 /* Base */,
+			);
+			name = FindPasswordFlow.storyboard;
 			sourceTree = "<group>";
 		};
 		687AAA991889F8B400AB8AC5 /* AppStore.txt */ = {
@@ -2150,6 +2403,81 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		01A207EC266406E400DB0E66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = IKPAutoFill/IKPAutoFill.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1222;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = WRR6GY9WK6;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = IKPAutoFill/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass.IKPAutoFill;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		01A207ED266406E400DB0E66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = IKPAutoFill/IKPAutoFill.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1222;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = WRR6GY9WK6;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = IKPAutoFill/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 2.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass.IKPAutoFill;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		689D000413A42740005EBD36 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2263,14 +2591,15 @@
 		689D000713A42740005EBD36 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = IOSKeePass.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1175;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1222;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				INFOPLIST_FILE = "MiniKeePass/IOSKeePass-Info.plist";
@@ -2279,11 +2608,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.6;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "Frank IOS Development";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MiniKeePass/MiniKeePass-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
@@ -2296,13 +2625,14 @@
 		689D000813A42740005EBD36 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = IOSKeePass.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1175;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1222;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				INFOPLIST_FILE = "MiniKeePass/IOSKeePass-Info.plist";
@@ -2311,11 +2641,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.6;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "Frank IOS Development";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "MiniKeePass/MiniKeePass-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 5.0;
@@ -2327,6 +2657,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		01A207EB266406E400DB0E66 /* Build configuration list for PBXNativeTarget "IKPAutoFill" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01A207EC266406E400DB0E66 /* Debug */,
+				01A207ED266406E400DB0E66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		689D000613A42740005EBD36 /* Build configuration list for PBXNativeTarget "IOSKeePass" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2348,6 +2687,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		013D6480265BC00900161D6B /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
+		013D6483265BC04E00161D6B /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.12.2;
+			};
+		};
 		01DB147E252650DC004451B5 /* XCRemoteSwiftPackageReference "Valet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Square/Valet";
@@ -2375,6 +2730,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		013D6481265BC00900161D6B /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 013D6480265BC00900161D6B /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
+		};
+		013D6484265BC04E00161D6B /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 013D6483265BC04E00161D6B /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+		01BDB29E26681545008251F0 /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 013D6483265BC04E00161D6B /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+		01BDB2A026681575008251F0 /* CryptoSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 013D6480265BC00900161D6B /* XCRemoteSwiftPackageReference "CryptoSwift" */;
+			productName = CryptoSwift;
+		};
 		01DB147F252650DC004451B5 /* Valet */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 01DB147E252650DC004451B5 /* XCRemoteSwiftPackageReference "Valet" */;

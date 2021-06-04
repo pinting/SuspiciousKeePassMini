@@ -23,6 +23,8 @@
 #import "IOSKeePass-Swift.h"
 #import "MBProgressHUD.h"
 
+//#import "AutoFillKeyChain.h"
+
 
 #define SECTION_HEADER_HEIGHT 46.0f
 
@@ -40,6 +42,7 @@ enum {
     TextFieldCell *urlCell;
     TextViewCell *commentsCell;
     TextFieldCell *otpCell;
+    TextFieldCell *autofillCell;
 }
 
 @property (nonatomic) BOOL isKdb4;
@@ -125,12 +128,28 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     otpCell.textField.text = @"";
     [otpCell.editAccessoryButton addTarget:self action:@selector(openScanBarcodePressed) forControlEvents:UIControlEventTouchUpInside];
    
+    autofillCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
+    autofillCell.style = TextFieldCellStyleAutoFill;
+    autofillCell.title = @"AutoFill";//NSLocalizedString(@"URL", nil);
+    autofillCell.delegate = self;
+    autofillCell.textField.placeholder = @"On or Off";//NSLocalizedString(@"URL", nil)
+    autofillCell.textField.enabled = NO;
+    autofillCell.textField.returnKeyType = UIReturnKeyDone;
+    autofillCell.textField.text = @"";
+    
+    if ([[AppSettings sharedInstance] autofillEnabled]) {
+        autofillCell.editAutoFill.enabled = TRUE;
+    }else{
+        autofillCell.editAutoFill.enabled = FALSE;
+    }
     
     
-    _defaultCells = @[titleCell, usernameCell, passwordCell, urlCell,otpCell];
+    
+   // [autofillCell.editAutoFill addTarget:self action:@selector(Autofill) forControlEvents:UIControlEventTouchUpInside];
+    
+    _defaultCells = @[titleCell, usernameCell, passwordCell, urlCell,autofillCell,otpCell];
     
     _editingStringFields = [NSMutableArray array];
-    
     
     KPKEntry *kdb4Entry = (KPKEntry *)self.entry;
     
@@ -161,6 +180,13 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                     }
                     
                 });
+            }
+            
+            if ([sf.key isEqualToString:@"AutoFill"])
+            {
+                if([sf.value isEqualToString:@"YES"]){
+                    autofillCell.editAutoFill.on = YES;
+                }
             }
         }
     
@@ -372,8 +398,59 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                     
                     [cell.textField resignFirstResponder];
                 }
-
+ 
                 KPKEntry *kdb4Entry = (KPKEntry *)self.entry;
+                
+                if ([[AppSettings sharedInstance] autofillEnabled]) {
+                    AutoFillDB *adb = [[AutoFillDB alloc] init];
+                   
+                    NSString *u;
+                    if(self.entry.url.length <=1)
+                        u = self.entry.title;
+                    else
+                        u = self.entry.url;
+                    
+                    
+                    if(autofillCell.editAutoFill.on == YES)
+                    {
+                       
+                       [adb AddEntryWithUser:self.entry.username secret:self.entry.password url:u];
+                        
+                        NSInteger count = kdb4Entry.attributes.count;
+                        BOOL autofillfound = FALSE;
+                        for (NSInteger i = 0; i < count; i++) {
+                            KPKAttribute *sf = kdb4Entry.attributes[i];
+                            if ([sf.key isEqualToString:@"AutoFill"])
+                            {
+                                sf.value = @"YES";
+                                autofillfound = TRUE;
+                            }
+                        }
+                        if(autofillfound == FALSE){
+                            KPKAttribute *afill = [[KPKAttribute alloc] initWithKey:@"AutoFill" value:@"YES" isProtected:NO];
+                            [self.editingStringFields addObject:afill];
+                            
+                        }  
+                        
+                    }else{
+                        NSInteger count = kdb4Entry.attributes.count;
+                        for (NSInteger i = 0; i < count; i++) {
+                            KPKAttribute *sf = kdb4Entry.attributes[i];
+                            if ([sf.key isEqualToString:@"AutoFill"])
+                            {
+                                sf.value = @"NO";
+                            }
+                        }
+                       [adb RemoveEntryWithUser:self.entry.username url:u];
+                    }
+                }else{
+                    //remove AutoFillDB
+                    AutoFillDB *adb = [[AutoFillDB alloc] init];
+                    [adb RemoveDB];
+                    
+                }
+                
+                
                 for (id attr in kdb4Entry.customAttributes) {
                     // do something with object
                     //NSLog(@"%@",attr);
@@ -385,6 +462,8 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                     //NSLog(@"%@",newattr);
                     [self.entry addCustomAttribute:newattr];
                 }
+                
+               
                 
                 //Kdb4Entry *kdb4Entry = (Kdb4Entry *)self.entry;
                 //[kdb4Entry.stringFields removeAllObjects];
@@ -886,6 +965,24 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 - (void)passwordGeneratorViewController:(PasswordGeneratorViewController *)controller password:(NSString *)password {
     passwordCell.textField.text = password;
 }
+
+/*- (void)Autofill {
+    AutoFillDB *adb = [[AutoFillDB alloc] init];
+    
+    NSString *u;
+    if(self.entry.url.length <=1)
+        u = self.entry.title;
+    else
+        u = self.entry.url;
+    
+    if(autofillCell.editAutoFill.on == YES)
+    { 
+        [adb AddEntryWithUser:self.entry.username secret:self.entry.password url:u];
+        
+    }else{
+        [adb RemoveEntryWithUser:self.entry.username url:u];
+    }
+}*/
 
 - (void)openScanBarcodePressed {
     // Display the qr scanner

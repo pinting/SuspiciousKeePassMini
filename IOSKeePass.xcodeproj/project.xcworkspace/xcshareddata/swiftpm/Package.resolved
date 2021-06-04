@@ -2,12 +2,30 @@
   "object": {
     "pins": [
       {
+        "package": "CryptoSwift",
+        "repositoryURL": "https://github.com/krzyzanowskim/CryptoSwift.git",
+        "state": {
+          "branch": null,
+          "revision": "4e31051c63cc0ddf10a25cf5318856c510cf77f4",
+          "version": "1.4.0"
+        }
+      },
+      {
         "package": "KeyboardGuide",
         "repositoryURL": "https://github.com/niw/KeyboardGuide.git",
         "state": {
           "branch": null,
           "revision": "f52e9881d8aa9b93dd76b9596e4d2c40a9b99308",
           "version": "0.2.0"
+        }
+      },
+      {
+        "package": "SQLite.swift",
+        "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
+        "state": {
+          "branch": null,
+          "revision": "0a9893ec030501a3956bee572d6b4fdd3ae158a1",
+          "version": "0.12.2"
         }
       },
       {
