@@ -24,6 +24,14 @@ class CredentialProvider {
             extensionContext?.cancelRequest(withError: error)
         }
         
+        if(dirNames?.count == 0)
+        {
+            let error = NSError(domain: ASExtensionErrorDomain,
+                                code: ASExtensionError.credentialIdentityNotFound.rawValue,
+                                userInfo: nil)
+            extensionContext?.cancelRequest(withError: error)
+        }
+        
         let domain = Directory(domain: recordIdentifier, username: identity.user, pwd: dirNames![0].pwd,hash:dirNames![0].hash,url: dirNames![0].url)
       
         //let username = Username(value: identity.user)
@@ -50,7 +58,7 @@ fileprivate func provideCredentialIdentity(for identifier: ASCredentialServiceId
 
 fileprivate func provideCredentials(in domain: Directory) -> ASPasswordCredential? {
     //let password = "Test123" //decryptPassword(for: directory, with: username) else { return nil }
-    guard let secure = domain.pwd.cryptoSwiftAESDecrypt(key: "XXXXXXXXXXXXX", iv:"XXXXXXXXXXXXX" ) else { return ASPasswordCredential(user: "unknown", password: "unknown") }
+    guard let secure = domain.pwd.cryptoSwiftAESDecrypt(key: "xxxxxxx", iv:"xxxxxx" ) else { return ASPasswordCredential(user: "unknown", password: "unknown") }
     
     return ASPasswordCredential(user: domain.username, password: secure)
 }

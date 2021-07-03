@@ -39,6 +39,7 @@
 "Comments_Edit" = "Comments (tap zum editieren)";
 "OK" = "OK";
 "Cancel" = "Cancel";
+"Accept" = "Accept";
 "Add" = "Add";
 "Search" = "Search";
 "Help" = "Help";
@@ -60,6 +61,8 @@
 "Choose Group" = "Choose Group";
 "Backup" = "Backup";
 "Not Supported" = "Not Supported";
+"AutoFill Request" = "AutoFill Request";
+"I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism.";
 
 // General Messages
 "This is an KDB in Verion 1, and has no support for One Time Passwords" = "This is an KDB in Verion 1, and has no support for One Time Passwords";

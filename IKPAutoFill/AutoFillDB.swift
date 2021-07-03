@@ -29,7 +29,7 @@ public class AutoFillDB: NSObject {
                 
                 try cnn.execute("CREATE TABLE IF NOT EXISTS AutoFill (id INTEGER PRIMARY KEY AUTOINCREMENT, HASH TEXT, User TEXT, PWD TEXT, URL TEXT, DOMAIN TEXT)")
                 
-                try cnn.execute("CREATE UNIQUE INDEX HASH_IDX ON AutoFill(HASH);")
+                //try cnn.execute("CREATE UNIQUE INDEX HASH_IDX ON AutoFill(HASH);")
                 } catch {
                     print(error)
                 }
@@ -53,7 +53,7 @@ public class AutoFillDB: NSObject {
                     let user = Expression<String>("User")
                     let pwd = Expression<String>("PWD")
                     let url = Expression<String>("URL")
-                    let query = autofill.filter(dom == domain && user == userOnDomain)
+                    let query = autofill.filter(dom.like(domain) && user.like(userOnDomain))
                     let rows = try cnn.prepare(query)
                     // SELECT * FROM "users" WHERE ("verified" AND (lower("name") == 'alice'))
                     var dir = [Directory]()
@@ -80,16 +80,22 @@ public class AutoFillDB: NSObject {
                 do{
                     let cnn = try Connection(filepath!.path)
                     let autofill = Table("AutoFill")
-                    let rows = try cnn.prepare(autofill)
+                    
                     let hash = Expression<String>("HASH")
                     let dom = Expression<String>("DOMAIN")
                     let user = Expression<String>("User")
                     let pwd = Expression<String>("PWD")
                     let url = Expression<String>("URL")
                     var dir = [Directory]()
+                    let rows = try cnn.prepare(autofill)
+                    
                     for row in rows{
-                        let dn = Directory(domain: row[dom], username: row[user], pwd: row[pwd], hash: row[hash], url: row[url])
-                        dir.append(dn)
+                        let us = row[user]
+                        if(!us.isEmpty){
+                            let dn = Directory(domain: row[dom], username: us, pwd: row[pwd], hash: row[hash], url: row[url])
+                            dir.append(dn)
+                            print(dn)
+                        }
                     }
                     return dir
                 } catch {

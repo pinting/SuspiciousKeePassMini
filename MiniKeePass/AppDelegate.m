@@ -111,7 +111,95 @@
     NSArray *urls = [fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
     return [urls firstObject];
 }
+/*- (void)methodAWithCompletion:(void (^) (BOOL success))completion
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, kNilOptions), ^{
 
+        // go do something asynchronous...
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+            completion(ifThingWorked)
+
+        });
+    });
+}*/
+- (void)buildAutoFillIfNeeded:(NSString *)dbname
+{
+    if (_databaseDocument == nil) {
+       
+    }
+    AppSettings *appSettings = [AppSettings sharedInstance];
+    
+    if(appSettings.autoFillMethod == 1 && appSettings.autofillEnabled == YES)
+    {
+        //Dump all Entries
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Autofill request", nil) message:NSLocalizedString(@"I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism.", nil)  preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Accept", nil) style:UIAlertActionStyleDefault
+                handler:^(UIAlertAction * action) {
+                
+                
+                NSLog(@"%@",self->_databaseDocument.kdbTree.metaData.customData.description);
+
+                    [AppDelegate showGlobalProgressHUDWithTitle:@"AutoFill build..."];
+                
+                    AutoFillDB *adb = [[AutoFillDB alloc] init];
+                    for(KPKEntry *entry in self->_databaseDocument.kdbTree.allEntries) {
+                        //NSLog(@"%@",entry.title);
+                        NSString *u;
+                        if(entry.url.length <=1)
+                            u = entry.title;
+                        else
+                            u = entry.url;
+                        
+                        [adb InsertEntryWithUser:entry.username secret:entry.password url:u];
+                    }
+               
+                NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+                 [dateFormatter setDateFormat:@"YYYYMMddHHmmss"];
+                [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+                NSDate *currentDate = [NSDate date];
+                [dateFormatter stringFromDate:currentDate];
+               
+                
+                [adb KeePassDBSyncWithDbname:dbname syncdate:[dateFormatter stringFromDate:currentDate]];//(dbname: dname, syncdate: [dateFormatter stringFromDate:currentDate])
+                [AppDelegate dismissGlobalHUD];
+                
+                   
+                
+            }];
+            
+            
+            UIAlertAction* leaveAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleDefault
+                handler:^(UIAlertAction * action) {}];
+
+            [alert addAction:defaultAction];
+            [alert addAction:leaveAction];
+            
+           
+            [self.topViewController presentViewController:alert animated:YES completion:nil];
+        
+             
+             
+                });
+             });
+       
+    }
+    
+    
+}
+
+- (DatabaseDocument *)getOpenDataBase {
+    
+    if (_databaseDocument == nil) {
+        return nil;
+    }
+    
+    return _databaseDocument;
+}
+    
 - (void)importUrl:(NSURL *)url {
     // Get the filename
     NSString *filename = [url lastPathComponent];

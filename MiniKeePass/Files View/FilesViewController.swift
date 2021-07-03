@@ -85,8 +85,30 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 return
             }
             
+            
             let appDelegate = AppDelegate.getDelegate()
-            let document = appDelegate?.databaseDocument
+            let document = appDelegate?.getOpenDataBase()//appDelegate?.databaseDocument
+            let adb = AutoFillDB()
+            let dname = URL(fileURLWithPath: document!.filename).lastPathComponent
+            if(!adb.IsKeePassInAutoFill(dbname: dname)){
+                
+            
+            
+                let group = DispatchGroup()
+                    group.enter()
+
+                    // avoid deadlocks by not using .main queue here
+                DispatchQueue.global(qos: .default).async {
+                    appDelegate?.buildAutoFillIfNeeded(dname)
+                    
+                        group.leave()
+                    }
+
+                // wait ...
+                group.wait()
+            }
+            
+           
             
             groupViewController.parentGroup = document?.kdbTree.root
             groupViewController.title = URL(fileURLWithPath: document!.filename).lastPathComponent
@@ -102,6 +124,8 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             break
         }
     }
+    
+    
     
     func displayDocumentBrowser(inboundURL: URL? = nil, importIfNeeded: Bool = true) {
       //if presentationContext == .launched {

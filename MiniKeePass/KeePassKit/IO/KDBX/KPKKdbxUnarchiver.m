@@ -132,6 +132,7 @@
     /* header | encrypted(hashed(zipped(data))) */
     
     NSData *encryptedData = [self.data subdataWithRange:NSMakeRange(self.headerLength, self.data.length - self.headerLength)];
+    
     NSData *decryptedData = [cipher decryptData:encryptedData withKey:keyData initializationVector:self.encryptionIV error:error];
     if(!decryptedData) {
       return nil;

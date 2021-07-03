@@ -141,7 +141,10 @@
         }
         case TextFieldCellStyleAutoFill: {
                 
-                self.textField.font = [UIFont fontWithName:@"Andale Mono" size:16 ];
+            //self.textField.font = [UIFont fontWithName:@"Andale Mono" size:16 ];
+            self.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+            self.titleLabel.adjustsFontForContentSizeCategory = true;
+            
             self.editAutoFill = [[UISwitch alloc] init];
                     CGSize switchSize = [self.editAutoFill  sizeThatFits:CGSizeZero];
 

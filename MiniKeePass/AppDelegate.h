@@ -34,6 +34,8 @@
 + (MBProgressHUD *)showGlobalProgressHUDWithTitle:(NSString *)title;
 + (void)dismissGlobalHUD;
 
+- (DatabaseDocument *)getOpenDataBase;
+- (void)buildAutoFillIfNeeded:(NSString *)dbname;
 - (void)closeDatabase;
 - (void)deleteAllData;
 - (UIViewController *)topViewController;

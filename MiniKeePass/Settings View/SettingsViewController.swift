@@ -57,6 +57,7 @@ class SettingsViewController: UITableViewController {
     
     @IBOutlet weak var versionLabel: UILabel!
     
+    @IBOutlet weak var autoFillMethod: UISegmentedControl!
     
     fileprivate let deleteAllDataAttempts = ["3", "5", "10", "15"]
     
@@ -105,6 +106,7 @@ class SettingsViewController: UITableViewController {
             // Initialize all the controls with their settings
             pinEnabledSwitch.isOn = appSettings.pinEnabled()
            
+            autoFillMethod.selectedSegmentIndex = appSettings.autoFillMethod()
             
             darkModeEnabledSwitch.isOn = appSettings.darkEnabled()
             enableAutofillExtension.isOn = appSettings.autofillEnabled()
@@ -216,6 +218,10 @@ class SettingsViewController: UITableViewController {
     
     // MARK: - Actions
     
+    @IBAction func SelAutoFilleMethod(_ sender: UISegmentedControl) {
+        self.appSettings?.setautoFillMethod(autoFillMethod.selectedSegmentIndex)
+    }
+    
     @IBAction func donePressedAction(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
@@ -302,6 +308,7 @@ class SettingsViewController: UITableViewController {
         }
         updateEnabledControls()
     }
+    
     @IBAction func darkEnabledChanged(_ sender: UISwitch) {
         if(darkModeEnabledSwitch.isOn){
                    self.appSettings?.setDarkEnabled(darkModeEnabledSwitch.isOn)

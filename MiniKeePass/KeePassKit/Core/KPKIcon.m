@@ -136,7 +136,17 @@
 }
 
 - (NSString *)encodedString {
-  return [self.image.kpk_pngData base64EncodedStringWithOptions:0];
+    /* test for bitmap content, if so, just use simple API to generate PNG */
+    CGImageRef cgImageRef = (__bridge CGImageRef)(self.image);
+    if(cgImageRef) {
+        return [UIImagePNGRepresentation(self.image) base64EncodedStringWithOptions:0];
+      //self.image.kpk_pngData = UIImagePNGRepresentation(self);
+    }else{
+        return nil;
+    }
+    
+    /* no bitmap data is present, we need to render it first */
+  //return [self.image.kpk_pngData base64EncodedStringWithOptions:0];
 }
 
 #pragma mark Private

@@ -73,9 +73,14 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     titleCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
     titleCell.style = TextFieldCellStyleTitle;
     titleCell.title = NSLocalizedString(@"Title", nil);
+    titleCell.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    titleCell.titleLabel.adjustsFontForContentSizeCategory = true;
     titleCell.delegate = self;
     titleCell.textField.placeholder = NSLocalizedString(@"Title", nil);
     titleCell.textField.enabled = NO;
+    titleCell.textField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    titleCell.textField.adjustsFontForContentSizeCategory = true;
+    
     titleCell.textField.text = self.entry.title;
     [titleCell.editAccessoryButton addTarget:self action:@selector(imageButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self setSelectedImageIndex:self.entry.iconId];
@@ -84,30 +89,45 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     usernameCell.style = TextFieldCellStylePlain;
     usernameCell.title = NSLocalizedString(@"Username", nil);
     usernameCell.delegate = self;
+    usernameCell.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    usernameCell.titleLabel.adjustsFontForContentSizeCategory = true;
     usernameCell.textField.placeholder = NSLocalizedString(@"Username", nil);
     usernameCell.textField.enabled = NO;
     usernameCell.textField.text = self.entry.username;
     usernameCell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
     usernameCell.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    usernameCell.textField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    usernameCell.textField.adjustsFontForContentSizeCategory = true;
+    
     
     passwordCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
     passwordCell.style = TextFieldCellStylePassword;
     passwordCell.title = NSLocalizedString(@"Password", nil);
+    passwordCell.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    passwordCell.titleLabel.adjustsFontForContentSizeCategory = true;
     passwordCell.delegate = self;
     passwordCell.textField.placeholder = NSLocalizedString(@"Password", nil);
     passwordCell.textField.enabled = NO;
     passwordCell.textField.text = self.entry.password;
+    passwordCell.textField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    passwordCell.textField.adjustsFontForContentSizeCategory = true;
+    
     [passwordCell.accessoryButton addTarget:self action:@selector(showPasswordPressed) forControlEvents:UIControlEventTouchUpInside];
     [passwordCell.editAccessoryButton addTarget:self action:@selector(generatePasswordPressed) forControlEvents:UIControlEventTouchUpInside];
     
     urlCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
     urlCell.style = TextFieldCellStyleUrl;
     urlCell.title = NSLocalizedString(@"URL", nil);
+    urlCell.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    urlCell.titleLabel.adjustsFontForContentSizeCategory = true;
     urlCell.delegate = self;
     urlCell.textField.placeholder = NSLocalizedString(@"URL", nil);
     urlCell.textField.enabled = NO;
     urlCell.textField.returnKeyType = UIReturnKeyDone;
     urlCell.textField.text = self.entry.url;
+    urlCell.textField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    urlCell.textField.adjustsFontForContentSizeCategory = true;
+    
     [urlCell.accessoryButton addTarget:self action:@selector(openUrlPressed) forControlEvents:UIControlEventTouchUpInside];
     
     commentsCell = [[TextViewCell alloc] init];
@@ -116,11 +136,15 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     commentsCell.textView.scrollEnabled = TRUE;
     commentsCell.textView.userInteractionEnabled = TRUE;
     commentsCell.parentView = self;
+    commentsCell.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    commentsCell.textView.adjustsFontForContentSizeCategory = true;
    
     
     otpCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
     otpCell.style = TextFieldCellStyleOTP;
     otpCell.title = @"OTP";//NSLocalizedString(@"URL", nil);
+    otpCell.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    otpCell.titleLabel.adjustsFontForContentSizeCategory = true;
     otpCell.delegate = self;
     otpCell.textField.placeholder = @"OneTimePassword";//NSLocalizedString(@"URL", nil)
     otpCell.textField.enabled = NO;
@@ -131,11 +155,15 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     autofillCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
     autofillCell.style = TextFieldCellStyleAutoFill;
     autofillCell.title = @"AutoFill";//NSLocalizedString(@"URL", nil);
+    autofillCell.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    autofillCell.titleLabel.adjustsFontForContentSizeCategory = true;
     autofillCell.delegate = self;
     autofillCell.textField.placeholder = @"On or Off";//NSLocalizedString(@"URL", nil)
     autofillCell.textField.enabled = NO;
     autofillCell.textField.returnKeyType = UIReturnKeyDone;
     autofillCell.textField.text = @"";
+    autofillCell.textField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    autofillCell.textField.adjustsFontForContentSizeCategory = true;
     
     if ([[AppSettings sharedInstance] autofillEnabled]) {
         autofillCell.editAutoFill.enabled = TRUE;
@@ -414,7 +442,8 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                     if(autofillCell.editAutoFill.on == YES)
                     {
                        
-                       [adb AddEntryWithUser:self.entry.username secret:self.entry.password url:u];
+                        
+                        [adb AddOrUpdateEntryWithUser:self.entry.username secret:self.entry.password url:u];
                         
                         NSInteger count = kdb4Entry.attributes.count;
                         BOOL autofillfound = FALSE;
@@ -479,7 +508,6 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                         });
                     });
            
-                
             
         }
     }
@@ -825,7 +853,10 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     if([cell isKindOfClass:[TextFieldCell class]]){
         if ([cell.title isEqualToString:@"OTP"])
         {
-            pasteboard.string = [cell.textField.text substringToIndex:7];
+            //Remove Blank from otp
+            NSString *otpwithoutspace = [[cell.textField.text substringToIndex:7]
+               stringByReplacingOccurrencesOfString:@" " withString:@""];
+            pasteboard.string = otpwithoutspace;
         }else{
             pasteboard.string = cell.textField.text;
         }

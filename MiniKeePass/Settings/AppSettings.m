@@ -41,6 +41,7 @@
 #define CLEAR_CLIPBOARD_ENABLED    @"clearClipboardEnabled"
 #define BACKUP_DISABLED            @"backupDisabled"
 #define AUTOFILL_ENABLED           @"autofillDisabled"
+#define AUTOFILL_METHOD            @"autoFillMethod"
 #define CLEAR_CLIPBOARD_TIMEOUT    @"clearClipboardTimeout"
 #define WEB_BROWSER_INTEGRATED     @"webBrowserIntegrated"
 #define PW_GEN_LENGTH              @"pwGenLength"
@@ -123,6 +124,7 @@ static AppSettings *sharedInstance;
         [defaultsDict setValue:[NSNumber numberWithInt:0] forKey:CLEAR_CLIPBOARD_TIMEOUT];
         [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:BACKUP_DISABLED];
         [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:AUTOFILL_ENABLED];
+        [defaultsDict setValue:[NSNumber numberWithInt:0] forKey:AUTOFILL_METHOD];
         [defaultsDict setValue:[NSNumber numberWithBool:YES] forKey:WEB_BROWSER_INTEGRATED];
         [defaultsDict setValue:[NSNumber numberWithInt:10] forKey:PW_GEN_LENGTH];
         [defaultsDict setValue:[NSNumber numberWithInt:0x07] forKey:PW_GEN_CHAR_SETS];
@@ -276,6 +278,13 @@ static AppSettings *sharedInstance;
 
 - (void)setAutofillEnabled:(BOOL)autofillEnabled{
     [userDefaults setBool:autofillEnabled forKey:AUTOFILL_ENABLED];
+}
+
+- (NSInteger)autoFillMethod {
+    return [userDefaults integerForKey:AUTOFILL_METHOD];
+}
+- (void)setautoFillMethod:(NSInteger)autoFillMethod{
+    [userDefaults setInteger:autoFillMethod forKey:AUTOFILL_METHOD];
 }
 
 - (BOOL)backupDisabled {

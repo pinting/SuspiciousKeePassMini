@@ -27,6 +27,9 @@
 - (BOOL)darkEnabled;
 - (void)setDarkEnabled:(BOOL)darkEnabled;
 
+- (NSInteger)autoFillMethod;
+- (void)setautoFillMethod:(NSInteger)autoFillMethod;
+
 - (BOOL)pinEnabled;
 - (void)setPinEnabled:(BOOL)pinEnabled;
 
