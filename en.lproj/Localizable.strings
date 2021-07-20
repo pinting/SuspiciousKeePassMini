@@ -62,6 +62,8 @@
 "Backup" = "Backup";
 "Not Supported" = "Not Supported";
 "AutoFill Request" = "AutoFill Request";
+"Attachments" = "Attachments";
+"Save" = "Save";
 "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism.";
 
 // General Messages

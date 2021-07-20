@@ -92,7 +92,7 @@
 	<key>CFBundleSignature</key>
 	<string>1101</string>
 	<key>CFBundleVersion</key>
-	<string>10</string>
+	<string>18</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>

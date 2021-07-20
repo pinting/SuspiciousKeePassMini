@@ -43,6 +43,7 @@ enum {
     TextViewCell *commentsCell;
     TextFieldCell *otpCell;
     TextFieldCell *autofillCell;
+    TextFieldCell *filesCell;
 }
 
 @property (nonatomic) BOOL isKdb4;
@@ -165,6 +166,21 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     autofillCell.textField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     autofillCell.textField.adjustsFontForContentSizeCategory = true;
     
+    filesCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
+    filesCell.style = TextFieldCellStylFiles;
+    filesCell.title = NSLocalizedString(@"Attachments", nil);
+    filesCell.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    filesCell.titleLabel.adjustsFontForContentSizeCategory = true;
+    filesCell.delegate = self;
+    filesCell.textField.placeholder = NSLocalizedString(@"Files", nil);
+    filesCell.textField.enabled = NO;
+    filesCell.textField.returnKeyType = UIReturnKeyDone;
+    filesCell.textField.text = @"";
+    filesCell.textField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    filesCell.textField.adjustsFontForContentSizeCategory = true;
+    
+    [filesCell.accessoryButton addTarget:self action:@selector(openFilesPressed) forControlEvents:UIControlEventTouchUpInside];
+    
     if ([[AppSettings sharedInstance] autofillEnabled]) {
         autofillCell.editAutoFill.enabled = TRUE;
     }else{
@@ -175,14 +191,23 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     
    // [autofillCell.editAutoFill addTarget:self action:@selector(Autofill) forControlEvents:UIControlEventTouchUpInside];
     
-    _defaultCells = @[titleCell, usernameCell, passwordCell, urlCell,autofillCell,otpCell];
+    _defaultCells = @[titleCell, usernameCell, passwordCell, urlCell,filesCell,autofillCell,otpCell];
     
     _editingStringFields = [NSMutableArray array];
     
     KPKEntry *kdb4Entry = (KPKEntry *)self.entry;
     
     if (self.isKdb4) {
-           
+        NSInteger bcount = kdb4Entry.binaries.count;
+        if(bcount >= 0){
+            NSString *tt = [[NSString alloc] initWithFormat:@"%ld %@",bcount, NSLocalizedString(@"Attachments", nil)];
+            filesCell.textField.text = tt;
+        }
+        for (NSInteger j = 0; j < bcount; j++) {
+            KPKBinary *bf = kdb4Entry.binaries[j];
+            NSLog(@"Binarie %@ is valid",bf.name);
+          
+        }
         NSInteger count = kdb4Entry.attributes.count;
         for (NSInteger i = 0; i < count; i++) {
             KPKAttribute *sf = kdb4Entry.attributes[i];
@@ -312,6 +337,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     [usernameCell.textField resignFirstResponder];
     [passwordCell.textField resignFirstResponder];
     [urlCell.textField resignFirstResponder];
+    [filesCell.textField resignFirstResponder];
     [commentsCell.textView resignFirstResponder];
     [otpCell.textField resignFirstResponder];
 }
@@ -860,6 +886,11 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         }else{
             pasteboard.string = cell.textField.text;
         }
+        if ([cell.title isEqualToString:NSLocalizedString(@"Attachments", nil)])
+        {
+            //[self openFilesPressed];
+            return;
+        }
         
         if ([cell.title isEqualToString:@"OTPURL:"])
         {
@@ -993,6 +1024,32 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
+- (void)openFilesPressed {
+    // Display the password generator
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"AttachmentList" bundle:nil];
+    //UINavigationController *navigationController = [storyboard instantiateInitialViewController];
+    
+    AttachmentListViewController *attachmentViewController = [storyboard instantiateInitialViewController];//(AttachmentListViewController *)navigationController.topViewController;
+    
+    attachmentViewController.entry = self.entry;
+    attachmentViewController.fcell = filesCell;
+    
+    
+    /*attachmentViewController.donePressed = ^(AttachmentListViewController *attachmentViewController, NSString *password) {
+        self->passwordCell.textField.text = password;
+        [attachmentViewController dismissViewControllerAnimated:YES completion:nil];
+    };*/
+    
+    [self.navigationController pushViewController:attachmentViewController animated:YES];
+    
+   /* attachmentViewController.cancelPressed = ^(AttachmentListViewController *attachmentViewController) {
+        [attachmentViewController dismissViewControllerAnimated:YES completion:nil];
+    };
+    
+
+    [self presentViewController:navigationController animated:YES completion:nil];*/
+}
+
 - (void)passwordGeneratorViewController:(PasswordGeneratorViewController *)controller password:(NSString *)password {
     passwordCell.textField.text = password;
 }
@@ -1094,6 +1151,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 - (void)qrScannerDidCancel:(UIViewController * _Nonnull)controller{
     NSLog(@"Cancel");
 }
+
 - (void)openUrlPressed {
     NSString *text = urlCell.textField.text;
     

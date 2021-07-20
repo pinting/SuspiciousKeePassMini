@@ -222,13 +222,28 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         // Get the file's last modification time
         let databaseManager = DatabaseManager.sharedInstance()
         let url = databaseManager?.getFileUrl(filename)
+        let size = databaseManager?.getFileSize(url)
         let date = databaseManager?.getFileLastModificationDate(url)
         let nowdate = Date()
+        var sstr = String(format:"%@ Bytes", size!)
+        
+        if(Int64(truncating: size!) > 1024){
+            sstr = String(format:"%d KB", Int64(truncating: size!)/1024)
+        }
+        
+        if(Int64(truncating: size!) > (1024*1024)){
+            sstr = String(format:"%d MB", Int64(truncating: size!)/1024/1024)
+        }
+        
+        if(Int64(truncating: size!) > (1024*1024*1024)){
+            sstr = String(format:"%d GB", Int64(truncating: size!)/1024/1024/1024)
+        }
+        
         // Format the last modified time as the subtitle of the cell
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .short
-        cell.detailTextLabel!.text = NSLocalizedString("Last Modified", comment: "") + ": " + dateFormatter.string(from: date ?? nowdate)
+        cell.detailTextLabel!.text = NSLocalizedString("Last Modified", comment: "") + ": " + dateFormatter.string(from: date ?? nowdate) + " Size:" + sstr
 
         return cell
     }

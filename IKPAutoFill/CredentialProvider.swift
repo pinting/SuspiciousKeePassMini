@@ -58,7 +58,7 @@ fileprivate func provideCredentialIdentity(for identifier: ASCredentialServiceId
 
 fileprivate func provideCredentials(in domain: Directory) -> ASPasswordCredential? {
     //let password = "Test123" //decryptPassword(for: directory, with: username) else { return nil }
-    guard let secure = domain.pwd.cryptoSwiftAESDecrypt(key: "xxxxxxx", iv:"xxxxxx" ) else { return ASPasswordCredential(user: "unknown", password: "unknown") }
+    guard let secure = domain.pwd.cryptoSwiftAESDecrypt(key: "RheinBrohl2021#!", iv:"o8!k3kp=)alk(2h/" ) else { return ASPasswordCredential(user: "unknown", password: "unknown") }
     
     return ASPasswordCredential(user: domain.username, password: secure)
 }

@@ -30,6 +30,7 @@
 - (NSArray *)getKeyFiles;
 - (NSURL *)getFileUrl:(NSString *)filename;
 - (NSDate *)getFileLastModificationDate:(NSURL *)url;
+- (NSNumber *)getFileSize:(NSURL *)url;
 - (void)deleteFile:(NSString *)filename;
 - (void)newDatabase:(NSURL *)url password:(NSString *)password version:(NSInteger)version;
 - (void)renameDatabase:(NSURL *)originalUrl newUrl:(NSURL *)newUrl;

@@ -179,7 +179,7 @@
                 [self.editAccessoryButton setImage:editAccessoryImage forState:UIControlStateNormal];
                 break;
             }
-        case TextFieldCellStyleUrl:
+        case TextFieldCellStyleUrl:{
             self.textField.textColor = [UIColor colorWithRed: 0.01 green: 0.64 blue: 1.00 alpha: 1.00];;//[UIColor blueColor];
             self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
             self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -188,6 +188,19 @@
             self.accessoryButton = [UIButton buttonWithType:UIButtonTypeCustom];
             self.accessoryButton.frame = CGRectMake(0.0, 0.0, 40, 40);
             [self.accessoryButton setImage:[UIImage imageNamed:@"external-link"] forState:UIControlStateNormal];
+            break;
+        }
+        case TextFieldCellStylFiles:{
+            self.textField.textColor = [UIColor colorWithRed: 0.01 green: 0.64 blue: 1.00 alpha: 1.00];;//[UIColor blueColor];
+            self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+            self.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+            self.textField.keyboardType = UIKeyboardTypeURL;
+            
+            self.accessoryButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            self.accessoryButton.frame = CGRectMake(0.0, 0.0, 40, 40);
+            [self.accessoryButton setImage:[UIImage imageNamed:@"Files"] forState:UIControlStateNormal];
+            break;
+        }
         case TextFieldCellStylePlain:
             break;
         case TextFieldCellStyleTitle: {

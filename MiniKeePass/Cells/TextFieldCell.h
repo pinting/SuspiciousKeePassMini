@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, TextFieldCellStyle) {
     TextFieldCellStyleTitle,
     TextFieldCellStylePassword,
     TextFieldCellStyleUrl,
+    TextFieldCellStylFiles,
     TextFieldCellStyleOTP,
     TextFieldCellStyleAutoFill
 };

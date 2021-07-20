@@ -61,6 +61,8 @@
 "Choose Group" = "Gruppe auswählen";
 "Backup" = "Backup";
 "Not Supported" = "Nicht Unterstützt";
+"Attachments" = "Anhänge";
+"Save" = "Speichern";
 "AutoFill Request" = "AutoFill Nachfrage";
 "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "Hiermit bestätige ich das meine Kennwörter in dieser DB dem IOS Autofill Mechanismus zur Verfügung gestellt werden";
 

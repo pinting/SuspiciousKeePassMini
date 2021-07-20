@@ -120,6 +120,12 @@ static DatabaseManager *sharedInstance;
     return date;
 }
 
+- (NSNumber *)getFileSize:(NSURL *)url {
+    NSNumber *size;
+    NSError *error;
+    [url getResourceValue:&size forKey:NSURLFileAllocatedSizeKey error:&error];
+    return size;
+}
 - (void)deleteFile:(NSString *)filename {
     NSURL *url = [self getFileUrl:filename];
     NSString *path = url.path;

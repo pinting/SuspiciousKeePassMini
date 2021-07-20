@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="yzN-Iu-RCo">
+    <device id="retina4_7" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Attachment List View Controller-->
+        <scene sceneID="5vc-i5-4wR">
+            <objects>
+                <tableViewController id="yzN-Iu-RCo" userLabel="Attachment List View Controller" customClass="AttachmentListViewController" customModule="IOSKeePass" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="yUi-Dz-D4Z">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="attachmentCell" rowHeight="80" id="Xrs-zX-K7e" customClass="attachmentCell" customModule="IOSKeePass">
+                                <rect key="frame" x="0.0" y="24.5" width="375" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Xrs-zX-K7e" id="Xdy-dJ-rPQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="349.5" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0B9-Eg-Bme">
+                                            <rect key="frame" x="16" y="5" width="70" height="70"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="70" id="BaH-EF-NGI"/>
+                                                <constraint firstAttribute="height" constant="70" id="mjP-N7-roT"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VDy-Se-gza">
+                                            <rect key="frame" x="94" y="33" width="31" height="14.5"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="VDy-Se-gza" firstAttribute="leading" secondItem="0B9-Eg-Bme" secondAttribute="trailing" constant="8" symbolic="YES" id="546-Hl-E3h"/>
+                                        <constraint firstItem="0B9-Eg-Bme" firstAttribute="leading" secondItem="Xdy-dJ-rPQ" secondAttribute="leadingMargin" id="Fme-cc-ma5"/>
+                                        <constraint firstItem="0B9-Eg-Bme" firstAttribute="top" secondItem="VDy-Se-gza" secondAttribute="top" constant="-28" id="oYN-nd-bu8"/>
+                                        <constraint firstItem="0B9-Eg-Bme" firstAttribute="centerY" secondItem="Xdy-dJ-rPQ" secondAttribute="centerY" id="u9s-fW-tCo"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="attachmentImage" destination="0B9-Eg-Bme" id="ZoF-Hg-2RU"/>
+                                    <outlet property="attachmentName" destination="VDy-Se-gza" id="dba-bs-SJZ"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="yzN-Iu-RCo" id="YXF-zB-S8K"/>
+                            <outlet property="delegate" destination="yzN-Iu-RCo" id="Rrr-dS-eqx"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Attachments" id="dnW-JK-Mcd">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Jre-j0-iUr">
+                            <connections>
+                                <action selector="AddFile:" destination="yzN-Iu-RCo" id="Uvi-RN-keL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="attachmentTable" destination="yUi-Dz-D4Z" id="B5d-ME-1Wa"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d5m-P7-ZuV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="221.59999999999999" y="331.48425787106447"/>
+        </scene>
+        <!--Binary View Controller-->
+        <scene sceneID="gph-ke-vQF">
+            <objects>
+                <viewController id="s0n-hJ-BYT" customClass="BinaryViewController" customModule="IOSKeePass" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="awQ-7H-mcX"/>
+                        <viewControllerLayoutGuide type="bottom" id="TO3-zN-6WM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Its-kD-qyd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="IF7-qz-seX"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d70-ls-zsO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="975" y="331"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
