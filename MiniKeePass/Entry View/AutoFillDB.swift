@@ -145,9 +145,9 @@ import SQLite
                     let pwd = Expression<String>("PWD")
                     let urlfield = Expression<String>("URL")
                     
-                    let sec = secret.cryptoSwiftAESEncrypt(key: "RheinBrohl2021#!", iv:"o8!k3kp=)alk(2h/" )
+                    let sec = secret.cryptoSwiftAESEncrypt(key: "xx#!", iv:"xxh/" )
                     let ha = String(format:"%@<->%@",user,url)
-                    let hash = ha.cryptoSwiftAESEncrypt(key: "ValueForAll2023#", iv: "o8!k3kp=)alk(2h/")
+                    let hash = ha.cryptoSwiftAESEncrypt(key: "xx#", iv: "oxx/")
                     try cnn.run(autofill.insert(userfield <- user, pwd <- sec!, urlfield <- url, dom <- domain, hashfield <- hash!))
                     //let ins = String(format:"INSERT INTO AutoFill (HASH,User,PWD,URL,DOMAIN) VALUES('%@','%@','%@','%@','%@');",hash!,user,sec!,url,domain)xxx
                     //try cnn.execute(ins)
@@ -175,9 +175,9 @@ import SQLite
                 do{
                     let cnn = try Connection(filepath!.path)
                     
-                    let sec = secret.cryptoSwiftAESEncrypt(key: "RheinBrohl2021#!", iv:"o8!k3kp=)alk(2h/" )
+                    let sec = secret.cryptoSwiftAESEncrypt(key: "xx#!", iv:"o8xxh/" )
                     let ha = String(format:"%@<->%@",user,url)
-                    let hash = ha.cryptoSwiftAESEncrypt(key: "ValueForAll2023#", iv: "o8!k3kp=)alk(2h/")
+                    let hash = ha.cryptoSwiftAESEncrypt(key: "xx#", iv: "xxh/")
                     let sel = String(format:"Select User,DOMAIN from AutoFill where User='%@' and DOMAIN='%@'",user,domain)
                     let rows = try cnn.prepare(sel)
                     var selection = 0
@@ -209,7 +209,7 @@ import SQLite
                 do{
                     let cnn = try Connection(filepath!.path)
                     let ha = String(format:"%@<->%@",user,url)
-                    let hash = ha.cryptoSwiftAESEncrypt(key: "ValueForAll2023#", iv: "o8!k3kp=)alk(2h/")
+                    let hash = ha.cryptoSwiftAESEncrypt(key: "xx#", iv: "oxx(2h/")
                     let del = String(format:"DELETE from AutoFill where HASH='%@';",hash!)
                     try cnn.execute(del)
                 } catch {
