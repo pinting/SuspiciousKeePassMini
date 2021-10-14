@@ -51,7 +51,6 @@
     
    
     [self checkFileProtection];
-
     
     return YES;
 }

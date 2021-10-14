@@ -114,6 +114,10 @@
 		01507BF326234CE8004EE497 /* chacha20_simple.c in Sources */ = {isa = PBXBuildFile; fileRef = 014B38802622374A00E46F27 /* chacha20_simple.c */; };
 		01507BF526234CEE004EE497 /* twofish.c in Sources */ = {isa = PBXBuildFile; fileRef = 014B387A2622371800E46F27 /* twofish.c */; };
 		01507BFE26234E61004EE497 /* ref.c in Sources */ = {isa = PBXBuildFile; fileRef = 014B38E12622377300E46F27 /* ref.c */; };
+		0154640B271309F900ADB7BA /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0154640A271309F900ADB7BA /* CloudKit.framework */; };
+		0154641427149FF700ADB7BA /* FilesProvider in Frameworks */ = {isa = PBXBuildFile; productRef = 0154641327149FF700ADB7BA /* FilesProvider */; };
+		015464172715E2B500ADB7BA /* SwiftSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 015464162715E2B500ADB7BA /* SwiftSpinner */; };
+		015464192716DF3F00ADB7BA /* CloudAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015464182716DF3F00ADB7BA /* CloudAccountViewController.swift */; };
 		016073EC2639CBC6008BC24D /* MF_Base32Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 016073EB2639CBC6008BC24D /* MF_Base32Additions.m */; };
 		01723AE626504433000BC997 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01723AE526504433000BC997 /* AuthenticationServices.framework */; };
 		01934AA3266141B600C385E8 /* KeychainSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01934AA2266141B600C385E8 /* KeychainSwift.swift */; };
@@ -584,6 +588,8 @@
 		014B39CE2622379400E46F27 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		014B39CF2622379400E46F27 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		01507BE226234BC5004EE497 /* KissXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KissXML.h; sourceTree = "<group>"; };
+		0154640A271309F900ADB7BA /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		015464182716DF3F00ADB7BA /* CloudAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudAccountViewController.swift; sourceTree = "<group>"; };
 		016073EA2639CBC6008BC24D /* MF_Base32Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MF_Base32Additions.h; sourceTree = "<group>"; };
 		016073EB2639CBC6008BC24D /* MF_Base32Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MF_Base32Additions.m; sourceTree = "<group>"; };
 		01723AE526504433000BC997 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
@@ -785,6 +791,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				013D6485265BC04E00161D6B /* SQLite in Frameworks */,
+				0154640B271309F900ADB7BA /* CloudKit.framework in Frameworks */,
 				689D000D13A42765005EBD36 /* AudioToolbox.framework in Frameworks */,
 				01DB1480252650DC004451B5 /* Valet in Frameworks */,
 				689DFFDE13A4273F005EBD36 /* CoreGraphics.framework in Frameworks */,
@@ -794,10 +801,12 @@
 				6802C36F1A425D7300595AC9 /* LocalAuthentication.framework in Frameworks */,
 				01FAD361264483780007A888 /* KeyboardGuide in Frameworks */,
 				0136402026A49E1E0054AA5C /* PKHUD in Frameworks */,
+				015464172715E2B500ADB7BA /* SwiftSpinner in Frameworks */,
 				0136401B269EB75D0054AA5C /* TOCropViewController in Frameworks */,
 				68EBC2D61613394D00E8E799 /* QuartzCore.framework in Frameworks */,
 				689D000F13A42777005EBD36 /* Security.framework in Frameworks */,
 				01723AE626504433000BC997 /* AuthenticationServices.framework in Frameworks */,
+				0154641427149FF700ADB7BA /* FilesProvider in Frameworks */,
 				689DFFDA13A4273F005EBD36 /* UIKit.framework in Frameworks */,
 				689D001113A4277E005EBD36 /* libxml2.dylib in Frameworks */,
 				689D001313A42784005EBD36 /* libz.dylib in Frameworks */,
@@ -1718,6 +1727,7 @@
 		689DFFD813A4273F005EBD36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0154640A271309F900ADB7BA /* CloudKit.framework */,
 				01723AE526504433000BC997 /* AuthenticationServices.framework */,
 				6802C36E1A425D7300595AC9 /* LocalAuthentication.framework */,
 				689D000C13A42765005EBD36 /* AudioToolbox.framework */,
@@ -1839,6 +1849,7 @@
 				689EA6921D67F94600CF445E /* SettingsViewController.swift */,
 				0118DF5C262B5B1A00A78850 /* Properties.storyboard */,
 				0118DF61262B703500A78850 /* PropertiesTableViewController.swift */,
+				015464182716DF3F00ADB7BA /* CloudAccountViewController.swift */,
 			);
 			path = "Settings View";
 			sourceTree = "<group>";
@@ -1953,6 +1964,8 @@
 				01364018269EB75D0054AA5C /* CropViewController */,
 				0136401A269EB75D0054AA5C /* TOCropViewController */,
 				0136401F26A49E1E0054AA5C /* PKHUD */,
+				0154641327149FF700ADB7BA /* FilesProvider */,
+				015464162715E2B500ADB7BA /* SwiftSpinner */,
 			);
 			productName = MiniKeePass;
 			productReference = 689DFFD513A4273F005EBD36 /* IOSKeePass.app */;
@@ -2028,6 +2041,8 @@
 				013D6483265BC04E00161D6B /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 				01364017269EB75D0054AA5C /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 				0136401E26A49E1E0054AA5C /* XCRemoteSwiftPackageReference "PKHUD" */,
+				0154641227149FF700ADB7BA /* XCRemoteSwiftPackageReference "FileProvider" */,
+				015464152715E2B500ADB7BA /* XCRemoteSwiftPackageReference "SwiftSpinner" */,
 			);
 			productRefGroup = 689DFFD613A4273F005EBD36 /* Products */;
 			projectDirPath = "";
@@ -2172,6 +2187,7 @@
 				01507BC626234A60004EE497 /* KPKFileKey.m in Sources */,
 				01FAD37826448ABF0007A888 /* TextEditorBridgeView.swift in Sources */,
 				01507BD526234A8F004EE497 /* NSData+KPKBase32.m in Sources */,
+				015464192716DF3F00ADB7BA /* CloudAccountViewController.swift in Sources */,
 				01507BDE26234A8F004EE497 /* NSDictionary+KPKVariant.m in Sources */,
 				01507BBF26234A4E004EE497 /* KPKXmlUtilities.m in Sources */,
 				01507B8F26233C4D004EE497 /* KPKTree+History.m in Sources */,
@@ -2439,7 +2455,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 20;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2450,7 +2466,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.6;
+				MARKETING_VERSION = 2.2.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass.IKPAutoFill;
@@ -2478,7 +2494,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 20;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -2489,7 +2505,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.1.6;
+				MARKETING_VERSION = 2.2.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass.IKPAutoFill;
@@ -2619,10 +2635,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = IOSKeePass.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1228;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 20;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "TARGET_OS_IOS=1";
@@ -2632,11 +2648,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.6;
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Frank IOS Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "MiniKeePass/MiniKeePass-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
@@ -2653,10 +2669,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = IOSKeePass.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1228;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 20;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = WRR6GY9WK6;
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "TARGET_OS_IOS=1";
@@ -2666,11 +2682,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.6;
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = de.unicomedv.IOSKeePass;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Frank IOS Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "MiniKeePass/MiniKeePass-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 5.0;
@@ -2744,6 +2760,22 @@
 				minimumVersion = 0.12.2;
 			};
 		};
+		0154641227149FF700ADB7BA /* XCRemoteSwiftPackageReference "FileProvider" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/amosavian/FileProvider.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.26.0;
+			};
+		};
+		015464152715E2B500ADB7BA /* XCRemoteSwiftPackageReference "SwiftSpinner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/icanzilb/SwiftSpinner.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.0;
+			};
+		};
 		01DB147E252650DC004451B5 /* XCRemoteSwiftPackageReference "Valet" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Square/Valet";
@@ -2795,6 +2827,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 013D6483265BC04E00161D6B /* XCRemoteSwiftPackageReference "SQLite.swift" */;
 			productName = SQLite;
+		};
+		0154641327149FF700ADB7BA /* FilesProvider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0154641227149FF700ADB7BA /* XCRemoteSwiftPackageReference "FileProvider" */;
+			productName = FilesProvider;
+		};
+		015464162715E2B500ADB7BA /* SwiftSpinner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 015464152715E2B500ADB7BA /* XCRemoteSwiftPackageReference "SwiftSpinner" */;
+			productName = SwiftSpinner;
 		};
 		01BDB29E26681545008251F0 /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;

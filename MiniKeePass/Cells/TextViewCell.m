@@ -63,17 +63,16 @@
 
     CGSize maximumTextViewSize = CGSizeMake(textView.frame.size.width, CGFLOAT_MAX);
     NSStringDrawingOptions options = NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin;
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:16]};
+    
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont systemFontOfSize:60]};
     //NSDictionary *attr = @{[NSFontAttributeName: [UIFont systemFontOfSize:16]]};
     CGRect textViewBounds = [textView.text boundingRectWithSize:maximumTextViewSize
                                                         options:options
                                                      attributes:attributes
                                                         context:nil];
     CGFloat height = ceilf(textViewBounds.size.height);
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screenRect.size.width;
-    CGFloat screenHeight = screenRect.size.height;
-    return screenHeight-320;
+    
+    return height;
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {

@@ -145,9 +145,9 @@ import SQLite
                     let pwd = Expression<String>("PWD")
                     let urlfield = Expression<String>("URL")
                     
-                    let sec = secret.cryptoSwiftAESEncrypt(key: "xx#!", iv:"xxh/" )
+                    let sec = secret.cryptoSwiftAESEncrypt(key: "xxxxxxx", iv:"xxxxxxx" )
                     let ha = String(format:"%@<->%@",user,url)
-                    let hash = ha.cryptoSwiftAESEncrypt(key: "xx#", iv: "oxx/")
+                    let hash = ha.cryptoSwiftAESEncrypt(key: "xxxxxxx#", iv: "xxxxx")
                     try cnn.run(autofill.insert(userfield <- user, pwd <- sec!, urlfield <- url, dom <- domain, hashfield <- hash!))
                     //let ins = String(format:"INSERT INTO AutoFill (HASH,User,PWD,URL,DOMAIN) VALUES('%@','%@','%@','%@','%@');",hash!,user,sec!,url,domain)xxx
                     //try cnn.execute(ins)
@@ -175,9 +175,9 @@ import SQLite
                 do{
                     let cnn = try Connection(filepath!.path)
                     
-                    let sec = secret.cryptoSwiftAESEncrypt(key: "xx#!", iv:"o8xxh/" )
+                    let sec = secret.cryptoSwiftAESEncrypt(key: "xxxxxxx", iv:"xxxxxxx" )
                     let ha = String(format:"%@<->%@",user,url)
-                    let hash = ha.cryptoSwiftAESEncrypt(key: "xx#", iv: "xxh/")
+                    let hash = ha.cryptoSwiftAESEncrypt(key: "xxxxxxxx", iv: "xxxxxxxx")
                     let sel = String(format:"Select User,DOMAIN from AutoFill where User='%@' and DOMAIN='%@'",user,domain)
                     let rows = try cnn.prepare(sel)
                     var selection = 0
@@ -209,11 +209,11 @@ import SQLite
                 do{
                     let cnn = try Connection(filepath!.path)
                     let ha = String(format:"%@<->%@",user,url)
-                    let hash = ha.cryptoSwiftAESEncrypt(key: "xx#", iv: "oxx(2h/")
+                    let hash = ha.cryptoSwiftAESEncrypt(key: "xxxxxxx", iv: "xxxxxx")
                     let del = String(format:"DELETE from AutoFill where HASH='%@';",hash!)
                     try cnn.execute(del)
                 } catch {
-                    print(error)
+                    print(error)x
                 }
             }
     }

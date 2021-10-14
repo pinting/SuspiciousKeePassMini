@@ -26,6 +26,10 @@
 #define EXIT_TIME                  @"exitTime"
 #define PIN_ENABLED                @"pinEnabled"
 #define PIN                        @"PIN"
+#define DEFAULTDB                  @"DefaultDB"
+#define CLOUDURL                   @"cloudURL"
+#define CLOUDUSER                  @"cloudUSER"
+#define CLOUDPWD                   @"cloudPWD"
 #define PIN_FAILED_ATTEMPTS        @"pinFailedAttempts"
 #define DARK_ENABLED               @"darkEnabled"
 #define TOUCH_ID_ENABLED           @"touchIdEnabled"
@@ -39,7 +43,8 @@
 #define SEARCH_TITLE_ONLY          @"searchTitleOnly"
 #define PASSWORD_ENCODING          @"passwordEncoding"
 #define CLEAR_CLIPBOARD_ENABLED    @"clearClipboardEnabled"
-#define BACKUP_DISABLED            @"backupDisabled"
+#define BACKUP_DISABLED            @"backupEnabled"
+#define BACKUP_FIRSTTIME           @"backupFirstTime"
 #define AUTOFILL_ENABLED           @"autofillDisabled"
 #define AUTOFILL_METHOD            @"autoFillMethod"
 #define CLEAR_CLIPBOARD_TIMEOUT    @"clearClipboardTimeout"
@@ -123,6 +128,7 @@ static AppSettings *sharedInstance;
         [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:CLEAR_CLIPBOARD_ENABLED];
         [defaultsDict setValue:[NSNumber numberWithInt:0] forKey:CLEAR_CLIPBOARD_TIMEOUT];
         [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:BACKUP_DISABLED];
+        [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:BACKUP_FIRSTTIME];
         [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:AUTOFILL_ENABLED];
         [defaultsDict setValue:[NSNumber numberWithInt:0] forKey:AUTOFILL_METHOD];
         [defaultsDict setValue:[NSNumber numberWithBool:YES] forKey:WEB_BROWSER_INTEGRATED];
@@ -222,7 +228,6 @@ static AppSettings *sharedInstance;
     [KeychainUtils setString:pin forKey:PIN andServiceName:KEYCHAIN_PIN_SERVICE];
 }
 
-
 - (NSInteger)pinFailedAttempts {
     NSString *string = [KeychainUtils stringForKey:PIN_FAILED_ATTEMPTS andServiceName:KEYCHAIN_PIN_SERVICE];
     if (string == nil) {
@@ -287,19 +292,67 @@ static AppSettings *sharedInstance;
     [userDefaults setInteger:autoFillMethod forKey:AUTOFILL_METHOD];
 }
 
-- (BOOL)backupDisabled {
+- (NSString *)defaultDB {
+    return [userDefaults stringForKey:DEFAULTDB];
+}
+
+- (void)setDefaultDB:(NSString *)defdb {
+    //[userDefaults setString:defdb forKey:DEFAULTDB];
+    [userDefaults setValue:defdb forKey:DEFAULTDB];
+}
+
+- (NSString *)cloudURL {
+    return [userDefaults stringForKey:CLOUDURL];
+}
+
+- (void)setCloudURL:(NSString *)cloudURL {
+    //[userDefaults setString:defdb forKey:DEFAULTDB];
+    [userDefaults setValue:cloudURL forKey:CLOUDURL];
+}
+
+- (NSString *)cloudUser {
+    return [userDefaults stringForKey:CLOUDUSER];
+}
+
+- (void)setCloudUser:(NSString *)cloudUser {
+    //[userDefaults setString:defdb forKey:DEFAULTDB];
+    [userDefaults setValue:cloudUser forKey:CLOUDUSER];
+}
+
+- (NSString *)cloudPWD {
+    return [userDefaults stringForKey:CLOUDPWD];
+}
+
+- (void)setCloudPWD:(NSString *)cloudPWD {
+    //[userDefaults setString:defdb forKey:DEFAULTDB];
+    [userDefaults setValue:cloudPWD forKey:CLOUDPWD];
+}
+
+- (BOOL)backupEnabled {
     return [userDefaults boolForKey:BACKUP_DISABLED];
 }
 
-- (void)setBackupDisabled:(BOOL)backupDisabled {
-    [userDefaults setBool:backupDisabled forKey:BACKUP_DISABLED];
+- (void)setBackupEnabled:(BOOL)backupEnabled {
+    [userDefaults setBool:backupEnabled forKey:BACKUP_DISABLED];
 
     NSURL *url = [NSURL fileURLWithPath:[AppDelegate documentsDirectory] isDirectory:YES];
 
     NSError *error = nil;
-    if (![url setResourceValue:[NSNumber numberWithBool:!backupDisabled] forKey:NSURLIsExcludedFromBackupKey error:&error]) {
+    if (![url setResourceValue:[NSNumber numberWithBool:!backupEnabled] forKey:NSURLIsExcludedFromBackupKey error:&error]) {
         NSLog(@"Error excluding %@ from backup: %@", url, error);
     }
+    
+    if(backupEnabled == NO){
+        [userDefaults setBool:NO forKey:BACKUP_FIRSTTIME];
+    }
+}
+
+- (BOOL)backupFirstTime {
+    return [userDefaults boolForKey:BACKUP_FIRSTTIME];
+}
+
+- (void)setBackupFirstTime:(BOOL)backupFirstTime {
+    [userDefaults setBool:backupFirstTime forKey:BACKUP_FIRSTTIME];
 }
 
 - (NSInteger)closeTimeout {

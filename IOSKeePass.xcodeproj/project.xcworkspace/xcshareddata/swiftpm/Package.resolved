@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "FilesProvider",
+        "repositoryURL": "https://github.com/amosavian/FileProvider.git",
+        "state": {
+          "branch": null,
+          "revision": "abf68a62541a4193c8d106367ddb3648e8ab693f",
+          "version": "0.26.0"
+        }
+      },
+      {
         "package": "KeyboardGuide",
         "repositoryURL": "https://github.com/niw/KeyboardGuide.git",
         "state": {
@@ -35,6 +44,15 @@
           "branch": null,
           "revision": "0a9893ec030501a3956bee572d6b4fdd3ae158a1",
           "version": "0.12.2"
+        }
+      },
+      {
+        "package": "SwiftSpinner",
+        "repositoryURL": "https://github.com/icanzilb/SwiftSpinner.git",
+        "state": {
+          "branch": null,
+          "revision": "f6cfeb6f1780571bdef8bdaf924ccdb573d23e33",
+          "version": "2.2.0"
         }
       },
       {

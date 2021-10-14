@@ -78,8 +78,20 @@
 - (BOOL)autofillEnabled;
 - (void)setAutofillEnabled:(BOOL)autofillEnabled;
 
-- (BOOL)backupDisabled;
-- (void)setBackupDisabled:(BOOL)backupDisabled;
+- (BOOL)backupEnabled;
+- (void)setBackupEnabled:(BOOL)backupEnabled;
+
+- (BOOL)backupFirstTime;
+- (void)setBackupFirstTime:(BOOL)backupFirstTime;
+
+- (NSString *)cloudURL;
+- (void)setCloudURL:(NSString *)cloudURL;
+
+- (NSString *)cloudUser;
+- (void)setCloudUser:(NSString *)cloudUser;
+
+- (NSString *)cloudPWD;
+- (void)setCloudPWD:(NSString *)cloudPWD;
 
 - (NSInteger)clearClipboardTimeout;
 - (NSInteger)clearClipboardTimeoutIndex;
@@ -94,4 +106,6 @@
 - (NSInteger)pwGenCharSets;
 - (void)setPwGenCharSets:(NSInteger)pwGenCharSets;
 
+- (NSString *)defaultDB;
+- (void)setDefaultDB:(NSString *)defdb;
 @end

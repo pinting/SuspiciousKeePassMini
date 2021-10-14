@@ -51,6 +51,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var clearClipboardEnabledSwitch: UISwitch!
     @IBOutlet weak var clearClipboardTimeoutCell: UITableViewCell!
     
+    @IBOutlet weak var accountDetailCell: UITableViewCell!
     @IBOutlet weak var excludeFromBackupsEnabledSwitch: UISwitch!
     
     @IBOutlet weak var integratedWebBrowserEnabledSwitch: UISwitch!
@@ -58,6 +59,7 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var versionLabel: UILabel!
     
     @IBOutlet weak var autoFillMethod: UISegmentedControl!
+    
     
     fileprivate let deleteAllDataAttempts = ["3", "5", "10", "15"]
     
@@ -131,7 +133,8 @@ class SettingsViewController: UITableViewController {
             clearClipboardEnabledSwitch.isOn = appSettings.clearClipboardEnabled()
             clearClipboardTimeoutCell.detailTextLabel!.text = clearClipboardTimeouts[appSettings.clearClipboardTimeoutIndex()]
             
-            excludeFromBackupsEnabledSwitch.isOn = appSettings.backupDisabled()
+            excludeFromBackupsEnabledSwitch.isOn = appSettings.backupEnabled()
+            
             
             integratedWebBrowserEnabledSwitch.isOn = appSettings.webBrowserIntegrated()
         }
@@ -149,6 +152,7 @@ class SettingsViewController: UITableViewController {
         let deleteOnFailureEnabled = appSettings.deleteOnFailureEnabled()
         let closeEnabled = appSettings.closeEnabled()
         let clearClipboardEnabled = appSettings.clearClipboardEnabled()
+        let accountEnabled = appSettings.backupEnabled()
         
          // Enable/disable the components dependant on settings
        
@@ -158,6 +162,7 @@ class SettingsViewController: UITableViewController {
         setCellEnabled(deleteAllDataAttemptsCell, enabled: pinEnabled && deleteOnFailureEnabled)
         setCellEnabled(closeDatabaseTimeoutCell, enabled: closeEnabled)
         setCellEnabled(clearClipboardTimeoutCell, enabled: clearClipboardEnabled)
+        setCellEnabled(accountDetailCell, enabled: accountEnabled)
     }
     
     fileprivate func setCellEnabled(_ cell: UITableViewCell, enabled: Bool) {
@@ -182,37 +187,47 @@ class SettingsViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let selectionViewController = segue.destination as! SelectionViewController
-        if (segue.identifier == "Delete All Data Attempts") {
-            selectionViewController.items = deleteAllDataAttempts
-            selectionViewController.selectedIndex = (appSettings?.deleteOnFailureAttemptsIndex())!
-            selectionViewController.itemSelected = { (selectedIndex) in
-                self.appSettings?.setDeleteOnFailureAttemptsIndex(selectedIndex)
-                self.navigationController?.popViewController(animated: true)
+        if(segue.identifier == "CloudAccount"){
+            let appSettings = AppSettings.sharedInstance() as AppSettings
+            let cloudacountviewcontroller = segue.destination as! CloudAccountViewController
+            cloudacountviewcontroller.user = appSettings.cloudUser() ?? "user"
+            cloudacountviewcontroller.url = appSettings.cloudURL() ?? "https:"
+            cloudacountviewcontroller.pwd = appSettings.cloudPWD() ?? "123"
+            
+            self.navigationController?.popViewController(animated: true)
+        }else{
+            let selectionViewController = segue.destination as! SelectionViewController
+            if (segue.identifier == "Delete All Data Attempts") {
+                selectionViewController.items = deleteAllDataAttempts
+                selectionViewController.selectedIndex = (appSettings?.deleteOnFailureAttemptsIndex())!
+                selectionViewController.itemSelected = { (selectedIndex) in
+                    self.appSettings?.setDeleteOnFailureAttemptsIndex(selectedIndex)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } else if (segue.identifier == "Close Database Timeout") {
+                selectionViewController.items = closeDatabaseTimeouts
+                selectionViewController.selectedIndex = (appSettings?.closeTimeoutIndex())!
+                selectionViewController.itemSelected = { (selectedIndex) in
+                    self.appSettings?.setCloseTimeoutIndex(selectedIndex)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } else if (segue.identifier == "Password Encoding") {
+                selectionViewController.items = passwordEncodings
+                selectionViewController.selectedIndex = (appSettings?.passwordEncodingIndex())!
+                selectionViewController.itemSelected = { (selectedIndex) in
+                    self.appSettings?.setPasswordEncoding(selectedIndex)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } else if (segue.identifier == "Clear Clipboard Timeout") {
+                selectionViewController.items = clearClipboardTimeouts
+                selectionViewController.selectedIndex = (appSettings?.clearClipboardTimeoutIndex())!
+                selectionViewController.itemSelected = { (selectedIndex) in
+                    self.appSettings?.setClearClipboardTimeoutIndex(selectedIndex)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            } else {
+                assertionFailure("Unknown segue")
             }
-        } else if (segue.identifier == "Close Database Timeout") {
-            selectionViewController.items = closeDatabaseTimeouts
-            selectionViewController.selectedIndex = (appSettings?.closeTimeoutIndex())!
-            selectionViewController.itemSelected = { (selectedIndex) in
-                self.appSettings?.setCloseTimeoutIndex(selectedIndex)
-                self.navigationController?.popViewController(animated: true)
-            }
-        } else if (segue.identifier == "Password Encoding") {
-            selectionViewController.items = passwordEncodings
-            selectionViewController.selectedIndex = (appSettings?.passwordEncodingIndex())!
-            selectionViewController.itemSelected = { (selectedIndex) in
-                self.appSettings?.setPasswordEncoding(selectedIndex)
-                self.navigationController?.popViewController(animated: true)
-            }
-        } else if (segue.identifier == "Clear Clipboard Timeout") {
-            selectionViewController.items = clearClipboardTimeouts
-            selectionViewController.selectedIndex = (appSettings?.clearClipboardTimeoutIndex())!
-            selectionViewController.itemSelected = { (selectedIndex) in
-                self.appSettings?.setClearClipboardTimeoutIndex(selectedIndex)
-                self.navigationController?.popViewController(animated: true)
-            }
-        } else {
-            assertionFailure("Unknown segue")
         }
     }
     
@@ -395,7 +410,17 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func excludeFromBackupEnabledChanged(_ sender: UISwitch) {
-        self.appSettings?.setBackupDisabled(excludeFromBackupsEnabledSwitch.isOn)
+        self.appSettings?.setBackupEnabled(excludeFromBackupsEnabledSwitch.isOn)
+        /*if(userText.text != nil){
+            self.appSettings?.setCloudUser(userText.text)
+        }
+        if(pwdText.text != nil){
+            self.appSettings?.setCloudPWD(pwdText.text)
+        }
+        if(urlText.text != nil){
+            self.appSettings?.setCloudURL(urlText.text)
+        }*/
+        updateEnabledControls()
     }
     
     @IBAction func integratedWebBrowserEnabledChanged(_ sender: UISwitch) {

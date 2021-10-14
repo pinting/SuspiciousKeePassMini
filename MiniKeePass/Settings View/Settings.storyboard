@@ -575,44 +575,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="iCloud/iTunes Backup" footerTitle="Exclude databases and key files from iTunes/iCloud backups." id="Zs3-9b-0kG">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="VQf-14-2bS">
-                                        <rect key="frame" x="0.0" y="1629.5" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="VQf-14-2bS" id="pUq-6Q-f3T">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exclude from backup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fKY-md-m8c">
-                                                    <rect key="frame" x="8" y="13.5" width="302" height="17"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7Ku-Wa-CXa">
-                                                    <rect key="frame" x="318" y="6.5" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="excludeFromBackupEnabledChanged:" destination="mlm-01-Slc" eventType="valueChanged" id="qYI-ow-kyT"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="7Ku-Wa-CXa" firstAttribute="leading" secondItem="fKY-md-m8c" secondAttribute="trailing" constant="8" id="5EH-uH-ep5"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="7Ku-Wa-CXa" secondAttribute="trailing" id="cEb-WA-dJO"/>
-                                                <constraint firstItem="fKY-md-m8c" firstAttribute="leading" secondItem="pUq-6Q-f3T" secondAttribute="leadingMargin" id="iFA-z0-Xg9"/>
-                                                <constraint firstItem="fKY-md-m8c" firstAttribute="centerY" secondItem="pUq-6Q-f3T" secondAttribute="centerY" id="nzt-7e-Pg6"/>
-                                                <constraint firstItem="7Ku-Wa-CXa" firstAttribute="centerY" secondItem="pUq-6Q-f3T" secondAttribute="centerY" id="uhl-yK-UUE"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" name="backgroundColor"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="Web Browser" footerTitle="Switch between an integrated web browser and Safari." id="ZbJ-mR-6o9">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="tZZ-6T-nMy">
-                                        <rect key="frame" x="0.0" y="1753.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1629.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="tZZ-6T-nMy" id="1Eo-Md-mqX">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -643,10 +609,72 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Cloud Backup" footerTitle="Switch ON / OFF Cloud  Backup" id="Zs3-9b-0kG">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="VQf-14-2bS">
+                                        <rect key="frame" x="0.0" y="1739.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="VQf-14-2bS" id="pUq-6Q-f3T">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Cloud Backup" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fKY-md-m8c">
+                                                    <rect key="frame" x="8" y="13.5" width="302" height="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7Ku-Wa-CXa" userLabel="Include Backup Enabled Switch">
+                                                    <rect key="frame" x="318" y="6.5" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="excludeFromBackupEnabledChanged:" destination="mlm-01-Slc" eventType="valueChanged" id="qYI-ow-kyT"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7Ku-Wa-CXa" firstAttribute="leading" secondItem="fKY-md-m8c" secondAttribute="trailing" constant="8" id="5EH-uH-ep5"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="7Ku-Wa-CXa" secondAttribute="trailing" id="cEb-WA-dJO"/>
+                                                <constraint firstItem="fKY-md-m8c" firstAttribute="leading" secondItem="pUq-6Q-f3T" secondAttribute="leadingMargin" id="iFA-z0-Xg9"/>
+                                                <constraint firstItem="fKY-md-m8c" firstAttribute="centerY" secondItem="pUq-6Q-f3T" secondAttribute="centerY" id="nzt-7e-Pg6"/>
+                                                <constraint firstItem="7Ku-Wa-CXa" firstAttribute="centerY" secondItem="pUq-6Q-f3T" secondAttribute="centerY" id="uhl-yK-UUE"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="backgroundColor"/>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="f3w-NO-BCi" detailTextLabel="KBQ-FY-DZT" style="IBUITableViewCellStyleValue1" id="1kN-f1-2pE" userLabel="Account Detail">
+                                        <rect key="frame" x="0.0" y="1783.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="1kN-f1-2pE" id="2Q9-K3-HqH">
+                                            <rect key="frame" x="0.0" y="0.0" width="357.5" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="f3w-NO-BCi">
+                                                    <rect key="frame" x="15" y="14" width="56" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="KBQ-FY-DZT">
+                                                    <rect key="frame" x="310" y="14" width="39.5" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="backgroundColor"/>
+                                        <connections>
+                                            <segue destination="UeK-yW-Prx" kind="show" identifier="CloudAccount" id="5Bp-cG-T83"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection id="O4c-S2-bxk" userLabel="Version">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="Sdb-s9-D0G" detailTextLabel="fc3-tI-Hn4" style="IBUITableViewCellStyleValue1" id="OBf-R4-5vk">
-                                        <rect key="frame" x="0.0" y="1842" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="1872" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="OBf-R4-5vk" id="AaX-EY-CkO">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -686,6 +714,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="accountDetailCell" destination="1kN-f1-2pE" id="yzj-n1-D54"/>
                         <outlet property="autoFillMethod" destination="1E2-iX-dUr" id="W8w-av-cBm"/>
                         <outlet property="clearClipboardEnabledSwitch" destination="Amv-ka-cmc" id="7LU-aG-nxz"/>
                         <outlet property="clearClipboardTimeoutCell" destination="2F7-jl-P33" id="2Ue-Ht-Q2L"/>
@@ -731,11 +760,135 @@
             </objects>
             <point key="canvasLocation" x="-522" y="210"/>
         </scene>
+        <!--CloudAccount-->
+        <scene sceneID="zK9-hL-jfE">
+            <objects>
+                <tableViewController id="UeK-yW-Prx" userLabel="CloudAccount" customClass="CloudAccountViewController" customModule="IOSKeePass" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="1De-Wb-x56">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" name="backgroundColor"/>
+                        <color key="sectionIndexBackgroundColor" name="backgroundColor"/>
+                        <sections>
+                            <tableViewSection headerTitle="URL or Server" footerTitle="e.g. https://nextcloud.com/remote.php/dav/files/username/" id="Tvz-Yq-NGE" userLabel="URL or Servername">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="mSL-Nh-VGX">
+                                        <rect key="frame" x="0.0" y="49.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="mSL-Nh-VGX" id="k1M-Wj-gPt">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="https://nextcloud.com/...." textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Iuj-WB-HWZ">
+                                                    <rect key="frame" x="16" y="12" width="310" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                    <connections>
+                                                        <action selector="urlChange:" destination="UeK-yW-Prx" eventType="editingChanged" id="OL8-rV-Uaz"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" name="backgroundColor"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="backgroundColor"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Accountname" footerTitle="most username or emailadress" id="iA3-jd-szQ" userLabel="Accountname">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="PWL-P7-G0E">
+                                        <rect key="frame" x="0.0" y="159.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="PWL-P7-G0E" id="d59-xF-r1w">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Accountname" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="q2V-oj-sug">
+                                                    <rect key="frame" x="16" y="11.5" width="310" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                    <connections>
+                                                        <action selector="accountChange:" destination="UeK-yW-Prx" eventType="editingChanged" id="D3g-Je-wkT"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" name="backgroundColor"/>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="backgroundColor"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Password" footerTitle="Your Cloud password" id="HdE-BK-IC2">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="FDU-w1-ToC">
+                                        <rect key="frame" x="0.0" y="269.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="FDU-w1-ToC" id="6sr-Q5-bGb">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eye" translatesAutoresizingMaskIntoConstraints="NO" id="qsp-ig-i2I">
+                                                    <rect key="frame" x="330" y="10" width="24" height="24"/>
+                                                    <gestureRecognizers/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="qsp-ig-i2I" secondAttribute="height" multiplier="1:1" id="4DC-aU-qt5"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <outletCollection property="gestureRecognizers" destination="OKn-vC-zgn" appends="YES" id="RS8-ZT-zk0"/>
+                                                    </connections>
+                                                </imageView>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Krp-uD-Psn">
+                                                    <rect key="frame" x="16" y="12" width="310" height="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                                                    <connections>
+                                                        <action selector="pwdCange:" destination="UeK-yW-Prx" eventType="editingChanged" id="NK2-Qr-2RU"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <color key="backgroundColor" name="backgroundColor"/>
+                                            <constraints>
+                                                <constraint firstItem="Krp-uD-Psn" firstAttribute="leading" secondItem="6sr-Q5-bGb" secondAttribute="leadingMargin" id="E9D-vb-sz1"/>
+                                                <constraint firstItem="Krp-uD-Psn" firstAttribute="centerY" secondItem="qsp-ig-i2I" secondAttribute="centerY" id="Ira-oy-jIz"/>
+                                                <constraint firstItem="qsp-ig-i2I" firstAttribute="centerY" secondItem="6sr-Q5-bGb" secondAttribute="centerY" id="Wgp-qW-aHW"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="qsp-ig-i2I" secondAttribute="trailing" constant="5" id="bRx-qK-1H8"/>
+                                                <constraint firstItem="qsp-ig-i2I" firstAttribute="leading" secondItem="Krp-uD-Psn" secondAttribute="trailing" constant="4" id="n1l-nR-XNF"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" name="backgroundColor"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="UeK-yW-Prx" id="Ipi-nt-bpq"/>
+                            <outlet property="delegate" destination="UeK-yW-Prx" id="xze-Kv-Syn"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="accountText" destination="q2V-oj-sug" id="cqJ-k7-Oh2"/>
+                        <outlet property="passwordText" destination="Krp-uD-Psn" id="YJq-tF-IXd"/>
+                        <outlet property="showImageView" destination="qsp-ig-i2I" id="ZiG-9L-Rge"/>
+                        <outlet property="urlText" destination="Iuj-WB-HWZ" id="6r5-gp-M7F"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ktl-cV-edj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="OKn-vC-zgn">
+                    <connections>
+                        <action selector="showPressed:" destination="UeK-yW-Prx" id="bYM-eg-8nv"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="264.80000000000001" y="939.58020989505258"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="eED-5Q-Yzd"/>
+        <segue reference="RVT-R6-U6p"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="eye" width="24" height="24"/>
         <namedColor name="backgroundColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

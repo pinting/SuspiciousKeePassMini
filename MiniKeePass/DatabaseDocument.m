@@ -133,6 +133,7 @@
     }
 }
 
+
 - (void)save {
     
 #ifdef USE_KDB
@@ -144,8 +145,25 @@
         
         [data writeToFile:self.filename atomically:YES];
         
-    
+        [[AppSettings sharedInstance] setBackupFirstTime:NO];
 #endif
+    
+   /* if (![[AppSettings sharedInstance] backupDisabled]) {
+        BOOL cloudIsAvailable = [[iCloud sharedCloud] checkCloudAvailability];
+        if (cloudIsAvailable) {
+            //YES
+            NSLog(@"Apple iCloud available document update will start immediataly");
+            [[iCloud sharedCloud] saveAndCloseDocumentWithName:self.filename withContent:[NSData data] completion:^(UIDocument *cloudDocument, NSData *documentData, NSError *error) {
+                if (error == nil) {
+                    // Code here to use the UIDocument or NSData objects which have been passed with the completion handler
+                    NSLog(@"iCloud Error:%@",error);
+                }
+            }];
+        }else{
+            NSLog(@"Apple iCloud not available on this device");
+        }
+    }*/
+
 }
 
 

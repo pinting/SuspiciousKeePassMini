@@ -61,6 +61,13 @@
 "Add new…" = "Ajouter nouveau…";
 "Choose Group" = "Choisir le Groupe";
 "Backup" = "Sauvegarde";
+"Not Supported" = "non supporté";
+"AutoFill Request" = "AutoFill demande";
+"Attachments" = "Pièces jointes";
+"Save" = "Sauvez";
+"Default" = "Défaut DB";
+"Recycle bin" = "Corbeille";
+"I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "Je confirme par la présente que mes mots de passe dans cette BD seront mis à la disposition du mécanisme de remplissage automatique d'IOS.";
 
 // General Messages
 "Align QR code within frame to scan" = "Alignez le code QR dans le cadre pour numériser";

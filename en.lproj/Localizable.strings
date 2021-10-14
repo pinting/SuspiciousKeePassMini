@@ -64,6 +64,8 @@
 "AutoFill Request" = "AutoFill Request";
 "Attachments" = "Attachments";
 "Save" = "Save";
+"Default" = "Default DB";
+"Recycle bin" = "Recycle bin";
 "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism.";
 
 // General Messages
@@ -153,7 +155,6 @@
 "Dropbox Import/Export" = "Dropbox Import/Export";
 "Safari/Email Import" = "Safari/Email Import";
 "Create New Database" = "Create New Database";
-"Key Files" = "Key Files";
 
 // Password Generator
 "Generator" = "Generator";

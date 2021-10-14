@@ -28,6 +28,7 @@
 #endif
 
 
+
 @implementation DatabaseManager
 
 static DatabaseManager *sharedInstance;
@@ -37,6 +38,7 @@ static DatabaseManager *sharedInstance;
     if (!initialized)     {
         initialized = YES;
         sharedInstance = [[DatabaseManager alloc] init];
+        
     }
 }
 
@@ -95,7 +97,38 @@ static DatabaseManager *sharedInstance;
         [fileManager fileExistsAtPath:path isDirectory:&dir];
         if (!dir) {
             NSString *extension = [[file pathExtension] lowercaseString];
-            if (![extension isEqualToString:@"kdb"] && ![extension isEqualToString:@"kdbx"]) {
+            if (![extension isEqualToString:@"kdb"] && ![extension isEqualToString:@"kdbx"] && ![extension isEqualToString:@"bck"]) {
+                [files addObject:file];
+            }
+        }
+    }
+
+    // Sort the list of files
+    [files sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+
+    return files;
+}
+
+- (NSArray *)getTrayFiles {
+    NSMutableArray *files = [[NSMutableArray alloc] init];
+
+    // Get the document's directory
+    NSString *documentsDirectory = [AppDelegate documentsDirectory];
+
+    // Get the contents of the documents directory
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:nil];
+
+    // Sort the files into database files and keyfiles
+    for (NSString *file in dirContents) {
+        NSString *path = [documentsDirectory stringByAppendingPathComponent:file];
+
+        // Check if it's a directory
+        BOOL dir = NO;
+        [fileManager fileExistsAtPath:path isDirectory:&dir];
+        if (!dir) {
+            NSString *extension = [[file pathExtension] lowercaseString];
+            if ([extension isEqualToString:@"bck"]) {
                 [files addObject:file];
             }
         }
@@ -127,7 +160,11 @@ static DatabaseManager *sharedInstance;
     return size;
 }
 - (void)deleteFile:(NSString *)filename {
+    
+    NSString *backupfilename = [filename stringByAppendingString:@".bck"];
+    
     NSURL *url = [self getFileUrl:filename];
+    NSURL *backupurl = [self getFileUrl:backupfilename];
     NSString *path = url.path;
 
     // Close the current database if we're deleting it's file
@@ -136,8 +173,42 @@ static DatabaseManager *sharedInstance;
         [appDelegate closeDatabase];
     }
 
-    // Delete the file
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    //create a Bakuo
+    [fileManager copyItemAtURL:url toURL:backupurl error:nil];
+    // Delete the file
+    [fileManager removeItemAtURL:url error:nil];
+}
+
+- (void)recoverFile:(NSString *)filename {
+   
+    NSString *moveFile = [filename substringToIndex:[filename length]-4];
+    NSURL *url = [self getFileUrl:filename];
+    NSURL *backupurl = [self getFileUrl:moveFile];
+   
+    NSString *path = url.path;
+
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    // Move the file
+    [fileManager moveItemAtURL:url toURL:backupurl error:nil];
+}
+
+
+- (void)removeFile:(NSString *)filename {
+   
+    NSURL *url = [self getFileUrl:filename];
+   
+    NSString *path = url.path;
+
+    // Close the current database if we're deleting it's file
+    AppDelegate *appDelegate = [AppDelegate getDelegate];
+    if ([path isEqualToString:appDelegate.databaseDocument.filename]) {
+        [appDelegate closeDatabase];
+    }
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    // Delete the file
     [fileManager removeItemAtURL:url error:nil];
 }
 

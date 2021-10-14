@@ -292,8 +292,10 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
 
         case .entries:
             let entry = entries[indexPath.row]
-
+            let bcount = entry.binaries.count
+            
             cell = tableView.dequeueReusableCell(withIdentifier: "EntryCell")!
+           
             cell.textLabel?.text = entry.title
             cell.imageView?.image = imageFactory?.image(for: entry)
 
@@ -311,7 +313,9 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
                 }
                 accountDescription += url
             }
-            
+            if(bcount > 0){
+                accountDescription += " 📎"
+            }
             cell.detailTextLabel?.text = accountDescription
         }
 

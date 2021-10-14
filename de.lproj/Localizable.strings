@@ -63,7 +63,9 @@
 "Not Supported" = "Nicht Unterstützt";
 "Attachments" = "Anhänge";
 "Save" = "Speichern";
+"Default" = "Standard DB";
 "AutoFill Request" = "AutoFill Nachfrage";
+"Recycle bin" = "Papierkorb";
 "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "Hiermit bestätige ich das meine Kennwörter in dieser DB dem IOS Autofill Mechanismus zur Verfügung gestellt werden";
 
 // General Messages
@@ -152,7 +154,6 @@
 "Dropbox Import/Export" = "Dropbox Im- und Export";
 "Safari/Email Import" = "Safari und E-Mail Import";
 "Create New Database" = "Neue Datenbank erstellen";
-"Key Files" = "Schlüsseldateien";
 
 // Password Generator
 "Generator" = "Generator";
