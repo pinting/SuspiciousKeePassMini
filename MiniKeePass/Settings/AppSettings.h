@@ -30,6 +30,9 @@
 - (NSInteger)autoFillMethod;
 - (void)setautoFillMethod:(NSInteger)autoFillMethod;
 
+- (NSInteger)cloudType;
+- (void)setCloudType:(NSInteger)cloudType;
+
 - (BOOL)pinEnabled;
 - (void)setPinEnabled:(BOOL)pinEnabled;
 
@@ -86,6 +89,9 @@
 
 - (NSString *)cloudURL;
 - (void)setCloudURL:(NSString *)cloudURL;
+
+- (NSString *)fileneedsBackup;
+- (void)setfileneedsBackup:(NSString *)fileneedsBackup;
 
 - (NSString *)cloudUser;
 - (void)setCloudUser:(NSString *)cloudUser;
