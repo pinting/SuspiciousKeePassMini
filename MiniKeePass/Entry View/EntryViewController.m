@@ -319,6 +319,8 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         [titleCell.textField becomeFirstResponder];
         self.isNewEntry = NO;
     }
+    
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
