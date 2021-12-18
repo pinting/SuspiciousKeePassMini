@@ -30,6 +30,8 @@
 #define CLOUDURL                   @"cloudURL"
 #define CLOUDUSER                  @"cloudUSER"
 #define CLOUDPWD                   @"cloudPWD"
+#define CLOUDTYPE                  @"cloudType"
+#define NEEDBACKUP                 @"fileneedsBackup"
 #define PIN_FAILED_ATTEMPTS        @"pinFailedAttempts"
 #define DARK_ENABLED               @"darkEnabled"
 #define TOUCH_ID_ENABLED           @"touchIdEnabled"
@@ -130,6 +132,7 @@ static AppSettings *sharedInstance;
         [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:BACKUP_DISABLED];
         [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:BACKUP_FIRSTTIME];
         [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:AUTOFILL_ENABLED];
+        [defaultsDict setValue:[NSNumber numberWithInt:0] forKey:CLOUDTYPE];
         [defaultsDict setValue:[NSNumber numberWithInt:0] forKey:AUTOFILL_METHOD];
         [defaultsDict setValue:[NSNumber numberWithBool:YES] forKey:WEB_BROWSER_INTEGRATED];
         [defaultsDict setValue:[NSNumber numberWithInt:10] forKey:PW_GEN_LENGTH];
@@ -292,6 +295,12 @@ static AppSettings *sharedInstance;
     [userDefaults setInteger:autoFillMethod forKey:AUTOFILL_METHOD];
 }
 
+- (NSInteger)cloudType {
+    return [userDefaults integerForKey:CLOUDTYPE];
+}
+- (void)setCloudType:(NSInteger)cloudType{
+    [userDefaults setInteger:cloudType forKey:CLOUDTYPE];
+}
 - (NSString *)defaultDB {
     return [userDefaults stringForKey:DEFAULTDB];
 }
@@ -299,6 +308,15 @@ static AppSettings *sharedInstance;
 - (void)setDefaultDB:(NSString *)defdb {
     //[userDefaults setString:defdb forKey:DEFAULTDB];
     [userDefaults setValue:defdb forKey:DEFAULTDB];
+}
+
+- (NSString *)fileneedsBackup {
+    return [userDefaults stringForKey:NEEDBACKUP];
+}
+
+- (void)setfileneedsBackup:(NSString *)fileneedsBackup {
+    //[userDefaults setString:defdb forKey:DEFAULTDB];
+    [userDefaults setValue:fileneedsBackup forKey:NEEDBACKUP];
 }
 
 - (NSString *)cloudURL {
