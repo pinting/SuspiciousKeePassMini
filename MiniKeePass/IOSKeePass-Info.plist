@@ -92,7 +92,7 @@
 	<key>CFBundleSignature</key>
 	<string>1101</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>21</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
@@ -103,9 +103,21 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Please allow before to use the Camera</string>
+	<string>We need access to scan the QR Barcode for One Time Passwords</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>We want use Biometric features</string>
+	<string>We want use Biometric features for secure easy access</string>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.de.unicomedv.IOSKeePass</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>IOSKeePass</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+		</dict>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Andale Mono.ttf</string>
