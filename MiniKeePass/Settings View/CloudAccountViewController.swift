@@ -16,11 +16,14 @@ class CloudAccountViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var urlText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
     
+    @IBOutlet weak var cloudType: UISegmentedControl!
+    
     @IBOutlet weak var showImageView: UIImageView!
     
     public var user: String = ""
     public var pwd: String = ""
     public var url: String = ""
+    public var selindex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +33,7 @@ class CloudAccountViewController: UITableViewController, UITextFieldDelegate {
         accountText.text = user
         urlText.text = url
         passwordText.text = pwd
+        cloudType.selectedSegmentIndex = selindex
     }
     
   
@@ -39,7 +43,11 @@ class CloudAccountViewController: UITableViewController, UITextFieldDelegate {
         appSettings.setCloudUser(user)
     }
     
-
+    @IBAction func cloudTypeChanged(_ sender: UISegmentedControl) {
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        appSettings.setCloudType(sender.selectedSegmentIndex)
+    }
+    
     @IBAction func urlChange(_ sender: UITextField) {
         let appSettings = AppSettings.sharedInstance() as AppSettings
         url = sender.text!
