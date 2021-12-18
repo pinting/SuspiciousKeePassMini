@@ -67,6 +67,11 @@
 "AutoFill Request" = "AutoFill Nachfrage";
 "Recycle bin" = "Papierkorb";
 "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "Hiermit bestätige ich das meine Kennwörter in dieser DB dem IOS Autofill Mechanismus zur Verfügung gestellt werden";
+"Shareing" = "Teilen";
+"Notify from IOSKeePass" = "Meldung von IOSKeePass";
+"New Default DB is selected Name:" = "Neue standard DB 🚀 wurde gewählt:";
+"This Database is" = "Diese KeePass DB is jetzt ihr Standard wenn Sie starten wird diese Automatisch geöffnet 📲";
+ "now" = "Jetzt";
 
 // General Messages
 "This is an KDB in Verion 1, and has no support for One Time Passwords" = "Dies ist die KDB in Verion 1, diese hat keine Unterstützung für Zeit basierte Einmal passwörter";
