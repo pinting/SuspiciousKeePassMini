@@ -193,6 +193,7 @@ class SettingsViewController: UITableViewController {
             cloudacountviewcontroller.user = appSettings.cloudUser() ?? "user"
             cloudacountviewcontroller.url = appSettings.cloudURL() ?? "https:"
             cloudacountviewcontroller.pwd = appSettings.cloudPWD() ?? "123"
+            cloudacountviewcontroller.selindex = appSettings.cloudType() ?? 0
             
             self.navigationController?.popViewController(animated: true)
         }else{
