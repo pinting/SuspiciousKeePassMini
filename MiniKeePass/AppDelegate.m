@@ -49,6 +49,7 @@
                                name:UIPasteboardChangedNotification
                              object:nil];
     
+    [AppRating appID:@"1516678863"];
    
     [self checkFileProtection];
     
