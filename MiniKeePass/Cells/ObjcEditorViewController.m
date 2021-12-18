@@ -69,8 +69,18 @@ NS_ASSUME_NONNULL_BEGIN
 {
     [super viewDidLoad];
 
-    UINavigationBar* navbar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    UINavigationBar* navbar= nil;
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        
+        /* Device is iPad */
+        navbar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width*0.7, 50)];
 
+    }else{
+        navbar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
+    }
+    
+     
     UINavigationItem* navItem = [[UINavigationItem alloc] initWithTitle:@"KeePass Notes"];
     
     UIBarButtonItem * const refreshBarButtonItem =
