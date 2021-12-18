@@ -145,7 +145,9 @@
         
         [data writeToFile:self.filename atomically:YES];
         
-        [[AppSettings sharedInstance] setBackupFirstTime:NO];
+        
+        [[AppSettings sharedInstance] setfileneedsBackup:self.filename];
+    
 #endif
     
    /* if (![[AppSettings sharedInstance] backupDisabled]) {
