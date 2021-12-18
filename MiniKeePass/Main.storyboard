@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="APd-hG-9Gf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="APd-hG-9Gf">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,7 +20,7 @@
                         <color key="separatorColor" name="backgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DatabaseCell" textLabel="AUH-xp-5SC" detailTextLabel="THz-dz-dy3" style="IBUITableViewCellStyleSubtitle" id="CNc-UM-igV">
-                                <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="44.666666030883789" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CNc-UM-igV" id="pIV-Jf-g3j">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -46,7 +46,7 @@
                                 <color key="backgroundColor" name="backgroundColor"/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="KeyFileCell" textLabel="Fa6-04-W9c" detailTextLabel="umU-Nh-Iqa" style="IBUITableViewCellStyleSubtitle" id="LPP-FW-Mc0">
-                                <rect key="frame" x="0.0" y="68.333333969116211" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="88.666666030883789" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LPP-FW-Mc0" id="QH8-0X-LMf">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -71,7 +71,7 @@
                                 <color key="backgroundColor" name="backgroundColor"/>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TrayCell" textLabel="byO-Bx-T6q" detailTextLabel="Myf-UY-krA" style="IBUITableViewCellStyleSubtitle" id="Z35-JL-jQF" userLabel="TrayCell">
-                                <rect key="frame" x="0.0" y="112.33333396911621" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="132.66666603088379" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z35-JL-jQF" id="aca-vp-sAp">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -169,7 +169,7 @@
                         <color key="separatorColor" name="backgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="GroupCell" id="7Ya-3i-ifE">
-                                <rect key="frame" x="0.0" y="24.333333969116211" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="44.666666030883789" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7Ya-3i-ifE" id="Aga-ZQ-45H">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -180,7 +180,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="EntryCell" textLabel="gzn-Bq-lES" detailTextLabel="MCq-o1-RtR" style="IBUITableViewCellStyleSubtitle" id="5h3-jQ-kts">
-                                <rect key="frame" x="0.0" y="68.333333969116211" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="88.666666030883789" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5h3-jQ-kts" id="vEL-Ci-oLp">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -254,10 +254,16 @@
             <objects>
                 <navigationController toolbarHidden="NO" id="APd-hG-9Gf" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="waS-9H-vbV">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="waS-9H-vbV">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="backgroundColor"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" systemColor="labelColor"/>
+                        </textAttributes>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" name="backgroundColor"/>
+                        </navigationBarAppearance>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="Eoa-O5-e5L">
@@ -282,6 +288,9 @@
         </namedColor>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
