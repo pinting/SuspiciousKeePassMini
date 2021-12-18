@@ -32,3 +32,7 @@
 
 #import <CommonCrypto/CommonCrypto.h>
 #import "TOCropViewController.h"
+
+#ifdef DEBUG
+//#import "FlexManager.h"
+#endif
