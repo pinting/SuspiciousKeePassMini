@@ -181,6 +181,8 @@
             //textedit.useCustomDropInteraction=YES;
             textedit.delegate = self;
             textedit.text = self.textView.text;
+            textedit.modalPresentationStyle = -2;
+           // textedit.width = self.parentView.view.frame.size.width;
             //[textedit.delegate self]
             // See `Settings.bundle`.
             //[textedit [useCustomDropInteraction:YES]];
