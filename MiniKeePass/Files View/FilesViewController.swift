@@ -21,11 +21,13 @@ import KeyboardGuide
 import FilesProvider
 import SwiftSpinner
 
+
+
 class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportDatabaseDelegate, UIDocumentBrowserViewControllerDelegate, FileProviderDelegate {
     private let databaseReuseIdentifier = "DatabaseCell"
     private let keyFileReuseIdentifier = "KeyFileCell"
     private let trayIdentifier = "TrayCell"
-
+    
     lazy var documentBrowser: DocumentBrowserViewController = {
       return DocumentBrowserViewController()
     }()
@@ -36,36 +38,83 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         case trayFiles = 2
         static let AllValues = [Section.databases, Section.keyFiles, Section.trayFiles]
     }
+    
+    
+    
 
     var databaseFiles: [String] = []
     var keyFiles: [String] = []
     var trayFiles: [String] = []
     var webdavProvider: WebDAVFileProvider?
+    var ftpProvider: FTPFileProvider?
+    var localProvider: LocalFileProvider?
+    var iCloudProvider: CloudFileProvider?
+    
     var backupcount: Int = 0
+    var singleBackup: Int = 0
+    var cloudType: Int = 0
+    var isFirstTime: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad();
         // Activate KeyboardGuide at the beginning of application life cycle.
         KeyboardGuide.shared.activate()
         
-    
-        
         let appSettings = AppSettings.sharedInstance() as AppSettings
         
+        appSettings.setfileneedsBackup("")
         let username = appSettings.cloudUser()
         let password = appSettings.cloudPWD()
+        cloudType = appSettings.cloudType()
         
         let baseURL = appSettings.cloudURL()  //"https://cloud.unicomedv.de/remote.php/dav/files/"+username+"/"
         
+        webdavProvider = nil
+        ftpProvider = nil
+        localProvider = nil
+        iCloudProvider = nil
+        
         if(username != nil && password != nil && baseURL != nil){
             let credential = URLCredential(user: username!, password: password!, persistence: .permanent)
-            webdavProvider = WebDAVFileProvider(baseURL: URL(string: baseURL!)!, credential: credential)
-            webdavProvider?.delegate = self as FileProviderDelegate
-        }else{
-            webdavProvider = nil
+            switch cloudType{
+                case 0:
+                    webdavProvider = WebDAVFileProvider(baseURL: URL(string: baseURL!)!, credential: credential)
+                    webdavProvider?.delegate = self as FileProviderDelegate
+                    break
+                case 1:
+                    //iCloudProvider = CloudFileProvider(containerId: "iCloud.unicomedv.de")
+                    //iCloudProvider?.delegate = self as FileProviderDelegate
+                    break
+                case 2:
+                    //SCP must implemeted
+                    break;
+                
+                default:
+                    webdavProvider = WebDAVFileProvider(baseURL: URL(string: baseURL!)!, credential: credential)
+                    webdavProvider?.delegate = self as FileProviderDelegate
+            }
+            
+            
+            
+            /*ftpProvider = FTPFileProvider(baseURL: URL(string: baseURL!)!, mode: FTPFileProvider.Mode.passive, credential: credential)
+            ftpProvider?.securedDataConnection = true
+            
+            iCloudProvider = CloudFileProvider(baseURL: URL(string: baseURL!)!)
+            
+            localProvider = LocalFileProvider(baseURL: URL(string: baseURL!)!)
+            localProvider?.credential = credential
+            
+            onedriveProvider = OneDriveFileProvider(credential: credential)
+            
+            dropboxProvider = DropboxFileProvider(credential: credential)*/
+            
+            
         }
     
-       
+        let flexswipe = UISwipeGestureRecognizer(target : self, action : #selector(onClickedToolFlex))
+        flexswipe.direction = .right
+        self.view.addGestureRecognizer(flexswipe)
+
         
         if #available(iOS 13.0, *) {
             if (appSettings.darkEnabled()) {
@@ -93,10 +142,84 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     override func viewWillAppear(_ animated: Bool) {
         updateFiles();
         super.viewWillAppear(animated)
-        copyDocumentsToWebDav()
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        
+        
+        cloudType = appSettings.cloudType()
+        switch cloudType{
+            case 0:
+                copyDocumentsToWebDav()
+                break
+            case 1:
+                copyDocumentsToiCloud()
+                break
+            case 2:
+                //SCP must be implemeted
+                break;
+            default:
+                copyDocumentsToWebDav()
+        }
+        
+        
+        let fnb = appSettings.fileneedsBackup()
+        if(fnb != ""){
+            switch cloudType{
+                case 0:
+                    needBackupToWebDav()
+                    break
+                case 1:
+                    needBackupToiCloud()
+                    break
+                case 2:
+                    //scp must be implemeted
+                    break;
+               
+                default:
+                    needBackupToWebDav()
+            }
+            
+        }
+        
         
     }
     
+     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if(self.isFirstTime == 0){
+           
+            let appSettings = AppSettings.sharedInstance() as AppSettings
+            //self.databaseFiles[indexPath.row]
+            let defname = appSettings.defaultDB()
+            if(defname != nil){
+                if(defname != "" ){
+                    let databaseManager = DatabaseManager.sharedInstance()
+                    
+                    databaseManager?.openDatabaseDocument(defname, animated: true)
+                    let appDelegate = AppDelegate.getDelegate()
+                    let document = appDelegate?.getOpenDataBase()
+                    if(document != nil){
+                        performSegue(withIdentifier: "fileOpened", sender: nil)
+                    }
+                }
+            }
+            
+            if(databaseFiles.count == 0){
+                let notiData = HDNotificationData(
+                            iconImage: UIImage(named: "AppIcon"),
+                            appTitle: "Notify from IOSKeePass".uppercased(),
+                            title: "Your Files Folder is empty 📂",
+                            message: "Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️",
+                            time: "now")
+                        
+                        HDNotificationView.show(data: notiData, onTap: nil, onDidDismiss: nil)
+            }
+            self.isFirstTime = 1
+        }
+         
+        
+        
+     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "newDatabase"?:
@@ -138,7 +261,8 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             
             groupViewController.parentGroup = document?.kdbTree.root
             groupViewController.title = URL(fileURLWithPath: document!.filename).lastPathComponent
-            groupViewController.tagid = 1;
+            groupViewController.tagid = 1
+            
             
            
         case "importDatabase"?:
@@ -150,7 +274,68 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             break
         }
     }
-   
+    
+   func copyDocumentsToFTP()
+   {
+        
+   }
+    
+    func copyDocumentsToLOCAL()
+    {
+         
+    }
+    
+    func needBackupToWebDav(){
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        singleBackup = 1
+        if (appSettings.backupEnabled() && webdavProvider != nil) {
+            // Setup iCloud Nexcloud
+            let fnb = appSettings.fileneedsBackup()
+            SwiftSpinner.show("Cloud Backup \nTap to stop").addTapHandler({
+              SwiftSpinner.hide()
+            })
+           // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
+            let localurl = URL(fileURLWithPath: fnb!)
+            let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+            webdavProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
+                if(err != nil){
+                    self.backupcount = self.backupcount - 1
+                    print("Status:\(err)")
+                }
+            })
+            appSettings.setfileneedsBackup("")
+        }
+           
+    }
+    
+    func needBackupToiCloud(){
+        if(iCloudProvider == nil){ //Mainthread problems
+            return
+        }
+        
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        singleBackup = 1
+        if (appSettings.backupEnabled() && iCloudProvider != nil) {
+            // Setup iCloud Nexcloud
+            let fnb = appSettings.fileneedsBackup()
+            SwiftSpinner.show("iCloud Backup \nTap to stop").addTapHandler({
+              SwiftSpinner.hide()
+            })
+           // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
+            let localurl = URL(fileURLWithPath: fnb!)
+            let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+            iCloudProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
+                if(err != nil){
+                    self.backupcount = self.backupcount - 1
+                    print("Status:\(err)")
+                }
+            })
+            appSettings.setfileneedsBackup("")
+        }
+           
+    }
+    
+    
     func copyDocumentsToWebDav(){
         
         let appSettings = AppSettings.sharedInstance() as AppSettings
@@ -172,7 +357,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             do {
                 let fileURLs = try FileManager.default.contentsOfDirectory(at: localDocumentsURL, includingPropertiesForKeys: nil)
                 // process files
-                SwiftSpinner.show("Backup \nTap to stop").addTapHandler({
+                SwiftSpinner.show("Cloud Backup \nTap to stop").addTapHandler({
                   SwiftSpinner.hide()
                 })
                
@@ -191,56 +376,67 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                         
                        
                     }
-               // SwiftSpinner.hide()
                 
                 
             } catch {
                 print("Error while enumerating files \(localDocumentsURL.path): \(error.localizedDescription)")
             }
-            
-            /*webdavProvider?.contentsOfDirectory(path: "/", completionHandler: {
-                contents, error in
-                for file in contents {
-                    print("Name: \(file.name)")
-                    print("Size: \(file.size)")
-                    print("Creation Date: \(file.creationDate)")
-                    print("Modification Date: \(file.modifiedDate)")
-                }
-            })*/
-            
-            //let iCloudToken = FileManager.default.ubiquityIdentityToken
-            
-                //is iCloud working?
-                /*if  iCloudToken != nil {
-                    print("iCloud available")
-                    if let iCloudDocumentsURL = FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") {
-                        print(iCloudDocumentsURL.path)
-                        
-                        if (!FileManager.default.fileExists(atPath: iCloudDocumentsURL.path, isDirectory: nil)) {
-                                    do {
-                                        try FileManager.default.createDirectory(at: iCloudDocumentsURL, withIntermediateDirectories: true, attributes: nil)
-                                    }
-                                    catch {
-                                        //Error handling
-                                        print("Error in creating doc")
-                                    }
-                        }else{
-                            print("iCloud URL already exist")
-                        }
-                    }
-                    
-                    copyDocumentsToNextCloudDirectory()
-                    
-                } else {
-                    print("iCloud is NOT working!")
-                    //  return
-                }*/
-
-
-           
+        }
+    }
+    
+    func copyDocumentsToiCloud(){
+        
+        if(iCloudProvider == nil){ //Mainthread problems
+            return
         }
         
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        
+        if (appSettings.backupEnabled() && !appSettings.backupFirstTime() && webdavProvider != nil) {
+            // Setup iCloud Nexcloud
+           
+            
+            iCloudProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
+                print("Status:\(err)")
+            })
+            
+            iCloudProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+                print("Status:\(err)")
+            })
+            
+            guard let localDocumentsURL = FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: .userDomainMask).last else { return }
+            
+            do {
+                let fileURLs = try FileManager.default.contentsOfDirectory(at: localDocumentsURL, includingPropertiesForKeys: nil)
+                // process files
+                SwiftSpinner.show("iCloud Backup \nTap to stop").addTapHandler({
+                  SwiftSpinner.hide()
+                })
+               
+                backupcount = fileURLs.count
+                
+                    fileURLs.forEach { localurl in
+                        print("Backup:\(localurl)")
+                        
+                        let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                        iCloudProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
+                            if(err != nil){
+                                self.backupcount = self.backupcount - 1
+                                print("Status:\(err)")
+                            }
+                        })
+                        
+                       
+                    }
+                
+                
+            } catch {
+                print("Error while enumerating files \(localDocumentsURL.path): \(error.localizedDescription)")
+            }
+        }
     }
+    
+
     
     func fileproviderSucceed(_ fileProvider: FileProviderOperations, operation: FileOperationType) {
             switch operation {
@@ -258,6 +454,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 }
             }
         
+            singleBackup = 0
             if(backupcount <= 0){
                 let appSettings = AppSettings.sharedInstance() as AppSettings
                 SwiftSpinner.hide()
@@ -281,9 +478,12 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             }
             if(backupcount <= 0){
                 let appSettings = AppSettings.sharedInstance() as AppSettings
-                SwiftSpinner.hide()
+                
                 appSettings.setBackupFirstTime(true)
             }
+            
+            SwiftSpinner.hide()
+            
         }
         
         func fileproviderProgress(_ fileProvider: FileProviderOperations, operation: FileOperationType, progress: Float) {
@@ -293,6 +493,29 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             case .copy(source: let source, destination: let dest) where source.hasPrefix("file://"):
                 
                 print("Uploading \((source as NSString).lastPathComponent) to \(dest): \(progress * 100) completed.")
+                if(singleBackup == 1){
+                    switch cloudType {
+                    case 0:
+                        SwiftSpinner.show(progress: Double(progress), title: "Cloud Backup: \(Int(progress * 100))% completed")
+                        break;
+                    case 1:
+                        SwiftSpinner.show(progress: Double(progress), title: "iCloud Backup: \(Int(progress * 100))% completed")
+                        break;
+                    case 2:
+                        SwiftSpinner.show(progress: Double(progress), title: "SCP Backup: \(Int(progress * 100))% completed")
+                        break;
+                    default:
+                        SwiftSpinner.show(progress: Double(progress), title: "Cloud Backup: \(Int(progress * 100))% completed")
+                    }
+                    
+                    if progress >= 1 {
+                        
+                        SwiftSpinner.show( duration: 2.0, title: "Complete!", animated: false)
+                        SwiftSpinner.hide()
+                        singleBackup = 0
+                        
+                    }
+                }
             case .copy(source: let source, destination: let dest):
                 print("Copy \(source) to \(dest): \(progress * 100) completed.")
             default:
@@ -426,9 +649,11 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             filename = databaseFiles[indexPath.row]
             let appSettings = AppSettings.sharedInstance() as AppSettings
             let defname = appSettings.defaultDB()
-            if(defname == filename){
-                print("Default DB found")
-                cell.textLabel?.textColor = UIColor.cyan
+            if(defname != nil){
+                if(defname == filename){
+                    print("Default DB found")
+                    cell.textLabel?.textColor = UIColor.systemGreen
+                }
             }
         case .keyFiles:
             cell = tableView.dequeueReusableCell(withIdentifier: keyFileReuseIdentifier, for: indexPath)
@@ -466,6 +691,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         dateFormatter.timeStyle = .short
         cell.detailTextLabel!.text = NSLocalizedString("Last Modified", comment: "") + ": " + dateFormatter.string(from: date ?? nowdate) + " Size:" + sstr
 
+        
         return cell
     }
 
@@ -487,9 +713,14 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         
     }
     
+    
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteAction = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Delete", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
             self.deleteRowAtIndexPath(indexPath)
+        }
+        
+        let shareAction = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Shareing", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
+            self.shareRowAtIndexPath(indexPath)
         }
         
         let renameAction = UITableViewRowAction(style: .normal, title: NSLocalizedString("Rename", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
@@ -508,18 +739,36 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             self.recoverRowAtIndexPath(indexPath)
         }
         
-        renameAction.backgroundColor = UIColor.systemGreen
-        defaultAction.backgroundColor = UIColor.systemBlue
+        shareAction.backgroundColor = UIColor.systemPurple
+        renameAction.backgroundColor = UIColor.systemBlue
+        defaultAction.backgroundColor = UIColor.systemGreen
         recoverAction.backgroundColor = UIColor.systemPurple
         
         switch Section.AllValues[indexPath.section] {
         case .databases:
-            return [deleteAction, renameAction, defaultAction]
+            return [shareAction,deleteAction, renameAction, defaultAction]
         case .keyFiles:
-            return [deleteAction]
+            return [shareAction,deleteAction]
         case .trayFiles:
             return [removeAction,recoverAction]
         }
+    }
+    
+    func shareRowAtIndexPath(_ indexPath: IndexPath) {
+        
+       // do {
+            let databaseManager = DatabaseManager.sharedInstance()
+            let keepassURL = databaseManager?.getFileUrl(databaseFiles[indexPath.row])
+            let tex = String("Share KeePass File:")+databaseFiles[indexPath.row];
+            //let keepassData = try NSData(contentsOf: keepassURL!, options: NSData.ReadingOptions())
+        let activityViewController = UIActivityViewController(activityItems: [tex, keepassURL!], applicationActivities: nil)
+            present(activityViewController, animated: true, completion: nil)
+         /*   } catch {
+                    print(error)
+            }*/
+
+        
+        
     }
     
     func defaultRowAtIndexPath(_ indexPath: IndexPath) {
@@ -529,13 +778,25 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         filename = databaseFiles[indexPath.row]
         let appSettings = AppSettings.sharedInstance() as AppSettings
         let of = appSettings.defaultDB()
-        if(filename == of){
-            appSettings.setDefaultDB("")
-          
-        }else{
-            appSettings.setDefaultDB(filename)
-            
-        }
+       
+            if(filename == of){
+                appSettings.setDefaultDB("")
+              
+            }else{
+                
+                appSettings.setDefaultDB(filename)
+                let notiData = HDNotificationData(
+                            iconImage: UIImage(named: "AppIcon"),
+                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                            title: NSLocalizedString("New Default DB is selected Name:", comment: "")+self.databaseFiles[indexPath.row],
+                            message: NSLocalizedString("This Database is", comment: ""),
+                            time: "now")
+                        
+                        HDNotificationView.show(data: notiData, onTap: nil, onDidDismiss: nil)
+           
+                
+            }
+       
        
         self.tableView.reloadRows(at: [indexPath],
                                   with: .fade)
@@ -746,6 +1007,12 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         }*/
         
        }
+  
+    @objc public func onClickedToolFlex() {
+        #if DEBUG
+            //FLEXManager.shared.showExplorer()
+        #endif
+    }
     
 }
 
