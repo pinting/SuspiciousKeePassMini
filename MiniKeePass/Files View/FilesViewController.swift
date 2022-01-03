@@ -274,6 +274,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             let appDelegate = AppDelegate.getDelegate()
             let document = appDelegate?.getOpenDataBase()//appDelegate?.databaseDocument
             //Check if file is available on cloud connection
+            
             if(checkFileVersionOnWebDav(document: document!) == true){
                  //neuere Version gefunden we should handle it
             }
@@ -334,8 +335,13 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     
     func checkFileVersionOnWebDav(document: DatabaseDocument)->Bool
     {
+        let appSettings = AppSettings.sharedInstance() as AppSettings
         var isChecked: Bool = false
         if document == nil {
+            return false
+        }
+        
+        if(appSettings.backupEnabled()  == false){
             return false
         }
         
