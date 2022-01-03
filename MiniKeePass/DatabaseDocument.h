@@ -30,6 +30,7 @@
 @property (nonatomic, strong) KPKTree *kdbTree;
 @property (nonatomic, copy) NSString *filename;
 @property (nonatomic, strong) NSURL *url;
+@property (nonatomic, strong) NSString* md5Base64;
 
 /// Create a KeePass Database
 /// @param filename Database filename
