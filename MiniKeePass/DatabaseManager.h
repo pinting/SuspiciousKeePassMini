@@ -32,7 +32,7 @@
 - (NSURL *)getFileUrl:(NSString *)filename;
 - (NSDate *)getFileLastModificationDate:(NSURL *)url;
 - (NSNumber *)getFileSize:(NSURL *)url;
-- (void)deleteFile:(NSString *)filename;
+- (void)moveFile:(NSString *)filename moveTo:(NSString *)moveTo;
 - (void)removeFile:(NSString *)filename;
 - (void)recoverFile:(NSString *)filename;
 - (void)newDatabase:(NSURL *)url password:(NSString *)password version:(NSInteger)version;
