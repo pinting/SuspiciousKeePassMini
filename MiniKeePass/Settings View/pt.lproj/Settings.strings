@@ -1,0 +1,198 @@
+
+/* Class = "UISegmentedControl"; 1E2-iX-dUr.segmentTitles[0] = "Individual"; ObjectID = "1E2-iX-dUr"; */
+"1E2-iX-dUr.segmentTitles[0]" = "Individual";
+
+/* Class = "UISegmentedControl"; 1E2-iX-dUr.segmentTitles[1] = "All Keepass entrys"; ObjectID = "1E2-iX-dUr"; */
+"1E2-iX-dUr.segmentTitles[1]" = "Todas as entradas de Keepass";
+
+/* Class = "UITableViewSection"; footerTitle = "Switch the APP to Dark mode"; ObjectID = "1XV-Vi-rXZ"; */
+"1XV-Vi-rXZ.footerTitle" = "Mudar o APP para o modo Escuro";
+
+/* Class = "UITableViewSection"; headerTitle = "IOS dark mode"; ObjectID = "1XV-Vi-rXZ"; */
+"1XV-Vi-rXZ.headerTitle" = "IOS modo escuro";
+
+/* Class = "UISegmentedControl"; 5tx-ga-DIK.segmentTitles[0] = "WebDAV"; ObjectID = "5tx-ga-DIK"; */
+"5tx-ga-DIK.segmentTitles[0]" = "WebDAV";
+
+/* Class = "UISegmentedControl"; 5tx-ga-DIK.segmentTitles[1] = "iCloud"; ObjectID = "5tx-ga-DIK"; */
+"5tx-ga-DIK.segmentTitles[1]" = "iCloud";
+
+/* Class = "UISegmentedControl"; 5tx-ga-DIK.segmentTitles[2] = "OneDrive"; ObjectID = "5tx-ga-DIK"; */
+"5tx-ga-DIK.segmentTitles[2]" = "OneDrive";
+
+/* Class = "UITableViewSection"; footerTitle = "Clear the contents of the clipboard after a given timeout upon performing a copy."; ObjectID = "6aD-nd-BAe"; */
+"6aD-nd-BAe.footerTitle" = "Limpar o conteúdo da prancheta após um determinado intervalo de tempo após a realização de uma cópia.";
+
+/* Class = "UITableViewSection"; headerTitle = "Clear Clipboard on Timeout"; ObjectID = "6aD-nd-BAe"; */
+"6aD-nd-BAe.headerTitle" = "Limpar a prancheta no Timeout";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "8ZA-aO-G1w"; */
+"8ZA-aO-G1w.text" = "Activado";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "Am8-Mj-Ugf"; */
+"Am8-Mj-Ugf.text" = "Activado";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "C0I-Y0-rYX"; */
+"C0I-Y0-rYX.text" = "Título";
+
+/* Class = "UILabel"; text = "Method"; ObjectID = "Cat-Ji-dIK"; */
+"Cat-Ji-dIK.text" = "Método";
+
+/* Class = "UILabel"; text = "IOS Autofill Support"; ObjectID = "HQU-cJ-O4e"; */
+"HQU-cJ-O4e.text" = "Apoio ao Autofill IOS";
+
+/* Class = "UITableViewSection"; footerTitle = "Your Cloud password"; ObjectID = "HdE-BK-IC2"; */
+"HdE-BK-IC2.footerTitle" = "A sua palavra-passe Cloud";
+
+/* Class = "UITableViewSection"; headerTitle = "Password"; ObjectID = "HdE-BK-IC2"; */
+"HdE-BK-IC2.headerTitle" = "Senha";
+
+/* Class = "UILabel"; text = "Integrated"; ObjectID = "I3Y-Du-rEB"; */
+"I3Y-Du-rEB.text" = "Integrado";
+
+/* Class = "UITextField"; placeholder = "https://nextcloud.com/...."; ObjectID = "Iuj-WB-HWZ"; */
+"Iuj-WB-HWZ.placeholder" = "https://nextcloud.com/....";
+
+/* Class = "UITableViewSection"; footerTitle = "Stores remembered database passwords in the devices's secure keychain."; ObjectID = "JmW-Y4-S1N"; */
+"JmW-Y4-S1N.footerTitle" = "Stores remembered database passwords in the devices's secure keychain.";
+
+/* Class = "UITableViewSection"; headerTitle = "Remember Database Passwords"; ObjectID = "JmW-Y4-S1N"; */
+"JmW-Y4-S1N.headerTitle" = "Recordar senhas de bases de dados";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "Krp-uD-Psn"; */
+"Krp-uD-Psn.placeholder" = "Senha";
+
+/* Class = "UILabel"; text = "Close Enabled"; ObjectID = "Q8a-zf-aFf"; */
+"Q8a-zf-aFf.text" = "Fechar Activado";
+
+/* Class = "UILabel"; text = "Close Timeout"; ObjectID = "QCo-U1-I8E"; */
+"QCo-U1-I8E.text" = "Fechar o tempo limite";
+
+/* Class = "UILabel"; text = "IOSKeePass Version"; ObjectID = "Sdb-s9-D0G"; */
+"Sdb-s9-D0G.text" = "IOSKeePass Versão";
+
+/* Class = "UITableViewSection"; footerTitle = "Hides passwords when viewing a password entry."; ObjectID = "Shd-Nf-YFM"; */
+"Shd-Nf-YFM.footerTitle" = "Oculta palavras-passe ao visualizar uma entrada de palavra-passe.";
+
+/* Class = "UITableViewSection"; headerTitle = "Hide Passwords"; ObjectID = "Shd-Nf-YFM"; */
+"Shd-Nf-YFM.headerTitle" = "Esconder palavras-passe";
+
+/* Class = "UILabel"; text = "Hide Passwords"; ObjectID = "T3z-vF-Z88"; */
+"T3z-vF-Z88.text" = "Esconder palavras-passe";
+
+/* Class = "UITableViewSection"; footerTitle = "e.g. https://nextcloud.com/remote.php/dav/files/username/"; ObjectID = "Tvz-Yq-NGE"; */
+"Tvz-Yq-NGE.footerTitle" = "e.g. https://nextcloud.com/remote.php/dav/files/username/";
+
+/* Class = "UITableViewSection"; headerTitle = "URL or Server"; ObjectID = "Tvz-Yq-NGE"; */
+"Tvz-Yq-NGE.headerTitle" = "URL or Server";
+
+/* Class = "UITableViewSection"; footerTitle = "Automatically close an open database after the selected timeout."; ObjectID = "ViH-4F-NKK"; */
+"ViH-4F-NKK.footerTitle" = "Fechamento automático de uma base de dados aberta após o tempo limite seleccionado.";
+
+/* Class = "UITableViewSection"; headerTitle = "Close Database on Timeout"; ObjectID = "ViH-4F-NKK"; */
+"ViH-4F-NKK.headerTitle" = "Fechar base de dados sobre o tempo limite";
+
+/* Class = "UILabel"; text = "Clear Timeout"; ObjectID = "WPB-ze-mX6"; */
+"WPB-ze-mX6.text" = "Tempo Limpo";
+
+/* Class = "UITableViewSection"; footerTitle = "The string encoding used for passwords when converting them to database keys."; ObjectID = "WTf-Ma-R7l"; */
+"WTf-Ma-R7l.footerTitle" = "A codificação de cordas utilizada para as palavras-passe ao convertê-las em chaves de bases de dados.";
+
+/* Class = "UITableViewSection"; headerTitle = "Password Encoding"; ObjectID = "WTf-Ma-R7l"; */
+"WTf-Ma-R7l.headerTitle" = "Codificação de senha";
+
+/* Class = "UILabel"; text = "Encoding"; ObjectID = "Wyv-5A-xwb"; */
+"Wyv-5A-xwb.text" = "Codificação";
+
+/* Class = "UITableViewSection"; footerTitle = "Prevent unauthorized access to IOSKeePass with a PIN."; ObjectID = "XnM-JR-qTX"; */
+"XnM-JR-qTX.footerTitle" = "Impedir o acesso não autorizado ao IOSKeePass com um PIN.";
+
+/* Class = "UITableViewSection"; headerTitle = "PIN Protection"; ObjectID = "XnM-JR-qTX"; */
+"XnM-JR-qTX.headerTitle" = "PIN Protecção";
+
+/* Class = "UITableViewSection"; footerTitle = "Select your Provider Type"; ObjectID = "ZSj-bs-JXH"; */
+"ZSj-bs-JXH.footerTitle" = "Seleccione o seu Tipo de Provedor";
+
+/* Class = "UITableViewSection"; headerTitle = "Cloud Provider"; ObjectID = "ZSj-bs-JXH"; */
+"ZSj-bs-JXH.headerTitle" = "Fornecedor de nuvens";
+
+/* Class = "UITableViewSection"; footerTitle = "Switch between an integrated web browser and Safari."; ObjectID = "ZbJ-mR-6o9"; */
+"ZbJ-mR-6o9.footerTitle" = "Alternar entre um navegador web integrado e o Safari.";
+
+/* Class = "UITableViewSection"; headerTitle = "Web Browser"; ObjectID = "ZbJ-mR-6o9"; */
+"ZbJ-mR-6o9.headerTitle" = "Web Browser";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "ZmO-Ci-csI"; */
+"ZmO-Ci-csI.title" = "Definições";
+
+/* Class = "UITableViewSection"; footerTitle = "Switch ON / OFF Cloud  Backup"; ObjectID = "Zs3-9b-0kG"; */
+"Zs3-9b-0kG.footerTitle" = "Ligar / Desligar Cloud Backup";
+
+/* Class = "UITableViewSection"; headerTitle = "Cloud Backup"; ObjectID = "Zs3-9b-0kG"; */
+"Zs3-9b-0kG.headerTitle" = "Cloud Backup";
+
+/* Class = "UILabel"; text = "Search Title only"; ObjectID = "bYX-rB-JtD"; */
+"bYX-rB-JtD.text" = "Pesquisar apenas Título";
+
+/* Class = "UITableViewSection"; footerTitle = "Delete all files and passwords after too many failed attempts."; ObjectID = "bnl-fj-Wky"; */
+"bnl-fj-Wky.footerTitle" = "Apagar todos os ficheiros e palavras-passe após demasiadas tentativas falhadas.";
+
+/* Class = "UITableViewSection"; headerTitle = "Delete All Data on PIN Failure"; ObjectID = "bnl-fj-Wky"; */
+"bnl-fj-Wky.headerTitle" = "apagar todos os dados sobre falha de PIN";
+
+/* Class = "UITableViewSection"; footerTitle = "Supports the IOS Autfoill Credential Provider"; ObjectID = "bqX-8v-ds6"; */
+"bqX-8v-ds6.footerTitle" = "Apoia o Provedor de Credenciais do IOS Autofill";
+
+/* Class = "UITableViewSection"; headerTitle = "IOS AutoFill"; ObjectID = "bqX-8v-ds6"; */
+"bqX-8v-ds6.headerTitle" = "IOS AutoFill";
+
+/* Class = "UITableViewSection"; footerTitle = "Sort Groups and Entries Alphabetically"; ObjectID = "dcw-Ls-OVy"; */
+"dcw-Ls-OVy.footerTitle" = "Ordenar grupos e entradas por ordem alfabética";
+
+/* Class = "UITableViewSection"; headerTitle = "Sorting"; ObjectID = "dcw-Ls-OVy"; */
+"dcw-Ls-OVy.headerTitle" = "Ordenação";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "drK-Tr-LS6"; */
+"drK-Tr-LS6.text" = "Activado";
+
+/* Class = "UITableViewSection"; footerTitle = "Search Title only (default: search all fields)"; ObjectID = "f3o-MT-xbh"; */
+"f3o-MT-xbh.footerTitle" = "Pesquisar apenas título (por defeito: pesquisar todos os campos)";
+
+/* Class = "UITableViewSection"; headerTitle = "Searching"; ObjectID = "f3o-MT-xbh"; */
+"f3o-MT-xbh.headerTitle" = "A pesquisar";
+
+/* Class = "UILabel"; text = "Account"; ObjectID = "f3w-NO-BCi"; */
+"f3w-NO-BCi.text" = "Conta";
+
+/* Class = "UILabel"; text = "Enable Cloud Backup"; ObjectID = "fKY-md-m8c"; */
+"fKY-md-m8c.text" = "Activar o Cloud Backup";
+
+/* Class = "UITableViewSection"; footerTitle = "most username or emailadress"; ObjectID = "iA3-jd-szQ"; */
+"iA3-jd-szQ.footerTitle" = "a maior parte dos nomes de utilizador ou de e-mailadress";
+
+/* Class = "UITableViewSection"; headerTitle = "Accountname or USERNAME"; ObjectID = "iA3-jd-szQ"; */
+"iA3-jd-szQ.headerTitle" = "Nome da conta";
+
+/* Class = "UILabel"; text = "Attempts"; ObjectID = "iK4-cj-HRD"; */
+"iK4-cj-HRD.text" = "Tentativas";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "kQ7-wA-XNa"; */
+"kQ7-wA-XNa.text" = "Activado";
+
+/* Class = "UILabel"; text = "Dark Enabled"; ObjectID = "moz-B7-WUb"; */
+"moz-B7-WUb.text" = "Activado nas Trevas";
+
+/* Class = "UILabel"; text = "PIN Enabled"; ObjectID = "p28-N6-qWa"; */
+"p28-N6-qWa.text" = "PIN Activado";
+
+/* Class = "UITextField"; placeholder = "Accountname"; ObjectID = "q2V-oj-sug"; */
+"q2V-oj-sug.placeholder" = "Nome da conta";
+
+/* Class = "UITableViewSection"; footerTitle = "Use your fingerprint or Camera and your Face as an alternative to entering a PIN if supported."; ObjectID = "vH4-cT-PCz"; */
+"vH4-cT-PCz.footerTitle" = "Utilize a sua impressão digital ou Câmara e o seu Rosto como alternativa à introdução de um PIN, se suportado.";
+
+/* Class = "UITableViewSection"; headerTitle = "Touch ID / Face ID"; ObjectID = "vH4-cT-PCz"; */
+"vH4-cT-PCz.headerTitle" = "Touch ID / Face ID";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "xMv-gl-Kfq"; */
+"xMv-gl-Kfq.text" = "Activado";

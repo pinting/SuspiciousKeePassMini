@@ -1,0 +1,198 @@
+
+/* Class = "UISegmentedControl"; 1E2-iX-dUr.segmentTitles[0] = "Individual"; ObjectID = "1E2-iX-dUr"; */
+"1E2-iX-dUr.segmentTitles[0]" = "Индивидуальный";
+
+/* Class = "UISegmentedControl"; 1E2-iX-dUr.segmentTitles[1] = "All Keepass entrys"; ObjectID = "1E2-iX-dUr"; */
+"1E2-iX-dUr.segmentTitles[1]" = "Все записи пользователя Keepass";
+
+/* Class = "UITableViewSection"; footerTitle = "Switch the APP to Dark mode"; ObjectID = "1XV-Vi-rXZ"; */
+"1XV-Vi-rXZ.footerTitle" = "Переключите APP в темный режим";
+
+/* Class = "UITableViewSection"; headerTitle = "IOS dark mode"; ObjectID = "1XV-Vi-rXZ"; */
+"1XV-Vi-rXZ.headerTitle" = "Темный режим IOS";
+
+/* Class = "UISegmentedControl"; 5tx-ga-DIK.segmentTitles[0] = "WebDAV"; ObjectID = "5tx-ga-DIK"; */
+"5tx-ga-DIK.segmentTitles[0]" = "WebDAV";
+
+/* Class = "UISegmentedControl"; 5tx-ga-DIK.segmentTitles[1] = "iCloud"; ObjectID = "5tx-ga-DIK"; */
+"5tx-ga-DIK.segmentTitles[1]" = "iCloud";
+
+/* Class = "UISegmentedControl"; 5tx-ga-DIK.segmentTitles[2] = "OneDrive"; ObjectID = "5tx-ga-DIK"; */
+"5tx-ga-DIK.segmentTitles[2]" = "OneDrive";
+
+/* Class = "UITableViewSection"; footerTitle = "Clear the contents of the clipboard after a given timeout upon performing a copy."; ObjectID = "6aD-nd-BAe"; */
+"6aD-nd-BAe.footerTitle" = "Очистка содержимого буфера обмена после заданного тайм-аута при выполнении копирования.";
+
+/* Class = "UITableViewSection"; headerTitle = "Clear Clipboard on Timeout"; ObjectID = "6aD-nd-BAe"; */
+"6aD-nd-BAe.headerTitle" = "Очистка буфера обмена по истечении времени";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "8ZA-aO-G1w"; */
+"8ZA-aO-G1w.text" = "Включено";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "Am8-Mj-Ugf"; */
+"Am8-Mj-Ugf.text" = "Включено";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "C0I-Y0-rYX"; */
+"C0I-Y0-rYX.text" = "Название";
+
+/* Class = "UILabel"; text = "Method"; ObjectID = "Cat-Ji-dIK"; */
+"Cat-Ji-dIK.text" = "Метод";
+
+/* Class = "UILabel"; text = "IOS Autofill Support"; ObjectID = "HQU-cJ-O4e"; */
+"HQU-cJ-O4e.text" = "Поддержка автозаполнения в IOS";
+
+/* Class = "UITableViewSection"; footerTitle = "Your Cloud password"; ObjectID = "HdE-BK-IC2"; */
+"HdE-BK-IC2.footerTitle" = "Ваш пароль к облаку";
+
+/* Class = "UITableViewSection"; headerTitle = "Password"; ObjectID = "HdE-BK-IC2"; */
+"HdE-BK-IC2.headerTitle" = "Пароль";
+
+/* Class = "UILabel"; text = "Integrated"; ObjectID = "I3Y-Du-rEB"; */
+"I3Y-Du-rEB.text" = "Интегрированный";
+
+/* Class = "UITextField"; placeholder = "https://nextcloud.com/...."; ObjectID = "Iuj-WB-HWZ"; */
+"Iuj-WB-HWZ.placeholder" = "https://nextcloud.com/....";
+
+/* Class = "UITableViewSection"; footerTitle = "Stores remembered database passwords in the devices's secure keychain."; ObjectID = "JmW-Y4-S1N"; */
+"JmW-Y4-S1N.footerTitle" = "Хранит запомненные пароли баз данных в защищенном брелоке устройства.";
+
+/* Class = "UITableViewSection"; headerTitle = "Remember Database Passwords"; ObjectID = "JmW-Y4-S1N"; */
+"JmW-Y4-S1N.headerTitle" = "Запоминание паролей баз данных";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "Krp-uD-Psn"; */
+"Krp-uD-Psn.placeholder" = "Пароль";
+
+/* Class = "UILabel"; text = "Close Enabled"; ObjectID = "Q8a-zf-aFf"; */
+"Q8a-zf-aFf.text" = "Закрыть Включено";
+
+/* Class = "UILabel"; text = "Close Timeout"; ObjectID = "QCo-U1-I8E"; */
+"QCo-U1-I8E.text" = "Таймаут закрытия";
+
+/* Class = "UILabel"; text = "IOSKeePass Version"; ObjectID = "Sdb-s9-D0G"; */
+"Sdb-s9-D0G.text" = "IOSKeePass Версия";
+
+/* Class = "UITableViewSection"; footerTitle = "Hides passwords when viewing a password entry."; ObjectID = "Shd-Nf-YFM"; */
+"Shd-Nf-YFM.footerTitle" = "Скрывает пароли при просмотре записи пароля.";
+
+/* Class = "UITableViewSection"; headerTitle = "Hide Passwords"; ObjectID = "Shd-Nf-YFM"; */
+"Shd-Nf-YFM.headerTitle" = "Скрыть пароли";
+
+/* Class = "UILabel"; text = "Hide Passwords"; ObjectID = "T3z-vF-Z88"; */
+"T3z-vF-Z88.text" = "Скрыть пароли";
+
+/* Class = "UITableViewSection"; footerTitle = "e.g. https://nextcloud.com/remote.php/dav/files/username/"; ObjectID = "Tvz-Yq-NGE"; */
+"Tvz-Yq-NGE.footerTitle" = "e.g. https://nextcloud.com/remote.php/dav/files/username/";
+
+/* Class = "UITableViewSection"; headerTitle = "URL or Server"; ObjectID = "Tvz-Yq-NGE"; */
+"Tvz-Yq-NGE.headerTitle" = "URL or Server";
+
+/* Class = "UITableViewSection"; footerTitle = "Automatically close an open database after the selected timeout."; ObjectID = "ViH-4F-NKK"; */
+"ViH-4F-NKK.footerTitle" = "Автоматическое закрытие открытой базы данных по истечении выбранного тайм-аута.";
+
+/* Class = "UITableViewSection"; headerTitle = "Close Database on Timeout"; ObjectID = "ViH-4F-NKK"; */
+"ViH-4F-NKK.headerTitle" = "Закрытие базы данных по истечении времени";
+
+/* Class = "UILabel"; text = "Clear Timeout"; ObjectID = "WPB-ze-mX6"; */
+"WPB-ze-mX6.text" = "Очистить тайм-аут";
+
+/* Class = "UITableViewSection"; footerTitle = "The string encoding used for passwords when converting them to database keys."; ObjectID = "WTf-Ma-R7l"; */
+"WTf-Ma-R7l.footerTitle" = "Строковая кодировка, используемая для паролей при преобразовании их в ключи базы данных.";
+
+/* Class = "UITableViewSection"; headerTitle = "Password Encoding"; ObjectID = "WTf-Ma-R7l"; */
+"WTf-Ma-R7l.headerTitle" = "Кодирование пароля";
+
+/* Class = "UILabel"; text = "Encoding"; ObjectID = "Wyv-5A-xwb"; */
+"Wyv-5A-xwb.text" = "Кодирование";
+
+/* Class = "UITableViewSection"; footerTitle = "Prevent unauthorized access to IOSKeePass with a PIN."; ObjectID = "XnM-JR-qTX"; */
+"XnM-JR-qTX.footerTitle" = "Предотвратите несанкционированный доступ к IOSKeePass с помощью PIN-кода.";
+
+/* Class = "UITableViewSection"; headerTitle = "PIN Protection"; ObjectID = "XnM-JR-qTX"; */
+"XnM-JR-qTX.headerTitle" = "Защита PIN-кода";
+
+/* Class = "UITableViewSection"; footerTitle = "Select your Provider Type"; ObjectID = "ZSj-bs-JXH"; */
+"ZSj-bs-JXH.footerTitle" = "Выберите тип провайдера";
+
+/* Class = "UITableViewSection"; headerTitle = "Cloud Provider"; ObjectID = "ZSj-bs-JXH"; */
+"ZSj-bs-JXH.headerTitle" = "Облачный провайдер";
+
+/* Class = "UITableViewSection"; footerTitle = "Switch between an integrated web browser and Safari."; ObjectID = "ZbJ-mR-6o9"; */
+"ZbJ-mR-6o9.footerTitle" = "Переключение между встроенным веб-браузером и Safari.";
+
+/* Class = "UITableViewSection"; headerTitle = "Web Browser"; ObjectID = "ZbJ-mR-6o9"; */
+"ZbJ-mR-6o9.headerTitle" = "Web Browser";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "ZmO-Ci-csI"; */
+"ZmO-Ci-csI.title" = "Настройки";
+
+/* Class = "UITableViewSection"; footerTitle = "Switch ON / OFF Cloud  Backup"; ObjectID = "Zs3-9b-0kG"; */
+"Zs3-9b-0kG.footerTitle" = "Переключение ВКЛ/ВЫКЛ Резервное копирование облака";
+
+/* Class = "UITableViewSection"; headerTitle = "Cloud Backup"; ObjectID = "Zs3-9b-0kG"; */
+"Zs3-9b-0kG.headerTitle" = "Облачное резервное копирование";
+
+/* Class = "UILabel"; text = "Search Title only"; ObjectID = "bYX-rB-JtD"; */
+"bYX-rB-JtD.text" = "Поиск только по названию";
+
+/* Class = "UITableViewSection"; footerTitle = "Delete all files and passwords after too many failed attempts."; ObjectID = "bnl-fj-Wky"; */
+"bnl-fj-Wky.footerTitle" = "Удалите все файлы и пароли после слишком большого количества неудачных попыток..";
+
+/* Class = "UITableViewSection"; headerTitle = "Delete All Data on PIN Failure"; ObjectID = "bnl-fj-Wky"; */
+"bnl-fj-Wky.headerTitle" = "Удаление всех данных при сбое PIN-кода";
+
+/* Class = "UITableViewSection"; footerTitle = "Supports the IOS Autfoill Credential Provider"; ObjectID = "bqX-8v-ds6"; */
+"bqX-8v-ds6.footerTitle" = "Поддерживает провайдер автозаполнения учетных данных IOS";
+
+/* Class = "UITableViewSection"; headerTitle = "IOS AutoFill"; ObjectID = "bqX-8v-ds6"; */
+"bqX-8v-ds6.headerTitle" = "Автозаполнение IOS";
+
+/* Class = "UITableViewSection"; footerTitle = "Sort Groups and Entries Alphabetically"; ObjectID = "dcw-Ls-OVy"; */
+"dcw-Ls-OVy.footerTitle" = "Сортировать группы и записи по алфавиту";
+
+/* Class = "UITableViewSection"; headerTitle = "Sorting"; ObjectID = "dcw-Ls-OVy"; */
+"dcw-Ls-OVy.headerTitle" = "Сортировка";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "drK-Tr-LS6"; */
+"drK-Tr-LS6.text" = "Включено";
+
+/* Class = "UITableViewSection"; footerTitle = "Search Title only (default: search all fields)"; ObjectID = "f3o-MT-xbh"; */
+"f3o-MT-xbh.footerTitle" = "Искать только в заголовке (по умолчанию: искать во всех полях)";
+
+/* Class = "UITableViewSection"; headerTitle = "Searching"; ObjectID = "f3o-MT-xbh"; */
+"f3o-MT-xbh.headerTitle" = "Поиск";
+
+/* Class = "UILabel"; text = "Account"; ObjectID = "f3w-NO-BCi"; */
+"f3w-NO-BCi.text" = "Счет";
+
+/* Class = "UILabel"; text = "Enable Cloud Backup"; ObjectID = "fKY-md-m8c"; */
+"fKY-md-m8c.text" = "Включить облачное резервное копирование";
+
+/* Class = "UITableViewSection"; footerTitle = "most username or emailadress"; ObjectID = "iA3-jd-szQ"; */
+"iA3-jd-szQ.footerTitle" = "имя пользователя или адрес электронной почты";
+
+/* Class = "UITableViewSection"; headerTitle = "Accountname or USERNAME"; ObjectID = "iA3-jd-szQ"; */
+"iA3-jd-szQ.headerTitle" = "Имя счета";
+
+/* Class = "UILabel"; text = "Attempts"; ObjectID = "iK4-cj-HRD"; */
+"iK4-cj-HRD.text" = "Попытки";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "kQ7-wA-XNa"; */
+"kQ7-wA-XNa.text" = "Включено";
+
+/* Class = "UILabel"; text = "Dark Enabled"; ObjectID = "moz-B7-WUb"; */
+"moz-B7-WUb.text" = "Темнота включена";
+
+/* Class = "UILabel"; text = "PIN Enabled"; ObjectID = "p28-N6-qWa"; */
+"p28-N6-qWa.text" = "PIN Включено";
+
+/* Class = "UITextField"; placeholder = "Accountname"; ObjectID = "q2V-oj-sug"; */
+"q2V-oj-sug.placeholder" = "Имя счета";
+
+/* Class = "UITableViewSection"; footerTitle = "Use your fingerprint or Camera and your Face as an alternative to entering a PIN if supported."; ObjectID = "vH4-cT-PCz"; */
+"vH4-cT-PCz.footerTitle" = "Используйте отпечаток пальца или камеру и лицо в качестве альтернативы вводу PIN-кода, если это поддерживается.";
+
+/* Class = "UITableViewSection"; headerTitle = "Touch ID / Face ID"; ObjectID = "vH4-cT-PCz"; */
+"vH4-cT-PCz.headerTitle" = "Touch ID / Face ID";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "xMv-gl-Kfq"; */
+"xMv-gl-Kfq.text" = "Включено";
