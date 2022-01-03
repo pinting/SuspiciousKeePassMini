@@ -68,6 +68,19 @@
 "Default" = "Défaut DB";
 "Recycle bin" = "Corbeille";
 "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "Je confirme par la présente que mes mots de passe dans cette BD seront mis à la disposition du mécanisme de remplissage automatique d'IOS.";
+"now" = "maintenant";
+"Notify from IOSKeePass" = "Notifier de IOSKeePass";
+"Your Files Folder is empty 📂" = "Votre dossier de fichiers est vide 📂.";
+"Need Cloud Backup ⚠️" = "Need Cloud Backup ⚠️";
+"Copy WebDav Backup ⚠️" = "Copie de la sauvegarde WebDav ⚠️";
+"Unsupported Feature ⚠️" = "Fonctionnalité non supportée ⚠️";
+"Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️" = "Veuillez utiliser le bouton + pour créer une nouvelle base de données KeePass vide ou utiliser le bouton Import pour obtenir votre base de données KeePass actuelle à partir de vos Sharepoints ⚙️.";
+"Sorry WebDav temporarily not available" = "Désolé, WebDav n'est temporairement pas disponible";
+"Sorry Cloud temporarily not reachable:" = "Désolé, Cloud est temporairement injoignable :";
+"Newer KeePass File ℹ️" = "Fichier KeePass plus récent ℹ️";
+"Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content"="Un fichier Keepass plus récent a été trouvé sur votre stockage en ligne, veuillez utiliser la procédure de synchronisation en ligne pour synchroniser le contenu le plus récent.";
+"Sorry Cloud connection temporarily not reachable:" = "Désolé, la connexion au nuage est temporairement inaccessible :";
+"At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection" = "Pour le moment, nous ne prenons pas en charge OneDrive ou iCloud. Veuillez utiliser un système prenant en charge WebDav comme OwnCloud ou Nextcloud via une connexion SSL sécurisée";
 
 // General Messages
 "Align QR code within frame to scan" = "Alignez le code QR dans le cadre pour numériser";

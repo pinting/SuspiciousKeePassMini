@@ -58,6 +58,30 @@
 "Add new…" = "添加新项";
 "Choose Group" = "选择群组";
 "Backup" = "备份";
+"Not Supported" = "不支持";
+"AutoFill Request" = "AutoFill Request";
+"Attachments" = "附件";
+"Save" = "拯救";
+"Default" = "默认情况下";
+"Recycle bin" = "回收站";
+"I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "我在此确认，我在这个数据库中的密码将被提供给IOS的自动填充机制。";
+"Shareing" = "Share";
+"Sync" = "Sync";
+"New Default DB is selected Name:" = "新的默认数据库是🚀选择的名称。";
+"This Database is" = "这个数据库现在是你的启动数据库，如果你第一次启动IOSKeePass，它将被直接打开📲。";
+"now" = "现在";
+"Notify from IOSKeePass" = "来自IOSKeePass的通知";
+"Your Files Folder is empty 📂" = "你的文件夹是空的 📂";
+"Need Cloud Backup ⚠️" = "需要云备份 ⚠️";
+"Copy WebDav Backup ⚠️" = "复制WebDav备份 ⚠️";
+"Unsupported Feature ⚠️" = "不支持的特征 ⚠️";
+"Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️" = "请使用加号按钮创建一个新的空的KeePassDB，或使用导入按钮从你的Sharepoints中获取你的实际KeePass DB ⚙️";
+"Sorry WebDav temporarily not available" = "对不起，WebDav暂时无法使用";
+"Sorry Cloud temporarily not reachable:" = "对不起，云端暂时无法接通。";
+"Newer KeePass File ℹ️" = "较新的KeePass文件 ℹ️";
+"Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content"="在你的云存储中发现较新的Keepass文件，请使用云同步程序同步到最新的内容。";
+"Sorry Cloud connection temporarily not reachable:" = "对不起，云端连接暂时无法到达。";
+"At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection" = "目前，我们不支持OneDrive或iCloud，请通过安全的SSL连接使用WebDav支持的系统，如OwnCloud或Nextcloud。";
 
 // General Messages
 "Align QR code within frame to scan" = "将QR码对准框架以进行扫描";

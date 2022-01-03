@@ -64,14 +64,28 @@
 "AutoFill Request" = "AutoFill Request";
 "Attachments" = "Attachments";
 "Save" = "Save";
-"Default" = "Default DB";
+"Default" = "Default";
 "Recycle bin" = "Recycle bin";
 "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism.";
-"Shareing" = "Shareing";
+"Shareing" = "Share";
+"Sync" = "Sync";
 "Notify from IOSKeePass" = "Notify from IOSKeePass";
 "New Default DB is selected Name:" = "New Default DB is 🚀 selected Name:";
 "This Database is" = "This Database is now your Startup DB if you Start IOSKeePass first time it will be directly opened 📲";
- "now" = "now";
+"now" = "now";
+"Notify from IOSKeePass" = "Notify from IOSKeePass";
+"Your Files Folder is empty 📂" = "Your Files Folder is empty 📂";
+"Need Cloud Backup ⚠️" = "Need Cloud Backup ⚠️";
+"Copy WebDav Backup ⚠️" = "Copy WebDav Backup ⚠️";
+"Unsupported Feature ⚠️" = "Unsupported Feature ⚠️";
+"Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️" = "Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️";
+"Sorry WebDav temporarily not available" = "Sorry WebDav temporarily not available";
+"Sorry Cloud temporarily not reachable:" = "Sorry Cloud temporarily not reachable:";
+"Newer KeePass File ℹ️" = "Newer KeePass File ℹ️";
+"Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content"="Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content";
+"Sorry Cloud connection temporarily not reachable:" = "Sorry Cloud connection temporarily not reachable:";
+"At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection" = "At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection";
+"Cloud Backup \nTap to stop" = "Cloud Backup \nTap to stop";
 
 // General Messages
 "This is an KDB in Verion 1, and has no support for One Time Passwords" = "This is an KDB in Verion 1, and has no support for One Time Passwords";

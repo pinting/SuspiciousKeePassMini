@@ -58,6 +58,30 @@
 "Add new…" = "Aggiungi nuovo…";
 "Choose Group" = "Seleziona gruppo";
 "Backup" = "Backup"; // FIXME
+"Not Supported" = "Non supportato";
+"AutoFill Request" = "AutoFill Richiesta";
+"Attachments" = "Allegati";
+"Save" = "Salva";
+"Default" = "Default";
+"Recycle bin" = "Cestino";
+"I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "Confermo che le mie password in questo DB saranno rese disponibili al meccanismo di Autofill di IOS.";
+"Shareing" = "Share";
+"Sync" = "Sync";
+"New Default DB is selected Name:" = "Nuovo DB predefinito è 🚀 Nome selezionato:";
+"This Database is" = "Questo database è ora il tuo DB di avvio, se avvii IOSKeePass per la prima volta sarà aperto direttamente 📲";
+"now" = "ora";
+"Notify from IOSKeePass" = "Notifica da IOSKeePass";
+"Your Files Folder is empty 📂" = "La tua cartella dei file è vuota 📂";
+"Need Cloud Backup ⚠️" = "Bisogno di un backup su cloud ⚠️";
+"Copy WebDav Backup ⚠️" = "Copiare il backup di WebDav ⚠️";
+"Unsupported Feature ⚠️" = "Caratteristica non supportata ⚠️";
+"Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️" = "Per favore usa il pulsante + per creare un nuovo KeePassDB vuoto o usa il pulsante Import per ottenere il tuo attuale KeePass DB dai tuoi Sharepoints ⚙️";
+"Sorry WebDav temporarily not available" = "Spiacente, WebDav non è temporaneamente disponibile";
+"Sorry Cloud temporarily not reachable:" = "Spiacente Cloud temporaneamente non raggiungibile:";
+"Newer KeePass File ℹ️" = "File KeePass più recente ℹ️";
+"Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content"="File Keepass più recente trovato sul tuo Cloud Storage, usa la procedura di sincronizzazione Cloud per sincronizzare il contenuto più recente";
+"Sorry Cloud connection temporarily not reachable:" = "Spiacente, la connessione Cloud non è temporaneamente raggiungibile:";
+"At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection" = "Al momento non supportiamo OneDrive o iCloud, si prega di utilizzare un sistema supportato da WebDav come OwnCloud o Nextcloud su una connessione sicura SSL";
 
 // General Messages
 "Align QR code within frame to scan" = "Allinea il codice QR all'interno del frame per eseguire la scansione";

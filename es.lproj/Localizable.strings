@@ -72,6 +72,18 @@
 "New Default DB is selected Name:" = "Nueva base de datos por defecto es 🚀 nombre seleccionado:";
 "This Database is" = "TEsta base de datos es ahora su DB de inicio si se inicia IOSKeePass primera vez que se abrirá directamente 📲";
  "now" = "ahora";
+"Your Files Folder is empty 📂" = "Su carpeta de archivos está vacía 📂";
+"Need Cloud Backup ⚠️" = "Necesito una copia de seguridad en la nube ⚠️";
+"Copy WebDav Backup ⚠️" = "Copia de seguridad de WebDav ⚠️";
+"Unsupported Feature ⚠️" = "Característica no compatible ⚠️";
+"Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️" = "Por favor, utilice el botón + para crear un nuevo KeePassDB vacío o utilizando el botón de importación para obtener su actual KeePass DB desde su Sharepoints ⚙️";
+"Sorry WebDav temporarily not available" = "Lo sentimos, WebDav no está disponible temporalmente";
+"Sorry Cloud temporarily not reachable:" = "Lo siento Nube temporalmente no localizable:";
+"Newer KeePass File ℹ️" = "Nuevo archivo KeePass ℹ️";
+"Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content"="Se ha encontrado un archivo Keepass más nuevo en su almacenamiento en la nube, por favor utilice el procedimiento de sincronización en la nube para sincronizar el contenido más nuevo.";
+"Sorry Cloud connection temporarily not reachable:" = "Lo siento, la conexión a la nube no está disponible temporalmente:";
+"At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection" = "Por el momento no somos compatibles con OneDrive o iCloud, por favor utilice un sistema compatible con WebDav como OwnCloud o Nextcloud a través de una conexión segura SSL.";
+
 
 // General Messages
 "This is an KDB in Verion 1, and has no support for One Time Passwords" = "Este es un KDB en Verion 1, y no tiene soporte para contraseñas de un solo uso";

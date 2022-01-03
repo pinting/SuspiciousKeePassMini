@@ -60,6 +60,30 @@
 "Add new…" = "Nieuwe toevoegen…";
 "Choose Group" = "Kies groep";
 "Backup" = "Backup";
+"Not Supported" = "Niet ondersteund";
+"AutoFill Request" = "AutoFill Verzoek";
+"Attachments" = "Bijlagen";
+"Save" = "Save";
+"Default" = "Standaard";
+"Recycle bin" = "Prullenbak";
+"I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "Ik bevestig hierbij dat mijn wachtwoorden in deze DB beschikbaar zullen worden gesteld aan het IOS Autofill-mechanisme.";
+"Shareing" = "Share";
+"Sync" = "Sync";
+"New Default DB is selected Name:" = "Nieuwe standaard DB is 🚀 gekozen Naam:";
+"This Database is" = "Deze Database is nu uw Startup DB als u IOSKeePass de eerste keer opstart zal het direct geopend worden 📲";
+"now" = "nu";
+"Notify from IOSKeePass" = "Verwittig van IOSKeePass";
+"Your Files Folder is empty 📂" = "Uw bestandsmap is leeg 📂";
+"Need Cloud Backup ⚠️" = "Cloud Backup nodig ⚠️";
+"Copy WebDav Backup ⚠️" = "Kopieer WebDav Backup ⚠️";
+"Unsupported Feature ⚠️" = "Niet-ondersteunde Feature ⚠️";
+"Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️" = "Gebruik de + knop om een nieuwe lege KeePassDB te maken of gebruik de importeer knop om uw huidige KeePass DB van uw Sharepoints te halen ⚙️";
+"Sorry WebDav temporarily not available" = "Sorry WebDav tijdelijk niet beschikbaar";
+"Sorry Cloud temporarily not reachable:" = "Sorry Cloud tijdelijk niet bereikbaar:";
+"Newer KeePass File ℹ️" = "Nieuwere KeePass File ℹ️";
+"Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content"="Nieuw Keepass bestand gevonden op uw Cloud opslag, gebruik de Cloud synchronisatie procedure om de nieuwste inhoud te synchroniseren";
+"Sorry Cloud connection temporarily not reachable:" = "Sorry Cloud verbinding tijdelijk niet bereikbaar:";
+"At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection" = "Op dit moment ondersteunen wij geen OneDrive of iCloud, gebruik a.u.b. een WebDav ondersteund systeem zoals OwnCloud of Nextcloud via een beveiligde SSL verbinding";
 
 // General Messages
 "Align QR code within frame to scan" = "Lijn de QR-code uit binnen het frame om te scannen";
