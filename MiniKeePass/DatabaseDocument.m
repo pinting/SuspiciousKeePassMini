@@ -36,12 +36,14 @@
 {
     self = [super init];
     if (self) {
+        
+        
         if (password == nil && keyFile == nil) {
             @throw [NSException exceptionWithName:@"IllegalArgument"
                                            reason:NSLocalizedString(@"No password or keyfile specified", nil)
                                          userInfo:nil];
         }
-
+        self.md5Base64 = nil;
         self.filename = filename;
         
        
@@ -99,8 +101,13 @@
 }
 
 - (NSData *)_loadDataBase:(NSString *)name{
-  self.url = [NSURL fileURLWithPath:name];
-  return [NSData dataWithContentsOfURL:self.url];
+    self.url = [NSURL fileURLWithPath:name];
+  
+    NSData *filedata = [NSData dataWithContentsOfURL:self.url];
+    
+    //Data(bytes: dec, count: Int(dec.count)).base64EncodedString(options: .lineLength64Characters)
+    self.md5Base64 = [filedata.MD5Sum base64EncodedStringWithOptions:0];
+    return filedata;
 }
 
 
@@ -108,6 +115,10 @@
     
   NSBundle *myBundle = [NSBundle bundleForClass:self.class];
   NSURL *url = [myBundle URLForResource:name withExtension:extension];
+  NSData *filedata = [NSData dataWithContentsOfURL:self.url];
+    
+    //Data(bytes: dec, count: Int(dec.count)).base64EncodedString(options: .lineLength64Characters)
+    self.md5Base64 = [filedata.MD5Sum base64EncodedStringWithOptions:0];
   return [NSData dataWithContentsOfURL:url];
 }
 
@@ -142,7 +153,7 @@
     
         NSError __autoreleasing *error = nil;
         NSData *data = [self.kdbTree encryptWithKey:self.kpkkey format:KPKDatabaseFormatKdbx error:&error];
-        
+        NSLog(@"File %@ MD5:%@",self.filename,data.MD5Sum);
         [data writeToFile:self.filename atomically:YES];
         
         
