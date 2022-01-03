@@ -45,7 +45,18 @@ class CloudAccountViewController: UITableViewController, UITextFieldDelegate {
     
     @IBAction func cloudTypeChanged(_ sender: UISegmentedControl) {
         let appSettings = AppSettings.sharedInstance() as AppSettings
-        appSettings.setCloudType(sender.selectedSegmentIndex)
+        if(sender.selectedSegmentIndex == 0){
+            appSettings.setCloudType(sender.selectedSegmentIndex)
+        }else{
+            let notiData = HDNotificationData(
+                        iconImage: UIImage(named: "AppIcon"),
+                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        title: NSLocalizedString("Unsupported Feature ⚠️",comment:""),
+                        message: NSLocalizedString("At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection",comment:""),
+                        time: NSLocalizedString("now", comment: ""))
+                    
+            HDNotificationView.show(data: notiData, secounds: 6.0, onTap: nil, onDidDismiss: nil)
+        }
     }
     
     @IBAction func urlChange(_ sender: UITextField) {
