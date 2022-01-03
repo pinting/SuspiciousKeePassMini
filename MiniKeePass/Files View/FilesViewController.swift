@@ -20,7 +20,7 @@ import UIKit
 import KeyboardGuide
 import FilesProvider
 import SwiftSpinner
-
+import OAuthSwift
 
 
 class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportDatabaseDelegate, UIDocumentBrowserViewControllerDelegate, FileProviderDelegate {
@@ -49,11 +49,13 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     var ftpProvider: FTPFileProvider?
     var localProvider: LocalFileProvider?
     var iCloudProvider: CloudFileProvider?
+    var onedriveProvider: OneDriveFileProvider?
     
     var backupcount: Int = 0
     var singleBackup: Int = 0
     var cloudType: Int = 0
     var isFirstTime: Int = 0
+    var rfc = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad();
@@ -66,7 +68,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         let username = appSettings.cloudUser()
         let password = appSettings.cloudPWD()
         cloudType = appSettings.cloudType()
-        
+        let syncena = appSettings.backupEnabled()
         let baseURL = appSettings.cloudURL()  //"https://cloud.unicomedv.de/remote.php/dav/files/"+username+"/"
         
         webdavProvider = nil
@@ -74,7 +76,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         localProvider = nil
         iCloudProvider = nil
         
-        if(username != nil && password != nil && baseURL != nil){
+        if(username != nil && password != nil && baseURL != nil && syncena == true){
             let credential = URLCredential(user: username!, password: password!, persistence: .permanent)
             switch cloudType{
                 case 0:
@@ -82,11 +84,37 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     webdavProvider?.delegate = self as FileProviderDelegate
                     break
                 case 1:
-                    //iCloudProvider = CloudFileProvider(containerId: "iCloud.unicomedv.de")
-                    //iCloudProvider?.delegate = self as FileProviderDelegate
+                 /*   DispatchQueue.global(qos: .background).async {
+                        print("Init icloud on background thread")
+                        self.iCloudProvider = CloudFileProvider(containerId: "iCloud.unicomedv.de")
+                        DispatchQueue.main.async {
+                            
+                            if(self.iCloudProvider != nil){
+                                print("finished Init iCloud.")
+                                self.iCloudProvider?.delegate = self as FileProviderDelegate
+                            }else{
+                                print("iCloud not available.")
+                            }
+                        }
+                        
+                    }*/
+                   
+                    
                     break
                 case 2:
-                    //SCP must implemeted
+                    /*DispatchQueue.global(qos: .background).async {
+                        print("Init OneDrive on background thread")
+                        self.onedriveProvider = OneDriveFileProvider(credential: credential)
+                        
+                        DispatchQueue.main.async {
+                            if(self.onedriveProvider != nil){
+                                print("finished Init Onedrive.")
+                                self.onedriveProvider?.delegate = self as FileProviderDelegate
+                            }else{
+                                print("OneDrive not available.")
+                            }
+                        }
+                    }*/
                     break;
                 
                 default:
@@ -110,6 +138,8 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             
             
         }
+        
+        self.title =  NSLocalizedString("Files", comment: "")
     
         let flexswipe = UISwipeGestureRecognizer(target : self, action : #selector(onClickedToolFlex))
         flexswipe.direction = .right
@@ -131,6 +161,13 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             }
         }
    
+        self.rfc.attributedTitle = NSAttributedString(string: "Refresh Fileview")
+       // self.rfc.addTarget(self, action: "refreshFiles:", for: UIControl.Event.valueChanged)
+        
+        self.rfc.addTarget(self, action: #selector(FilesViewController.refreshFiles), for: UIControl.Event.valueChanged)
+
+
+        self.tableView?.addSubview(rfc)
         
         self.navigationItem.rightBarButtonItem = self.editButtonItem
       
@@ -146,7 +183,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         
         
         cloudType = appSettings.cloudType()
-        switch cloudType{
+      /*  switch cloudType{
             case 0:
                 copyDocumentsToWebDav()
                 break
@@ -154,15 +191,15 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 copyDocumentsToiCloud()
                 break
             case 2:
-                //SCP must be implemeted
+                copyDocumentsToOneDrive()
                 break;
             default:
                 copyDocumentsToWebDav()
-        }
+        }*/
         
         
         let fnb = appSettings.fileneedsBackup()
-        if(fnb != ""){
+        if(fnb != "" && appSettings.backupEnabled() == true){
             switch cloudType{
                 case 0:
                     needBackupToWebDav()
@@ -171,7 +208,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     needBackupToiCloud()
                     break
                 case 2:
-                    //scp must be implemeted
+                    needBackupToOneDrive()
                     break;
                
                 default:
@@ -207,17 +244,15 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             if(databaseFiles.count == 0){
                 let notiData = HDNotificationData(
                             iconImage: UIImage(named: "AppIcon"),
-                            appTitle: "Notify from IOSKeePass".uppercased(),
-                            title: "Your Files Folder is empty 📂",
-                            message: "Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️",
-                            time: "now")
+                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                            title: NSLocalizedString("Your Files Folder is empty 📂", comment: ""),
+                            message: NSLocalizedString("Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️", comment:""),
+                            time: NSLocalizedString("now", comment: ""))
                         
-                        HDNotificationView.show(data: notiData, onTap: nil, onDidDismiss: nil)
+                HDNotificationView.show(data: notiData, secounds: 12.0, onTap: nil, onDidDismiss: nil)
             }
             self.isFirstTime = 1
         }
-         
-        
         
      }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -230,6 +265,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
 
             newDatabaseViewController.delegate = self
         case "fileOpened"?:
+            
             guard let groupViewController = segue.destination as? GroupViewController else {
                 return
             }
@@ -237,6 +273,10 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             
             let appDelegate = AppDelegate.getDelegate()
             let document = appDelegate?.getOpenDataBase()//appDelegate?.databaseDocument
+            //Check if file is available on cloud connection
+            if(checkFileVersionOnWebDav(document: document!) == true){
+                 //neuere Version gefunden we should handle it
+            }
             let adb = AutoFillDB()
             let dname = URL(fileURLWithPath: document!.filename).lastPathComponent
             if(!adb.IsKeePassInAutoFill(dbname: dname)){
@@ -275,6 +315,13 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         }
     }
     
+    @objc func refreshFiles(sender:AnyObject) {
+      self.updateFiles()
+      self.tableView.reloadData()
+        self.rfc.endRefreshing()
+    }
+
+    
    func copyDocumentsToFTP()
    {
         
@@ -285,60 +332,421 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
          
     }
     
-    func needBackupToWebDav(){
-        let appSettings = AppSettings.sharedInstance() as AppSettings
-        singleBackup = 1
-        if (appSettings.backupEnabled() && webdavProvider != nil) {
-            // Setup iCloud Nexcloud
-            let fnb = appSettings.fileneedsBackup()
-            SwiftSpinner.show("Cloud Backup \nTap to stop").addTapHandler({
-              SwiftSpinner.hide()
-            })
-           // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
-            let localurl = URL(fileURLWithPath: fnb!)
-            let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
-            webdavProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
-                if(err != nil){
-                    self.backupcount = self.backupcount - 1
-                    print("Status:\(err)")
-                }
-            })
-            appSettings.setfileneedsBackup("")
+    func checkFileVersionOnWebDav(document: DatabaseDocument)->Bool
+    {
+        var isChecked: Bool = false
+        if document == nil {
+            return false
         }
-           
+        
+        if(self.webdavProvider == nil){ //Mainthread problems
+            let notiData = HDNotificationData(
+                        iconImage: UIImage(named: "AppIcon"),
+                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                        message: NSLocalizedString("Sorry WebDav temporarily not available", comment: ""),
+                        time: NSLocalizedString("now", comment: ""))
+                    
+            HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+            return false
+        }
+        
+        self.webdavProvider?.isReachable(completionHandler:{success,error in
+            if(error != nil)
+            {
+                print("Isreachable Error:\(error?.localizedDescription)")
+            }
+            if(success == false){
+                DispatchQueue.main.async {
+                    let notiData = HDNotificationData(
+                                iconImage: UIImage(named: "AppIcon"),
+                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                                message: NSLocalizedString("Sorry Cloud temporarily not reachable:", comment:""),
+                                time: NSLocalizedString("now", comment: ""))
+                            
+                    HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+                }
+            }else{
+                let localurl = URL(fileURLWithPath: document.filename)
+                let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                let localattrib = try? FileManager.default.attributesOfItem(atPath: document.filename)
+                self.webdavProvider?.attributesOfItem(path: remotePath, completionHandler:{ attrib, error in
+                    if(error == nil){
+                        let localdate = localattrib?[FileAttributeKey.modificationDate] as? Date
+                        var clouddate:Date = (attrib?.modifiedDate)!
+                        let cds = clouddate.timeIntervalSinceReferenceDate //we add 180 secs because the modified date is different between local and cloud
+                        let lds = localdate!.timeIntervalSinceReferenceDate+90
+                                //return attr[FileAttributeKey.modificationDate] as? Date
+                        print("Modify Date:\(attrib?.modifiedDate) local:\(localattrib?[FileAttributeKey.modificationDate]) md5-Base64:\(document.md5Base64)")
+                        
+                        if(cds > lds){
+                            DispatchQueue.main.async {
+                                let notiData = HDNotificationData(
+                                            iconImage: UIImage(named: "AppIcon"),
+                                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                            title: NSLocalizedString("Newer KeePass File ℹ️",comment:""),
+                                            message: NSLocalizedString("Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content",comment:""),
+                                            time:NSLocalizedString("now", comment: ""))
+                                        
+                                HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+                            }
+                            isChecked=true
+                        }
+                    }
+                })
+                
+            }
+        })
+       return isChecked
     }
     
-    func needBackupToiCloud(){
-        if(iCloudProvider == nil){ //Mainthread problems
+    func needBackupToWebDav(){
+        /*let appSettings = AppSettings.sharedInstance() as AppSettings
+        let username = appSettings.cloudUser()
+        let password = appSettings.cloudPWD()
+        let baseURL = appSettings.cloudURL()  //"https://cloud.unicomedv.de/remote.php/dav/files/"+username+"/"
+        let credential = URLCredential(user: username!, password: password!, persistence: .permanent)
+        
+        self.webdavProvider = WebDAVFileProvider(baseURL: URL(string: baseURL!)!, credential: credential)*/
+       
+            
+        if(self.webdavProvider == nil){ //Mainthread problems
+            let notiData = HDNotificationData(
+                        iconImage: UIImage(named: "AppIcon"),
+                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                        message: NSLocalizedString("Sorry Cloud temporarily not reachable:", comment:""),
+                        time: NSLocalizedString("now", comment: ""))
+                    
+            HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
             return
         }
         
-        let appSettings = AppSettings.sharedInstance() as AppSettings
-        singleBackup = 1
-        if (appSettings.backupEnabled() && iCloudProvider != nil) {
-            // Setup iCloud Nexcloud
-            let fnb = appSettings.fileneedsBackup()
-            SwiftSpinner.show("iCloud Backup \nTap to stop").addTapHandler({
-              SwiftSpinner.hide()
-            })
-           // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
-            let localurl = URL(fileURLWithPath: fnb!)
-            let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
-            iCloudProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
-                if(err != nil){
-                    self.backupcount = self.backupcount - 1
-                    print("Status:\(err)")
+        self.webdavProvider?.isReachable(completionHandler:{success,error in
+            if(success == false){
+                DispatchQueue.main.async {
+                    let notiData = HDNotificationData(
+                                iconImage: UIImage(named: "AppIcon"),
+                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                                message: NSLocalizedString("Sorry Cloud connection temporarily not reachable:",comment:""),
+                                time: NSLocalizedString("now", comment: ""))
+                            
+                    HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
                 }
-            })
-            appSettings.setfileneedsBackup("")
+            }else{
+                DispatchQueue.main.async {
+                    let appSettings = AppSettings.sharedInstance() as AppSettings
+                    self.singleBackup = 1
+                    if (appSettings.backupEnabled() && self.webdavProvider != nil) {
+                        // Setup iCloud Nexcloud
+                        let fnb = appSettings.fileneedsBackup()
+                        
+                       // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
+                        let localurl = URL(fileURLWithPath: fnb!)
+                        
+                        let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                        
+                        self.webdavProvider?.contentsOfDirectory(path: remotePath, completionHandler:{ files, error in
+                            
+                            if(error != nil){
+                                
+                                print("Error on webDav contents of Direcrory:\(error)")
+                                self.webdavProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
+                                    print("Create Directory IOSKeePass:\(err)")
+                                    self.webdavProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+                                        print("Create Directory Backup:\(err)")
+                                    })
+                                })
+                                
+                                
+                            }
+                            DispatchQueue.main.async {
+                                SwiftSpinner.show("Cloud Backup \nTap to stop").addTapHandler({
+                                  SwiftSpinner.hide()
+                                })
+                                self.webdavProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
+                                    if(err != nil){
+                                        self.backupcount = self.backupcount - 1
+                                        print("Status:\(err)")
+                                    }
+                                })
+                                appSettings.setfileneedsBackup("")
+                            }
+                            
+                        })
+                        
+                        
+                    }
+                }
+            }
+        })
+        
+        
+           
+    }
+    
+    func needBackupToOneDrive(){
+        
+        if(self.onedriveProvider == nil){ //Mainthread problems
+            let notiData = HDNotificationData(
+                        iconImage: UIImage(named: "AppIcon"),
+                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                        message: "Sorry OneDrive temporarily not available",
+                        time: NSLocalizedString("now", comment: ""))
+                    
+            HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+            return
         }
+        
+        self.onedriveProvider?.isReachable(completionHandler:{success,error in
+            if(success == false){
+                DispatchQueue.main.async {
+                    let nData = HDNotificationData(
+                                iconImage: UIImage(named: "AppIcon"),
+                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                                message: "Sorry OneDrive temporarily not reachable:",
+                                time: NSLocalizedString("now", comment: ""))
+                            
+                    HDNotificationView.show(data: nData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+                }
+            }else{
+                DispatchQueue.main.async {
+                    let appSettings = AppSettings.sharedInstance() as AppSettings
+                    self.singleBackup = 1
+                    if (appSettings.backupEnabled() && self.onedriveProvider != nil) {
+                        // Setup iCloud Nexcloud
+                        let fnb = appSettings.fileneedsBackup()
+                        
+                       // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
+                        let localurl = URL(fileURLWithPath: fnb!)
+                        
+                        let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                        
+                        self.onedriveProvider?.contentsOfDirectory(path: remotePath, completionHandler:{ files, error in
+                            
+                            if(error != nil){
+                                
+                                print("Error on webDav contents of Direcrory:\(error)")
+                                self.onedriveProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
+                                    print("Create Directory IOSKeePass:\(err)")
+                                    self.onedriveProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+                                        print("Create Directory Backup:\(err)")
+                                    })
+                                })
+                                
+                                
+                            }
+                            DispatchQueue.main.async {
+                                SwiftSpinner.show("Cloud Backup \nTap to stop").addTapHandler({
+                                  SwiftSpinner.hide()
+                                })
+                                self.onedriveProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
+                                    if(err != nil){
+                                        self.backupcount = self.backupcount - 1
+                                        print("Status:\(err)")
+                                    }
+                                })
+                                appSettings.setfileneedsBackup("")
+                            }
+                            
+                        })
+                        
+                        
+                    }
+                }
+            }
+        })
+        
+        
+           /* let appSettings = AppSettings.sharedInstance() as AppSettings
+            self.singleBackup = 1
+            if (appSettings.backupEnabled() && self.onedriveProvider != nil) {
+                // Setup iCloud Nexcloud
+                let fnb = appSettings.fileneedsBackup()
+                SwiftSpinner.show("OneDrive Backup \nTap to stop").addTapHandler({
+                  SwiftSpinner.hide()
+                })
+               // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
+                let localurl = URL(fileURLWithPath: fnb!)
+                let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                //check is Backup Location exist
+                self.onedriveProvider?.contentsOfDirectory(path: remotePath, completionHandler:{ files, error in
+                    
+                    if(error != nil){
+                        print("Error on webDav contents of Direcrory:\(error)")
+                    }
+                    if(files.count == 0){ //vermutlich nicht vorhanden oder leer
+                        self.copyDocumentsToWebDav()
+                    }
+                    
+                })
+                self.onedriveProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
+                    if(err != nil){
+                        self.backupcount = self.backupcount - 1
+                        print("Status:\(err)")
+                    }
+                })
+                appSettings.setfileneedsBackup("")
+            }*/
+        
+    }
+    
+    func needBackupToiCloud(){
+        if(self.iCloudProvider == nil){ //Mainthread problems
+            let notiData = HDNotificationData(
+                        iconImage: UIImage(named: "AppIcon"),
+                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                        message: "Sorry iCloud temporarily not available",
+                        time: NSLocalizedString("now", comment: ""))
+                    
+            HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+            return
+        }
+        
+        self.iCloudProvider?.isReachable(completionHandler:{success,error in
+            if(success == false){
+                DispatchQueue.main.async {
+                    let nData = HDNotificationData(
+                                iconImage: UIImage(named: "AppIcon"),
+                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                                message: "Sorry iCloud temporarily not reachable:",
+                                time: NSLocalizedString("now", comment: ""))
+                            
+                    HDNotificationView.show(data: nData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+                }
+            }else{
+                DispatchQueue.main.async {
+                    let appSettings = AppSettings.sharedInstance() as AppSettings
+                    self.singleBackup = 1
+                    if (appSettings.backupEnabled() && self.iCloudProvider != nil) {
+                        // Setup iCloud Nexcloud
+                        let fnb = appSettings.fileneedsBackup()
+                        
+                       // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
+                        let localurl = URL(fileURLWithPath: fnb!)
+                        
+                        let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                        
+                        self.iCloudProvider?.contentsOfDirectory(path: remotePath, completionHandler:{ files, error in
+                            
+                            if(error != nil){
+                                
+                                print("Error on webDav contents of Direcrory:\(error)")
+                                self.iCloudProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
+                                    print("Create Directory IOSKeePass:\(err)")
+                                    self.iCloudProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+                                        print("Create Directory Backup:\(err)")
+                                    })
+                                })
+                                
+                                
+                            }
+                            DispatchQueue.main.async {
+                                SwiftSpinner.show("Cloud Backup \nTap to stop").addTapHandler({
+                                  SwiftSpinner.hide()
+                                })
+                                self.iCloudProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
+                                    if(err != nil){
+                                        self.backupcount = self.backupcount - 1
+                                        print("Status:\(err)")
+                                    }
+                                })
+                                appSettings.setfileneedsBackup("")
+                            }
+                            
+                        })
+                        
+                        
+                    }
+                }
+            }
+        })
+        
+        
            
     }
     
     
     func copyDocumentsToWebDav(){
         
-        let appSettings = AppSettings.sharedInstance() as AppSettings
+        if(webdavProvider == nil){ //Mainthread problems
+            let notiData = HDNotificationData(
+                        iconImage: UIImage(named: "AppIcon"),
+                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        title: NSLocalizedString("Copy WebDav Backup ⚠️",comment: ""),
+                        message: NSLocalizedString("Sorry WebDav temporarily not available", comment: ""),
+                        time: NSLocalizedString("now", comment: ""))
+                    
+            HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+            return
+        }
+        
+        onedriveProvider?.isReachable(completionHandler:{success,error in
+            if(success == false){
+                let notiData = HDNotificationData(
+                            iconImage: UIImage(named: "AppIcon"),
+                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                            title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                            message: "Sorry OneDrive temporarily not reachable:",
+                            time: NSLocalizedString("now", comment: ""))
+                        
+                HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+                return
+            }else{
+                let appSettings = AppSettings.sharedInstance() as AppSettings
+                
+                if (appSettings.backupEnabled() && !appSettings.backupFirstTime() && self.webdavProvider != nil) {
+                    // Setup iCloud Nexcloud
+                   
+                    
+                    self.webdavProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
+                        print("Status:\(err)")
+                    })
+                    
+                    self.webdavProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+                        print("Status:\(err)")
+                    })
+                    
+                    guard let localDocumentsURL = FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: .userDomainMask).last else { return }
+                    
+                    do {
+                        let fileURLs = try FileManager.default.contentsOfDirectory(at: localDocumentsURL, includingPropertiesForKeys: nil)
+                        // process files
+                        SwiftSpinner.show("Cloud Backup \nTap to stop").addTapHandler({
+                          SwiftSpinner.hide()
+                        })
+                       
+                        self.backupcount = fileURLs.count
+                        
+                            fileURLs.forEach { localurl in
+                                print("Backup:\(localurl)")
+                                
+                                let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                                self.webdavProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
+                                    if(err != nil){
+                                        self.backupcount = self.backupcount - 1
+                                        print("Status:\(err)")
+                                    }
+                                })
+                                
+                               
+                            }
+                        
+                        
+                    } catch {
+                        print("Error while enumerating files \(localDocumentsURL.path): \(error.localizedDescription)")
+                    }
+                }
+            }
+        })
+        
+        /*let appSettings = AppSettings.sharedInstance() as AppSettings
         
         if (appSettings.backupEnabled() && !appSettings.backupFirstTime() && webdavProvider != nil) {
             // Setup iCloud Nexcloud
@@ -381,12 +789,80 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             } catch {
                 print("Error while enumerating files \(localDocumentsURL.path): \(error.localizedDescription)")
             }
+        }*/
+    }
+    
+    func copyDocumentsToOneDrive(){
+        
+        if(onedriveProvider == nil){ //Mainthread problems
+            let notiData = HDNotificationData(
+                        iconImage: UIImage(named: "AppIcon"),
+                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        title: "Copy OneDrive Backup ⚠️",
+                        message: "Sorry OneDrive temporarily not available",
+                        time: NSLocalizedString("now", comment: ""))
+                    
+            HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+            return
+        }
+        
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        
+        if (appSettings.backupEnabled() && !appSettings.backupFirstTime() && onedriveProvider != nil) {
+            // Setup iCloud Nexcloud
+           
+            
+            onedriveProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
+                print("Status:\(err)")
+            })
+            
+            onedriveProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+                print("Status:\(err)")
+            })
+            
+            guard let localDocumentsURL = FileManager.default.urls(for: FileManager.SearchPathDirectory.documentDirectory, in: .userDomainMask).last else { return }
+            
+            do {
+                let fileURLs = try FileManager.default.contentsOfDirectory(at: localDocumentsURL, includingPropertiesForKeys: nil)
+                // process files
+                SwiftSpinner.show("Cloud Backup \nTap to stop").addTapHandler({
+                  SwiftSpinner.hide()
+                })
+               
+                backupcount = fileURLs.count
+                
+                    fileURLs.forEach { localurl in
+                        print("Backup:\(localurl)")
+                        
+                        let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                        webdavProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
+                            if(err != nil){
+                                self.backupcount = self.backupcount - 1
+                                print("Status:\(err)")
+                            }
+                        })
+                        
+                       
+                    }
+                
+                
+            } catch {
+                print("Error while enumerating files \(localDocumentsURL.path): \(error.localizedDescription)")
+            }
         }
     }
     
     func copyDocumentsToiCloud(){
         
         if(iCloudProvider == nil){ //Mainthread problems
+            let notiData = HDNotificationData(
+                        iconImage: UIImage(named: "AppIcon"),
+                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                        message: "Sorry iCloud temporarily not available",
+                        time: NSLocalizedString("now", comment: ""))
+                    
+            HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
             return
         }
         
@@ -409,7 +885,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             do {
                 let fileURLs = try FileManager.default.contentsOfDirectory(at: localDocumentsURL, includingPropertiesForKeys: nil)
                 // process files
-                SwiftSpinner.show("iCloud Backup \nTap to stop").addTapHandler({
+                SwiftSpinner.show("Cloud Backup \nTap to stop").addTapHandler({
                   SwiftSpinner.hide()
                 })
                
@@ -460,6 +936,9 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 SwiftSpinner.hide()
                 appSettings.setBackupFirstTime(true)
             }
+        
+            updateFiles()
+            self.tableView.reloadData()
         }
         
         func fileproviderFailed(_ fileProvider: FileProviderOperations, operation: FileOperationType, error: Error) {
@@ -490,23 +969,19 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             switch operation {
             case .copy(source: let source, destination: let dest) where dest.hasPrefix("file://"):
                 print("Downloading \(source) to \((dest as NSString).lastPathComponent): \(progress * 100) completed.")
+                SwiftSpinner.show(progress: Double(progress), title: "Cloud Sync: \(Int(progress * 100))% completed")
+                if progress >= 1 {
+                    
+                    SwiftSpinner.show( duration: 2.0, title: "Complete!", animated: false)
+                    SwiftSpinner.hide()
+                }
             case .copy(source: let source, destination: let dest) where source.hasPrefix("file://"):
                 
                 print("Uploading \((source as NSString).lastPathComponent) to \(dest): \(progress * 100) completed.")
                 if(singleBackup == 1){
-                    switch cloudType {
-                    case 0:
+                   
                         SwiftSpinner.show(progress: Double(progress), title: "Cloud Backup: \(Int(progress * 100))% completed")
-                        break;
-                    case 1:
-                        SwiftSpinner.show(progress: Double(progress), title: "iCloud Backup: \(Int(progress * 100))% completed")
-                        break;
-                    case 2:
-                        SwiftSpinner.show(progress: Double(progress), title: "SCP Backup: \(Int(progress * 100))% completed")
-                        break;
-                    default:
-                        SwiftSpinner.show(progress: Double(progress), title: "Cloud Backup: \(Int(progress * 100))% completed")
-                    }
+                        
                     
                     if progress >= 1 {
                         
@@ -550,7 +1025,80 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             print("Error in copy item")
         }
     }
-    
+/*
+    func OneDriveRefreshToken()
+    {
+        let appScheme = "IOSKeePass"
+        var oToken = ""
+        let username = appSettings.cloudUser()
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        
+        var oauth = OAuth2Swift(consumerKey: "CLIENT_ID",
+                                 consumerSecret: "",
+                                 authorizeUrl: "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+                                 accessTokenUrl: "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+                                 responseType: "code")
+        
+        oauth.authorizeURLHandler = SafariURLHandler(viewController: self, oauthSwift: oauth)
+        
+        var refreshtoken = oauth.renewAccessToken(withRefreshToken: oToken, completionHandler: { result in
+            switch result {
+                case .success(let (credential, response, parameters)):
+                  print(credential.oauthToken)
+                let urlcredential = URLCredential(user: username, password: credential.oauthToken, persistence: .permanent)
+                let refreshToken = credential.oauthRefreshToken
+                // TODO: Save refreshToken in keychain
+                // TODO: Save credential in keychain
+                // TODO: Create OneDrive provider using urlcredential
+                  // Do your request
+                case .failure(let error):
+                  print(error.localizedDescription)
+                }
+        })
+        
+        /*,
+                    success: { credential, response, parameters in
+                    let urlcredential = URLCredential(user: user ?? "anonymous", password: credential.oauthToken, persistence: .permanent)
+                    let refreshToken = credential.oauthRefreshToken
+                    // TODO: Save refreshToken in keychain
+                    // TODO: Save credential in keychain
+                    // TODO: Create OneDrive provider using urlcredential
+            }, failure: { error in
+                print(error.localizedDescription)
+                // TODO: Clear saved refresh token and call this method again to get authorization token
+            }, completionHandler: { parameter in
+                print("oauth refresh complete")
+            })*/
+      
+           let handle = oauth.authorize(
+                withCallbackURL: URL(string: "\(appScheme)://oauth-callback/onedrive")!,
+                scope: "offline_access User.Read Files.ReadWrite.All", state: "ONEDRIVE", completionHandler: { result in
+                    switch result {
+                        case .success(let (credential, response, parameters)):
+                          print(credential.oauthToken)
+                        let credential = URLCredential(user: username, password: credential.oauthToken, persistence: .permanent)
+                        // TODO: Save refreshToken in keychain
+                        // TODO: Save credential in keychain
+                        // TODO: Create OneDrive provider using credential
+                          // Do your request
+                        case .failure(let error):
+                          print(error.localizedDescription)
+                        }
+                })
+        
+               /* success: { credential, response, parameters in
+                    let credential = URLCredential(user: user ?? "anonymous", password: credential.oauthToken, persistence: .permanent)
+                    // TODO: Save refreshToken in keychain
+                    // TODO: Save credential in keychain
+                    // TODO: Create OneDrive provider using credential
+            }, failure: { error in
+                print(error.localizedDescription)
+            }, completionHandler: { _ in
+                print("oauth authorize complete")
+            })*/
+        
+    }
+    */
     
     func displayDocumentBrowser(inboundURL: URL? = nil, importIfNeeded: Bool = true) {
       //if presentationContext == .launched {
@@ -739,14 +1287,27 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             self.recoverRowAtIndexPath(indexPath)
         }
         
+        let syncAction = UITableViewRowAction(style: .default, title: NSLocalizedString("Sync", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
+            DispatchQueue.global(qos: .background).async {
+                self.syncRowAtIndexPath(indexPath)
+            }
+        }
+        
         shareAction.backgroundColor = UIColor.systemPurple
         renameAction.backgroundColor = UIColor.systemBlue
         defaultAction.backgroundColor = UIColor.systemGreen
         recoverAction.backgroundColor = UIColor.systemPurple
+        syncAction.backgroundColor = UIColor.systemOrange
         
         switch Section.AllValues[indexPath.section] {
         case .databases:
-            return [shareAction,deleteAction, renameAction, defaultAction]
+            let appSettings = AppSettings.sharedInstance() as AppSettings
+            if(appSettings.backupEnabled() == true){
+                return [syncAction,shareAction,deleteAction, renameAction, defaultAction]
+            }else{
+                return [shareAction,deleteAction, renameAction, defaultAction]
+            }
+           
         case .keyFiles:
             return [shareAction,deleteAction]
         case .trayFiles:
@@ -754,6 +1315,98 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         }
     }
     
+    func syncRowAtIndexPath(_ indexPath: IndexPath) {
+        if(self.webdavProvider == nil){ //Mainthread problems
+            let notiData = HDNotificationData(
+                        iconImage: UIImage(named: "AppIcon"),
+                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                        message: NSLocalizedString("Sorry WebDav temporarily not available", comment: ""),
+                        time: NSLocalizedString("now", comment: ""))
+                    
+            HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+            return
+        }
+        
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+       
+        let databaseManager = DatabaseManager.sharedInstance()
+        
+        let keepassURL = databaseManager?.getFileUrl(databaseFiles[indexPath.row])
+        let appDelegate = AppDelegate.getDelegate()
+        self.webdavProvider?.isReachable(completionHandler:{success,error in
+            if(error != nil)
+            {
+                print("Isreachable Error:\(error?.localizedDescription)")
+            }
+            if(success == false){
+                DispatchQueue.main.async {
+                    let notiData = HDNotificationData(
+                                iconImage: UIImage(named: "AppIcon"),
+                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                                message: NSLocalizedString("Sorry Cloud temporarily not reachable:", comment:""),
+                                time: NSLocalizedString("now", comment: ""))
+                            
+                    HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+                }
+                
+            }else{
+                let remotePath = "/IOSKeePass/Backups/"+keepassURL!.lastPathComponent
+                let localattrib = try? FileManager.default.attributesOfItem(atPath: keepassURL!.path)
+                self.singleBackup = 1
+                self.webdavProvider?.attributesOfItem(path: remotePath, completionHandler:{ attrib, error in
+                    if(error == nil){
+                        let localdate = localattrib?[FileAttributeKey.modificationDate] as? Date
+                        var clouddate:Date = (attrib?.modifiedDate)!
+                        let cds = clouddate.timeIntervalSinceReferenceDate+180 //we add 180 secs because the modified date is different between local and cloud
+                        let lds = localdate!.timeIntervalSinceReferenceDate
+                                //return attr[FileAttributeKey.modificationDate] as? Date
+                        print("Modify Date:\(attrib?.modifiedDate) local:\(localattrib?[FileAttributeKey.modificationDate])")
+                        
+                        if(cds > lds){
+                            
+                            DispatchQueue.main.async {
+                                SwiftSpinner.show("Cloud Sync \nTap to stop").addTapHandler({
+                                  SwiftSpinner.hide()
+                                })
+                                var count: Int = 0
+                                let filename = keepassURL?.lastPathComponent
+                                let template = NSPredicate(format: "self BEGINSWITH $letter")
+                                let beginsWithFilename = ["letter": filename]
+                                let beginsWithF = template.withSubstitutionVariables(beginsWithFilename)
+
+                                let beginsWithFilenames = self.trayFiles.filter { beginsWithF.evaluate(with: $0) }
+                                count = beginsWithFilenames.count
+                                
+                                var movefile = filename! + ".bck"
+                                if(count > 0){
+                                    movefile = filename! + "_"+String(count)+".bck"
+                                }
+                                
+                                // Delete the file
+                              
+                                databaseManager?.moveFile(filename, moveTo: movefile)
+                                self.webdavProvider?.copyItem(path: remotePath, toLocalURL: keepassURL!, completionHandler: { err in
+                                    if(err != nil){
+                                       
+                                        print("Status:\(err)")
+                                    }
+                                    
+                                })
+                                appSettings.setfileneedsBackup("")
+                            }
+                            
+                        }else{
+                           
+                        }
+                    }
+                })
+                
+            }
+        })
+        
+    }
     func shareRowAtIndexPath(_ indexPath: IndexPath) {
         
        // do {
@@ -790,9 +1443,9 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                             appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
                             title: NSLocalizedString("New Default DB is selected Name:", comment: "")+self.databaseFiles[indexPath.row],
                             message: NSLocalizedString("This Database is", comment: ""),
-                            time: "now")
+                            time: NSLocalizedString("now", comment: ""))
                         
-                        HDNotificationView.show(data: notiData, onTap: nil, onDidDismiss: nil)
+                HDNotificationView.show(data: notiData, secounds: 10.0, onTap: nil, onDidDismiss: nil)
            
                 
             }
@@ -857,21 +1510,36 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     
     func removeRowAtIndexPath(_ indexPath: IndexPath) {
         // Get the filename to delete
-        let filename: String
+        
        
-        filename = trayFiles.remove(at: indexPath.row)
         
-        // Delete the file
-        let databaseManager = DatabaseManager.sharedInstance()
-        databaseManager?.removeFile(filename)
+        let alertController = UIAlertController(title: "Remove KeePass", message: "If you select remove you don`t recover thie KeePass File anyone", preferredStyle: .actionSheet)
+        let removetAction = UIAlertAction(title: "Remove", style: .default) { (action) in
+            let filename = self.trayFiles.remove(at: indexPath.row)
+            
+            // Delete the file
+            let databaseManager = DatabaseManager.sharedInstance()
+            databaseManager?.removeFile(filename)
+            
+            // Update the table
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        }
         
-        // Update the table
-        tableView.deleteRows(at: [indexPath], with: .fade)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action) in
+        }
+       
+        alertController.addAction(removetAction)
+        alertController.addAction(cancelAction)
+        
+        alertController.modalPresentationStyle = .popover
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     func deleteRowAtIndexPath(_ indexPath: IndexPath) {
         // Get the filename to delete
         let filename: String
+        var count: Int = 0
         switch Section.AllValues[indexPath.section] {
         case .databases:
             filename = databaseFiles.remove(at: indexPath.row)
@@ -879,15 +1547,27 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             filename = keyFiles.remove(at: indexPath.row)
         case .trayFiles:
             filename = trayFiles.remove(at: indexPath.row)
+            
         }
         
-        let movefile = filename + ".bck"
+        let template = NSPredicate(format: "self BEGINSWITH $letter")
+        let beginsWithFilename = ["letter": filename]
+        let beginsWithF = template.withSubstitutionVariables(beginsWithFilename)
+
+        let beginsWithFilenames = trayFiles.filter { beginsWithF.evaluate(with: $0) }
+        count = beginsWithFilenames.count
+        
+        var movefile = filename + ".bck"
+        if(count > 0){
+            movefile = filename + "_"+String(count)+".bck"
+        }
+        
         // Delete the file
         let databaseManager = DatabaseManager.sharedInstance()
-        databaseManager?.deleteFile(filename)
+        databaseManager?.moveFile(filename, moveTo: movefile)
         
         // Update the table
-        tableView.deleteRows(at: [indexPath], with: .fade)
+        /*tableView.deleteRows(at: [indexPath], with: .fade)
         
         let index = self.trayFiles.insertionIndexOf(String(movefile)) {
             $0.localizedCaseInsensitiveCompare($1) == ComparisonResult.orderedAscending
@@ -902,7 +1582,9 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         } else {
             let indexPath = IndexPath(row: index, section: Section.trayFiles.rawValue)
             self.tableView.insertRows(at: [indexPath], with: .right)
-        }
+        }*/
+        self.updateFiles()
+        self.tableView.reloadData()
     }
     
     func newDatabaseCreated(filename: String) {
