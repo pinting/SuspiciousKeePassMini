@@ -14,7 +14,7 @@ import SnapKit
 /// ----------------------------------------------------------------------------------
 public extension HDNotificationView {
     
-    class func show(data: HDNotificationData?, onTap: (() -> Void)? = nil, onDidDismiss: (() -> Void)? = nil) -> HDNotificationView? {
+    class func show(data: HDNotificationData?, secounds: Double,  onTap: (() -> Void)? = nil, onDidDismiss: (() -> Void)? = nil) -> HDNotificationView? {
         
         guard let _data = data else {
             return nil
@@ -23,6 +23,7 @@ public extension HDNotificationView {
         /// New notification view
         let notiView = HDNotificationView(appearance: HDNotificationAppearance.defaultAppearance, notiData: _data)
         
+        notiView.appearance.appearingDuration = secounds
         notiView.onTabHandleBlock = onTap
         notiView.onDidDismissBlock = onDidDismiss
         
@@ -30,6 +31,7 @@ public extension HDNotificationView {
         notiView.loadingNotificationData()
         
         notiView.show(onComplete: nil)
+        
         
         return notiView
     }
