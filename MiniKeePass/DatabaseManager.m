@@ -159,12 +159,12 @@ static DatabaseManager *sharedInstance;
     [url getResourceValue:&size forKey:NSURLFileAllocatedSizeKey error:&error];
     return size;
 }
-- (void)deleteFile:(NSString *)filename {
+- (void)moveFile:(NSString *)filename moveTo:(NSString *)moveTo {
     
-    NSString *backupfilename = [filename stringByAppendingString:@".bck"];
+    //NSString *backupfilename = [filename stringByAppendingString:@".bck"];
     
     NSURL *url = [self getFileUrl:filename];
-    NSURL *backupurl = [self getFileUrl:backupfilename];
+    NSURL *backupurl = [self getFileUrl:moveTo];
     NSString *path = url.path;
 
     // Close the current database if we're deleting it's file
@@ -174,7 +174,7 @@ static DatabaseManager *sharedInstance;
     }
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    //create a Bakuo
+    //create a Bakup
     [fileManager copyItemAtURL:url toURL:backupurl error:nil];
     // Delete the file
     [fileManager removeItemAtURL:url error:nil];
