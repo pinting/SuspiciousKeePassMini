@@ -6,6 +6,7 @@ and sensible data to a local file, and not in the cloud, also i mean, it was fre
 I have create a new repo on Github, because the original Github project was setting to read only, and i can´t support the original Software development.
 
 *New
+- Webdav Protocol Support with a Sync on Deamnd (Dez. 2022)
 - IOS Autofill Credential Provider Support (June 2021)
 - Support for KDBx Version 4 (Mar. 2021)
 - IOS Darkmode Support (Aug. 2020)
@@ -69,6 +70,8 @@ Credits
 -------
 MiniKeePass
 Copyright 2011 Jason Rush and John Flanagan. All rights reserved.
+IOSKeePass
+Copyright 2019 Frank Hausmann. All rigts reserved
 
 German Translation - Florian Holzapfel<br />
 Japanese Translation - Katherine Lake<br />
