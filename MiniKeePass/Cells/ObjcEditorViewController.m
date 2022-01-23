@@ -55,10 +55,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)doneBarButtonItemDidTap:(id)sender
 {
-    self.text = self.textEditorView.text;
-    id<ObjcEditorViewControllerDelegate> const delegate = self.delegate;
-    if ([delegate respondsToSelector:@selector(ObjcEditorViewControllerDidTapDone:)]) {
-        [delegate ObjcEditorViewControllerDidTapDone:self];
+    //compare Text
+    if ([ self.text isEqualToString:self.textEditorView.text]) {
+        
+    }else{
+        self.text = self.textEditorView.text;
+        
+        id<ObjcEditorViewControllerDelegate> const delegate = self.delegate;
+        if ([delegate respondsToSelector:@selector(ObjcEditorViewControllerDidTapDone:)]) {
+            [delegate ObjcEditorViewControllerDidTapDone:self];
+        }
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -72,9 +78,15 @@ NS_ASSUME_NONNULL_BEGIN
     UINavigationBar* navbar= nil;
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
-        
+        if (UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])){
+            /* Device is iPad */
+            navbar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width*0.6, 50)];
+        }else{
+            /* Device is iPad */
+            navbar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width*0.86, 50)];
+        }
         /* Device is iPad */
-        navbar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width*0.7, 50)];
+        //navbar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width*0.6, 50)];
 
     }else{
         navbar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
