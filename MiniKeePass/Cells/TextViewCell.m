@@ -21,6 +21,7 @@
 #import "ObjcEditorViewController.h"
 #import "TextViewCell.h"
 
+
 @implementation TextViewCell
 
 @synthesize textView;
@@ -40,8 +41,8 @@
         
         [self addGestureRecognizer:self.normalPress];
                 
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
         
+
         textView = [[UITextView alloc] initWithFrame:CGRectZero];
         textView.font = [UIFont systemFontOfSize:16];
         textView.alwaysBounceVertical = TRUE;
@@ -101,6 +102,7 @@
   return shouldChangeText;
 }
 
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 
     UITouch *touch = [[event allTouches] anyObject];
@@ -139,7 +141,7 @@
     if (gesture.state == UIGestureRecognizerStateEnded)
     {
         if(!self.textView.isEditable){
-            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+            /*UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
             pasteboard.string = self.textView.text;
             UIColor *col=[UIColor whiteColor];
             UIColor *back=[UIColor colorWithRed:0.85 green:0.85 blue:0.85 alpha:0.4];
@@ -172,7 +174,20 @@
                     [copiedLabel removeFromSuperview];
                   
                 }];
-            });
+            });*/
+          
+            [NSUserDefaults standardUserDefaults];
+           
+            ObjcEditorViewController *textedit =  [[ObjcEditorViewController alloc] init];
+            
+            //textedit.useCustomDropInteraction=YES;
+            textedit.delegate = self;
+            textedit.text = self.textView.text;
+            textedit.modalPresentationStyle = -2;
+            
+            [self.parentView presentViewController:textedit animated:YES completion:nil];
+
+           
         }else{
             [NSUserDefaults standardUserDefaults];
            
@@ -200,11 +215,17 @@
         }
     }
 }
+
 - (void)ObjcEditorViewControllerDidTapDone:(ObjcEditorViewController *)editor
 {
     
     //NSLog(@"String received at FirstVC: %@",editor.text);
+    
     self.textView.text = editor.text;
+    id<EntryViewControllerDelegate> const delegate = self.delegate;
+    if ([delegate respondsToSelector:@selector(saveCommentText:)]) {
+            [delegate saveCommentText:self];
+    }
 }
  
 - (void) longPress:(UILongPressGestureRecognizer *)gesture{
@@ -227,6 +248,7 @@
         }
     }
 }
+
 
 /*- (void) editTextRecognizerTabbed:(UITapGestureRecognizer *) aRecognizer
 {

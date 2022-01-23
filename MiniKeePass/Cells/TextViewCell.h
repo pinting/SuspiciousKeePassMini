@@ -18,11 +18,20 @@
 #import <UIKit/UIKit.h>
 #import "ObjcEditorViewController.h"
 
+@class TextViewCell;
+
+@protocol EntryViewControllerDelegate <NSObject>
+@optional
+- (void)saveCommentText:(TextViewCell *)ObjcTextViewCell;
+
+@end
+
 @interface TextViewCell : UITableViewCell <UITextViewDelegate,ObjcEditorViewControllerDelegate> {
 	UITextView *textView;
     UITableViewController *parentView;
     UILongPressGestureRecognizer *longPress;
     UITapGestureRecognizer *normalPress;
+    
    
 }
 
@@ -30,6 +39,8 @@
 @property (nonatomic, strong) UITableViewController *parentView;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPress;
 @property (nonatomic, strong) UITapGestureRecognizer *normalPress;
+@property (nonatomic, weak, nullable) id<EntryViewControllerDelegate> delegate;
 
 - (CGFloat)getCellHeight;
 @end
+
