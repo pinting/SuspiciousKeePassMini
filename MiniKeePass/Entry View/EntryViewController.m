@@ -23,6 +23,7 @@
 #import "IOSKeePass-Swift.h"
 #import "MBProgressHUD.h"
 
+
 //#import "AutoFillKeyChain.h"
 
 
@@ -54,7 +55,7 @@ enum {
 
 @property (nonatomic, readonly) NSArray *filledCells;
 @property (nonatomic, readonly) NSArray *defaultCells;
-
+@property (nonatomic, strong) FaviconFinder *fav;
 @property (nonatomic, readonly) NSArray *cells;
 
 @end
@@ -70,7 +71,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     
     [self.tableView registerNib:[UINib nibWithNibName:@"TextFieldCell" bundle:nil] forCellReuseIdentifier:TextFieldCellIdentifier];
     
-    
+    self.fav = nil;
     titleCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
     titleCell.style = TextFieldCellStyleTitle;
     titleCell.title = NSLocalizedString(@"Title", nil);
@@ -84,7 +85,33 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     
     titleCell.textField.text = self.entry.title;
     [titleCell.editAccessoryButton addTarget:self action:@selector(imageButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self setSelectedImageIndex:self.entry.iconId];
+    [titleCell.accessoryButton addTarget:self action:@selector(imageButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.favico = nil;
+    
+   
+    
+    /*
+    if(self.entry.url != nil){
+        
+       
+        NSString *myURLString = @"https://s2.googleusercontent.com/s2/favicons?domain=";
+        NSString *urlstring = [myURLString stringByAppendingString:self.entry.url];
+
+        NSURL *myURL=[NSURL URLWithString: urlstring];
+       
+        SDWebImageManager *manager = [SDWebImageManager sharedManager];
+        [manager loadImageWithURL:myURL options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+            //Progress if needed
+        } completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+            if(image){
+                [titleCell.accessoryButton setImage:image forState:UIControlStateNormal];
+                [titleCell.editAccessoryButton setImage:image forState:UIControlStateNormal];
+                self.entry.icon.image=image;
+            }
+        }];
+        
+    }*/
     
     usernameCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
     usernameCell.style = TextFieldCellStylePlain;
@@ -137,6 +164,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     commentsCell.textView.scrollEnabled = TRUE;
     commentsCell.textView.userInteractionEnabled = TRUE;
     commentsCell.parentView = self;
+    commentsCell.delegate = self;
     commentsCell.textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     commentsCell.textView.adjustsFontForContentSizeCategory = true;
    
@@ -198,6 +226,15 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     KPKEntry *kdb4Entry = (KPKEntry *)self.entry;
     
     if (self.isKdb4) {
+        
+        if(self.entry.icon == nil){
+            [self setSelectedImageIndex:self.entry.iconId];
+        }else{
+            [titleCell.accessoryButton setImage:self.entry.icon.image forState:UIControlStateNormal];
+            [titleCell.editAccessoryButton setImage:self.entry.icon.image forState:UIControlStateNormal];
+            
+        }
+        
         NSInteger bcount = kdb4Entry.binaries.count;
         if(bcount >= 0){
             NSString *tt = [[NSString alloc] initWithFormat:@"%ld %@",bcount, NSLocalizedString(@"Attachments", nil)];
@@ -429,7 +466,6 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated canceled:(BOOL)canceled {
     [super setEditing:editing animated:animated];
     
-    
     // Ensure that all updates happen at once
     [self.tableView beginUpdates];
 
@@ -445,8 +481,24 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
             self.entry.url = urlCell.textField.text;
             self.entry.notes = commentsCell.textView.text;
             self.entry.timeInfo.modificationDate  = [NSDate date];
-
+            
+            
+            
             if (self.isKdb4) {
+                if(self.fav !=nil){
+                    UIImage *img = [self.fav getImage];
+                    [titleCell.accessoryButton setImage:img forState:UIControlStateNormal];
+                    //[self.entry addCustomI;
+                    if(self.entry.iconId < 75){
+                        KPKIcon *ico = [[KPKIcon alloc] initWithImage:img];
+                        
+                         DatabaseDocument *db = [AppDelegate getDelegate].databaseDocument;
+                         KPKMetaData *meta = db.kdbTree.metaData;
+                        [meta addCustomIcon: ico];
+                        [[ImageFactory sharedInstance] appendimage:img];
+                        self.entry.iconId = [[ImageFactory sharedInstance] numOfImages];
+                    }
+                }
                 // Ensure any textfield currently being edited is saved
                 NSInteger count = [self.tableView numberOfRowsInSection:SECTION_CUSTOM_FIELDS] - 1;
                 for (NSInteger i = 0; i < count; i++) {
@@ -540,7 +592,19 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
             
         }
     }
-
+    
+    if(self.fav !=nil){
+        UIImage *img = [self.fav getImage];
+        [titleCell.editAccessoryButton setImage:img forState:UIControlStateNormal];
+        if(self.entry.icon == nil){
+            //self.entry.icon = [[KPKIcon alloc] initWithImage:img];
+            
+        }else{
+            self.entry.icon.image = img;
+           
+        }
+    }
+    
     // Index paths for cells to be added or removed
     NSMutableArray *paths = [NSMutableArray array];
 
@@ -580,6 +644,11 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
    
 }
 
+#pragma mark - TextView delegate
+
+- (void)textViewDidChange:(UITextView *)textview {
+    [self setEditing:YES animated:YES];
+}
 #pragma mark - TextFieldCell delegate
 
 - (void)textFieldCellDidEndEditing:(TextFieldCell *)textFieldCell {
@@ -974,8 +1043,15 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     _selectedImageIndex = index;
 
     UIImage *image = [[ImageFactory sharedInstance] imageForIndex:index];
-    [titleCell.accessoryButton setImage:image forState:UIControlStateNormal];
-    [titleCell.editAccessoryButton setImage:image forState:UIControlStateNormal];
+    if(self.entry.icon != nil){
+        [titleCell.accessoryButton setImage:self.entry.icon.image forState:UIControlStateNormal];
+        [titleCell.editAccessoryButton setImage:self.entry.icon.image forState:UIControlStateNormal];
+    }else{
+        [titleCell.accessoryButton setImage:image forState:UIControlStateNormal];
+        [titleCell.editAccessoryButton setImage:image forState:UIControlStateNormal];
+    }
+    
+  
 }
 
 - (void)imageButtonPressed {
@@ -988,6 +1064,22 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         };
         
         [self.navigationController pushViewController:imageSelectorViewController animated:YES];
+    }else{
+        if(self.entry.url != nil){
+            
+            NSURL *myURL=[NSURL URLWithString: self.entry.url ];
+           
+            if(myURL.relativeString == @"")
+            {
+                return;
+            }
+            self.fav = [[FaviconFinder alloc] initWithUrl:myURL logEnabled:true image:self.favico btn: titleCell.accessoryButton];
+            
+            [self.fav downloadico];
+            
+            
+            
+        }
     }
 }
 
@@ -1182,6 +1274,12 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     }
 }
 
+- (void)saveCommentText:(TextViewCell *)ObjcTextViewCell
+{
+    if (self.editing == NO) {
+        [self setEditing:YES animated:NO];
+    }
+}
 
     
    
