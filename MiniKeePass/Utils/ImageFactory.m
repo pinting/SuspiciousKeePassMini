@@ -18,10 +18,11 @@
 
 #import "ImageFactory.h"
 
-#define NUM_IMAGES 74
+//#define NUM_IMAGES 74
 
 @interface ImageFactory ()
 @property (nonatomic, strong) NSMutableArray *standardImages;
+@property (nonatomic) NSInteger numOfImages;
 @end
 
 @implementation ImageFactory
@@ -29,8 +30,9 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.standardImages = [[NSMutableArray alloc] initWithCapacity:NUM_IMAGES];
-        for (NSUInteger i = 0; i < NUM_IMAGES; i++) {
+        self.numOfImages = 74; //Comes from asset
+        self.standardImages = [[NSMutableArray alloc] initWithCapacity:self.numOfImages];
+        for (NSUInteger i = 0; i < self.numOfImages; i++) {
             [self.standardImages addObject:[NSNull null]];
         }
     }
@@ -46,9 +48,19 @@
     return sharedInstance;
 }
 
+- (void)reInit {
+    [self.standardImages removeAllObjects];
+    
+    self.numOfImages = 74; //Comes from asset
+    self.standardImages = [[NSMutableArray alloc] initWithCapacity:self.numOfImages];
+    for (NSUInteger i = 0; i < self.numOfImages; i++) {
+        [self.standardImages addObject:[NSNull null]];
+    }
+}
+
 - (NSArray *)images {
     // Make sure all the standard images are loaded
-    for (NSUInteger i = 0; i < NUM_IMAGES; i++) {
+    for (NSUInteger i = 0; i < self.numOfImages; i++) {
         [self imageForIndex:i];
     }
     return self.standardImages;
@@ -63,7 +75,7 @@
 }
 
 - (UIImage *)imageForIndex:(NSInteger)index {
-    if (index >= NUM_IMAGES) {
+    if (index >= self.numOfImages) {
         return nil;
     }
 
@@ -75,5 +87,24 @@
 
     return image;
 }
-
+- (void)appendimage:(UIImage *)image {
+    if(image == NULL)
+        return;
+    
+    if(image.size.width != 24 || image.size.height != 24){
+        CGSize newSize = CGSizeMake(24, 24);  //whaterver size
+        UIGraphicsBeginImageContext(newSize);
+        [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        [self.standardImages addObject:newImage];
+        self.numOfImages += 1;
+    }else{
+        [self.standardImages addObject:image];
+        self.numOfImages += 1;
+    }
+   
+    
+    
+}
 @end
