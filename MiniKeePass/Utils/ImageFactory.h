@@ -32,5 +32,8 @@
 - (UIImage *)imageForGroup:(KPKGroup *)group;
 - (UIImage *)imageForEntry:(KPKEntry *)entry;
 - (UIImage *)imageForIndex:(NSInteger)index;
+- (void)appendimage:(UIImage *)image;
+- (void)reInit;
+- (NSInteger)numOfImages;
 
 @end
