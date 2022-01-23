@@ -20,7 +20,7 @@
 #import "AppDelegate.h"
 #import "AppSettings.h"
 #import "MBProgressHUD.h"
-
+#import "ImageFactory.h"
 
 @interface DatabaseDocument ()
 #ifdef USE_KDB
@@ -89,11 +89,17 @@
             
         }
         
-        /*KPKMetaData *meta = self.kdbTree.metaData;
+        KPKMetaData *meta = self.kdbTree.metaData;
         if(meta!=nil)
         {
-            NSLog(@"%@",meta);
-        }*/
+            //Reinit ImageFactory
+            [[ImageFactory sharedInstance] reInit];
+            NSLog(@"Custom icons = %@",[meta customIcons]);
+            for (KPKIcon *kpico in meta.customIcons) {
+                UIImage *img = kpico.image;
+                [[ImageFactory sharedInstance] appendimage:img];
+            }
+        }
         
 #endif
     }
