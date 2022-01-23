@@ -84,6 +84,8 @@
 "Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content"="Neuere Keepass Datei in deinem Cloud Speicher gefunden, zum Syncronisieren bitte die SYNC funktion benutzen";
 "Sorry Cloud connection temporarily not reachable:" = "Icher Verbindung zur Cloud ist temporär nicht erreihbar:";
 "At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection" = "Zur zeit unterstützen wir leider kein OneDrive oder iCloud, bitte benutze das WebDAv Protokoll zu deiner private Cloud wie OwnCloud oder Nextcloud über eine sichere SSL verbindung";
+"Create Cloud Infrastructure ⚠️" = "Erstekk Cloud Infrastruktur ⚠️";
+"Createing Directorys on Cloud please try it again ✅" = "Erstelle Verzeichnisse in der Cloud bitte wiederholen sie das speichern ✅";
 // General Messages
 "This is an KDB in Verion 1, and has no support for One Time Passwords" = "Dies ist die KDB in Verion 1, diese hat keine Unterstützung für Zeit basierte Einmal passwörter";
 "Align QR code within frame to scan" = "Richten Sie den zu scannenden QR-Code aus";
