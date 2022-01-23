@@ -838,6 +838,14 @@ NSSet *_protectedKeyPathForAttribute(SEL aSelector) {
   return nil;
 }
 
+- (void)setBinaryName:(NSString *)name newName:(NSString *)newName{
+    for(KPKBinary *binary in self.mutableBinaries) {
+      if([binary.name isEqualToString:name]) {
+          binary.name = newName;
+      }
+    }
+}
+
 - (void)addBinary:(KPKBinary *)binary {
   [self _addBinary:binary atIndex:self.mutableBinaries.count];
 }
