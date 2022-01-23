@@ -86,7 +86,8 @@
 "Sorry Cloud connection temporarily not reachable:" = "Sorry Cloud connection temporarily not reachable:";
 "At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection" = "At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection";
 "Cloud Backup \nTap to stop" = "Cloud Backup \nTap to stop";
-
+"Create Cloud Infrastructure ⚠️" = "Create Cloud Infrastructure ⚠️";
+"Createing Directorys on Cloud please try it again ✅" = "Createing Directorys on Cloud please try it again ✅";
 // General Messages
 "This is an KDB in Verion 1, and has no support for One Time Passwords" = "This is an KDB in Verion 1, and has no support for One Time Passwords";
 "Align QR code within frame to scan" = "Align QR code within frame to scan";
