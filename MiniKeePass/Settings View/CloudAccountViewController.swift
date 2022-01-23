@@ -45,9 +45,10 @@ class CloudAccountViewController: UITableViewController, UITextFieldDelegate {
     
     @IBAction func cloudTypeChanged(_ sender: UISegmentedControl) {
         let appSettings = AppSettings.sharedInstance() as AppSettings
-        if(sender.selectedSegmentIndex == 0){
+        if(sender.selectedSegmentIndex == 0 || sender.selectedSegmentIndex == 1){
             appSettings.setCloudType(sender.selectedSegmentIndex)
         }else{
+            DispatchQueue.main.async {
             let notiData = HDNotificationData(
                         iconImage: UIImage(named: "AppIcon"),
                         appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
@@ -56,6 +57,7 @@ class CloudAccountViewController: UITableViewController, UITextFieldDelegate {
                         time: NSLocalizedString("now", comment: ""))
                     
             HDNotificationView.show(data: notiData, secounds: 6.0, onTap: nil, onDidDismiss: nil)
+            }
         }
     }
     
