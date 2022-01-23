@@ -198,6 +198,8 @@ FOUNDATION_EXTERN NSString *const KPKMetaEntryKeePassKitUserTemplates;        //
  */
 - (void)removeBinary:(KPKBinary *)binary;
 
+//Frank Hausmann for faater rename
+- (void)setBinaryName:(NSString *)name newName:(NSString *)newName;
 /**
  Returns the first binary with the given name.
 
