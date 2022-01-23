@@ -323,9 +323,19 @@ public class HDNotificationView: UIView {
         guard let _notiData = self.notiData else {
             return
         }
-        guard let _keyWindow = UIApplication.shared.keyWindow else {
+        
+        guard let _keyWindow = UIApplication.shared.connectedScenes
+                .filter({$0.activationState == .foregroundActive})
+                .compactMap({$0 as? UIWindowScene})
+                .first?.windows
+                .filter({$0.isKeyWindow}).first else {
+                    return;
+                }
+
+        /*guard let _keyWindow = UIApplication.shared.keyWindow else {
             return
-        }
+        }*/
+        
         let _appearance = self.appearance
         
         _keyWindow.windowLevel = .statusBar
