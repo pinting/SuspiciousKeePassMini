@@ -28,10 +28,12 @@
 #endif
 #import "AppDelegate.h"
 
+
 @interface EntryViewController : UITableViewController <UIGestureRecognizerDelegate, TextFieldCellDelegate>
 
 @property (nonatomic, assign) NSUInteger selectedImageIndex;
 @property (nonatomic, strong) KPKEntry *entry;
+@property (nonatomic, strong) UIImage *favico;
 @property (nonatomic) BOOL isNewEntry;
 
 
