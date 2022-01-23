@@ -289,7 +289,11 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
 
             cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell")!
             cell.textLabel?.text = group.title
-            cell.imageView?.image = imageFactory?.image(for: group)
+            if(group.icon == nil){
+                cell.imageView?.image = imageFactory?.image(for: group)
+            }else{
+                cell.imageView?.image = group.icon.image
+            }
 
         case .entries:
             let entry = entries[indexPath.row]
@@ -298,7 +302,11 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             cell = tableView.dequeueReusableCell(withIdentifier: "EntryCell")!
            
             cell.textLabel?.text = entry.title
-            cell.imageView?.image = imageFactory?.image(for: entry)
+            if(entry.icon == nil){
+                cell.imageView?.image = imageFactory?.image(for: entry)
+            }else{
+                cell.imageView?.image = entry.icon.image
+            }
 
             // Detail text is a combination of username and url
             var accountDescription = ""
