@@ -145,7 +145,83 @@ class AttachmentListViewController: UITableViewController, CropViewControllerDel
             }
             
         }
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+  
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let deleteAction = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Delete", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
+            self.deleteRowAtIndexPath(indexPath)
+        }
+        
+        let renameAction = UITableViewRowAction(style: .normal, title: NSLocalizedString("Rename", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
+            self.renameRowAtIndexPath(indexPath)
+        }
+        
+        renameAction.backgroundColor = UIColor.systemBlue
+        
+        return [deleteAction, renameAction]
+    }
+    
+    func deleteRowAtIndexPath(_ indexPath: IndexPath) {
+        print("Deleted Binary")
+        //days.remove(at: indexPath.row)
+        //tableView.deleteRows(at: [indexPath], with: .left)
+        HUD.show(.progress)
+
+            let bin = self.entry?.binaries[indexPath.row]
+        
+            self.entry?.removeBinary(bin)
+            //AppDelegate.showGlobalProgressHUD(withTitle: "Saving")
+            self.attachmentTable.reloadData()
+            let appDelegate = AppDelegate.getDelegate()
+            
+            appDelegate?.databaseDocument.save()
+        let tt = String(format:"%d Attachments",self.entry?.binaries.count as! CVarArg)
+        self.fcell?.textField.text = tt
+        HUD.flash(.success, delay: 1.0)
+    }
+    
+    func renameRowAtIndexPath(_ indexPath: IndexPath){
+        print("Rename Binary")
+        //days.remove(at: indexPath.row)
+        //tableView.deleteRows(at: [indexPath], with: .left)
+        let bin = self.entry?.binaries[indexPath.row]
+        
+        let alertController = UIAlertController(title: "Rename Attachment", message: "Do you want rename the Attachment", preferredStyle: .alert)
+        alertController.addTextField { (textField) in
+            textField.text = bin?.name
+        }
+        let removetAction = UIAlertAction(title: "Rename", style: .default) { (action) in
+            HUD.show(.progress)
+
+            let textField = alertController.textFields![0]
+            self.entry?.setBinaryName(bin?.name, newName:textField.text)
+            self.attachmentTable.reloadData()
+            let appDelegate = AppDelegate.getDelegate()
+            
+            appDelegate?.databaseDocument.save()
+            let tt = String(format:"%d Attachments",self.entry?.binaries.count as! CVarArg)
+            self.fcell?.textField.text = tt
+            HUD.flash(.success, delay: 1.0)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action) in
+        }
+       
+        alertController.addAction(removetAction)
+        alertController.addAction(cancelAction)
+        
+        alertController.modalPresentationStyle = .popover
+        let popover = alertController.popoverPresentationController
+        popover?.sourceView = view
+        popover?.sourceRect = CGRect(x: 32, y: 32, width: 64, height: 64)
+
+        
+        present(alertController, animated: true, completion: nil)
+        
+       
+    }
+    
+/*    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
             return .delete
         }
         
@@ -171,7 +247,7 @@ class AttachmentListViewController: UITableViewController, CropViewControllerDel
             }
    
         }
-
+*/
    /* override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let indexPath = self.tableView.indexPathForSelectedRow else {
             return
