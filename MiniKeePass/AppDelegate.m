@@ -26,11 +26,12 @@
 #import "KTouchIDAuthentication.h"
 
 
+
 @interface AppDelegate ()
 
 @property (nonatomic, strong) FilesViewController *filesViewController;;
 @property (nonatomic, strong) UINavigationController *navigationController;
-
+@property (nonatomic, strong) OAuthObjcHelper *outhHelper;
 @end
 
 @implementation AppDelegate
@@ -91,6 +92,12 @@
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
+    NSString *h = url.host;
+    
+    if([url.host isEqual: @"auth"]){ //@"oauth-callback"]){
+        self.outhHelper = [[OAuthObjcHelper alloc] initWithUrl:url];
+        NSLog(@"Reply URL:%@",url);
+    }
      [self importUrl:url];
     
     return YES;
