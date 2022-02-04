@@ -51,7 +51,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     var localProvider: LocalFileProvider?
     var iCloudProvider: CloudFileProvider?
     var onedriveProvider: OneDriveFileProvider?
-    
+    var oauth: OAuth2Swift?
     var backupcount: Int = 0
     var singleBackup: Int = 0
     var cloudType: Int = 0
@@ -119,6 +119,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                             }
                         }
                     }*/
+                    OneDriveRefreshToken()
                     break;
                 
                 default:
@@ -665,8 +666,66 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             }
             return
         }
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        let savedToken =  appSettings.refreshToken()
         
-        self.onedriveProvider?.isReachable(completionHandler:{success,error in
+        if savedToken!.isEmpty{
+            DispatchQueue.main.async {
+                let nData = HDNotificationData(
+                            iconImage: UIImage(named: "AppIcon"),
+                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                            title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                            message: "Sorry OneDrive temporarily not reachable:",
+                            time: NSLocalizedString("now", comment: ""))
+                        
+                HDNotificationView.show(data: nData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+            }
+        }else{
+                self.singleBackup = 1
+                if (appSettings.backupEnabled() && self.onedriveProvider != nil) {
+                    // Setup iCloud Nexcloud
+                    let fnb = appSettings.fileneedsBackup()
+                    
+                   // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
+                    let localurl = URL(fileURLWithPath: fnb!)
+                    let remotePath = "/IOSKeePass/Backups"
+                    let remotefile = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                    
+                    self.onedriveProvider?.contentsOfDirectory(path: remotePath, completionHandler:{ files, error in
+                        
+                        if(error != nil){
+                            
+                            print("Error on webDav contents of Direcrory:\(error)")
+                            self.onedriveProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
+                                print("Create Directory IOSKeePass:\(err)")
+                                self.onedriveProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+                                    print("Create Directory Backup:\(err)")
+                                })
+                            })
+                            
+                            
+                        }
+                        DispatchQueue.main.async {
+                            SwiftSpinner.show("Cloud Backup \nTap to stop").addTapHandler({
+                              SwiftSpinner.hide()
+                            })
+                            self.onedriveProvider?.copyItem(localFile: localurl, to: remotefile, overwrite: true, completionHandler: { err in
+                                if(err != nil){
+                                    self.backupcount = self.backupcount - 1
+                                    print("Status:\(err)")
+                                }
+                            })
+                            appSettings.setfileneedsBackup("")
+                        }
+                        
+                    })
+                    
+                    
+                }
+            }
+        
+        
+       /* self.onedriveProvider?.isReachable(completionHandler:{success,error in
             if(success == false){
                 DispatchQueue.main.async {
                     let nData = HDNotificationData(
@@ -724,7 +783,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     }
                 }
             }
-        })
+        })*/
         
         
            /* let appSettings = AppSettings.sharedInstance() as AppSettings
@@ -1215,80 +1274,80 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             print("Error in copy item")
         }
     }
-/*
+
     func OneDriveRefreshToken()
     {
         let appScheme = "IOSKeePass"
-        var oToken = ""
-        let username = appSettings.cloudUser()
-        let appSettings = AppSettings.sharedInstance() as AppSettings
         
-        var oauth = OAuth2Swift(consumerKey: "CLIENT_ID",
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        let username = appSettings.cloudUser()
+        let savedToken =  appSettings.refreshToken()
+        let kClientID = "137e1fe9-5666-4eb1-9a36-168fa28d4dea"
+        let kRedirectUri = "msauth.de.unicomedv.IOSKeePass://auth"
+        let kAuthority = "https://login.microsoftonline.com/common"
+        let kGraphEndpoint = "https://graph.microsoft.com/"
+        self.oauth = OAuth2Swift(consumerKey: "137e1fe9-5666-4eb1-9a36-168fa28d4dea",
                                  consumerSecret: "",
-                                 authorizeUrl: "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
-                                 accessTokenUrl: "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+                                 authorizeUrl: "https://login.microsoftonline.com/fe4e6494-0017-40df-a25b-dfeaf494e286/oauth2/v2.0/authorize",
+                                 accessTokenUrl: "https://login.microsoftonline.com/fe4e6494-0017-40df-a25b-dfeaf494e286/oauth2/v2.0/token",
                                  responseType: "code")
         
-        oauth.authorizeURLHandler = SafariURLHandler(viewController: self, oauthSwift: oauth)
+        self.oauth!.authorizeURLHandler = SafariURLHandler(viewController: self, oauthSwift: self.oauth!)
         
-        var refreshtoken = oauth.renewAccessToken(withRefreshToken: oToken, completionHandler: { result in
-            switch result {
-                case .success(let (credential, response, parameters)):
-                  print(credential.oauthToken)
-                let urlcredential = URLCredential(user: username, password: credential.oauthToken, persistence: .permanent)
-                let refreshToken = credential.oauthRefreshToken
-                // TODO: Save refreshToken in keychain
-                // TODO: Save credential in keychain
-                // TODO: Create OneDrive provider using urlcredential
-                  // Do your request
-                case .failure(let error):
-                  print(error.localizedDescription)
-                }
-        })
-        
-        /*,
-                    success: { credential, response, parameters in
-                    let urlcredential = URLCredential(user: user ?? "anonymous", password: credential.oauthToken, persistence: .permanent)
+        if !savedToken!.isEmpty {
+            self.oauth!.renewAccessToken(withRefreshToken: savedToken!, completionHandler: { result in
+                switch result {
+                    case .success(let (credential, response, parameters)):
+                      print(credential.oauthToken)
+                    let urlcredential = URLCredential(user: username!, password: credential.oauthToken, persistence: .permanent)
                     let refreshToken = credential.oauthRefreshToken
                     // TODO: Save refreshToken in keychain
+                    appSettings.setRefreshToken(refreshToken)
                     // TODO: Save credential in keychain
                     // TODO: Create OneDrive provider using urlcredential
-            }, failure: { error in
-                print(error.localizedDescription)
-                // TODO: Clear saved refresh token and call this method again to get authorization token
-            }, completionHandler: { parameter in
-                print("oauth refresh complete")
-            })*/
-      
-           let handle = oauth.authorize(
-                withCallbackURL: URL(string: "\(appScheme)://oauth-callback/onedrive")!,
-                scope: "offline_access User.Read Files.ReadWrite.All", state: "ONEDRIVE", completionHandler: { result in
-                    switch result {
-                        case .success(let (credential, response, parameters)):
-                          print(credential.oauthToken)
-                        let credential = URLCredential(user: username, password: credential.oauthToken, persistence: .permanent)
-                        // TODO: Save refreshToken in keychain
-                        // TODO: Save credential in keychain
-                        // TODO: Create OneDrive provider using credential
-                          // Do your request
-                        case .failure(let error):
-                          print(error.localizedDescription)
+                        if(self.onedriveProvider == nil){
+                            self.onedriveProvider = OneDriveFileProvider(credential: urlcredential)
+                            print("finished Init Onedrive.")
+                            self.onedriveProvider?.delegate = self as FileProviderDelegate
+                        }else{
+                            print("OneDrive already init ")
                         }
-                })
-        
-               /* success: { credential, response, parameters in
-                    let credential = URLCredential(user: user ?? "anonymous", password: credential.oauthToken, persistence: .permanent)
-                    // TODO: Save refreshToken in keychain
-                    // TODO: Save credential in keychain
-                    // TODO: Create OneDrive provider using credential
-            }, failure: { error in
-                print(error.localizedDescription)
-            }, completionHandler: { _ in
-                print("oauth authorize complete")
-            })*/
+                    
+                      // Do your request
+                    case .failure(let error):
+                      print(error.localizedDescription)
+                    appSettings.setRefreshToken("")
+                    }
+            })
+        }else{
+            _ = self.oauth!.authorize(
+                withCallbackURL: URL(string: kRedirectUri),//"\(appScheme)://oauth-callback/onedrive")!,
+                    scope: "offline_access User.Read Files.ReadWrite.All", state: "ONEDRIVE", completionHandler: { result in
+                        switch result {
+                            case .success(let (credential, response, parameters)):
+                              print(credential.oauthToken)
+                            let urlcredential = URLCredential(user: username!, password: credential.oauthToken, persistence: .permanent)
+                            // TODO: Save refreshToken in keychain
+                            appSettings.setRefreshToken(credential.oauthRefreshToken)
+                            // TODO: Save credential in keychain
+                            // TODO: Create OneDrive provider using credential
+                            if(self.onedriveProvider == nil){
+                                self.onedriveProvider = OneDriveFileProvider(credential: urlcredential)
+                                print("finished Init Onedrive.")
+                                self.onedriveProvider?.delegate = self as FileProviderDelegate
+                            }else{
+                                print("OneDrive already init.")
+                            }
+                              // Do your request
+                            case .failure(let error):
+                              print(error.localizedDescription)
+                            appSettings.setRefreshToken("")
+                            }
+                    })
+        }
         
     }
-    */
+    
     
     func displayDocumentBrowser(inboundURL: URL? = nil, importIfNeeded: Bool = true) {
       //if presentationContext == .launched {
@@ -1754,6 +1813,170 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     
     func syncFromOneDrive(_ indexPath: IndexPath)
     {
+        if(self.onedriveProvider == nil){ //Mainthread problems
+            DispatchQueue.main.async {
+            let notiData = HDNotificationData(
+                        iconImage: UIImage(named: "AppIcon"),
+                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                        message: NSLocalizedString("Sorry onedrive temporarily not available", comment: ""),
+                        time: NSLocalizedString("now", comment: ""))
+                    
+            HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+            }
+            return
+        }
+        
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        let savedToken =  appSettings.refreshToken()
+        let databaseManager = DatabaseManager.sharedInstance()
+        
+        let keepassURL = databaseManager?.getFileUrl(databaseFiles[indexPath.row])
+        let appDelegate = AppDelegate.getDelegate()
+        if savedToken!.isEmpty {
+            DispatchQueue.main.async {
+                let notiData = HDNotificationData(
+                            iconImage: UIImage(named: "AppIcon"),
+                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                            title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                            message: NSLocalizedString("Sorry onedrive temporarily not reachable:", comment:""),
+                            time: NSLocalizedString("now", comment: ""))
+                        
+                HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+            }
+        }else{
+            let remotePath = "/IOSKeePass/Backups/"+keepassURL!.lastPathComponent
+            let localattrib = try? FileManager.default.attributesOfItem(atPath: keepassURL!.path)
+            self.singleBackup = 1
+            
+            self.onedriveProvider?.contentsOfDirectory(path: "/IOSKeePass/Backups/", completionHandler:{ files, error in
+                if(error == nil){
+                    //print("files:\(files.)")
+                    var found = false
+                    files.forEach { file in
+                        print("File:\(file.name)")
+                        if(file.name == keepassURL!.lastPathComponent){
+                            found = true;
+                        }
+                    }
+                    DispatchQueue.main.async {
+                        SwiftSpinner.show("Cloud Sync \nTap to stop").addTapHandler({
+                          SwiftSpinner.hide()
+                        })
+                    if(found == true){
+                        var count: Int = 0
+                        let filename = keepassURL!.lastPathComponent
+                        let template = NSPredicate(format: "self BEGINSWITH $letter")
+                        let beginsWithFilename = ["letter": filename]
+                        let beginsWithF = template.withSubstitutionVariables(beginsWithFilename)
+
+                        let beginsWithFilenames = self.trayFiles.filter { beginsWithF.evaluate(with: $0) }
+                        count = beginsWithFilenames.count
+                        
+                        var movefile = filename + ".bck"
+                        if(count > 0){
+                            movefile = filename + "_"+String(count)+".bck"
+                        }
+                        databaseManager?.moveFile(filename, moveTo: movefile)
+                        self.onedriveProvider?.copyItem(path: remotePath, toLocalURL: keepassURL!, completionHandler: { err in
+                            if(err != nil){
+                               
+                                print("Status:\(err)")
+                            }
+                            
+                        })
+                    }else{
+                        self.onedriveProvider?.copyItem(localFile: keepassURL!, to: remotePath, completionHandler: { err in
+                            if(err != nil){
+                               
+                                print("Status:\(err)")
+                            }
+                            
+                        })
+                    }
+                        appSettings.setfileneedsBackup("")
+                }
+                }else{
+                    print("Error:\(error)")
+                }
+            })
+        }
+        /*self.onedriveProvider?.isReachable(completionHandler:{success,error in
+            if(error != nil)
+            {
+                print("Isreachable Error:\(error?.localizedDescription)")
+            }
+            if(success == false){
+                DispatchQueue.main.async {
+                    let notiData = HDNotificationData(
+                                iconImage: UIImage(named: "AppIcon"),
+                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
+                                message: NSLocalizedString("Sorry onedrive temporarily not reachable:", comment:""),
+                                time: NSLocalizedString("now", comment: ""))
+                            
+                    HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
+                }
+                
+            }else{
+                let remotePath = "/IOSKeePass/Backups/"+keepassURL!.lastPathComponent
+                let localattrib = try? FileManager.default.attributesOfItem(atPath: keepassURL!.path)
+                self.singleBackup = 1
+               
+                self.onedriveProvider?.contentsOfDirectory(path: "/IOSKeePass/Backups/", completionHandler:{ files, error in
+                    if(error == nil){
+                        //print("files:\(files.)")
+                        var found = false
+                        files.forEach { file in
+                            print("File:\(file.name)")
+                            if(file.name == keepassURL!.lastPathComponent){
+                                found = true;
+                            }
+                        }
+                        DispatchQueue.main.async {
+                            SwiftSpinner.show("Cloud Sync \nTap to stop").addTapHandler({
+                              SwiftSpinner.hide()
+                            })
+                        if(found == true){
+                            var count: Int = 0
+                            let filename = keepassURL!.lastPathComponent
+                            let template = NSPredicate(format: "self BEGINSWITH $letter")
+                            let beginsWithFilename = ["letter": filename]
+                            let beginsWithF = template.withSubstitutionVariables(beginsWithFilename)
+
+                            let beginsWithFilenames = self.trayFiles.filter { beginsWithF.evaluate(with: $0) }
+                            count = beginsWithFilenames.count
+                            
+                            var movefile = filename + ".bck"
+                            if(count > 0){
+                                movefile = filename + "_"+String(count)+".bck"
+                            }
+                            databaseManager?.moveFile(filename, moveTo: movefile)
+                            self.onedriveProvider?.copyItem(path: remotePath, toLocalURL: keepassURL!, completionHandler: { err in
+                                if(err != nil){
+                                   
+                                    print("Status:\(err)")
+                                }
+                                
+                            })
+                        }else{
+                            self.onedriveProvider?.copyItem(localFile: keepassURL!, to: remotePath, completionHandler: { err in
+                                if(err != nil){
+                                   
+                                    print("Status:\(err)")
+                                }
+                                
+                            })
+                        }
+                            appSettings.setfileneedsBackup("")
+                    }
+                    }else{
+                        print("Error:\(error)")
+                    }
+                })
+            }
+        })*/
+                
     }
     
     func syncRowAtIndexPath(_ indexPath: IndexPath) {
