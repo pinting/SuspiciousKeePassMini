@@ -45,8 +45,9 @@ class CloudAccountViewController: UITableViewController, UITextFieldDelegate {
     
     @IBAction func cloudTypeChanged(_ sender: UISegmentedControl) {
         let appSettings = AppSettings.sharedInstance() as AppSettings
-        if(sender.selectedSegmentIndex == 0 || sender.selectedSegmentIndex == 1){
+        if(sender.selectedSegmentIndex == 0 || sender.selectedSegmentIndex == 1 || sender.selectedSegmentIndex == 2){
             appSettings.setCloudType(sender.selectedSegmentIndex)
+            appSettings.setRefreshToken("")
         }else{
             DispatchQueue.main.async {
             let notiData = HDNotificationData(
