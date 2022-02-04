@@ -36,11 +36,13 @@
       "size" : "40x40"
     },
     {
+      "filename" : "57 iPad.png",
       "idiom" : "iphone",
       "scale" : "1x",
       "size" : "57x57"
     },
     {
+      "filename" : "114 iPhone Retina.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "57x57"
@@ -98,11 +100,13 @@
       "size" : "50x50"
     },
     {
+      "filename" : "72 iPad.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "72x72"
     },
     {
+      "filename" : "144 iPad Retina.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "72x72"
