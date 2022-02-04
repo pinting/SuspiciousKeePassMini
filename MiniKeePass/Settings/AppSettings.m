@@ -31,6 +31,7 @@
 #define CLOUDUSER                  @"cloudUSER"
 #define CLOUDPWD                   @"cloudPWD"
 #define CLOUDTYPE                  @"cloudType"
+#define REFRESHTOKEN               @"refreshToken"
 #define NEEDBACKUP                 @"fileneedsBackup"
 #define PIN_FAILED_ATTEMPTS        @"pinFailedAttempts"
 #define DARK_ENABLED               @"darkEnabled"
@@ -344,6 +345,15 @@ static AppSettings *sharedInstance;
 - (void)setCloudPWD:(NSString *)cloudPWD {
     //[userDefaults setString:defdb forKey:DEFAULTDB];
     [userDefaults setValue:cloudPWD forKey:CLOUDPWD];
+}
+
+- (NSString *)refreshToken {
+    return [userDefaults stringForKey:REFRESHTOKEN];
+}
+
+- (void)setRefreshToken:(NSString *)refreshToken {
+    //[userDefaults setString:defdb forKey:DEFAULTDB];
+    [userDefaults setValue:refreshToken forKey:REFRESHTOKEN];
 }
 
 - (BOOL)backupEnabled {

@@ -96,6 +96,9 @@
 - (NSString *)cloudUser;
 - (void)setCloudUser:(NSString *)cloudUser;
 
+- (NSString *)refreshToken;
+- (void)setRefreshToken:(NSString *)refreshToken;
+
 - (NSString *)cloudPWD;
 - (void)setCloudPWD:(NSString *)cloudPWD;
 
