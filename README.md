@@ -55,7 +55,7 @@ Credits
 MiniKeePass
 Copyright 2011 Jason Rush and John Flanagan. All rights reserved.
 IOSKeePass
-Copyright 2019 Frank Hausmann. All rigts reserved
+Copyright 2019-2022 Frank Hausmann. All rigts reserved
 
 German Translation - Florian Holzapfel<br />
 Japanese Translation - Katherine Lake<br />
