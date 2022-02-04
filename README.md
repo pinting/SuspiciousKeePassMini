@@ -6,6 +6,7 @@ and sensible data to a local file, and not in the cloud, also i mean, it was fre
 I have create a new repo on Github, because the original Github project was setting to read only, and i can´t support the original Software development.
 
 *New
+- OneDrive Sync support (Feb. 2022)
 - Extract icons from Website to use as Customicons (Jan 2022)
 - iCloud Sync Support (Jan. 2022)
 - Webdav Protocol Support with a Sync on demand (Dez. 2021)
