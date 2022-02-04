@@ -28,6 +28,8 @@
 
 
 #define SECTION_HEADER_HEIGHT 46.0f
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 
 enum {
     SECTION_DEFAULT_FIELDS,
@@ -281,15 +283,38 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
         }
     
     }
-    /*UIBlurEffect *blurEffect = [[UIBlurEffect alloc] init];// (style: UIBlurEffect.Style.light)
-    _blurEffectView = [[UIVisualEffectView alloc] init]; // [effect: blurEffect)
-    _blurEffectView.effect = blurEffect;
-    _blurEffectView.frame = self.view.bounds;
-    _blurEffectView.autoresizingMask = self.view.autoresizingMask;
+    /*let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+    blurEffectView = UIVisualEffectView(effect: blurEffect)
+    blurEffectView?.frame = view.bounds
+    blurEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    blurEffectView?.tag = 3101*/
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];// (style: UIBlurEffect.Style.light)
+    //UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    self.blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    //CGRect rc = self.view.bounds;
+    CGRect ac = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    ac.origin.x = 0;
+    //rc.size.width += 15;
+    [self.blurEffectView setFrame:ac];
+    //self.blurEffectView.effect = blurEffect;
+    //self.blurEffectView.frame = self.view.bounds;
+    self.blurEffectView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     //.flexibleWidth, self.view.autoresizingMask.flexibleHeight];
-    _blurEffectView.tag = 1801;
+    self.blurEffectView.tag = 1801;
     // Add a pasteboard notification listener to support clearing the clipboard*/
    
+    // Add listeners to the keyboard
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [notificationCenter addObserver:self
+                            selector:@selector(didEnterBackgroundNotification:)
+                               name:UISceneDidEnterBackgroundNotification
+                              object:nil];
+    [notificationCenter addObserver:self
+                            selector:@selector(appCameToForeground:)
+                                name:UISceneWillEnterForegroundNotification
+                              object:nil];
   
 }
 
@@ -314,6 +339,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     }*/
     
     if ([[AppSettings sharedInstance] pinEnabled]) {
+        [self.view addSubview:self.blurEffectView];
         [self.navigationController popViewControllerAnimated:YES];
 
     }
@@ -328,17 +354,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     // Hide the toolbar
     [self.navigationController setToolbarHidden:YES animated:animated];
 
-    // Add listeners to the keyboard
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
-    [notificationCenter addObserver:self
-                            selector:@selector(didEnterBackgroundNotification:)
-                               name:UISceneDidEnterBackgroundNotification
-                              object:nil];
-    [notificationCenter addObserver:self
-                            selector:@selector(appCameToForeground:)
-                                name:UISceneWillEnterForegroundNotification
-                              object:nil];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
