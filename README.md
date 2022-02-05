@@ -5,7 +5,7 @@ IOSKeePass ist a fork of MiniKeePass, i do it, because i find that this Software
 and sensible data to a local file, and only in the cloud with a strong enrcyption, also i mean, it was free and it should be keep for free in future.
 I have create a new repo on Github, because the original Github project was setting to read only, and i can´t support the original Software development.
 
-*New
+*New Stuff
 - OneDrive Sync support (Feb. 2022)
 - Extract icons from Website to use as Customicons (Jan 2022)
 - iCloud Sync Support (Jan. 2022)
@@ -16,7 +16,7 @@ I have create a new repo on Github, because the original Github project was sett
 - One Time password support secure secret key storing (Released in 1.80)
   The Time-based One-time Password algorithm (TOTP) is an extension of the HMAC-based One-time Password algorithm (HOTP) that generates a one-time password (OTP) by instead taking         
   uniqueness from the current time. It has been adopted as Internet Engineering Task Force (IETF)[1] standard RFC 6238,
-  [1] is the cornerstone of Initiative for Open Authentication (OATH), and is used in a number of two-factor authentication (2FA) systems. 
+  [1] is the cornerstone of Initiative for Open Authentication (OAUTH), and is used in a number of two-factor authentication (2FA) systems. 
 - open key db file from ios local storage
 - support open db by FaceID using LAPolicyDeviceOwnerAuthenticationWithBiometrics
 
