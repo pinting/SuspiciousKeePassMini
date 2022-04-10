@@ -122,7 +122,10 @@
   return self.creationDate.hash ^ self.modificationDate.hash ^ self.accessDate.hash ^ self.expirationDate.hash ^ self.expires;
 }
 
-- (BOOL)isEqual:(id)object {
+//comment in some sizuations are possible that
+//a buffer oveflow in gzip compression are owerwrite by other objects because
+//KPKTimeInfo is inherited by NsObject
+/*- (BOOL)isEqual:(id)object {
   if(self == object) {
     return YES;
   }
@@ -131,7 +134,7 @@
   }
   NSLog(@"%@:Incompatible object %@ for equality!", self, object);
   return NO;
-}
+}*/
 
 - (BOOL)isEqualToTimeInfo:(KPKTimeInfo *)timeInfo {
   if(self == timeInfo) {
