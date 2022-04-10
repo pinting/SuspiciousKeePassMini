@@ -463,6 +463,10 @@ static DatabaseManager *sharedInstance;
             NSError *error;
             if([KTouchIDAuthentication canAuthenticateWithError:&error]){
                 [KeychainUtils setString:password forKey:self.selectedFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
+                if (keyFile != nil) {
+                    [KeychainUtils setString:keyFile forKey:self.selectedFilename
+                              andServiceName:KEYCHAIN_KEYFILES_SERVICE];
+                }
             }
         }];
     } @catch (NSException *exception) {
