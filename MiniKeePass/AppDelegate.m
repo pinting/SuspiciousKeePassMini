@@ -53,7 +53,7 @@
     [AppRating appID:@"1516678863"];
    
     [self checkFileProtection];
-    
+   
     return YES;
 }
 
