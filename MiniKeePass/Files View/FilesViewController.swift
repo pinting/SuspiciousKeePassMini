@@ -22,7 +22,7 @@ import FilesProvider
 import SwiftSpinner
 import OAuthSwift
 import SwiftUI
-
+//import FLEX
 
 class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportDatabaseDelegate, UIDocumentBrowserViewControllerDelegate, FileProviderDelegate {
     private let databaseReuseIdentifier = "DatabaseCell"
@@ -186,6 +186,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         }
 
       
+        print("HomePath:\(NSHomeDirectory())")
         
     }
     
