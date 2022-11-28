@@ -6,6 +6,8 @@ and sensible data to a local file, and only in the cloud with a strong enrcyptio
 I have create a new repo on Github, because the original Github project was setting to read only, and i can´t support the original Software development.
 
 *New Stuff
+- Change Master Password
+- Add Context Menus
 - OneDrive Sync support (Feb. 2022)
 - Extract icons from Website to use as Customicons (Jan 2022)
 - iCloud Sync Support (Jan. 2022)
