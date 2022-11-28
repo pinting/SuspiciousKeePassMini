@@ -48,18 +48,18 @@ static DatabaseManager *sharedInstance;
 
 - (NSArray *)getDatabases {
     NSMutableArray *files = [[NSMutableArray alloc] init];
-
+    
     // Get the document's directory
     NSString *documentsDirectory = [AppDelegate documentsDirectory];
-
+    
     // Get the contents of the documents directory
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:nil];
-
+    
     // Sort the files into database files and keyfiles
     for (NSString *file in dirContents) {
         NSString *path = [documentsDirectory stringByAppendingPathComponent:file];
-
+        
         // Check if it's a directory
         BOOL dir = NO;
         [fileManager fileExistsAtPath:path isDirectory:&dir];
@@ -70,28 +70,28 @@ static DatabaseManager *sharedInstance;
             }
         }
     }
-
+    
     // Sort the list of files
     [files sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-
+    
     return files;
 }
 
 
 - (NSArray *)getKeyFiles {
     NSMutableArray *files = [[NSMutableArray alloc] init];
-
+    
     // Get the document's directory
     NSString *documentsDirectory = [AppDelegate documentsDirectory];
-
+    
     // Get the contents of the documents directory
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:nil];
-
+    
     // Sort the files into database files and keyfiles
     for (NSString *file in dirContents) {
         NSString *path = [documentsDirectory stringByAppendingPathComponent:file];
-
+        
         // Check if it's a directory
         BOOL dir = NO;
         [fileManager fileExistsAtPath:path isDirectory:&dir];
@@ -102,27 +102,27 @@ static DatabaseManager *sharedInstance;
             }
         }
     }
-
+    
     // Sort the list of files
     [files sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-
+    
     return files;
 }
 
 - (NSArray *)getTrayFiles {
     NSMutableArray *files = [[NSMutableArray alloc] init];
-
+    
     // Get the document's directory
     NSString *documentsDirectory = [AppDelegate documentsDirectory];
-
+    
     // Get the contents of the documents directory
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:nil];
-
+    
     // Sort the files into database files and keyfiles
     for (NSString *file in dirContents) {
         NSString *path = [documentsDirectory stringByAppendingPathComponent:file];
-
+        
         // Check if it's a directory
         BOOL dir = NO;
         [fileManager fileExistsAtPath:path isDirectory:&dir];
@@ -133,10 +133,10 @@ static DatabaseManager *sharedInstance;
             }
         }
     }
-
+    
     // Sort the list of files
     [files sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-
+    
     return files;
 }
 
@@ -166,13 +166,13 @@ static DatabaseManager *sharedInstance;
     NSURL *url = [self getFileUrl:filename];
     NSURL *backupurl = [self getFileUrl:moveTo];
     NSString *path = url.path;
-
+    
     // Close the current database if we're deleting it's file
     AppDelegate *appDelegate = [AppDelegate getDelegate];
     if ([path isEqualToString:appDelegate.databaseDocument.filename]) {
         [appDelegate closeDatabase];
     }
-
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     //create a Bakup
     [fileManager copyItemAtURL:url toURL:backupurl error:nil];
@@ -181,14 +181,14 @@ static DatabaseManager *sharedInstance;
 }
 
 - (void)recoverFile:(NSString *)filename {
-   
+    
     NSString *moveFile = [filename substringToIndex:[filename length]-4];
     NSURL *url = [self getFileUrl:filename];
     NSURL *backupurl = [self getFileUrl:moveFile];
-   
+    
     NSString *path = url.path;
-
-
+    
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     // Move the file
     [fileManager moveItemAtURL:url toURL:backupurl error:nil];
@@ -196,17 +196,17 @@ static DatabaseManager *sharedInstance;
 
 
 - (void)removeFile:(NSString *)filename {
-   
+    
     NSURL *url = [self getFileUrl:filename];
-   
+    
     NSString *path = url.path;
-
+    
     // Close the current database if we're deleting it's file
     AppDelegate *appDelegate = [AppDelegate getDelegate];
     if ([path isEqualToString:appDelegate.databaseDocument.filename]) {
         [appDelegate closeDatabase];
     }
-
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     // Delete the file
     [fileManager removeItemAtURL:url error:nil];
@@ -232,7 +232,7 @@ static DatabaseManager *sharedInstance;
 #else
     NSError __autoreleasing *error = nil;
     KPKFileVersion kdbversion;
-   
+    
     switch(version){
         case 1:
             kdbversion.format = KPKDatabaseFormatKdb;
@@ -241,12 +241,12 @@ static DatabaseManager *sharedInstance;
         case 2:
             kdbversion.format = KPKDatabaseFormatKdbx;
             kdbversion.version = kKPKKdbxFileVersion3;
-
+            
             break;
         case 3:
             kdbversion.format = KPKDatabaseFormatKdbx;
             kdbversion.version = kKPKKdbxFileVersion4;
-
+            
             break;
             
     }
@@ -271,31 +271,119 @@ static DatabaseManager *sharedInstance;
     }
 }
 
-- (void)renameDatabase:(NSURL *)originalUrl newUrl:(NSURL *)newUrl {
+- (void)renameDatabase:(NSURL *)originalUrl newUrl:(NSURL *)newUrl currentPassword:(NSString *)currentPassword newPassword:(NSString *)newPassword {
     NSString *oldFilename = originalUrl.lastPathComponent;
     NSString *newFilename = newUrl.lastPathComponent;
     
     // Move input file into documents directory
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager moveItemAtURL:originalUrl toURL:newUrl error:nil];
-    
-    // Check if we should move the saved passwords to the new filename
-    if ([[AppSettings sharedInstance] rememberPasswordsEnabled]) {
+   
+    //hier das neue kennwort setzten
+    [fileManager copyItemAtURL:originalUrl toURL:newUrl error:nil];
+ 
+
+   
         // Load the password and keyfile from the keychain under the old filename
-        NSString *password = [KeychainUtils stringForKey:oldFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
-        NSString *keyFile = [KeychainUtils stringForKey:oldFilename andServiceName:KEYCHAIN_KEYFILES_SERVICE];
-        
-        // Store the password and keyfile into the keychain under the new filename
-        [KeychainUtils setString:password forKey:newFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
-        [KeychainUtils setString:keyFile forKey:newFilename andServiceName:KEYCHAIN_KEYFILES_SERVICE];
-        
-        // Delete the keychain entries for the old filename
-        [KeychainUtils deleteStringForKey:oldFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
-        [KeychainUtils deleteStringForKey:oldFilename andServiceName:KEYCHAIN_KEYFILES_SERVICE];
-    }
+    NSString *password = [KeychainUtils stringForKey:oldFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
+    NSString *keyFile = [KeychainUtils stringForKey:oldFilename andServiceName:KEYCHAIN_KEYFILES_SERVICE];
+    
+   
+    [KeychainUtils setString:currentPassword forKey:newFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
+    [KeychainUtils setString:keyFile forKey:newFilename andServiceName:KEYCHAIN_KEYFILES_SERVICE];
+    
+    DatabaseDocument *dd = [[DatabaseDocument alloc] initWithFilename:originalUrl.path password:currentPassword keyFile:keyFile];
+    
+    [dd saveWithNewkey:newPassword keyFile:keyFile];
+    
+    [KeychainUtils setString:newPassword forKey:oldFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
+    [KeychainUtils setString:keyFile forKey:oldFilename andServiceName:KEYCHAIN_KEYFILES_SERVICE];
+    
+    
+    // Delete the keychain entries for the old filename
+    //[KeychainUtils deleteStringForKey:oldFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
+    //[KeychainUtils deleteStringForKey:oldFilename andServiceName:KEYCHAIN_KEYFILES_SERVICE];
+  
 }
 
+- (NSString *)getKeyChainPWDWithBioMetricsForFile:(NSString *)filename {
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+    NSError *error;
+    
+    __block NSString *password = nil;
+    // Get the application delegate
+    AppDelegate *appDelegate = [AppDelegate getDelegate];
 
+    // Get the documents directory
+    NSString *documentsDirectory = [AppDelegate documentsDirectory];
+
+    // Load the password and keyfile from the keychain
+    //NSString *password = [KeychainUtils stringForKey:self.selectedFilename
+    //                                  andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
+    NSString *keyFile = [KeychainUtils stringForKey:self.selectedFilename
+                                     andServiceName:KEYCHAIN_KEYFILES_SERVICE];
+   
+    if ([[AppSettings sharedInstance] touchIdEnabled]) {
+        if([KTouchIDAuthentication canAuthenticateWithError:&error]){
+            [[KTouchIDAuthentication sharedInstance] authenticateBiometricsWithSuccess:^(){
+                password = [KeychainUtils stringForKey:filename
+                andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
+                dispatch_semaphore_signal(sema);
+            } andFailure:^(long errorCode){
+                NSString * authErrorString;
+                switch (errorCode) {
+                    case KTouchIDAuthenticationErrorSystemCancel:
+                        authErrorString = @"System canceled auth request due to app coming to foreground or background.";
+                        break;
+                    case KTouchIDAuthenticationErrorAuthenticationFailed:
+                        authErrorString = @"User failed after a few attempts.";
+                        break;
+                    case KTouchIDAuthenticationErrorUserCancel:
+                        authErrorString = @"User cancelled.";
+                        break;
+                    case KTouchIDAuthenticationErrorTouchIDNotEnrolled:
+                        authErrorString = @"No Touch ID fingers enrolled.";
+                        break;
+                    case KTouchIDAuthenticationErrorTouchIDNotAvailable:
+                        authErrorString = @"Touch ID not available on your device.";
+                        break;
+                    case KTouchIDAuthenticationErrorPasscodeNotSet:
+                        authErrorString = @"Need a passcode set to use Touch ID.";
+                        break;
+                    default:
+                        authErrorString = @"Check your Touch ID Settings.";
+                        break;
+                    case KTouchIDAuthenticationErrorUserFallback:
+                        authErrorString = @"Fallback auth method should be implemented here.";
+                        //authErrorString = nil;
+                        //[self authenticateDevicePasscode];
+                        
+                        break;
+                        
+                }
+                
+                if(authErrorString)
+                    //[self presentAlertControllerWithMessage:authErrorString];
+                    NSLog(@"%@",authErrorString);
+                
+                dispatch_semaphore_signal(sema);
+            }];
+        }else{
+            dispatch_semaphore_signal(sema);
+        }
+    }else{
+        dispatch_semaphore_signal(sema);
+    }
+   
+    if (![NSThread isMainThread]) {
+        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+    } else {
+        while (dispatch_semaphore_wait(sema, DISPATCH_TIME_NOW)) {
+            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:0]];
+        }
+    }
+
+    return password;
+}
 
 - (void)openDatabaseDocument:(NSString*)filename animated:(BOOL)animated {
     BOOL databaseLoaded = NO;
@@ -481,5 +569,6 @@ static DatabaseManager *sharedInstance;
         [passwordEntryViewController presentViewController:alertController animated:YES completion:nil];
     }
 }
+
 
 @end

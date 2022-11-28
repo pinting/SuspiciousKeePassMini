@@ -150,6 +150,24 @@
     }
 }
 
+- (void)saveWithNewkey:(NSString *)password keyFile:(NSString *)keyFile
+{
+    KPKCompositeKey *key = [[KPKCompositeKey alloc] initWithKeys:@[[KPKKey keyWithPassword:password]]];
+    
+    NSData *keyFileData = nil;
+    
+    if(keyFile != nil)
+       keyFileData =  [self _loadDataBase:keyFile];
+    
+    if(keyFileData !=nil)
+        [self.kpkkey addKey:[KPKKey keyWithKeyFileData:keyFileData]];
+    
+    NSError __autoreleasing *error = nil;
+    NSData *data = [self.kdbTree encryptWithKey:key format:KPKDatabaseFormatKdbx error:&error];
+    NSLog(@"File %@ MD5:%@",self.filename,data.MD5Sum);
+    [data writeToFile:self.filename atomically:YES];
+    
+}
 
 - (void)save {
     

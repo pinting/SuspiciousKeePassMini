@@ -39,6 +39,9 @@
 /// @return A KeePass DatabaseDocument
 - (id)initWithFilename:(NSString *)filename password:(NSString *)password keyFile:(NSString *)keyFile;
 
+///Save with a new Masterkey
+- (void)saveWithNewkey:(NSString *)password keyFile:(NSString *)keyFile;
+
 /// Save the current KeePass DatabaseDocument
 - (void)save;
 

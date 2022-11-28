@@ -36,8 +36,10 @@
 - (void)removeFile:(NSString *)filename;
 - (void)recoverFile:(NSString *)filename;
 - (void)newDatabase:(NSURL *)url password:(NSString *)password version:(NSInteger)version;
-- (void)renameDatabase:(NSURL *)originalUrl newUrl:(NSURL *)newUrl;
+- (void)renameDatabase:(NSURL *)originalUrl newUrl:(NSURL *)newUrl currentPassword:(NSString *)currentPassword newPassword:(NSString *)newPassword;
 
+- (NSString *)getKeyChainPWDWithBioMetricsForFile:(NSString *)filename;
+    
 /// Open the specified KeePass DatabaseDocument
 /// @param path Path to the chosen KeePass DatabaseDocument
 /// @param animated Animate the ViewController transition
