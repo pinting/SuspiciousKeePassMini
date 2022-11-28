@@ -271,6 +271,88 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         }
         
      }
+   
+    
+  
+    override func tableView(_ tableView: UITableView,contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint)
+    -> UIContextMenuConfiguration? {
+        // 1
+        let index = indexPath.row
+        
+        // 2
+        let identifier = "\(index)" as NSString
+        return UIContextMenuConfiguration(
+            identifier: identifier,
+            previewProvider: nil) { _ in
+              // 3
+                
+            let defaultAction = UIAction(
+              title: "Auto Open",
+              image: UIImage(systemName: "doc")) { _ in
+                  self.defaultRowAtIndexPath(indexPath)
+            }
+                  
+                
+              let deleteAction = UIAction(
+                title: "Delete Keypass DB",
+                image: UIImage(systemName: "trash.fill")) { _ in
+                    self.deleteRowAtIndexPath(indexPath)
+              }
+                
+            let renameAction = UIAction(
+              title: "Change Masterkey",
+              image: UIImage(systemName: "key.horizontal")) { _ in
+                  self.changePWDRowAtIndexPath(indexPath)
+            }
+                
+            let removeAction = UIAction(
+              title: "Remove from Trash",
+              image: UIImage(systemName: "eraser.fill")) { _ in
+                  self.removeRowAtIndexPath(indexPath)
+            }
+            
+            let recoverAction = UIAction(
+              title: "Recover Keypass DB",
+              image: UIImage(systemName: "figure.run.square.stack")) { _ in
+                  self.changePWDRowAtIndexPath(indexPath)
+            }
+             
+            let syncAction = UIAction(
+              title: "Cloud Sync",
+              image: UIImage(systemName: "cloud")) { _ in
+                print("Share")
+            }
+          // 4
+          let shareAction = UIAction(
+            title: "Share",
+            image: UIImage(systemName: "square.and.arrow.up")) { _ in
+              print("Share")
+          }
+          
+                switch Section.AllValues[indexPath.section] {
+                case .databases:
+                    let appSettings = AppSettings.sharedInstance() as AppSettings
+                    if(appSettings.backupEnabled() == true){
+                        //return [syncAction,shareAction,deleteAction, renameAction, defaultAction]
+                        return UIMenu(title: "", image: nil, children: [defaultAction,deleteAction,renameAction,syncAction,shareAction])
+                    }else{
+                        //return [shareAction,deleteAction, renameAction, defaultAction]
+                        return UIMenu(title: "", image: nil, children: [defaultAction,deleteAction,renameAction,shareAction])
+                    }
+                   
+                case .keyFiles:
+                    //return [shareAction,deleteAction]
+                    return UIMenu(title: "", image: nil, children: [shareAction,deleteAction])
+                case .trayFiles:
+                    //return [removeAction,recoverAction]
+                    return UIMenu(title: "", image: nil, children: [removeAction,recoverAction])
+                }
+              // 5
+              
+          }
+    }
+    
+   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "newDatabase"?:
@@ -696,7 +778,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                         
                         if(error != nil){
                             
-                            print("Error on webDav contents of Direcrory:\(error)")
+                            print("Error on OneDrive contents of Direcrory:\(error)")
                             self.onedriveProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
                                 print("Create Directory IOSKeePass:\(err)")
                                 self.onedriveProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
@@ -713,7 +795,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                             self.onedriveProvider?.copyItem(localFile: localurl, to: remotefile, overwrite: true, completionHandler: { err in
                                 if(err != nil){
                                     self.backupcount = self.backupcount - 1
-                                    print("Status:\(err)")
+                                    print("OneDrive Status:\(err)")
                                 }
                             })
                             appSettings.setfileneedsBackup("")
@@ -1194,7 +1276,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         func fileproviderFailed(_ fileProvider: FileProviderOperations, operation: FileOperationType, error: Error) {
             switch operation {
             case .copy(source: let source, destination: let dest):
-                print("copying \(source) to \(dest) has been failed.")
+                print("copying \(source) to \(dest) has been failed with \(Error.self).")
                 backupcount = backupcount-1
             case .remove:
                 print("file can't be deleted.")
@@ -1512,28 +1594,28 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     }
     
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleteAction = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Delete", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
+ /*   override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+       let deleteAction = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Delete", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
             self.deleteRowAtIndexPath(indexPath)
         }
         
-        let shareAction = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Shareing", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
+        /*let shareAction = UITableViewRowAction(style: .destructive, title: NSLocalizedString("Shareing", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
             self.shareRowAtIndexPath(indexPath)
-        }
+        }*/
         
         let renameAction = UITableViewRowAction(style: .normal, title: NSLocalizedString("Rename", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
-            self.renameRowAtIndexPath(indexPath)
+            self.changePWDRowAtIndexPath(indexPath)
         }
         
-        let defaultAction = UITableViewRowAction(style: .default, title: NSLocalizedString("Default", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
+        /*let defaultAction = UITableViewRowAction(style: .default, title: NSLocalizedString("Default", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
             self.defaultRowAtIndexPath(indexPath)
-        }
+        }*/
         
         let removeAction = UITableViewRowAction(style: .default, title: NSLocalizedString("Remove", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
             self.removeRowAtIndexPath(indexPath)
         }
         
-        let recoverAction = UITableViewRowAction(style: .default, title: NSLocalizedString("Recover", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
+        /*let recoverAction = UITableViewRowAction(style: .default, title: NSLocalizedString("Recover", comment: "")) { (action: UITableViewRowAction, indexPath: IndexPath) -> Void in
             self.recoverRowAtIndexPath(indexPath)
         }
         
@@ -1541,29 +1623,26 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.global(qos: .background).async {
                 self.syncRowAtIndexPath(indexPath)
             }
-        }
+        }*/
         
-        shareAction.backgroundColor = UIColor.systemPurple
+        //shareAction.backgroundColor = UIColor.systemPurple
         renameAction.backgroundColor = UIColor.systemBlue
-        defaultAction.backgroundColor = UIColor.systemGreen
-        recoverAction.backgroundColor = UIColor.systemPurple
-        syncAction.backgroundColor = UIColor.systemOrange
+        //defaultAction.backgroundColor = UIColor.systemGreen
+        removeAction.backgroundColor = UIColor.systemPurple
+        //syncAction.backgroundColor = UIColor.systemOrange
         
         switch Section.AllValues[indexPath.section] {
         case .databases:
-            let appSettings = AppSettings.sharedInstance() as AppSettings
-            if(appSettings.backupEnabled() == true){
-                return [syncAction,shareAction,deleteAction, renameAction, defaultAction]
-            }else{
-                return [shareAction,deleteAction, renameAction, defaultAction]
-            }
+           
+                return [renameAction]
+           
            
         case .keyFiles:
-            return [shareAction,deleteAction]
+            return [deleteAction]
         case .trayFiles:
-            return [removeAction,recoverAction]
+            return [removeAction]
         }
-    }
+    }*/
     
     func syncFromWebDav(_ indexPath: IndexPath)
     {
@@ -2078,14 +2157,14 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         }
     }
     
-    func renameRowAtIndexPath(_ indexPath: IndexPath) {
+    func changePWDRowAtIndexPath(_ indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "RenameDatabase", bundle: nil)
         let navigationController = storyboard.instantiateInitialViewController() as! UINavigationController
         
         let viewController = navigationController.topViewController as! RenameDatabaseViewController
-        viewController.donePressed = { (renameDatabaseViewController: RenameDatabaseViewController, originalUrl: URL, newUrl: URL) in
+        viewController.donePressed = { (renameDatabaseViewController: RenameDatabaseViewController, originalUrl: URL, newUrl: URL,currentPassword: String, newPassword: String) in
             let databaseManager = DatabaseManager.sharedInstance()
-            databaseManager?.renameDatabase(originalUrl, newUrl: newUrl)
+            databaseManager?.renameDatabase(originalUrl, newUrl: newUrl,currentPassword: currentPassword, newPassword: newPassword)
             
             // Update the filename in the files list
             self.databaseFiles[indexPath.row] = newUrl.lastPathComponent
@@ -2289,6 +2368,21 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         #if DEBUG
             //FLEXManager.shared.showExplorer()
         #endif
+        
+        let appGroupId = "group.de.unicomedv.KeePass"
+        let fileManager = FileManager.default
+        
+        
+        //Check is Autofill.DB
+        //var filepath = AppDelegate.documentsDirectoryUrl()
+        var filepath = fileManager.containerURL(forSecurityApplicationGroupIdentifier: appGroupId)
+        filepath = filepath?.appendingPathComponent("AutoFill.db")
+        
+        //print("Using shared App Path: \(filepath!.path)")
+       
+            
+        if fileManager.fileExists(atPath: filepath!.path) {
+        }
     }
     
 }
