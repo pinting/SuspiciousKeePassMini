@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eNG-Fw-s0t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eNG-Fw-s0t">
     <device id="retina4_7" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,17 +17,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="backgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Database Name" footerTitle="Enter a name for the password database. The correct file extension will automatically be appended." id="dqo-KA-xxA">
+                            <tableViewSection headerTitle="Database Name" footerTitle="After change the Master password, you find a Backup copy with the old Password in your Backup section." id="dqo-KA-xxA">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="cTP-DC-7OU">
-                                        <rect key="frame" x="0.0" y="49.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="cTP-DC-7OU" id="W1F-MB-sro">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="FGw-rp-noX">
-                                                    <rect key="frame" x="16" y="12.5" width="343" height="19"/>
+                                                    <rect key="frame" x="16" y="11" width="343" height="22"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
@@ -44,13 +44,79 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Password change" id="RRG-QC-UA5">
+                                <string key="footerTitle">Please use complex passwords for your KeePass DB,
+a simple password like e.g. MyWife1984 can be recognized within 30 minutes using "john the ripper". Fact the more complex and longer a password the longer will be the time of recognition, I recommend you to use a string of 12 characters or more filled with random characters. Please put your Master password on a secure place, in IOSKeePass there is no way to revover your master password</string>
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="wRX-Kv-qov">
+                                        <rect key="frame" x="0.0" y="191" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="wRX-Kv-qov" id="WDs-cu-SGg">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Current" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="aXL-lS-mra">
+                                                    <rect key="frame" x="16" y="11.5" width="343" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="aXL-lS-mra" firstAttribute="leading" secondItem="WDs-cu-SGg" secondAttribute="leadingMargin" id="L3o-eb-fBV"/>
+                                                <constraint firstItem="aXL-lS-mra" firstAttribute="centerY" secondItem="WDs-cu-SGg" secondAttribute="centerY" id="ZXQ-ss-ftW"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="aXL-lS-mra" secondAttribute="trailing" id="gMz-yy-nvF"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="WWB-qc-Klm">
+                                        <rect key="frame" x="0.0" y="235" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="WWB-qc-Klm" id="CdH-k0-aIQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vus-gC-Apm">
+                                                    <rect key="frame" x="16" y="11.5" width="343" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="vus-gC-Apm" firstAttribute="leading" secondItem="CdH-k0-aIQ" secondAttribute="leadingMargin" id="HNZ-Yj-uE3"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="vus-gC-Apm" secondAttribute="trailing" id="rKa-SL-dEC"/>
+                                                <constraint firstItem="vus-gC-Apm" firstAttribute="centerY" secondItem="CdH-k0-aIQ" secondAttribute="centerY" id="th3-fu-Uwa"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="myo-oc-yya">
+                                        <rect key="frame" x="0.0" y="279" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" tableViewCell="myo-oc-yya" id="SCp-V2-xtx">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kx6-Pz-xig">
+                                                    <rect key="frame" x="16" y="11.5" width="343" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="kx6-Pz-xig" firstAttribute="centerY" secondItem="SCp-V2-xtx" secondAttribute="centerY" id="19U-55-DwL"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="kx6-Pz-xig" secondAttribute="trailing" id="bdl-vb-5gV"/>
+                                                <constraint firstItem="kx6-Pz-xig" firstAttribute="leading" secondItem="SCp-V2-xtx" secondAttribute="leadingMargin" id="eWT-Rt-R1e"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="LRv-5a-zvh" id="HPk-Zh-rzL"/>
                             <outlet property="delegate" destination="LRv-5a-zvh" id="hXs-dg-RjW"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Rename" id="PNk-M3-uh6">
+                    <navigationItem key="navigationItem" title="Master Password Change" id="PNk-M3-uh6">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="xzP-i2-b1N">
                             <connections>
                                 <action selector="cancelPressed:" destination="LRv-5a-zvh" id="g2y-vP-K5V"/>
@@ -63,7 +129,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="confirmPwdTextField" destination="kx6-Pz-xig" id="x8K-hr-RTo"/>
+                        <outlet property="correntPwdTextFiled" destination="aXL-lS-mra" id="acL-Un-LtS"/>
                         <outlet property="nameTextField" destination="FGw-rp-noX" id="6hf-Z5-Xp4"/>
+                        <outlet property="pwdTextField" destination="vus-gC-Apm" id="RM1-kR-kOj"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Swv-YR-8lQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
