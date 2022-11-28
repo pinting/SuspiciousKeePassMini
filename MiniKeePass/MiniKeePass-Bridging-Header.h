@@ -28,6 +28,7 @@
 #import "MF_Base32Additions.h"
 #import "MBProgressHUD.h"
 #import "ObjcEditorViewController.h"
+#import "KTouchIDAuthentication.h"
 
 
 #import <CommonCrypto/CommonCrypto.h>
