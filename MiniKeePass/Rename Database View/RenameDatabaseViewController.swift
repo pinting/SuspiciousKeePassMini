@@ -18,17 +18,135 @@
 
 import UIKit
 
+
 class RenameDatabaseViewController: UITableViewController {
     @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var correntPwdTextFiled: UITextField!
+    @IBOutlet weak var pwdTextField: UITextField!
+    @IBOutlet weak var confirmPwdTextField: UITextField!
     
+    var donePressed: ((RenameDatabaseViewController, _ originalUrl: URL, _ newUrl: URL, _ cuurentPassword: String, _ newPassword: String) -> Void)?
     var originalUrl: URL!
+    var showPWDButton: UIImageView!
+    var showConfirmButton: UIImageView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        var createPWDButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        createPWDButton.setTitle("...", for: .normal)
+        createPWDButton.addTarget(self,
+                         action: #selector(createPassword),
+                         for: .touchUpInside)
+        
+        nameTextField.isEnabled = true
+        pwdTextField.rightViewMode = UITextField.ViewMode.always
+        pwdTextField.rightView = createPWDButton
+        
+        showPWDButton = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        showPWDButton.image = UIImage(named: "eye") //setTitle("...", for: .normal)
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(showPasswords))
+        showPWDButton.isUserInteractionEnabled = true
+        showPWDButton.addGestureRecognizer(singleTap)
 
-    var donePressed: ((RenameDatabaseViewController, _ originalUrl: URL, _ newUrl: URL) -> Void)?
+        correntPwdTextFiled.rightViewMode = UITextField.ViewMode.always
+        correntPwdTextFiled.rightView = showPWDButton
+        
+        showConfirmButton = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+        showConfirmButton.image = UIImage(named: "eye") //setTitle("...", for: .normal)
+        let singleConfTap = UITapGestureRecognizer(target: self, action: #selector(showConfirmPasswords))
+        showConfirmButton.isUserInteractionEnabled = true
+        showConfirmButton.addGestureRecognizer(singleConfTap)
+
+        correntPwdTextFiled.rightViewMode = UITextField.ViewMode.always
+        confirmPwdTextField.rightView = showConfirmButton
+        
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        let filename = originalUrl.lastPathComponent
+        // Check if we should move the saved passwords to the new filename
+        if (appSettings.rememberPasswordsEnabled() == true) {
+            // Load the password and keyfile from the keychain under the old filename
+            
+            let currentpwd = KeychainUtils.string(forKey: filename, andServiceName: "KEYCHAIN_PASSWORDS_SERVICE")
+            correntPwdTextFiled.text = currentpwd;
+            
+        }
+        
+        if(appSettings.touchIdEnabled() == true){
+            let databaseManager = DatabaseManager.sharedInstance()
+            
+           
+            let cpwd =  databaseManager?.getKeyChainPWDWithBioMetrics(forFile: filename)
+            if(cpwd != nil){
+                if(!cpwd!.isEmpty){
+                    correntPwdTextFiled.text = cpwd;
+                }
+            }
+            
+        }
+        
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         nameTextField.text = originalUrl.deletingPathExtension().lastPathComponent
+    }
+    
+    @objc func showPasswords(){
+        if (!correntPwdTextFiled.isSecureTextEntry) {
+            // Clear the password first, since you can't edit a secure text entry once set
+            //correntPwdTextFiled.text = ""
+            correntPwdTextFiled.isSecureTextEntry = true
+            
+            // Change the image
+            showPWDButton.image = UIImage(named: "eye")
+        } else {
+            correntPwdTextFiled.isSecureTextEntry = false
+            
+            // Change the image
+            showPWDButton.image = UIImage(named: "eye-slash")
+        }
+    }
+    
+    @objc func showConfirmPasswords(){
+        if (!pwdTextField.isSecureTextEntry) {
+            // Clear the password first, since you can't edit a secure text entry once set
+            //correntPwdTextFiled.text = ""
+            pwdTextField.isSecureTextEntry = true
+            confirmPwdTextField.isSecureTextEntry = true
+            // Change the image
+            showConfirmButton.image = UIImage(named: "eye")
+        } else {
+            pwdTextField.isSecureTextEntry = false
+            confirmPwdTextField.isSecureTextEntry = false
+            // Change the image
+            showConfirmButton.image = UIImage(named: "eye-slash")
+        }
+    }
+    
+    @objc
+    func createPassword() {
+        print("CreatePassword")
+        let storyboard = UIStoryboard(name: "PasswordGenerator", bundle: nil)
+        let navigationController = storyboard.instantiateInitialViewController() as! UINavigationController
+        
+       /* let passwordGeneratorViewController = navigationController.topViewController as! PasswordGeneratorViewController*/
+        let viewController = navigationController.topViewController as! PasswordGeneratorViewController
+        viewController.donePressed = { (passwordGeneratorViewController: PasswordGeneratorViewController, password: String) in//try is current master pwd right
+            
+            self.pwdTextField.text = password
+            self.confirmPwdTextField.text = password
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        viewController.cancelPressed = { (passwordGeneratorViewController: PasswordGeneratorViewController) in
+        
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+
+        present(navigationController, animated: true, completion: nil)
     }
     
     // MARK: - UITextFieldDelegate
@@ -41,24 +159,53 @@ class RenameDatabaseViewController: UITableViewController {
     // MARK: - Actions
     
     @IBAction func donePressedAction(_ sender: UIBarButtonItem?) {
-        let name = nameTextField.text;
+        let name = nameTextField.text
+        pwdTextField.isSecureTextEntry  = false
+        let newPwd = pwdTextField.text
+        correntPwdTextFiled.isSecureTextEntry = false
+        let currentPwd = correntPwdTextFiled.text
+        
+        let confirm = confirmPwdTextField.text
+       
+        
         if (name == nil || name!.isEmpty) {
             self.presentAlertWithTitle(NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Filename is invalid", comment: ""))
             return
         }
         
-        // Create the new URL
-        var newUrl = originalUrl.deletingLastPathComponent()
-        newUrl = newUrl.appendingPathComponent(nameTextField.text!)
-        newUrl = newUrl.appendingPathExtension(originalUrl.pathExtension)
-        
-        // Check if the file already exists
-        if ((newUrl as NSURL).checkResourceIsReachableAndReturnError(nil)) {
-            self.presentAlertWithTitle(NSLocalizedString("Error", comment: ""), message: NSLocalizedString("A file already exists with this name", comment: ""))
+        //Check is pwd, conform and current valid
+        if(newPwd == nil || newPwd!.isEmpty || confirm == nil || confirm!.isEmpty || currentPwd == nil || currentPwd!.isEmpty){
+               
+            self.presentAlertWithTitle(NSLocalizedString("Warning", comment: ""), message: NSLocalizedString("Anything is wrong with your Masterkey", comment: "Please correct Password, Confirm, or New Password"))
             return
         }
+       
+        let dateFormatter = DateFormatter()
+
+        // Set Date Format
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let date = Date()
+        let calendar = Calendar.current
+        let hourm = calendar.component(.hour, from: date)*60*60*1000
+        let minutem = calendar.component(.minute, from: date)*60*1000
+        let secondm = calendar.component(.second, from: date)*1000
+        let millis = calendar.component(.nanosecond, from: date)
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        let filename =  nameTextField.text! + "." + dateFormatter.string(from: date)+".\(hourm+minutem+secondm+millis)"
         
-        donePressed?(self, originalUrl, newUrl)
+        // Create the new URL
+        var newUrl = originalUrl.deletingLastPathComponent()
+        newUrl = newUrl.appendingPathComponent(filename)
+        newUrl = newUrl.appendingPathExtension(originalUrl.pathExtension)
+        
+        newUrl = newUrl.appendingPathExtension("bck")
+    
+        
+       // if(renameonly == true){
+       //     donePressed?(self, originalUrl, newUrl, "", "")
+        //}else{
+        donePressed?(self, originalUrl, newUrl, currentPwd!, newPwd!)
+        //}
     }
     
     @IBAction func cancelPressed(_ sender: UIBarButtonItem) {
