@@ -141,6 +141,10 @@ class SettingsViewController: UITableViewController {
         
         // Update which controls are enabled
         updateEnabledControls()
+        
+        /*let adb = AutoFillDB()
+        adb.GetEntrys()*/
+        
     }
     
     fileprivate func updateEnabledControls() {
