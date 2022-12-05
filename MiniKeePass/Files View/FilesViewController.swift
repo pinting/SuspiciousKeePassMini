@@ -320,13 +320,15 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             let syncAction = UIAction(
               title: "Cloud Sync",
               image: UIImage(systemName: "cloud")) { _ in
-                print("Share")
+                  DispatchQueue.global(qos: .background).async {
+                      self.syncRowAtIndexPath(indexPath)
+                  }
             }
           // 4
           let shareAction = UIAction(
             title: "Share",
             image: UIImage(systemName: "square.and.arrow.up")) { _ in
-              print("Share")
+                self.shareRowAtIndexPath(indexPath)
           }
           
                 switch Section.AllValues[indexPath.section] {
@@ -407,6 +409,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     // avoid deadlocks by not using .main queue here
                 DispatchQueue.global(qos: .default).async {
                     appDelegate?.buildAutoFillIfNeeded(dname)
+                    //Zip Autofill DB and Encrypt file
                     
                         group.leave()
                     }
