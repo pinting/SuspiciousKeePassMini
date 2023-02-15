@@ -50,16 +50,30 @@
                                name:UIPasteboardChangedNotification
                              object:nil];
     
-    [AppRating appID:@"1516678863"];
+    //[AppRating appID:@"1516678863"];
    
     [self checkFileProtection];
    
+    AppSettings *appSettings = [AppSettings sharedInstance];
+    
+    if(appSettings.getInternalVersion == 0)
+    {
+        //Now we remove autfillDB and create ne one
+        AutoFillDB *adb = [[AutoFillDB alloc] init];
+        [adb RemoveDB];
+        [appSettings setInternalVersion:1];
+        
+    }
     return YES;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Check file protection
     [self checkFileProtection];
+    
+    //Matomo Tracker
+   
+    
 }
 
 -(void)applicationDidEnterBackground:(UIApplication *)application {
@@ -160,8 +174,17 @@
                             u = entry.title;
                         else
                             u = entry.url;
-                        
-                        [adb InsertEntryWithUser:entry.username secret:entry.password url:u];
+                        NSInteger count = entry.attributes.count;
+                        for (NSInteger i = 0; i < count; i++) {
+                            KPKAttribute *sf = entry.attributes[i];
+                            if ([sf.key isEqualToString:@"OTPURL:"])
+                            {
+                                [adb AddOrUpdateEntryWithUser:entry.username secret:entry.password url:u otpurl:sf.value];
+                            }else{
+                                [adb AddOrUpdateEntryWithUser:entry.username secret:entry.password url:u otpurl:@""];
+                            }
+                        }
+                        //[adb InsertEntryWithUser:entry.username secret:entry.password url:u];
                     }
                
                 NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
