@@ -25,9 +25,9 @@ import SQLite
             
         if !fileManager.fileExists(atPath: filepath!.path) {
                 do{
-                    let cnn = try Connection(filepath!.path)
+                let cnn = try Connection(filepath!.path)
                 
-                try cnn.execute("CREATE TABLE IF NOT EXISTS AutoFill (id INTEGER PRIMARY KEY AUTOINCREMENT, HASH TEXT, User TEXT, PWD TEXT, URL TEXT, DOMAIN TEXT)")
+                try cnn.execute("CREATE TABLE IF NOT EXISTS AutoFill (id INTEGER PRIMARY KEY AUTOINCREMENT, HASH TEXT, User TEXT, PWD TEXT,OTPURL Text,URL TEXT,DOMAIN TEXT)")
                 
                 try cnn.execute("CREATE TABLE IF NOT EXISTS KeePassDBNames (id INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, LASTSYNC TEXT)")
                     
@@ -123,7 +123,7 @@ import SQLite
         return false
     }
     
-    @objc public func InsertEntry(user: String, secret: String, url: String){
+    @objc public func InsertEntry(user: String, secret: String, url: String, otpurl: String){
         
         var filepath = fileManager.containerURL(forSecurityApplicationGroupIdentifier: appGroupId)
         filepath = filepath?.appendingPathComponent("AutoFill.db")
@@ -144,11 +144,18 @@ import SQLite
                     let userfield = Expression<String>("User")
                     let pwd = Expression<String>("PWD")
                     let urlfield = Expression<String>("URL")
+                    let otpfield = Expression<String>("OTPURL")
                     
-                    let sec = secret.cryptoSwiftAESEncrypt(key: "xxxxxxx", iv:"xxxxxxx" )
-                    let ha = String(format:"%@<->%@",user,url)
-                    let hash = ha.cryptoSwiftAESEncrypt(key: "xxxxxxx#", iv: "xxxxx")
-                    try cnn.run(autofill.insert(userfield <- user, pwd <- sec!, urlfield <- url, dom <- domain, hashfield <- hash!))
+                    
+                    
+                    if(otpurl == ""){
+                        ou = ""
+                    }
+                    
+                    if(sec == nil){
+                        sec = "";
+                    }
+                    try cnn.run(autofill.insert(userfield <- user, pwd <- sec!,otpfield <- ou!, urlfield <- url, dom <- domain, hashfield <- hash!))
                     //let ins = String(format:"INSERT INTO AutoFill (HASH,User,PWD,URL,DOMAIN) VALUES('%@','%@','%@','%@','%@');",hash!,user,sec!,url,domain)xxx
                     //try cnn.execute(ins)
                     
@@ -159,7 +166,7 @@ import SQLite
             }
     }
     
-    @objc public func AddOrUpdateEntry(user: String, secret: String, url: String){
+    @objc public func AddOrUpdateEntry(user: String, secret: String, url: String, otpurl: String){
         
         var filepath = fileManager.containerURL(forSecurityApplicationGroupIdentifier: appGroupId)
         filepath = filepath?.appendingPathComponent("AutoFill.db")
@@ -175,22 +182,29 @@ import SQLite
                 do{
                     let cnn = try Connection(filepath!.path)
                     
-                    let sec = secret.cryptoSwiftAESEncrypt(key: "xxxxxxx", iv:"xxxxxxx" )
+                    let sec = secret.cryptoSwiftAESEncrypt(key: "ColoniaAXZ2027#!", iv:"o8!k3kp=)alk(2h/" )
+                    var ou = otpurl.cryptoSwiftAESEncrypt(key:  "BreisigAXZ2027#!", iv:"o8!k3kp=)alk(2h/" )
                     let ha = String(format:"%@<->%@",user,url)
-                    let hash = ha.cryptoSwiftAESEncrypt(key: "xxxxxxxx", iv: "xxxxxxxx")
+                    let hash = ha.cryptoSwiftAESEncrypt(key: "ValueForAll2025#", iv: "o8!k3kp=)alk(2h/")
                     let sel = String(format:"Select User,DOMAIN from AutoFill where User='%@' and DOMAIN='%@'",user,domain)
                     let rows = try cnn.prepare(sel)
                     var selection = 0
+                    
                     for row in rows{
                         selection=selection+1
                     }
+                    if(otpurl == ""){
+                        ou = ""
+                    }else{
+                        //print(otpurl)
+                    }
                     
                     if(selection == 0){
-                        let ins = String(format:"INSERT INTO AutoFill (HASH,User,PWD,URL,DOMAIN) VALUES('%@','%@','%@','%@','%@');",hash!,user,sec!,url,domain)
+                        let ins = String(format:"INSERT INTO AutoFill (HASH,User,PWD,OTPURL,URL,DOMAIN) VALUES('%@','%@','%@','%@','%@','%@');",hash!,user,sec!,ou!,url,domain)
                         try cnn.execute(ins)
                     }else{
                         
-                        let ins = String(format:"UPDATE AutoFill SET User='%@',PWD='%@',URL='%@' ",user,sec!,url)
+                        let ins = String(format:"UPDATE AutoFill SET User='%@',PWD='%@',OTPURL='%@',URL='%@' where User='%@' and DOMAIN='%@'",user,sec!,ou!,url,user,domain)
                         try cnn.execute(ins)
                     }
                 
@@ -209,11 +223,11 @@ import SQLite
                 do{
                     let cnn = try Connection(filepath!.path)
                     let ha = String(format:"%@<->%@",user,url)
-                    let hash = ha.cryptoSwiftAESEncrypt(key: "xxxxxxx", iv: "xxxxxx")
+                    let hash = ha.cryptoSwiftAESEncrypt(key: "ValueForAll2025#", iv: "o8!k3kp=)alk(2h/")
                     let del = String(format:"DELETE from AutoFill where HASH='%@';",hash!)
                     try cnn.execute(del)
                 } catch {
-                    print(error)x
+                    print(error)
                 }
             }
     }
@@ -227,7 +241,11 @@ import SQLite
                 do{
                     let cnn = try Connection(filepath!.path)
                     let sel = String(format:"SELECT * from AutoFill;")
-                    try cnn.execute(sel)
+                    let rows = try cnn.prepare(sel)
+                    
+                    for row in rows{
+                        print(row)
+                    }
                 } catch {
                     print(error)
                 }
