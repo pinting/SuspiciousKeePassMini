@@ -39,6 +39,7 @@ enum {
 };
 
 @interface EntryViewController() {
+    TextFieldCell *groupCell;
     TextFieldCell *titleCell;
     TextFieldCell *usernameCell;
     TextFieldCell *passwordCell;
@@ -74,6 +75,19 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"TextFieldCell" bundle:nil] forCellReuseIdentifier:TextFieldCellIdentifier];
     
     self.fav = nil;
+
+    groupCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
+    groupCell.style = TextFieldCellStylePlain;
+    groupCell.title = NSLocalizedString(@"Group", nil);
+    groupCell.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    groupCell.titleLabel.adjustsFontForContentSizeCategory = true;
+    groupCell.delegate = self;
+    groupCell.textField.placeholder = NSLocalizedString(@"Group", nil);
+    groupCell.textField.enabled = NO;
+    groupCell.textField.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    groupCell.textField.adjustsFontForContentSizeCategory = true;
+    groupCell.textField.text = self.entry.parent.title;
+    
     titleCell = [self.tableView dequeueReusableCellWithIdentifier:TextFieldCellIdentifier];
     titleCell.style = TextFieldCellStyleTitle;
     titleCell.title = NSLocalizedString(@"Title", nil);
@@ -91,7 +105,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     
     self.favico = nil;
     
-   
+
     
     /*
     if(self.entry.url != nil){
@@ -221,7 +235,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     
    // [autofillCell.editAutoFill addTarget:self action:@selector(Autofill) forControlEvents:UIControlEventTouchUpInside];
     
-    _defaultCells = @[titleCell, usernameCell, passwordCell, urlCell,filesCell,autofillCell,otpCell];
+    _defaultCells = @[groupCell, titleCell, usernameCell, passwordCell, urlCell,filesCell,autofillCell,otpCell];
     
     _editingStringFields = [NSMutableArray array];
     
@@ -539,7 +553,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                     {
                        
                         
-                        [adb AddOrUpdateEntryWithUser:self.entry.username secret:self.entry.password url:u];
+                        [adb AddOrUpdateEntryWithUser:kdb4Entry.username secret:kdb4Entry.password url:u otpurl:@""];
                         
                         NSInteger count = kdb4Entry.attributes.count;
                         BOOL autofillfound = FALSE;
@@ -549,6 +563,11 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
                             {
                                 sf.value = @"YES";
                                 autofillfound = TRUE;
+                            }
+                            
+                            if ([sf.key isEqualToString:@"OTPURL:"])
+                            {
+                                [adb AddOrUpdateEntryWithUser:kdb4Entry.username secret:kdb4Entry.password url:u otpurl:sf.value];
                             }
                         }
                         if(autofillfound == FALSE){
@@ -627,7 +646,7 @@ static NSString *TextFieldCellIdentifier = @"TextFieldCell";
     // Manage default cells
     for (TextFieldCell *cell in self.defaultCells) {
         cell.textField.enabled = editing;
-
+        groupCell.textField.enabled = NO;
         // Add empty cells to the list of cells that need to be added/deleted when changing between editing
         if (cell.textField.text.length == 0) {
             [paths addObject:[NSIndexPath indexPathForRow:[self.defaultCells indexOfObject:cell] inSection:0]];
