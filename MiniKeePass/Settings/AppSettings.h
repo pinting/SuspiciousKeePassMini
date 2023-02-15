@@ -36,6 +36,9 @@
 - (BOOL)pinEnabled;
 - (void)setPinEnabled:(BOOL)pinEnabled;
 
+- (BOOL)analyseDataEnabled;
+- (void)setAnalyseDataEnabled:(BOOL)analyseDataEnabled;
+
 - (NSString *)pin;
 - (void)setPin:(NSString *)pin;
 
@@ -105,6 +108,9 @@
 - (NSInteger)clearClipboardTimeout;
 - (NSInteger)clearClipboardTimeoutIndex;
 - (void)setClearClipboardTimeoutIndex:(NSInteger)clearClipboardTimeoutIndex;
+
+- (NSInteger)getInternalVersion;
+- (void)setInternalVersion:(NSInteger)internalVersion;
 
 - (BOOL)webBrowserIntegrated;
 - (void)setWebBrowserIntegrated:(BOOL)webBrowserIntegrated;
