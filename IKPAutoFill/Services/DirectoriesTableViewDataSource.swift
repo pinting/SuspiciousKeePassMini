@@ -1,21 +1,28 @@
 import UIKit
 
+protocol MyForwardCellDelegate: AnyObject {
+        func forwarddidTapButtonInCell(_ cell: DirectoryCell)
+    }
+
 class DirectoriesTableViewDataSource: NSObject, UITableViewDataSource {
+    
+    weak var delegate: MyForwardCellDelegate?
     var sections: [DirectorySection]
     var filteredSections: [DirectorySection]
 
     init(directories: [Directory] = []) {
         sections = buildAlphanumericSections(from: directories)
         filteredSections = sections
+        
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "directory", for: indexPath) as! DirectoryCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: "directory", for: indexPath) as! DirectoryCell
 
         let section = filteredSections[indexPath.section]
         let directory = section.constituents[indexPath.row]
         cell.configure(with: directory)
-
+        cell.delegate = self
         return cell
     }
 
@@ -47,6 +54,7 @@ class DirectoriesTableViewDataSource: NSObject, UITableViewDataSource {
     }
 }
 
+
 fileprivate func buildAlphanumericSections(from directories: [Directory]) -> [DirectorySection] {
     let filteredDirectories = directories.filter { $0.domain.prefix(1) != "." }
     let groupedDictionary = Dictionary(grouping: filteredDirectories, by: { $0.domain.prefix(1) })
@@ -56,3 +64,11 @@ fileprivate func buildAlphanumericSections(from directories: [Directory]) -> [Di
         DirectorySection(letter: String($0), constituents: groupedDictionary[$0]!)
     }
 }
+
+extension DirectoriesTableViewDataSource: MyCellDelegate {
+    func didTapButtonInCell(_ cell: DirectoryCell) {
+        delegate?.forwarddidTapButtonInCell(cell)
+        print("cell prot")
+    }
+}
+
