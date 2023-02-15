@@ -37,7 +37,7 @@ class ViewPasswordDirectoriesViewController: UIViewController {
 extension ViewPasswordDirectoriesViewController: MyForwardCellDelegate {
     func forwarddidTapButtonInCell(_ cell: DirectoryCell) {
        //Do whatever you want to do when the button is tapped here
-        let decrypturl = cell.dir.otpurl.cryptoSwiftAESDecryptForUrl(key: "BreisigAXZ2027#!", iv:"o8!k3kp=)alk(2h/" )
+       
         let url = URL(string: decrypturl!)
         do{
             let tok =  try Token(url: url!) //[[Token alloc] initWithUrl:url secret:nil error:nil];
@@ -100,70 +100,7 @@ extension ViewPasswordDirectoriesViewController: UITableViewDelegate {
         navigator?.navigateToContentsOf(domain: directory)
     }
     
-   /* func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "directory", for: indexPath) as! DirectoryCell
-        
-        let decrypturl = cell.dir.otpurl.cryptoSwiftAESDecryptForUrl(key: "BreisigAXZ2027#!", iv:"o8!k3kp=)alk(2h/" )
-        let url = URL(string: decrypturl!)
-        do{
-            let tok =  try Token(url: url!) //[[Token alloc] initWithUrl:url secret:nil error:nil];
-            
-            //OTP.text = tok.currentPasswordmoreReadable;
-            //dir.pwd = tok.currentPasswordmoreReadable!
-            
-            let tt = String(format:"You Want using this OTP:%@", doOntimeRefresh(tok: tok))
-            let alertController = UIAlertController(title: "Calculate OTP", message: tt, preferredStyle: .actionSheet)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action) in
-            }
-            let usingAction = UIAlertAction(title: "Using", style: .default) { (action) in
-                cell.dir.otp = tok.currentPasswordmoreReadable!
-                
-            }
-            alertController.addAction(usingAction)
-            alertController.addAction(cancelAction)
-            
-            alertController.modalPresentationStyle = .popover
-            let popover = alertController.popoverPresentationController
-            popover?.sourceView = view
-            popover?.sourceRect = CGRect(x: 32, y: 32, width: 64, height: 64)
-            
-            present(alertController, animated: true, completion: nil)
-        } catch {
-            print(error)
-        }
-        
-        return cell
-    }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-      }
-
-      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-      }
-    
-    func doOntimeRefresh(tok: Token)->String {
-        let dateFormatter = DateFormatter()
-
-        // Set Date Format
-        dateFormatter.dateFormat = "ss"
-        
-        let dat = Date()
-        let sec = Int(dateFormatter.string(from: dat))//[[dateFormatter stringFromDate:[NSDate date]] integerValue];
-       
-             
-        if(sec! >= 30){
-            //NSString *tt = [[NSString alloc] initWithFormat:@"%@ (%ldsec)",tok.currentPasswordmoreReadable,60-sec];
-            return String(format:"%@ %ds",tok.currentPasswordmoreReadable!, (60-sec!))
-            //OTP.text = tt;// tok.currentPassword;
-                //NSLog(@"OTP %d valid",60-sec);
-             }else{
-                 return String(format:"%@ %ds",tok.currentPasswordmoreReadable!, (30-sec!))
-                //  OTP.text = tt;// tok.currentPassword;
-             }
-        
-    }*/
+   
 }
     
 
