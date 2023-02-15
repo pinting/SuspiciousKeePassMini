@@ -27,7 +27,8 @@ public class AutoFillDB: NSObject {
                 do{
                     let cnn = try Connection(filepath!.path)
                 
-                try cnn.execute("CREATE TABLE IF NOT EXISTS AutoFill (id INTEGER PRIMARY KEY AUTOINCREMENT, HASH TEXT, User TEXT, PWD TEXT, URL TEXT, DOMAIN TEXT)")
+                //try cnn.execute("CREATE TABLE IF NOT EXISTS AutoFill (id INTEGER PRIMARY KEY AUTOINCREMENT, HASH TEXT, User TEXT, PWD TEXT, URL TEXT, DOMAIN TEXT)")
+                try cnn.execute("CREATE TABLE IF NOT EXISTS AutoFill (id INTEGER PRIMARY KEY AUTOINCREMENT, HASH TEXT, User TEXT, PWD TEXT,OTPUrl Text,URL TEXT,DOMAIN TEXT)")
                 
                 //try cnn.execute("CREATE UNIQUE INDEX HASH_IDX ON AutoFill(HASH);")
                 } catch {
@@ -53,12 +54,13 @@ public class AutoFillDB: NSObject {
                     let user = Expression<String>("User")
                     let pwd = Expression<String>("PWD")
                     let url = Expression<String>("URL")
+                    let otpfield = Expression<String>("OTPURL")
                     let query = autofill.filter(dom.like(domain) && user.like(userOnDomain))
                     let rows = try cnn.prepare(query)
                     // SELECT * FROM "users" WHERE ("verified" AND (lower("name") == 'alice'))
                     var dir = [Directory]()
                     for row in rows{
-                        let dn = Directory(domain: row[dom], username: row[user], pwd: row[pwd], hash: row[hash], url: row[url])
+                        let dn = Directory(domain: row[dom], username: row[user], pwd: row[pwd], hash: row[hash], url: row[url], otpurl: row[otpfield], otp: "")
                         dir.append(dn)
                     }
                 return dir
@@ -86,13 +88,14 @@ public class AutoFillDB: NSObject {
                     let user = Expression<String>("User")
                     let pwd = Expression<String>("PWD")
                     let url = Expression<String>("URL")
+                    let otpfield = Expression<String>("OTPURL")
                     var dir = [Directory]()
                     let rows = try cnn.prepare(autofill)
                     
                     for row in rows{
                         let us = row[user]
                         if(!us.isEmpty){
-                            let dn = Directory(domain: row[dom], username: us, pwd: row[pwd], hash: row[hash], url: row[url])
+                            let dn = Directory(domain: row[dom], username: us, pwd: row[pwd], hash: row[hash], url: row[url], otpurl: row[otpfield], otp: "")
                             dir.append(dn)
                             print(dn)
                         }

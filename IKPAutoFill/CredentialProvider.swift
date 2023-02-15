@@ -32,7 +32,7 @@ class CredentialProvider {
             extensionContext?.cancelRequest(withError: error)
         }
         
-        let domain = Directory(domain: recordIdentifier, username: identity.user, pwd: dirNames![0].pwd,hash:dirNames![0].hash,url: dirNames![0].url)
+        let domain = Directory(domain: recordIdentifier, username: identity.user, pwd: dirNames![0].pwd,hash:dirNames![0].hash,url: dirNames![0].url, otpurl: dirNames![0].otpurl, otp: "")
       
         //let username = Username(value: identity.user)
         guard let pwCredentials = provideCredentials(in: domain) else { return }
@@ -44,7 +44,11 @@ class CredentialProvider {
         guard let credentialIdentity = provideCredentialIdentity(for: identifier, in: domain) else { return }
         guard let pwCredentials = provideCredentials(in: domain) else { return }
 
-        ASCredentialIdentityStore.shared.saveCredentialIdentities([credentialIdentity])
+        if(domain.otp == ""){
+            ASCredentialIdentityStore.shared.saveCredentialIdentities([credentialIdentity])
+        }else{
+            ASCredentialIdentityStore.shared.removeAllCredentialIdentities()
+        }
         extensionContext?.completeRequest(withSelectedCredential: pwCredentials)
     }
 }
@@ -52,13 +56,17 @@ class CredentialProvider {
 fileprivate func provideCredentialIdentity(for identifier: ASCredentialServiceIdentifier?,
                                            in domain: Directory) -> ASPasswordCredentialIdentity? {
     guard let serviceIdentifier = identifier else { return nil }
-
-    return ASPasswordCredentialIdentity(serviceIdentifier: serviceIdentifier, user: domain.username, recordIdentifier: domain.domain)
+    
+    var username = domain.username
+   
+        
+    return ASPasswordCredentialIdentity(serviceIdentifier: serviceIdentifier, user: username, recordIdentifier: domain.domain)
 }
 
 fileprivate func provideCredentials(in domain: Directory) -> ASPasswordCredential? {
     //let password = "Test123" //decryptPassword(for: directory, with: username) else { return nil }
-    guard let secure = domain.pwd.cryptoSwiftAESDecrypt(key: "RheinBrohl2021#!", iv:"o8!k3kp=)alk(2h/" ) else { return ASPasswordCredential(user: "unknown", password: "unknown") }
+    
+    guard let secure = domain.pwd.cryptoSwiftAESDecrypt(key: "ColoniaAXZ2027#!", iv:"o8!k3kp=)alk(2h/" ) else { return ASPasswordCredential(user: "unknown", password: "unknown") }
     
     return ASPasswordCredential(user: domain.username, password: secure)
 }
@@ -73,14 +81,14 @@ extension String {
 
     func cryptoSwiftAESDecrypt(key: String, iv: String) -> String? {
        
-        let d = Data(base64Encoded: self)
-        print("decodedData: \(d)")
+        let d = Data(base64Encoded: self, options: .ignoreUnknownCharacters)
+        //print("decodedData: \(d)")
         let encrypted: [UInt8] = Array(d!.bytes)
 
 
         guard let dec = try? AES(key: key, iv: iv, padding: .pkcs7).decrypt(encrypted) else {    return nil    }
         let decData = String(bytes: dec, encoding: .utf8)
-            print("decryptedString: \(decData)")
+        //print("decryptedString: \(decData)")
         //let decData = Data(bytes: dec, count: Int(dec.count)) //.base64EncodedString(options: .lineLength64Characters)
         return decData
     }
