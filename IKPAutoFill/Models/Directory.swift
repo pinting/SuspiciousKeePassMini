@@ -4,6 +4,8 @@ struct Directory {
     let pwd: String
     let hash: String
     let url: String
+    let otpurl: String
+    var otp: String
 }
 
 struct DirectorySection {
