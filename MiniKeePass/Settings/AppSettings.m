@@ -25,6 +25,7 @@
 #define VERSION                    @"version"
 #define EXIT_TIME                  @"exitTime"
 #define PIN_ENABLED                @"pinEnabled"
+#define ANALYSE_ENABLED            @"analyseDataEnabled"
 #define PIN                        @"PIN"
 #define DEFAULTDB                  @"DefaultDB"
 #define CLOUDURL                   @"cloudURL"
@@ -51,6 +52,7 @@
 #define AUTOFILL_ENABLED           @"autofillDisabled"
 #define AUTOFILL_METHOD            @"autoFillMethod"
 #define CLEAR_CLIPBOARD_TIMEOUT    @"clearClipboardTimeout"
+#define INTERNAL_VERSION           @"internalVersion"
 #define WEB_BROWSER_INTEGRATED     @"webBrowserIntegrated"
 #define PW_GEN_LENGTH              @"pwGenLength"
 #define PW_GEN_CHAR_SETS           @"pwGenCharSets"
@@ -84,6 +86,20 @@ static NSInteger clearClipboardTimeoutValues[] = {
     120,
     180
 };
+
+static NSInteger internalVersionValues[] = {
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+};
+
 
 static NSStringEncoding passwordEncodingValues[] = {
     NSUTF8StringEncoding,
@@ -122,6 +138,7 @@ static AppSettings *sharedInstance;
         [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:DELETE_ON_FAILURE_ENABLED];
         [defaultsDict setValue:[NSNumber numberWithInt:1] forKey:DELETE_ON_FAILURE_ATTEMPTS];
         [defaultsDict setValue:[NSNumber numberWithBool:YES] forKey:CLOSE_ENABLED];
+        [defaultsDict setValue:[NSNumber numberWithBool:YES] forKey:ANALYSE_ENABLED];
         [defaultsDict setValue:[NSNumber numberWithInt:4] forKey:CLOSE_TIMEOUT];
         [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:REMEMBER_PASSWORDS_ENABLED];
         [defaultsDict setValue:[NSNumber numberWithBool:YES] forKey:HIDE_PASSWORDS];
@@ -209,6 +226,14 @@ static AppSettings *sharedInstance;
 
 - (void)setDarkEnabled:(BOOL)darkEnabled {
     [userDefaults setBool:darkEnabled forKey:DARK_ENABLED];
+}
+
+- (BOOL)analyseDataEnabled {
+    return [userDefaults boolForKey:ANALYSE_ENABLED];
+}
+
+- (void)setAnalyseDataEnabled:(BOOL)analyseDataEnabled {
+    [userDefaults setBool:analyseDataEnabled forKey:ANALYSE_ENABLED];
 }
 
 - (BOOL)pinEnabled {
@@ -453,6 +478,14 @@ static AppSettings *sharedInstance;
 
 - (NSInteger)clearClipboardTimeoutIndex {
     return [userDefaults integerForKey:CLEAR_CLIPBOARD_TIMEOUT];
+}
+
+- (NSInteger)getInternalVersion {
+    return internalVersionValues[[userDefaults integerForKey:INTERNAL_VERSION]];
+}
+
+- (void)setInternalVersion:(NSInteger)internalVersion {
+    [userDefaults setInteger:internalVersion forKey:INTERNAL_VERSION];
 }
 
 - (void)setClearClipboardTimeoutIndex:(NSInteger)clearClipboardTimeoutIndex {
