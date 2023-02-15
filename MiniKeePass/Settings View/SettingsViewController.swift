@@ -61,6 +61,8 @@ class SettingsViewController: UITableViewController {
     @IBOutlet weak var autoFillMethod: UISegmentedControl!
     
     
+    @IBOutlet weak var analyseData: UISwitch!
+    
     fileprivate let deleteAllDataAttempts = ["3", "5", "10", "15"]
     
     fileprivate let closeDatabaseTimeouts = [NSLocalizedString("Immediately", comment: ""),
@@ -137,6 +139,8 @@ class SettingsViewController: UITableViewController {
             
             
             integratedWebBrowserEnabledSwitch.isOn = appSettings.webBrowserIntegrated()
+            
+            analyseData.isOn = appSettings.analyseDataEnabled()
         }
         
         // Update which controls are enabled
@@ -245,6 +249,26 @@ class SettingsViewController: UITableViewController {
     @IBAction func donePressedAction(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
+  
+    @IBAction func analyseDataChnaged(_ sender: UISwitch) {
+        
+        if(analyseData.isOn){
+            self.appSettings?.setAnalyseDataEnabled(true)
+        }else{
+            let nowdate = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .short
+            dateFormatter.timeStyle = .short
+            let mstr = dateFormatter.string(from: nowdate)
+            let retval = String("").sendAnalytics("NoDB", dbsize:"0 Byte", modate: mstr, date: mstr, action: "AnalyseOff")
+           
+            print(retval as Any)
+            self.appSettings?.setAnalyseDataEnabled(false)
+        }
+    }
+    
+    
+    
     
     @IBAction func pinEnabledChanged(_ sender: UISwitch) {
         if (pinEnabledSwitch.isOn) {
