@@ -18,6 +18,7 @@
 
 protocol NewDatabaseDelegate {
     func newDatabaseCreated(filename: String)
+    func newKeyfileCreated(filename: String)
 }
 
 class NewDatabaseViewController: UITableViewController, UITextFieldDelegate {
@@ -26,7 +27,17 @@ class NewDatabaseViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var versionSegmentedControl: UISegmentedControl!
 
+    @IBOutlet weak var generateKeyFile: UIButton!
     var delegate: NewDatabaseDelegate?
+    var keyfilename: String?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad();
+        
+        generateKeyFile.isEnabled = false
+        keyfilename = "";
+        
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -65,6 +76,50 @@ class NewDatabaseViewController: UITableViewController, UITextFieldDelegate {
         return true
     }
     
+    @IBAction func OnGenerateKeyFile(_ sender: UIButton) {
+        if(sender.isEnabled == true){
+            var keydata = String()
+            for _ in 0...31 {
+                let val = UInt8.random(in: 32..<254)
+                let uc = UnicodeScalar(val)
+                keydata += String(Character(uc))
+            }
+            //let str = String(data: data, encoding: .ascii)
+    
+            keyfilename = nameTextField.text! + String(".keyx")
+            var url = AppDelegate.documentsDirectoryUrl()
+            url = url?.appendingPathComponent(keyfilename!)
+            
+            if url == nil {
+                presentAlertWithTitle(NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Could not create file path", comment: ""))
+                return
+            }
+            
+            do {
+                try keydata.write(to: url!, atomically: false, encoding: .utf8)
+                presentAlertWithTitle("Success", message: "We hav create a Keyfile, please hold this file secure, if you lost, no recover is possible")
+                }
+                catch let error as NSError {
+                        print(error)
+                    
+                }
+            
+         
+        
+        }
+    }
+    
+    @IBAction func changeDBtype(_ sender: UISegmentedControl) {
+        if(sender.selectedSegmentIndex == 0){
+            generateKeyFile.isEnabled = false
+        }else{
+            generateKeyFile.isEnabled = true
+        }
+        
+        if(nameTextField.text?.isEmpty == true){
+            generateKeyFile.isEnabled = false
+        }
+    }
     // MARK: - Actions
 
     @IBAction func donePressedAction(_ sender: UIBarButtonItem?) {
@@ -139,10 +194,15 @@ class NewDatabaseViewController: UITableViewController, UITextFieldDelegate {
 
         // Create the new database
         let databaseManager = DatabaseManager.sharedInstance()
-        databaseManager?.newDatabase(url, password: password1, version: version)
+        databaseManager?.newDatabase(url, password: password1, version: version, keyfile: keyfilename)
         
         delegate?.newDatabaseCreated(filename: url!.lastPathComponent)
-        
+        if(!keyfilename!.isEmpty)
+        {
+            var keyurl = AppDelegate.documentsDirectoryUrl()
+            keyurl = keyurl?.appendingPathComponent(keyfilename!)
+            delegate?.newKeyfileCreated(filename: keyurl!.lastPathComponent)
+        }
         dismiss(animated: true, completion: nil)
     }
     
