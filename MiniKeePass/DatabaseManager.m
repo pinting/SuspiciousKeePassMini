@@ -180,18 +180,50 @@ static DatabaseManager *sharedInstance;
     [fileManager removeItemAtURL:url error:nil];
 }
 
-- (void)recoverFile:(NSString *)filename {
+- (void)copyFile:(NSString *)filename moveTo:(NSString *)copyTo {
     
-    NSString *moveFile = [filename substringToIndex:[filename length]-4];
+    //NSString *backupfilename = [filename stringByAppendingString:@".bck"];
+    
+    NSURL *url = [self getFileUrl:filename];
+    NSURL *backupurl = [self getFileUrl:copyTo];
+    NSString *path = url.path;
+    
+    // Close the current database if we're deleting it's file
+    AppDelegate *appDelegate = [AppDelegate getDelegate];
+    if ([path isEqualToString:appDelegate.databaseDocument.filename]) {
+        [appDelegate closeDatabase];
+    }
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    //create a Bakup
+    [fileManager copyItemAtURL:url toURL:backupurl error:nil];
+   
+}
+
+- (NSString *)recoverFile:(NSString *)filename {
+    
+    NSArray *tags = [filename componentsSeparatedByString:@".kdbx"];
+    NSMutableString *moveFile = [[NSMutableString alloc] init];
+    if(tags.count == 1){
+        tags = [filename componentsSeparatedByString:@".keyx"];
+        [moveFile appendString:tags[0]];
+        [moveFile appendString:@".keyx"];
+    }else{
+        [moveFile appendString:tags[0]];
+        [moveFile appendString:@".kdbx"];
+    }
+   
+    //[filename substringToIndex:[filename length]-4];
     NSURL *url = [self getFileUrl:filename];
     NSURL *backupurl = [self getFileUrl:moveFile];
     
-    NSString *path = url.path;
+    //NSString *path = url.path;
     
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     // Move the file
     [fileManager moveItemAtURL:url toURL:backupurl error:nil];
+    return moveFile;
 }
 
 
@@ -212,7 +244,7 @@ static DatabaseManager *sharedInstance;
     [fileManager removeItemAtURL:url error:nil];
 }
 
-- (void)newDatabase:(NSURL *)url password:(NSString *)password version:(NSInteger)version {
+- (void)newDatabase:(NSURL *)url password:(NSString *)password version:(NSInteger)version keyfile:(NSString *)keyfile {
     // Create the KdbWriter for the requested version
 #ifdef USE_KDB
     id<KdbWriter> writer;
@@ -225,7 +257,7 @@ static DatabaseManager *sharedInstance;
     // Create the KdbPassword
     KdbPassword *kdbPassword = [[KdbPassword alloc] initWithPassword:password
                                                     passwordEncoding:NSUTF8StringEncoding
-                                                             keyFile:nil];
+                                                             keyFile:keyfile];
     
     // Create the new database
     [writer newFile:url.path withPassword:kdbPassword];
@@ -253,6 +285,20 @@ static DatabaseManager *sharedInstance;
     
     KPKCompositeKey *key = [[KPKCompositeKey alloc] initWithKeys:@[[KPKKey keyWithPassword:password]]];
     
+    NSData *keyFileData = nil;
+    
+    if(![keyfile  isEqual: @""]){
+        NSURL *kurl = [self getFileUrl:keyfile];
+      
+        //NSData *filedata = [NSData dataWithContentsOfURL:url];
+        
+        //Data(bytes: dec, count: Int(dec.count)).base64EncodedString(options: .lineLength64Characters)
+        //NSString *md5Base64 = [filedata.MD5Sum base64EncodedStringWithOptions:0];
+        keyFileData =  [NSData dataWithContentsOfURL:kurl];
+    }
+    if(keyFileData !=nil)
+        [key addKey:[KPKKey keyWithKeyFileData:keyFileData]];
+    
     //KPKTree *tree = [[KPKTree alloc] initWithContentsOfUrl:url key:key error:&error];
     //tree = [tree initWithTemplateContents];
     KPKTree *tree = [[KPKTree alloc]initWithTemplateContents];
@@ -271,18 +317,42 @@ static DatabaseManager *sharedInstance;
     }
 }
 
-- (void)renameDatabase:(NSURL *)originalUrl newUrl:(NSURL *)newUrl currentPassword:(NSString *)currentPassword newPassword:(NSString *)newPassword {
+- (void)renameDatabase:(NSURL *)originalUrl newUrl:(NSURL *)newUrl  {
+    
     NSString *oldFilename = originalUrl.lastPathComponent;
-    NSString *newFilename = newUrl.lastPathComponent;
+        NSString *newFilename = newUrl.lastPathComponent;
+        
+        // Move input file into documents directory
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        [fileManager moveItemAtURL:originalUrl toURL:newUrl error:nil];
+        
+        // Check if we should move the saved passwords to the new filename
+    if ([[AppSettings sharedInstance] rememberPasswordsEnabled]) {
+        // Load the password and keyfile from the keychain under the old filename
+        NSString *password = [KeychainUtils stringForKey:oldFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
+        NSString *keyFile = [KeychainUtils stringForKey:oldFilename andServiceName:KEYCHAIN_KEYFILES_SERVICE];
+        
+        // Store the password and keyfile into the keychain under the new filename
+        [KeychainUtils setString:password forKey:newFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
+        [KeychainUtils setString:keyFile forKey:newFilename andServiceName:KEYCHAIN_KEYFILES_SERVICE];
+        
+        // Delete the keychain entries for the old filename
+        [KeychainUtils deleteStringForKey:oldFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
+        [KeychainUtils deleteStringForKey:oldFilename andServiceName:KEYCHAIN_KEYFILES_SERVICE];
+    }
+    
+}
+
+- (void)changeMasterKey:(NSURL *)originalUrl newUrl:(NSURL *)backupUrl currentPassword:(NSString *)currentPassword newPassword:(NSString *)newPassword {
+    NSString *oldFilename = originalUrl.lastPathComponent;
+    NSString *newFilename = backupUrl.lastPathComponent;
     
     // Move input file into documents directory
     NSFileManager *fileManager = [NSFileManager defaultManager];
    
     //hier das neue kennwort setzten
-    [fileManager copyItemAtURL:originalUrl toURL:newUrl error:nil];
+    [fileManager copyItemAtURL:originalUrl toURL:backupUrl error:nil];
  
-
-   
         // Load the password and keyfile from the keychain under the old filename
     NSString *password = [KeychainUtils stringForKey:oldFilename andServiceName:KEYCHAIN_PASSWORDS_SERVICE];
     NSString *keyFile = [KeychainUtils stringForKey:oldFilename andServiceName:KEYCHAIN_KEYFILES_SERVICE];
