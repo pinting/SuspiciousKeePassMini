@@ -27,61 +27,67 @@ class RenameDatabaseViewController: UITableViewController {
     
     var donePressed: ((RenameDatabaseViewController, _ originalUrl: URL, _ newUrl: URL, _ cuurentPassword: String, _ newPassword: String) -> Void)?
     var originalUrl: URL!
+    var renameOnly: Bool!
     var showPWDButton: UIImageView!
     var showConfirmButton: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var createPWDButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-        createPWDButton.setTitle("...", for: .normal)
-        createPWDButton.addTarget(self,
-                         action: #selector(createPassword),
-                         for: .touchUpInside)
         
         nameTextField.isEnabled = true
-        pwdTextField.rightViewMode = UITextField.ViewMode.always
-        pwdTextField.rightView = createPWDButton
         
-        showPWDButton = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-        showPWDButton.image = UIImage(named: "eye") //setTitle("...", for: .normal)
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(showPasswords))
-        showPWDButton.isUserInteractionEnabled = true
-        showPWDButton.addGestureRecognizer(singleTap)
-
-        correntPwdTextFiled.rightViewMode = UITextField.ViewMode.always
-        correntPwdTextFiled.rightView = showPWDButton
-        
-        showConfirmButton = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
-        showConfirmButton.image = UIImage(named: "eye") //setTitle("...", for: .normal)
-        let singleConfTap = UITapGestureRecognizer(target: self, action: #selector(showConfirmPasswords))
-        showConfirmButton.isUserInteractionEnabled = true
-        showConfirmButton.addGestureRecognizer(singleConfTap)
-
-        correntPwdTextFiled.rightViewMode = UITextField.ViewMode.always
-        confirmPwdTextField.rightView = showConfirmButton
-        
-        let appSettings = AppSettings.sharedInstance() as AppSettings
-        let filename = originalUrl.lastPathComponent
-        // Check if we should move the saved passwords to the new filename
-        if (appSettings.rememberPasswordsEnabled() == true) {
-            // Load the password and keyfile from the keychain under the old filename
+        if(renameOnly == false){
+            nameTextField.isEnabled = false
+            var createPWDButton = UIButton(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+            createPWDButton.setTitle("...", for: .normal)
+            createPWDButton.addTarget(self,
+                                      action: #selector(createPassword),
+                                      for: .touchUpInside)
             
-            let currentpwd = KeychainUtils.string(forKey: filename, andServiceName: "KEYCHAIN_PASSWORDS_SERVICE")
-            correntPwdTextFiled.text = currentpwd;
+            pwdTextField.rightViewMode = UITextField.ViewMode.always
+            pwdTextField.rightView = createPWDButton
             
-        }
-        
-        if(appSettings.touchIdEnabled() == true){
-            let databaseManager = DatabaseManager.sharedInstance()
+            showPWDButton = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+            showPWDButton.image = UIImage(named: "eye") //setTitle("...", for: .normal)
+            let singleTap = UITapGestureRecognizer(target: self, action: #selector(showPasswords))
+            showPWDButton.isUserInteractionEnabled = true
+            showPWDButton.addGestureRecognizer(singleTap)
             
-           
-            let cpwd =  databaseManager?.getKeyChainPWDWithBioMetrics(forFile: filename)
-            if(cpwd != nil){
-                if(!cpwd!.isEmpty){
-                    correntPwdTextFiled.text = cpwd;
-                }
+            correntPwdTextFiled.rightViewMode = UITextField.ViewMode.always
+            correntPwdTextFiled.rightView = showPWDButton
+            
+            showConfirmButton = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+            showConfirmButton.image = UIImage(named: "eye") //setTitle("...", for: .normal)
+            let singleConfTap = UITapGestureRecognizer(target: self, action: #selector(showConfirmPasswords))
+            showConfirmButton.isUserInteractionEnabled = true
+            showConfirmButton.addGestureRecognizer(singleConfTap)
+            
+            correntPwdTextFiled.rightViewMode = UITextField.ViewMode.always
+            confirmPwdTextField.rightView = showConfirmButton
+            
+            let appSettings = AppSettings.sharedInstance() as AppSettings
+            let filename = originalUrl.lastPathComponent
+            // Check if we should move the saved passwords to the new filename
+            if (appSettings.rememberPasswordsEnabled() == true) {
+                // Load the password and keyfile from the keychain under the old filename
+                
+                let currentpwd = KeychainUtils.string(forKey: filename, andServiceName: "KEYCHAIN_PASSWORDS_SERVICE")
+                correntPwdTextFiled.text = currentpwd;
+                
             }
             
+            if(appSettings.touchIdEnabled() == true){
+                let databaseManager = DatabaseManager.sharedInstance()
+                
+                
+                let cpwd =  databaseManager?.getKeyChainPWDWithBioMetrics(forFile: filename)
+                if(cpwd != nil){
+                    if(!cpwd!.isEmpty){
+                        correntPwdTextFiled.text = cpwd;
+                    }
+                }
+                
+            }
         }
         
     }
@@ -173,13 +179,14 @@ class RenameDatabaseViewController: UITableViewController {
             return
         }
         
-        //Check is pwd, conform and current valid
-        if(newPwd == nil || newPwd!.isEmpty || confirm == nil || confirm!.isEmpty || currentPwd == nil || currentPwd!.isEmpty){
-               
-            self.presentAlertWithTitle(NSLocalizedString("Warning", comment: ""), message: NSLocalizedString("Anything is wrong with your Masterkey", comment: "Please correct Password, Confirm, or New Password"))
-            return
+        if(renameOnly == false){
+            //Check is pwd, conform and current valid
+            if(newPwd == nil || newPwd!.isEmpty || confirm == nil || confirm!.isEmpty || currentPwd == nil || currentPwd!.isEmpty){
+                
+                self.presentAlertWithTitle(NSLocalizedString("Warning", comment: ""), message: NSLocalizedString("Anything is wrong with your Masterkey", comment: "Please correct Password, Confirm, or New Password"))
+                return
+            }
         }
-       
         let dateFormatter = DateFormatter()
 
         // Set Date Format
@@ -191,20 +198,29 @@ class RenameDatabaseViewController: UITableViewController {
         let secondm = calendar.component(.second, from: date)*1000
         let millis = calendar.component(.nanosecond, from: date)
         dateFormatter.dateFormat = "yyyy.MM.dd"
-        let filename =  nameTextField.text! + "." + dateFormatter.string(from: date)+".\(hourm+minutem+secondm+millis)"
+        let filename =  nameTextField.text!// + "." + dateFormatter.string(from: date)+".\(hourm+minutem+secondm+millis)"
         
         // Create the new URL
-        var newUrl = originalUrl.deletingLastPathComponent()
-        newUrl = newUrl.appendingPathComponent(filename)
-        newUrl = newUrl.appendingPathExtension(originalUrl.pathExtension)
+       
         
-        newUrl = newUrl.appendingPathExtension("bck")
+        //newUrl = newUrl.appendingPathExtension("bck")
     
         
        // if(renameonly == true){
        //     donePressed?(self, originalUrl, newUrl, "", "")
         //}else{
-        donePressed?(self, originalUrl, newUrl, currentPwd!, newPwd!)
+        if(renameOnly == true){
+            var newUrl = originalUrl.deletingLastPathComponent()
+            newUrl = newUrl.appendingPathComponent(filename)
+            newUrl = newUrl.appendingPathExtension(originalUrl.pathExtension)
+            donePressed?(self, originalUrl, newUrl, currentPwd!, "")
+        }else{
+            var backurl = originalUrl.deletingLastPathComponent()
+            backurl = backurl.appendingPathComponent(filename)
+            backurl = backurl.appendingPathExtension(originalUrl.pathExtension)
+          
+            donePressed?(self, originalUrl, backurl, currentPwd!, newPwd!)
+        }
         //}
     }
     
