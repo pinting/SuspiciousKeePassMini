@@ -33,10 +33,12 @@
 - (NSDate *)getFileLastModificationDate:(NSURL *)url;
 - (NSNumber *)getFileSize:(NSURL *)url;
 - (void)moveFile:(NSString *)filename moveTo:(NSString *)moveTo;
+- (void)copyFile:(NSString *)filename moveTo:(NSString *)copyTo;
 - (void)removeFile:(NSString *)filename;
-- (void)recoverFile:(NSString *)filename;
-- (void)newDatabase:(NSURL *)url password:(NSString *)password version:(NSInteger)version;
-- (void)renameDatabase:(NSURL *)originalUrl newUrl:(NSURL *)newUrl currentPassword:(NSString *)currentPassword newPassword:(NSString *)newPassword;
+- (NSString *)recoverFile:(NSString *)filename;
+- (void)newDatabase:(NSURL *)url password:(NSString *)password version:(NSInteger)version keyfile:(NSString *)keyfile;
+- (void)renameDatabase:(NSURL *)originalUrl newUrl:(NSURL *)newUrl;
+- (void)changeMasterKey:(NSURL *)originalUrl newUrl:(NSURL *)newUrl currentPassword:(NSString *)currentPassword newPassword:(NSString *)newPassword;
 
 - (NSString *)getKeyChainPWDWithBioMetricsForFile:(NSString *)filename;
     
