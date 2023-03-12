@@ -78,14 +78,30 @@ class NewDatabaseViewController: UITableViewController, UITextFieldDelegate {
     
     @IBAction func OnGenerateKeyFile(_ sender: UIButton) {
         if(sender.isEnabled == true){
-            var keydata = String()
+            var keydata = Data()
             for _ in 0...31 {
                 let val = UInt8.random(in: 32..<254)
-                let uc = UnicodeScalar(val)
-                keydata += String(Character(uc))
+                //let uc = UnicodeScalar(val)
+                keydata.append(val) //String(Character(uc))
             }
+            
+            let keyfile = KPKFileKey.init(keyFileData: keydata)
             //let str = String(data: data, encoding: .ascii)
-    
+            /*
+             <?xml version="1.0" encoding="UTF-8"?>
+             <KeyFile>
+                 <Meta>
+                     <Version>2.0</Version>
+                 </Meta>
+                 <Key>
+                     <Data Hash="00E6D8C2">
+                         367C775B C1E7F996 9D9C9F95 DBCF3F65
+                         F3968276 D0A7A699 209D13A4 E52860E0
+                     </Data>
+                 </Key>
+             </KeyFile>
+
+             */
             keyfilename = nameTextField.text! + String(".keyx")
             var url = AppDelegate.documentsDirectoryUrl()
             url = url?.appendingPathComponent(keyfilename!)
@@ -96,7 +112,10 @@ class NewDatabaseViewController: UITableViewController, UITextFieldDelegate {
             }
             
             do {
-                try keydata.write(to: url!, atomically: false, encoding: .utf8)
+                let kdata = keyfile?.data(forXMLType: KPKDatabaseFormat.kdbx)
+                
+                try kdata!.write(to: url!)
+                //try to copy keyfile to cl
                 presentAlertWithTitle("Success", message: "We hav create a Keyfile, please hold this file secure, if you lost, no recover is possible")
                 }
                 catch let error as NSError {
