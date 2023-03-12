@@ -38,6 +38,7 @@ FOUNDATION_EXPORT NSUInteger const KPKKeyFileDataLength;
 @interface NSData (KPKKeyfile)
 
 + (NSData *)kpk_keyDataForData:(NSData *)data version:(KPKDatabaseFormat)version error:(NSError *__autoreleasing *)error;
-+ (NSData *)kpk_generateKeyfileDataOfType:(KPKKeyFileType)type;
++ (NSData *)kpk_generateKeyfileDataOfType:(NSData *)data type:(KPKKeyFileType)type error:(NSError *__autoreleasing *)error;
++ (NSData *)kpk_generateNewKeyfileDataOfType:(KPKKeyFileType)type;
 
 @end
