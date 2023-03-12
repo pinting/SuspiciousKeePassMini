@@ -40,7 +40,7 @@ NSCharacterSet *KPKHexCharacterSet() {
   uint8_t byte;
   for(NSInteger byteIndex = 0; byteIndex < data.length; byteIndex++) {
     [data getBytes:&byte range:NSMakeRange(byteIndex, 1)];
-    [hexString appendFormat:@"%02x", byte];
+    [hexString appendFormat:@"%02X", byte];
   }
   return hexString;
 }
