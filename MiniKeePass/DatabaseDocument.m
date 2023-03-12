@@ -21,6 +21,7 @@
 #import "AppSettings.h"
 #import "MBProgressHUD.h"
 #import "ImageFactory.h"
+#import "KissXML.h"
 
 @interface DatabaseDocument ()
 #ifdef USE_KDB
@@ -65,8 +66,11 @@
         if(keyFile != nil)
            keyFileData =  [self _loadDataBase:keyFile];
         
-        if(keyFileData !=nil)
+        if(keyFileData !=nil){
+            
             [self.kpkkey addKey:[KPKKey keyWithKeyFileData:keyFileData]];
+           
+        }
        
         NSData *data = [self _loadDataBase:self.filename];// extension:@"kdb"];
         if(data ==nil)
@@ -105,6 +109,25 @@
     }
     return self;
 }
+
+- (NSString *)stringFromHexString:(NSString *)aStrHexString
+{
+    // The hex codes should all be two characters.
+    if (([aStrHexString length] % 2) != 0)
+        return nil;
+
+    NSMutableString *aMutStrNewString = [NSMutableString string];
+    for (NSInteger i = 0; i < [aStrHexString length]; i += 2)
+    {
+        NSString *hex = [aStrHexString substringWithRange:NSMakeRange(i, 2)];
+        NSInteger decimalValue = 0;
+        sscanf([hex UTF8String], "%X", &decimalValue);
+        [aMutStrNewString appendFormat:@"%c", decimalValue];
+    }
+
+    return aMutStrNewString;
+}
+
 
 - (NSData *)_loadDataBase:(NSString *)name{
     self.url = [NSURL fileURLWithPath:name];
