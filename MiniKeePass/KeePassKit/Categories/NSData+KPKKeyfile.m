@@ -60,7 +60,27 @@ NSUInteger const KPKKeyFileDataLength             = 32;
   return [self kpk_keyDataForData:data version:version error:error];
 }
 
-+ (NSData *)kpk_generateKeyfileDataOfType:(KPKKeyFileType)type {
++ (NSData *)kpk_generateKeyfileDataOfType:(NSData *)data type:(KPKKeyFileType)type error:(NSError *__autoreleasing *)error {
+    if(!data) {
+      KPKCreateError(error, KPKErrorNoKeyData);
+      return nil;
+    }
+
+  switch(type) {
+    case KPKKeyFileTypeBinary:
+      return data;
+    case KPKKeyFileTypeHex:
+      return [[NSString kpk_hexstringFromData:data] dataUsingEncoding:NSUTF8StringEncoding];
+    case KPKKeyFileTypeXMLVersion1:
+      return [self _kpk_xmlKeyForData:data addHash:NO];
+    case KPKKeyFileTypeXMLVersion2:
+      return [self _kpk_xmlKeyForData:data addHash:YES];
+    default:
+      return nil;
+  }
+}
+
++ (NSData *)kpk_generateNewKeyfileDataOfType:(KPKKeyFileType)type {
   NSData *data = [NSData kpk_dataWithRandomBytes:KPKKeyFileDataLength];
   switch(type) {
     case KPKKeyFileTypeBinary:
@@ -96,7 +116,7 @@ NSUInteger const KPKKeyFileDataLength             = 32;
     NSString *hashHex = [NSString kpk_hexstringFromData:hashData];
     NSString *dataHex = [NSString kpk_hexstringFromData:data];
     
-    [versionElement setStringValue:@"2.00"];
+    [versionElement setStringValue:@"2.0"];
     [dataElement setStringValue:dataHex];
     [dataElement addAttributeWithName:kKPKXmlHash stringValue:hashHex];
   }
@@ -235,8 +255,20 @@ NSUInteger const KPKKeyFileDataLength             = 32;
   }
   
   NSString *hashValue = [dataElement attributeForName:kKPKXmlHash].stringValue;
+   
   NSString *dataValue = dataElement.stringValue;
-  
+    //Block Handle like
+    /*
+     <Data Hash="00E6D8C2">
+                367C775B C1E7F996 9D9C9F95 DBCF3F65
+                F3968276 D0A7A699 209D13A4 E52860E0
+            </Data>
+     */
+    
+    //Remove spaces and new line
+    dataValue = [dataValue stringByReplacingOccurrencesOfString:@" " withString:@""];
+    dataValue = [dataValue stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
   if(dataValue == nil) {
     KPKCreateError(error, KPKErrorKdbxKeyDataParsingError);
     return nil;
