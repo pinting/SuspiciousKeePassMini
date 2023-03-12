@@ -15,6 +15,8 @@
 
 @property (nonatomic, copy) KPKData *kdbData;
 @property (nonatomic, copy) KPKData *kdbxData;
+@property (nonatomic, copy) KPKData *kdbXMLData;
+@property (nonatomic, copy) KPKData *kdbxXMLData;
 
 @end
 
@@ -33,6 +35,8 @@
   if(self) {
     self.kdbData = [[KPKData alloc] initWithProtectedData:[NSData kpk_keyDataForData:data version:KPKDatabaseFormatKdb error:error]];
     self.kdbxData = [[KPKData alloc] initWithProtectedData:[NSData kpk_keyDataForData:data version:KPKDatabaseFormatKdbx error:error]];
+    self.kdbXMLData = [[KPKData alloc] initWithProtectedData:[NSData kpk_generateKeyfileDataOfType:data type:KPKKeyFileTypeXMLVersion1 error:error]]; //ohne HASH
+    self.kdbxXMLData = [[KPKData alloc] initWithProtectedData:[NSData kpk_generateKeyfileDataOfType:data type:KPKKeyFileTypeXMLVersion2 error:error]]; //mit HASH
   }
   return self;
 }
@@ -59,6 +63,20 @@
     
     case KPKDatabaseFormatKdbx:
       return self.kdbxData.data;
+    
+    case KPKDatabaseFormatUnknown:
+    default:
+      return nil;
+  }
+}
+
+- (NSData *)dataForXMLType:(KPKDatabaseFormat)format {
+  switch (format) {
+    case KPKDatabaseFormatKdb:
+      return self.kdbXMLData.data;
+    
+    case KPKDatabaseFormatKdbx:
+      return self.kdbxXMLData.data;
     
     case KPKDatabaseFormatUnknown:
     default:
