@@ -23,5 +23,6 @@
 - (instancetype)initWithKeyFileData:(NSData *)data error:(NSError *__autoreleasing *)error;
 
 - (NSData *)dataForFormat:(KPKDatabaseFormat)format;
+- (NSData *)dataForXMLType:(KPKDatabaseFormat)format;
 
 @end
