@@ -1,7 +1,19 @@
-IOSKeePass
+FreeKeePass (formerly IOSKeePass)
 ===========
 
-IOSKeePass ist a fork of MiniKeePass, i do it, because i find that this Software is great stuff for password storing
+12.03.2023
+We had to change the app name because we violated the
+Apple App Store Policy 5.2.5 - Legal - Intellectual Property.
+Your app metadata contains content that resembles designs or terms used for Apple products and services, which may cause confusion among users. Specifically, your metadata includes:
+
+- Terms for iOS in the app name in an inappropriate manner.
+- Terms for iOS in the app name displayed on the device. 
+
+for this reason we call IOSKeePass after FreeKeePass.
+
+Translated with www.DeepL.com/Translator (free version)
+
+Free KeePass ist a fork of MiniKeePass, i do it, because i find that this Software is great stuff for password storing
 and sensible data to a local file, and only in the cloud with a strong enrcyption, also i mean, it was free and it should be keep for free in future.
 I have create a new repo on Github, because the original Github project was setting to read only, and i can´t support the original Software development.
 
