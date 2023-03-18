@@ -68,8 +68,8 @@
 /* Class = "UILabel"; text = "Close Timeout"; ObjectID = "QCo-U1-I8E"; */
 "QCo-U1-I8E.text" = "Cierre del tiempo de espera";
 
-/* Class = "UILabel"; text = "IOSKeePass Version"; ObjectID = "Sdb-s9-D0G"; */
-"Sdb-s9-D0G.text" = "IOSKeePass Versión";
+/* Class = "UILabel"; text = "KeePassMini Version"; ObjectID = "Sdb-s9-D0G"; */
+"Sdb-s9-D0G.text" = "KeePassMini Versión";
 
 /* Class = "UITableViewSection"; footerTitle = "Hides passwords when viewing a password entry."; ObjectID = "Shd-Nf-YFM"; */
 "Shd-Nf-YFM.footerTitle" = "Oculta las contraseñas cuando se visualiza una entrada de contraseña.";
@@ -104,8 +104,8 @@
 /* Class = "UILabel"; text = "Encoding"; ObjectID = "Wyv-5A-xwb"; */
 "Wyv-5A-xwb.text" = "Codificación";
 
-/* Class = "UITableViewSection"; footerTitle = "Prevent unauthorized access to IOSKeePass with a PIN."; ObjectID = "XnM-JR-qTX"; */
-"XnM-JR-qTX.footerTitle" = "Evita el acceso no autorizado a IOSKeePass con un PIN.";
+/* Class = "UITableViewSection"; footerTitle = "Prevent unauthorized access to KeePassMini with a PIN."; ObjectID = "XnM-JR-qTX"; */
+"XnM-JR-qTX.footerTitle" = "Evita el acceso no autorizado a KeePassMini con un PIN.";
 
 /* Class = "UITableViewSection"; headerTitle = "PIN Protection"; ObjectID = "XnM-JR-qTX"; */
 "XnM-JR-qTX.headerTitle" = "PIN Protección";
