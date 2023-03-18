@@ -1,4 +1,4 @@
-FreeKeePass (formerly IOSKeePass)
+KeePassMini (formerly IOSKeePass)
 ===========
 
 12.03.2023
@@ -9,11 +9,11 @@ Your app metadata contains content that resembles designs or terms used for Appl
 - Terms for iOS in the app name in an inappropriate manner.
 - Terms for iOS in the app name displayed on the device. 
 
-for this reason we call IOSKeePass after FreeKeePass.
+for this reason we call IOSKeePass after KeePassMini.
 
 Translated with www.DeepL.com/Translator (free version)
 
-Free KeePass ist a fork of MiniKeePass, i do it, because i find that this Software is great stuff for password storing
+Free KeePass ist a fork of MinKeePassMini, i do it, because i find that this Software is great stuff for password storing
 and sensible data to a local file, and only in the cloud with a strong enrcyption, also i mean, it was free and it should be keep for free in future.
 I have create a new repo on Github, because the original Github project was setting to read only, and i can´t support the original Software development.
 
@@ -35,15 +35,15 @@ I have create a new repo on Github, because the original Github project was sett
 - support open db by FaceID using LAPolicyDeviceOwnerAuthenticationWithBiometrics
 
 *Older Stuff from Original
-MiniKeePass provides secure password storage on your phone that's compatible with KeePass.
+MinKeePassMini provides secure password storage on your phone that's compatible with KeePass.
 
 - View, Edit, and Create KeePass 1.x and 2.x files
 - Search for entries from the top of tables like in Mail
 - Key File Support
 - Import/Export files to Dropbox using the Dropbox iPhone app
 - Copy password entries to the clipboard for easy entry
-- Open websites in Safari while MiniKeePass runs in the background
-- Prevent unauthorized access to MiniKeePass with a PIN
+- Open websites in Safari while MinKeePassMini runs in the background
+- Prevent unauthorized access to MinKeePassMini with a PIN
 - Remember database passwords in the device's secure keychain
 - Optionally clear the clipboard after set time on devices that support background tasks
 - Generate new passwords
@@ -66,7 +66,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Credits
 -------
-MiniKeePass
+MinKeePassMini
 Copyright 2011 Jason Rush and John Flanagan. All rights reserved.
 IOSKeePass
 Copyright 2019-2022 Frank Hausmann. All rigts reserved
@@ -80,7 +80,7 @@ French Translation - Patrice Lachance<br />
 Brazilian Portuguese Translation - BR Lingo<br />
 Turkish Translation - Durul Dalkanat<br />
 
-MiniKeePass Icon - Gabriele Cirulli
+MinKeePassMini Icon - Gabriele Cirulli
 
 Nuvola Icons
 Copyright (c) 2003-2004  David Vignoni. All rights reserved.
@@ -105,7 +105,7 @@ References
 - TwitterTextEditor Copyright 2021 Twitter, Inc.
 - SwiftSpinner Copyright (c) 2015-present Marin Todorov, Underplot ltd.
 - KissXML Copyright (c) 2012 Robbie Hanson. All rights reserved.
-- MiniKeePass Copyright (c) 2011 Jason Rush and John Flanagan. All rights reserved.
+- MinKeePassMini Copyright (c) 2011 Jason Rush and John Flanagan. All rights reserved.
 - KeePass Database Library Copyright (c) 2010 Qiang Yu. All rights reserved.
 - KeepassX Copyright (c) 2012 Felix Geyer debfx@fobos.de
 - NSData Gzip Category from the CocoaDev Wiki
