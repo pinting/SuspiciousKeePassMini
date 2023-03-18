@@ -1,6 +1,6 @@
 //
 //  DocumentBrowserViewController.swift
-//  MiniKeePass
+//  MinKeePassMini
 //
 //  Created by Frank Hausmann on 31.05.20.
 //  Copyright © 2020 Self. All rights reserved.
