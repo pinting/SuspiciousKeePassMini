@@ -58,12 +58,19 @@
 "Add new…" = "Yeni ekle…";
 "Choose Group" = "Grup Seç";
 "Backup" = "Yedekle";
-
+"Important note about KeePassMini !" = "KeePassMini hakkında önemli not!";
+"I understand!" = "Anlıyorum!";
+"Unfortunately, we can not offer IOSKeePass" = "Ne yazık ki, bu ekleme ile Apple App Store'un kurallarını ihlal ettiğimiz için Apple App Store üzerinden IOS eklentisi ile IOSKeePass'ı artık kullanıma sunamıyoruz. Maalesef IOS'un sunduğu ve kaynak kodunda kullandığımız güvenli anahtarlık yönetimi de bu isme iliştirilmiş durumda.
+Bu nedenle, öncelikle eski APP'yi uygulama adıyla saklamalısınız
+IOSKeePass, tüm KeePass DB'leriniz ve KEYS'leriniz uzantılara sahip olana kadar
+.kdb ve .kdbx ile .key ve keyx dosyaları IOSKeePass dizininden KeePassMini adlı yeni dizine İçe Aktar düğmesi (sağ alt orta) kullanılarak taşınmış ve gerekirse Face/TouchId kullanılarak yeni anahtarlık öğrenilmiştir.
+Face/TouchId kullanarak anahtar zinciri. Tüm KeePass DB'lerini taşıdığınızda,
+IOSKeePass'ı Apple cihazınızdan veri kaybı olmadan kaldırabilirsiniz.";
 
 // General Messages
 "Align QR code within frame to scan" = "Taramak için QR kodunu çerçeve içinde hizalayın";
 "Enter your PIN to unlock" = "Kilidini açmak için PIN'inizi girin";
-"Unlock MiniKeePass" = "Kilidi aç";
+"Unlock MinKeePassMini" = "Kilidi aç";
 "Enter the password and/or select the keyfile for the %@ database." = "Veritabanının şifresini girin ve anahtar dosyasını seçin. ";
 "Enter a new name for the password database. The correct file extension will automatically be appended." = "Veritabanı şifresi için yeni bir ad girin. Doğru dosya uzantısı otomatik olarak eklenir.";
 "Do not forget your database password, it cannot be recovered." = "Veritabanı şifrenizi unutmayın, kurtarılamaz.";
@@ -120,7 +127,7 @@
 "Password Encoding" = "Şifre Kodlama";
 "Clear Clipboard on Timeout" = "Zaman aşımı durumunda Panoyu Temizle";
 "Clear Timeout" = "Clear Timeout";
-"Prevent unauthorized access to MiniKeePass with a PIN." = "PIN ile MiniKeePass'e yetkisiz erişimi önle.";
+"Prevent unauthorized access to MinKeePassMini with a PIN." = "PIN ile MinKeePassMini'e yetkisiz erişimi önle.";
 "Delete all files and passwords after too many failed attempts." = "Çok fazla başarısız girişimden sonra tüm dosyaları ve şifreleri sil.";
 "Automatically close an open database after the selected timeout." = "Seçili zaman aşımından sonra otomatik olarak açık bir veritabanını kapat.";
 "Stores remembered database passwords in the devices's secure keychain." = "Yedeklenmiş veritabanı şifrelerini cihazların güvenlik anahtarlıklarına kaydedin.";
@@ -138,7 +145,7 @@
 "Set PIN" = "PIN'i ayarla";
 "Confirm PIN" = "PIN'i onayla";
 "PINs did not match. Try again" = "PIN'ler eşleşmedi. Tekrar dene";
-"MiniKeePass version %@" = "MiniKeePass versiyon %@";
+"MinKeePassMini version %@" = "MinKeePassMini versiyon %@";
 
 // Help Titles
 "iTunes Import/Export" = "iTunes İçeri aktar/Dışarı aktar";

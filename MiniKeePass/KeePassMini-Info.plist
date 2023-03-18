@@ -39,7 +39,7 @@
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.jflan.MiniKeePass.kdb</string>
+				<string>com.jflan.MinKeePassMini.kdb</string>
 			</array>
 		</dict>
 		<dict>
@@ -98,12 +98,12 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>msauth.de.unicomedv.IOSKeePass</string>
+				<string>msauth.de.unicomedv.KeePassMini</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>7</string>
+	<string>21</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
@@ -119,12 +119,12 @@
 	<string>We want use Biometric features for secure easy access</string>
 	<key>NSUbiquitousContainers</key>
 	<dict>
-		<key>iCloud.de.unicomedv.IOSKeePass</key>
+		<key>iCloud.de.unicomedv.KeePassMini</key>
 		<dict>
 			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
 			<true/>
 			<key>NSUbiquitousContainerName</key>
-			<string>IOSKeePass</string>
+			<string>KeePassMini</string>
 			<key>NSUbiquitousContainerSupportedFolderLevels</key>
 			<string>Any</string>
 		</dict>

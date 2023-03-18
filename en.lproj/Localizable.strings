@@ -69,11 +69,11 @@
 "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism.";
 "Shareing" = "Share";
 "Sync" = "Sync";
-"Notify from IOSKeePass" = "Notify from IOSKeePass";
+"Notify from KeePassMini" = "Notify from KeePassMini";
 "New Default DB is selected Name:" = "New Default DB is 🚀 selected Name:";
-"This Database is" = "This Database is now your Startup DB if you Start IOSKeePass first time it will be directly opened 📲";
+"This Database is" = "This Database is now your Startup DB if you Start KeePassMini first time it will be directly opened 📲";
 "now" = "now";
-"Notify from IOSKeePass" = "Notify from IOSKeePass";
+"Notify from KeePassMini" = "Notify from KeePassMini";
 "Your Files Folder is empty 📂" = "Your Files Folder is empty 📂";
 "Need Cloud Backup ⚠️" = "Need Cloud Backup ⚠️";
 "Copy WebDav Backup ⚠️" = "Copy WebDav Backup ⚠️";
@@ -88,11 +88,20 @@
 "Cloud Backup \nTap to stop" = "Cloud Backup \nTap to stop";
 "Create Cloud Infrastructure ⚠️" = "Create Cloud Infrastructure ⚠️";
 "Createing Directorys on Cloud please try it again ✅" = "Createing Directorys on Cloud please try it again ✅";
-// General Messages
+"Important note about KeePassMini !" = "Important note about KeePassMini !";
+"I understand!" = "I understand!";
+"Unfortunately, we can not offer IOSKeePass" = "Unfortunately, we can no longer roll out IOSKeePass with the addition IOS via the Apple App Store, because we violate the guidelines of the Apple App Store with the addition. Unfortunately, the secure keyring management that IOS offers and that we use in the source code is also attached to this name.
+For this reason you should first keep the old APP with the appname
+IOSKeePass until all your KeePass DB's and KEYS with the extensions
+.kdb and .kdbx as well as the .key and keyx files via the import button (bottom middle right) from the IOSKeePass directory to the new directory named KeePassMini, and if necessary have used Face/TouchId to learn the new keychain.
+keychain using Face/TouchId. If you have migrated all KeePass DBs,
+you can remove IOSKeePass from your Apple device without data loss.";
+
+// General Messages"
 "This is an KDB in Verion 1, and has no support for One Time Passwords" = "This is an KDB in Verion 1, and has no support for One Time Passwords";
 "Align QR code within frame to scan" = "Align QR code within frame to scan";
 "Enter your PIN to unlock" = "Enter your PIN to unlock";
-"Unlock MiniKeePass" = "Unlock MiniKeePass";
+"Unlock MinKeePassMini" = "Unlock MinKeePassMini";
 "Enter the password and/or select the keyfile for the %@ database." = "Enter the password and/or select the keyfile for the %@ database.";
 "Enter a new name for the password database. The correct file extension will automatically be appended." = "Enter a new name for the password database. The correct file extension will automatically be appended.";
 "Do not forget your database password, it cannot be recovered." = "Do not forget your database password, it cannot be recovered.";
@@ -150,7 +159,7 @@
 "Password Encoding" = "Password Encoding";
 "Clear Clipboard on Timeout" = "Clear Clipboard on Timeout";
 "Clear Timeout" = "Clear Timeout";
-"Prevent unauthorized access to MiniKeePass with a PIN." = "Prevent unauthorized access to MiniKeePass with a PIN.";
+"Prevent unauthorized access to MinKeePassMini with a PIN." = "Prevent unauthorized access to MinKeePassMini with a PIN.";
 "Delete all files and passwords after too many failed attempts." = "Delete all files and passwords after too many failed attempts.";
 "Automatically close an open database after the selected timeout." = "Automatically close an open database after the selected timeout.";
 "Stores remembered database passwords in the devices's secure keychain." = "Stores remembered database passwords in the devices's secure keychain.";
@@ -168,7 +177,7 @@
 "Set PIN" = "Set PIN";
 "Confirm PIN" = "Confirm PIN";
 "PINs did not match. Try again" = "PINs did not match. Try again";
-"MiniKeePass version %@" = "MiniKeePass version %@";
+"MinKeePassMini version %@" = "MinKeePassMini version %@";
 
 // Help Titles
 "iTunes Import/Export" = "iTunes Import/Export";

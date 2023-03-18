@@ -67,9 +67,9 @@
 "I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "Confirmo que as minhas palavras-passe neste BD serão disponibilizadas ao mecanismo de preenchimento automático do IOS.";
 "Shareing" = "Share";
 "Sync" = "Sync";
-"Notify from IOSKeePass" = "Notificar da IOSKeePass";
+"Notify from KeePassMini" = "Notificar da KeePassMini";
 "New Default DB is selected Name:" = "O novo DB por defeito é 🚀 nome seleccionado:";
-"This Database is" = "TEsta Base de Dados é agora a sua Base de Dados Inicial se iniciar o IOSKeePass pela primeira vez, será aberta directamente 📲";
+"This Database is" = "TEsta Base de Dados é agora a sua Base de Dados Inicial se iniciar o KeePassMini pela primeira vez, será aberta directamente 📲";
 "now" = "agora";
 "Your Files Folder is empty 📂" = "A sua pasta de ficheiros está vazia 📂";
 "Need Cloud Backup ⚠️" = "Precisa de Backup em Nuvem ⚠️";
@@ -82,11 +82,19 @@
 "Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content"="Ficheiro mais recente do Keepass encontrado no seu Cloud Storage, por favor utilize o procedimento de sincronização Cloud sync para sincronizar com o conteúdo mais recente";
 "Sorry Cloud connection temporarily not reachable:" = "Desculpe Ligação de nuvem temporariamente inacessível:";
 "At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection" = "De momento não suportamos OneDrive ou iCloud, por favor use um sistema WebDav suportado como o OwnCloud ou Nextcloud através de uma ligação segura SSL";
+"Important note about KeePassMini !" = "Nota importante sobre o KeePassMini !";
+"I understand!" = "Eu compreendo!";
+"Unfortunately, we can not offer IOSKeePass" = "Infelizmente, já não podemos lançar o IOSKeePass com o IOS adicional através da Apple App Store, uma vez que violamos as directrizes da Apple App Store com esta adição. Infelizmente, a gestão segura de chaveiros que o IOS oferece e que usamos no código fonte está também anexada a este nome.
+Por este motivo, deve primeiro manter o antigo APP com o nome da aplicação
+IOSKeePass até todos os seus DB's KeePass e KEYS com as extensões
+.kdb e .kdbx, bem como os ficheiros .key e keyx foram migrados do directório IOSKeePass para o novo directório com o nome KeePassMini usando o botão Importar (canto inferior direito do meio), e se necessário aprenderam o novo porta-chaves usando Face/TouchId.
+chaveiro usando o Face/TouchId. Depois de ter migrado todos os KeePass DBs,
+pode remover o IOSKeePass do seu dispositivo Apple sem perda de dados.";
 
 // General Messages
 "Align QR code within frame to scan" = "Alinhe o código QR dentro do quadro para digitalizar";
 "Enter your PIN to unlock" = "Digite o PIN para desbloquear";
-"Unlock MiniKeePass" = "Desbloqueie o MiniKeePass";
+"Unlock MinKeePassMini" = "Desbloqueie o MinKeePassMini";
 "Enter the password and/or select the keyfile for the %@ database." = "Digite a senha e/ou selecione o arquivo de chave do banco de dados %@.";
 "Enter a new name for the password database. The correct file extension will automatically be appended." = "Digite um novo nome para o banco de dados da senha. A extensão de arquivo correta será usada automaticamente.";
 "Do not forget your database password, it cannot be recovered." = "Não se esqueça da senha do banco de dados. Ela não pode ser recuperada.";
@@ -143,7 +151,7 @@
 "Password Encoding" = "Codificação de Senha";
 "Clear Clipboard on Timeout" = "Limpar Área de Transferência Automaticamente";
 "Clear Timeout" = "Limpeza Automática";
-"Prevent unauthorized access to MiniKeePass with a PIN." = "Impeça o acesso não autorizado ao MiniKeePass com um PIN.";
+"Prevent unauthorized access to MinKeePassMini with a PIN." = "Impeça o acesso não autorizado ao MinKeePassMini com um PIN.";
 "Delete all files and passwords after too many failed attempts." = "Apague todos os arquivos e senhas após tentativas incorretas.";
 "Automatically close an open database after the selected timeout." = "Feche automaticamente um banco de dados aberto após o tempo selecionado.";
 "Stores remembered database passwords in the devices's secure keychain." = "Armazene as senhas de bancos de dados memorizadas nas chaves seguras do dispositivo.";
@@ -161,7 +169,7 @@
 "Set PIN" = "Defina o PIN";
 "Confirm PIN" = "Confirme o PIN";
 "PINs did not match. Try again" = "PINs não coincidem. Tente de novo.";
-"MiniKeePass version %@" = "MiniKeePass versão %@";
+"MinKeePassMini version %@" = "MinKeePassMini versão %@";
 
 // Help Titles
 "iTunes Import/Export" = "Importe/Exporte do Computador";

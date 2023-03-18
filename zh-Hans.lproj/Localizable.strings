@@ -68,9 +68,9 @@
 "Shareing" = "Share";
 "Sync" = "Sync";
 "New Default DB is selected Name:" = "新的默认数据库是🚀选择的名称。";
-"This Database is" = "这个数据库现在是你的启动数据库，如果你第一次启动IOSKeePass，它将被直接打开📲。";
+"This Database is" = "这个数据库现在是你的启动数据库，如果你第一次启动KeePassMini，它将被直接打开📲。";
 "now" = "现在";
-"Notify from IOSKeePass" = "来自IOSKeePass的通知";
+"Notify from KeePassMini" = "来自KeePassMini的通知";
 "Your Files Folder is empty 📂" = "你的文件夹是空的 📂";
 "Need Cloud Backup ⚠️" = "需要云备份 ⚠️";
 "Copy WebDav Backup ⚠️" = "复制WebDav备份 ⚠️";
@@ -82,11 +82,19 @@
 "Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content"="在你的云存储中发现较新的Keepass文件，请使用云同步程序同步到最新的内容。";
 "Sorry Cloud connection temporarily not reachable:" = "对不起，云端连接暂时无法到达。";
 "At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection" = "目前，我们不支持OneDrive或iCloud，请通过安全的SSL连接使用WebDav支持的系统，如OwnCloud或Nextcloud。";
+"Important note about KeePassMini !" = "关于KeePassMini的重要说明 !";
+"I understand!" = "我明白!";
+"Unfortunately, we can not offer IOSKeePass" = "不幸的是，我们不能再通过苹果应用商店推出添加了IOS的IOSKeePass，因为我们的这种添加违反了苹果应用商店的准则。不幸的是，IOS提供的、我们在源代码中使用的安全钥匙圈管理也附在这个名字上。
+出于这个原因，你应该首先保留旧的APP，其应用名称为
+IOSKeePass，直到你所有的KeePass数据库和KEYS的扩展名为
+.kdb和.kdbx以及.key和keyx文件已经通过导入按钮（右下角）从IOSKeePass目录迁移到名称为KeePassMini的新目录中，如果有必要，还可以使用Face/TouchId学习新的钥匙圈。
+使用Face/TouchId的钥匙链。当你已经迁移了所有的KeePass数据库。
+你可以从你的苹果设备上删除IOSKeePass而不损失数据。";
 
 // General Messages
 "Align QR code within frame to scan" = "将QR码对准框架以进行扫描";
 "Enter your PIN to unlock" = "请输入 PIN 码以解锁应用";
-"Unlock MiniKeePass" = "解锁MiniKeePass应用";
+"Unlock MinKeePassMini" = "解锁MinKeePassMini应用";
 "Enter the password and/or select the keyfile for the %@ database." = "请输入密码和（或）选定密钥文件以访问“%@”数据库";
 "Enter a new name for the password database. The correct file extension will automatically be appended." = "请为密码数据库输入新的名称，文件扩展名将会自动添加";
 "Do not forget your database password, it cannot be recovered." = "请牢记您的数据库密码，密码丢失后无法重新找回";
@@ -143,7 +151,7 @@
 "Password Encoding" = "密码编码方式";
 "Clear Clipboard on Timeout" = "在指定时间后清空剪贴板";
 "Clear Timeout" = "多长时间后清空剪切板？";
-"Prevent unauthorized access to MiniKeePass with a PIN." = "使用PIN码阻止对MiniKeePass应用的非法访问";
+"Prevent unauthorized access to MinKeePassMini with a PIN." = "使用PIN码阻止对MinKeePassMini应用的非法访问";
 "Delete all files and passwords after too many failed attempts." = "尝试失败次数过多后删除所有文件和密码";
 "Automatically close an open database after the selected timeout." = "在设定的时长后自动关闭数据库";
 "Stores remembered database passwords in the devices's secure keychain." = "使用iCloud 钥匙串保存数据库密码";
@@ -161,7 +169,7 @@
 "Set PIN" = "设定 PIN 码";
 "Confirm PIN" = "确认 PIN 码";
 "PINs did not match. Try again" = "两次输入的 PIN 码不一致，请重试";
-"MiniKeePass version %@" = "MiniKeePass %@ 版本";
+"MinKeePassMini version %@" = "MinKeePassMini %@ 版本";
 
 // Help Titles
 "iTunes Import/Export" = "使用iTunes导入/导出文件";
