@@ -1,6 +1,6 @@
 //
 //  BinaryViewController.swift
-//  IOSKeePass
+//  KeePassMini
 //
 //  Created by Frank Hausmann on 14.07.21.
 //  Copyright © 2021 Self. All rights reserved.
