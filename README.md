@@ -11,7 +11,6 @@ Your app metadata contains content that resembles designs or terms used for Appl
 
 for this reason we call IOSKeePass after KeePassMini.
 
-Translated with www.DeepL.com/Translator (free version)
 
 Free KeePass ist a fork of MinKeePassMini, i do it, because i find that this Software is great stuff for password storing
 and sensible data to a local file, and only in the cloud with a strong enrcyption, also i mean, it was free and it should be keep for free in future.
