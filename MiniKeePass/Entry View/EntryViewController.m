@@ -20,7 +20,7 @@
 //#import "Kdb4Node.h"
 #import "AppSettings.h"
 #import "ImageFactory.h"
-#import "IOSKeePass-Swift.h"
+#import "KeePassMini-Swift.h"
 #import "MBProgressHUD.h"
 
 
