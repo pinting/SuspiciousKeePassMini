@@ -1,6 +1,6 @@
 //
 //  CloudAccountView.swift
-//  IOSKeePass
+//  KeePassMini
 //
 //  Created by Frank Hausmann on 13.10.21.
 //  Copyright © 2021 Self. All rights reserved.
@@ -52,7 +52,7 @@ class CloudAccountViewController: UITableViewController, UITextFieldDelegate {
             DispatchQueue.main.async {
             let notiData = HDNotificationData(
                         iconImage: UIImage(named: "AppIcon"),
-                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                         title: NSLocalizedString("Unsupported Feature ⚠️",comment:""),
                         message: NSLocalizedString("At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection",comment:""),
                         time: NSLocalizedString("now", comment: ""))

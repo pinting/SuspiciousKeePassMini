@@ -260,9 +260,9 @@ class SettingsViewController: UITableViewController {
             dateFormatter.dateStyle = .short
             dateFormatter.timeStyle = .short
             let mstr = dateFormatter.string(from: nowdate)
-            let retval = String("").sendAnalytics("NoDB", dbsize:"0 Byte", modate: mstr, date: mstr, action: "AnalyseOff")
+            let retval = String("").sendAnalytics("NoDB_Mini", dbsize:"0 Byte", modate: mstr, date: mstr, action: "AnalyseOff")
            
-            print(retval as Any)
+            //print(retval as Any)
             self.appSettings?.setAnalyseDataEnabled(false)
         }
     }
@@ -294,7 +294,7 @@ class SettingsViewController: UITableViewController {
             
             let options = ALOptions()
                 options.image = UIImage(named: "AppIcon60x60")!
-                options.title = "IOSKeepass Pin creation"
+                options.title = "KeePassMini Pin creation"
                 options.isSensorsEnabled = false
                 options.color = col
                 options.onSuccessfulDismiss = { (mode: ALMode?) in
@@ -332,7 +332,7 @@ class SettingsViewController: UITableViewController {
                // let img = UIImage(named: "AppIcon")
                 
                 options.image = UIImage (named:"AppIcon60x60");
-                options.title = "IOSKeepass Pin deletion"
+                options.title = "KeePassMini Pin deletion"
                 options.isSensorsEnabled = false
                 options.color = col
                 options.onSuccessfulDismiss = { (mode: ALMode?) in

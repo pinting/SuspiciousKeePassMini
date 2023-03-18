@@ -1,6 +1,6 @@
 //
 //  PropertiesTableViewController.swift
-//  IOSKeePass
+//  KeePassMini
 //
 //  Created by Frank Hausmann on 17.04.21.
 //  Copyright © 2021 Self. All rights reserved.
