@@ -22,7 +22,7 @@
 #import "DatabaseManager.h"
 #import "KeychainUtils.h"
 //#import "LockScreenManager.h"
-#import "IOSKeePass-Swift.h"
+#import "KeePassMini-Swift.h"
 #import "KTouchIDAuthentication.h"
 
 
