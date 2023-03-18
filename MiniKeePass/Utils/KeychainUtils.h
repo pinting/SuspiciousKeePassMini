@@ -29,9 +29,9 @@
 
 #import <UIKit/UIKit.h>
 
-#define KEYCHAIN_PIN_SERVICE       @"de.unicomedv.IOSKeePass.pin"
-#define KEYCHAIN_PASSWORDS_SERVICE @"de.unicomedv.IOSKeePass.passwords"
-#define KEYCHAIN_KEYFILES_SERVICE  @"de.unicomedv.IOSKeePass.keys"
+#define KEYCHAIN_PIN_SERVICE       @"de.unicomedv.KeePassMini.pin"
+#define KEYCHAIN_PASSWORDS_SERVICE @"de.unicomedv.KeePassMini.passwords"
+#define KEYCHAIN_KEYFILES_SERVICE  @"de.unicomedv.KeePassMini.keys"
 
 @interface KeychainUtils : NSObject
 
