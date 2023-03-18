@@ -26,6 +26,9 @@ class HelpWebViewController: UIViewController {
         super.viewDidLoad()
         
         // Load the help page
+        if(url == nil){
+            return
+        }
         let urlRequest = URLRequest(url: url!)
         webView.loadRequest(urlRequest)
     }
