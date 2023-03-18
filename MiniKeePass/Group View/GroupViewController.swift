@@ -705,7 +705,7 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
         }
         let appSettings = AppSettings.sharedInstance() as AppSettings
         if (appSettings.pinEnabled()) {
-            print("IOSKEEPass enters foreground")
+            print("KeePassMini enters foreground")
             
             let mode = ALMode.validate
             let appSettings = AppSettings.sharedInstance() as AppSettings
@@ -720,7 +720,7 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             
             let options = ALOptions()
                 options.image = UIImage(named: "AppIcon")!
-                options.title = "IOSKeepass Locked"
+                options.title = "KeePassMini Locked"
                 options.isSensorsEnabled = appSettings.touchIdEnabled()
                 options.color = col
                 options.onSuccessfulDismiss = { (mode: ALMode?) in
