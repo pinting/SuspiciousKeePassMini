@@ -39,6 +39,9 @@
 - (BOOL)analyseDataEnabled;
 - (void)setAnalyseDataEnabled:(BOOL)analyseDataEnabled;
 
+- (BOOL)userNotify;
+- (void)setUserNotify:(BOOL)userNotify;
+    
 - (NSString *)pin;
 - (void)setPin:(NSString *)pin;
 

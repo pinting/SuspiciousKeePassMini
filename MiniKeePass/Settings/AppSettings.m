@@ -20,9 +20,10 @@
 #import "KeychainUtils.h"
 #import "PasswordUtils.h"
 #import "AppDelegate.h"
-#import "IOSKeePass-Swift.h"
+#import "KeePassMini-Swift.h"
 
 #define VERSION                    @"version"
+#define USER_NOTIFY                @"usernotify"
 #define EXIT_TIME                  @"exitTime"
 #define PIN_ENABLED                @"pinEnabled"
 #define ANALYSE_ENABLED            @"analyseDataEnabled"
@@ -139,6 +140,7 @@ static AppSettings *sharedInstance;
         [defaultsDict setValue:[NSNumber numberWithInt:1] forKey:DELETE_ON_FAILURE_ATTEMPTS];
         [defaultsDict setValue:[NSNumber numberWithBool:YES] forKey:CLOSE_ENABLED];
         [defaultsDict setValue:[NSNumber numberWithBool:YES] forKey:ANALYSE_ENABLED];
+        [defaultsDict setValue:[NSNumber numberWithBool:YES] forKey:USER_NOTIFY];
         [defaultsDict setValue:[NSNumber numberWithInt:4] forKey:CLOSE_TIMEOUT];
         [defaultsDict setValue:[NSNumber numberWithBool:NO] forKey:REMEMBER_PASSWORDS_ENABLED];
         [defaultsDict setValue:[NSNumber numberWithBool:YES] forKey:HIDE_PASSWORDS];
@@ -234,6 +236,14 @@ static AppSettings *sharedInstance;
 
 - (void)setAnalyseDataEnabled:(BOOL)analyseDataEnabled {
     [userDefaults setBool:analyseDataEnabled forKey:ANALYSE_ENABLED];
+}
+
+- (BOOL)userNotify {
+    return [userDefaults boolForKey:USER_NOTIFY];
+}
+
+- (void)setUserNotify:(BOOL)userNotify {
+    [userDefaults setBool:userNotify forKey:USER_NOTIFY];
 }
 
 - (BOOL)pinEnabled {
