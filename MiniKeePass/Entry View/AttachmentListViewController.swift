@@ -1,6 +1,6 @@
 //
 //  AttachmentListViewController.swift
-//  IOSKeePass
+//  KeePassMini
 //
 //  Created by Frank Hausmann on 11.07.21.
 //  Copyright © 2021 Self. All rights reserved.
