@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#import "IOSKeePass-Swift.h"
+#import "KeePassMini-Swift.h"
 #import "AppDelegate.h"
 #import "AppSettings.h"
 #import "ObjcEditorViewController.h"
