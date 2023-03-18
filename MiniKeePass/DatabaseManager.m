@@ -19,7 +19,7 @@
 #import "AppDelegate.h"
 #import "KeychainUtils.h"
 #import "AppSettings.h"
-#import "IOSKeePass-Swift.h"
+#import "KeePassMini-Swift.h"
 #import "KTouchIDAuthentication.h"
 
 #ifdef USE_KDB
