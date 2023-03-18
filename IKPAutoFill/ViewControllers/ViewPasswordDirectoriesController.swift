@@ -37,7 +37,7 @@ class ViewPasswordDirectoriesViewController: UIViewController {
 extension ViewPasswordDirectoriesViewController: MyForwardCellDelegate {
     func forwarddidTapButtonInCell(_ cell: DirectoryCell) {
        //Do whatever you want to do when the button is tapped here
-       
+        let decrypturl = cell.dir.otpurl.cryptoSwiftAESDecryptForUrl(key: "BreisigAXZ2027#!", iv:"o8!k3kp=)alk(2h/" )
         let url = URL(string: decrypturl!)
         do{
             let tok =  try Token(url: url!) //[[Token alloc] initWithUrl:url secret:nil error:nil];
