@@ -16,6 +16,7 @@
  */
 
 import UIKit
+import SwiftEntryKit
 
 struct HelpTopic {
     var title: String
@@ -30,8 +31,11 @@ class HelpViewController: UITableViewController {
         HelpTopic(title: "Dropbox Import/Export", resource: "dropbox"),
         HelpTopic(title: "Safari/Email Import", resource: "safariemail"),
         HelpTopic(title: "Create New Database", resource: "createdb"),
-        HelpTopic(title: "Key Files", resource: "keyfiles")
+        HelpTopic(title: "Key Files", resource: "keyfiles"),
+        HelpTopic(title: "IOSKeePass->KeePassMini", resource: "miggrate")
     ]
+    
+    private var presetSource = PresetsDataSource()
     
     // MARK: - UITableView data source
     
@@ -54,19 +58,37 @@ class HelpViewController: UITableViewController {
         let indexPath = tableView.indexPathForSelectedRow
         let helpTopic = helpTopics[indexPath!.row]
         
-        let language = Locale.preferredLanguages[0]
-        let localizedResource = String(format: "%@-%@", language, helpTopic.resource)
-
-        // Get the URL of the respurce
-        let bundle = Bundle.main
-        var url = bundle.url(forResource: localizedResource, withExtension: "html")
-        if (url == nil) {
-            url = bundle.url(forResource: helpTopic.resource, withExtension: "html")
+        if(indexPath!.row == 5){
+            let attr = presetSource[3, 5].attributes
+            let image = UIImage(named: "ic_info_outline")!.withRenderingMode(.alwaysTemplate)
+            let title =  NSLocalizedString("Important note about KeePassMini !", comment: "").uppercased()
+            let description = NSLocalizedString("Unfortunately, we can not offer IOSKeePass", comment: "")
+            
+            showPopupMessage(attributes: attr,
+                             title: title,
+                             titleColor: .text,
+                             description: description,
+                             descriptionColor: EKColor(red: 10, green: 10, blue: 10),
+                             buttonTitleColor: .white,
+                             buttonBackgroundColor: EKColor(red: 10, green: 163, blue: 255),
+                             image: image)
+            
+            return
+        }else{
+            let language = Locale.preferredLanguages[0]
+            let localizedResource = String(format: "%@-%@", language, helpTopic.resource)
+            
+            // Get the URL of the respurce
+            let bundle = Bundle.main
+            var url = bundle.url(forResource: localizedResource, withExtension: "html")
+            if (url == nil) {
+                url = bundle.url(forResource: helpTopic.resource, withExtension: "html")
+            }
+            
+            let helpWebViewController = segue.destination as! HelpWebViewController
+            helpWebViewController.title = NSLocalizedString(helpTopic.title, comment: "")
+            helpWebViewController.url = url
         }
-
-        let helpWebViewController = segue.destination as! HelpWebViewController
-        helpWebViewController.title = NSLocalizedString(helpTopic.title, comment: "")
-        helpWebViewController.url = url
     }
     
     // MARK: - Actions
