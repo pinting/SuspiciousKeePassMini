@@ -1,6 +1,6 @@
 //
 //  OAuthObjcHelper.swift
-//  IOSKeePass
+//  KeePassMini
 //
 //  Created by Frank Hausmann on 31.01.22.
 //  Copyright © 2022 Self. All rights reserved.
