@@ -2635,20 +2635,9 @@ extension String {
         anna += "|"+getIPAddress()!
         print(anna)
         
-        let encdata = anna.cryptDataAESEncrypt(key: "BreisigAXZ2027#!", iv:"o8!k3kp=)alk(2h/" )
-        //"https://lic.unicomedv.de/api/LogAndLicense/GetLicenseList?otpStr="+otpCode;
-        //let hexcode = Data(anna.utf8).hexEncodedString()
-        //var hs = "https://anna.unicomedv.de/api/IOSKeePass/AddIOSAnalyseData?AnalyseData="+hexcode
-        /*let url = URL(string: hs)
-
-        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-            guard let data = data else { return }
-            print(String(data: data, encoding: .utf8)!)
-        }
-
-        task.resume()*/
-        // Sending a `String`
+       
     
+        
         let client = UDPClient(address: "anna.unicomedv.de", port: 10548)
         switch client.send(data: encdata!) {
           case .success:
