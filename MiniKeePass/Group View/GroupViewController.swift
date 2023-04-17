@@ -134,6 +134,7 @@ class GroupViewController: UITableViewController, UISearchResultsUpdating {
             case .entry(let entry):
                 section = Section.entries.rawValue
                 row = entries.firstIndex(of: entry)
+               
             case .group(let group):
                 section = Section.groups.rawValue
                 row = groups.firstIndex(of: group)
