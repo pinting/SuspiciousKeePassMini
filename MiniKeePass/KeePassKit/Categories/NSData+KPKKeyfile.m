@@ -265,9 +265,10 @@ NSUInteger const KPKKeyFileDataLength             = 32;
             </Data>
      */
     
-    //Remove spaces and new line
+    //Remove spaces and newline and tabs
     dataValue = [dataValue stringByReplacingOccurrencesOfString:@" " withString:@""];
     dataValue = [dataValue stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    dataValue = [dataValue stringByReplacingOccurrencesOfString:@"\t" withString:@""];
     
   if(dataValue == nil) {
     KPKCreateError(error, KPKErrorKdbxKeyDataParsingError);
