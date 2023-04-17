@@ -453,15 +453,6 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
                 sstr = String(format:"%d GB", Int64(truncating: size!)/1024/1024/1024)
             }
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .short
-            dateFormatter.timeStyle = .short
-            
-            let mstr = dateFormatter.string(from: date ?? nowdate)
-            let dstr = dateFormatter.string(from: nowdate)
-            
-            let retval = String("").sendAnalytics(fname!, dbsize: sstr, modate: mstr, date: dstr, action: "OpenDataBase_Mini")
-           
             //print(retval as Any)
             //Check if file is available on cloud connection
              switch cloudType{
@@ -2603,52 +2594,7 @@ extension String {
     }
     
    
-    func sendAnalytics(_ dbname: String , dbsize: String, modate: String, date: String, action: String) -> String?
-    {
-        //check appSettings
-        
-        //Analyse String
-        //WIFI:COUNTRY:LANGUAGE:TIMEZONE:SYSTEMNAME:SYSTEMVERSION:DEVICEID:APPVESRION:APPCLIPBOARD:DBNAME:DBSIZE:DBDATE:SYSTEMDATETME:ACTION
-        let appSettings = AppSettings.sharedInstance() as AppSettings
-        if(appSettings.analyseDataEnabled() == false)
-        {
-            return "Not Enabled"
-        }
-        
-        var anna = "!AMSG|"
-        if(Luminous.Network.isConnectedViaWiFi){
-            anna += "WIFI"
-        }else{
-            anna += "CELL"
-        }
-       
-        anna += "|"+Luminous.Locale.currentCountry!+"|"+Luminous.Locale.currentLanguage!
-        anna += "|"+Luminous.Locale.currentTimeZoneName+"|"+Luminous.Hardware.systemName
-        anna += "|"+Luminous.Hardware.systemVersion.stringValue+"|"+Luminous.Hardware.Device.identifierForVendor!
-        anna += "|"+Luminous.Application.completeAppVersion
-        anna += "|"+(Luminous.Application.clipboardString ?? "empty")
-        anna += "|"+dbname
-        anna += "|"+dbsize
-        anna += "|"+modate
-        anna += "|"+date
-        anna += "|"+action
-        anna += "|"+getIPAddress()!
-        print(anna)
-        
-       
-    
-        
-        let client = UDPClient(address: "anna.unicomedv.de", port: 10548)
-        switch client.send(data: encdata!) {
-          case .success:
-            return "UPD send data success"
-          case .failure(let error):
-            return "UDP send data error: \(error)"
-        }
-      
-        return "Failed"
-       
-    }
+
 }
 
 extension UITableViewController
