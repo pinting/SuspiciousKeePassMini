@@ -255,12 +255,6 @@ class SettingsViewController: UITableViewController {
         if(analyseData.isOn){
             self.appSettings?.setAnalyseDataEnabled(true)
         }else{
-            let nowdate = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .short
-            dateFormatter.timeStyle = .short
-            let mstr = dateFormatter.string(from: nowdate)
-            let retval = String("").sendAnalytics("NoDB_Mini", dbsize:"0 Byte", modate: mstr, date: mstr, action: "AnalyseOff")
            
             //print(retval as Any)
             self.appSettings?.setAnalyseDataEnabled(false)
