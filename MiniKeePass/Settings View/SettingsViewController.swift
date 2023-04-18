@@ -140,7 +140,7 @@ class SettingsViewController: UITableViewController {
             
             integratedWebBrowserEnabledSwitch.isOn = appSettings.webBrowserIntegrated()
             
-            analyseData.isOn = appSettings.analyseDataEnabled()
+            //analyseData.isOn = appSettings.analyseDataEnabled()
         }
         
         // Update which controls are enabled
@@ -250,7 +250,7 @@ class SettingsViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
   
-    @IBAction func analyseDataChnaged(_ sender: UISwitch) {
+    /*@IBAction func analyseDataChnaged(_ sender: UISwitch) {
         
         if(analyseData.isOn){
             self.appSettings?.setAnalyseDataEnabled(true)
@@ -259,7 +259,7 @@ class SettingsViewController: UITableViewController {
             //print(retval as Any)
             self.appSettings?.setAnalyseDataEnabled(false)
         }
-    }
+    }*/
     
     
     
