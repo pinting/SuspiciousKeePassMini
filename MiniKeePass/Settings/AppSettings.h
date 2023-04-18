@@ -36,8 +36,8 @@
 - (BOOL)pinEnabled;
 - (void)setPinEnabled:(BOOL)pinEnabled;
 
-- (BOOL)analyseDataEnabled;
-- (void)setAnalyseDataEnabled:(BOOL)analyseDataEnabled;
+/*- (BOOL)analyseDataEnabled;
+- (void)setAnalyseDataEnabled:(BOOL)analyseDataEnabled;*/
 
 - (BOOL)userNotify;
 - (void)setUserNotify:(BOOL)userNotify;
