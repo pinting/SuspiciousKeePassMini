@@ -282,14 +282,14 @@ class FilesViewController: UITableViewController, NewDatabaseDelegate,ImportData
              Schlüsselbund angelernt haben. Wenn sie alle KeePass DBs migriert haben, \
              können Sie die IOSKeePass ohne Datenverlust von Ihrem Apple gerät entfernen.
              """*/
-             showPopupMessage(attributes: attr,
+             /*showPopupMessage(attributes: attr,
                               title: title,
                               titleColor: .text,
                               description: description,
                               descriptionColor: EKColor(red: 10, green: 10, blue: 10),
                               buttonTitleColor: .white,
                               buttonBackgroundColor: EKColor(red: 10, green: 163, blue: 255),
-                              image: image)
+                              image: image)*/
              
              appSettings.setUserNotify(false)
          }
