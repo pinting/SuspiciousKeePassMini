@@ -1,18 +1,3 @@
-# Suspicious iOS KeePass client
-
-Early this week somebody was trying to log into my bank account (from a location within Germany). 2FA protected me. This was a surprise, because I am storing my service specific login credentials in KeePass, thus for them to have my pass, they would have to access my personal devices.
-
-Contacted my bank, they came back telling me they do not see any suspicious activity.
-
-Looked through my local machine (first manually, than with 3 different kind of AVs). Nothing.
-
-Changed my bank account password and waited. After a few days, there was a new login attempt. Panicked.
-
-Started to go over my iPhone, checking everything, trying to update each application to its latest version. To my surprise the app I was using to read my KeePass database, iOSKeePass, was missing from App Store. It was deleted and I only owned a local copy. I specifically selected this fork, because its source-code was public on GitHub. Went up there and started to read each commit. Found this weird piece of analytics code that is sending the clipboard contents over UDP to a 3rd party server. Yesterday (20th of May) contacted the developer over a GitHub comment shouting out this is weird, because the application uses its clipboard access to copy out passwords from the DB - sending these over analytics sounds like a huge risk. Today (21th of May) this comment was deleted and the repository was washed clean with a single commit in the main branch.
-
-I wrote a script which saved each commit of the repository as ZIP files. Run a few keyword searches, but did not find anything that would directly sell out my credentials. Expect to this analytics report which includes the clipboard content. If I understand the inner app flow right, this is triggered after opening a DB, so not after opening and copying an entry. However, it still makes me feel unsecure.
-
-```
 e45695a2a3fa85748c3e5bd28d296120def4e822
 65b755493088bbe0f672f7c8c45abf87bcc45bb0
 eb62b8a36c78eb1af886af9e8aa96c124bc7cd76
@@ -42,7 +27,7 @@ b88e0f5987f5450b2635fb81322d969a86f265f7
 aa9ec9015bc59ecdfc8b48794c86783aae2f9180
 7532465759d901a51c371bd21c8256c6b77f0ee6
 daa4a0c7477674b5bbed4545ee1d6b3a7745a2a4
-437221cce8ce17ca57320ca4045caa96c42caa80 - This is where the "Anna" code is introduced sending the clipboard data.
+437221cce8ce17ca57320ca4045caa96c42caa80
 89e32e676b91cf1ece16ff00efa1e1adc877af6c
 1c804306dd0aecea7882b201d9f413b232b38c13
 1f04dcd7e7c63b3a8b26de21f5151be89e7ecaad
@@ -55,7 +40,7 @@ e896e7b6a1bcca972b44de6c5383ea7a484cbf87
 8f23f59b41a2a949c658b92a351934d5c2bad6f2
 8ffc510d05f3ee0f93d0a617a363dfae44bfabfb
 9ba749e1dd10d89e63b8c766e6f0d772b04399b6
-55a60464380761b07f044d2aa0993afd62aa9662 - This is the last IOSKeePass version. After this it is renamed.
+55a60464380761b07f044d2aa0993afd62aa9662
 ea6c81a9c517ac9b4b2d7c056fc17dc8f36c6b9b
 5b43f547626fc56340109ef2e1b8c22260cbcb6e
 89e7b690368cb1de8716794ead3487aacc4b116e
@@ -217,4 +202,3 @@ f9f0661f3d49c0d91b3b4dc218fd9ffcc939d0d8
 e2ab614121d135dd3f31ca8a06272577991a69fe
 2c4407fc26873c1d227fa2d2b278c80ede1a0a56
 95a5ca061002bbb13c01f38a87924ed81d43744c
-```
