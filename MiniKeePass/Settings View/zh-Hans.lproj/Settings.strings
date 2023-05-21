@@ -1,0 +1,198 @@
+
+/* Class = "UISegmentedControl"; 1E2-iX-dUr.segmentTitles[0] = "Individual"; ObjectID = "1E2-iX-dUr"; */
+"1E2-iX-dUr.segmentTitles[0]" = "个人";
+
+/* Class = "UISegmentedControl"; 1E2-iX-dUr.segmentTitles[1] = "All Keepass entrys"; ObjectID = "1E2-iX-dUr"; */
+"1E2-iX-dUr.segmentTitles[1]" = "所有Keepass条目";
+
+/* Class = "UITableViewSection"; footerTitle = "Switch the APP to Dark mode"; ObjectID = "1XV-Vi-rXZ"; */
+"1XV-Vi-rXZ.footerTitle" = "将APP切换到黑暗模式";
+
+/* Class = "UITableViewSection"; headerTitle = "IOS dark mode"; ObjectID = "1XV-Vi-rXZ"; */
+"1XV-Vi-rXZ.headerTitle" = "IOS的黑暗模式";
+
+/* Class = "UISegmentedControl"; 5tx-ga-DIK.segmentTitles[0] = "WebDAV"; ObjectID = "5tx-ga-DIK"; */
+"5tx-ga-DIK.segmentTitles[0]" = "WebDAV";
+
+/* Class = "UISegmentedControl"; 5tx-ga-DIK.segmentTitles[1] = "iCloud"; ObjectID = "5tx-ga-DIK"; */
+"5tx-ga-DIK.segmentTitles[1]" = "iCloud";
+
+/* Class = "UISegmentedControl"; 5tx-ga-DIK.segmentTitles[2] = "OneDrive"; ObjectID = "5tx-ga-DIK"; */
+"5tx-ga-DIK.segmentTitles[2]" = "OneDrive";
+
+/* Class = "UITableViewSection"; footerTitle = "Clear the contents of the clipboard after a given timeout upon performing a copy."; ObjectID = "6aD-nd-BAe"; */
+"6aD-nd-BAe.footerTitle" = "在执行复制时，在给定的超时后清除剪贴板的内容。";
+
+/* Class = "UITableViewSection"; headerTitle = "Clear Clipboard on Timeout"; ObjectID = "6aD-nd-BAe"; */
+"6aD-nd-BAe.headerTitle" = "超时清除剪贴板";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "8ZA-aO-G1w"; */
+"8ZA-aO-G1w.text" = "已启用";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "Am8-Mj-Ugf"; */
+"Am8-Mj-Ugf.text" = "已启用";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "C0I-Y0-rYX"; */
+"C0I-Y0-rYX.text" = "标题";
+
+/* Class = "UILabel"; text = "Method"; ObjectID = "Cat-Ji-dIK"; */
+"Cat-Ji-dIK.text" = "方法";
+
+/* Class = "UILabel"; text = "IOS Autofill Support"; ObjectID = "HQU-cJ-O4e"; */
+"HQU-cJ-O4e.text" = "支持IOS自动填表";
+
+/* Class = "UITableViewSection"; footerTitle = "Your Cloud password"; ObjectID = "HdE-BK-IC2"; */
+"HdE-BK-IC2.footerTitle" = "你的云计算密码";
+
+/* Class = "UITableViewSection"; headerTitle = "Password"; ObjectID = "HdE-BK-IC2"; */
+"HdE-BK-IC2.headerTitle" = "密码";
+
+/* Class = "UILabel"; text = "Integrated"; ObjectID = "I3Y-Du-rEB"; */
+"I3Y-Du-rEB.text" = "综合";
+
+/* Class = "UITextField"; placeholder = "https://nextcloud.com/...."; ObjectID = "Iuj-WB-HWZ"; */
+"Iuj-WB-HWZ.placeholder" = "https://nextcloud.com/....";
+
+/* Class = "UITableViewSection"; footerTitle = "Stores remembered database passwords in the devices's secure keychain."; ObjectID = "JmW-Y4-S1N"; */
+"JmW-Y4-S1N.footerTitle" = "在设备的安全钥匙串中存储记忆中的数据库密码。";
+
+/* Class = "UITableViewSection"; headerTitle = "Remember Database Passwords"; ObjectID = "JmW-Y4-S1N"; */
+"JmW-Y4-S1N.headerTitle" = "记住数据库密码";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "Krp-uD-Psn"; */
+"Krp-uD-Psn.placeholder" = "密码";
+
+/* Class = "UILabel"; text = "Close Enabled"; ObjectID = "Q8a-zf-aFf"; */
+"Q8a-zf-aFf.text" = "关闭 已启用";
+
+/* Class = "UILabel"; text = "Close Timeout"; ObjectID = "QCo-U1-I8E"; */
+"QCo-U1-I8E.text" = "关闭超时";
+
+/* Class = "UILabel"; text = "KeePassMini Version"; ObjectID = "Sdb-s9-D0G"; */
+"Sdb-s9-D0G.text" = "KeePassMini 版本";
+
+/* Class = "UITableViewSection"; footerTitle = "Hides passwords when viewing a password entry."; ObjectID = "Shd-Nf-YFM"; */
+"Shd-Nf-YFM.footerTitle" = "在查看密码条目时隐藏密码。";
+
+/* Class = "UITableViewSection"; headerTitle = "Hide Passwords"; ObjectID = "Shd-Nf-YFM"; */
+"Shd-Nf-YFM.headerTitle" = "隐藏密码";
+
+/* Class = "UILabel"; text = "Hide Passwords"; ObjectID = "T3z-vF-Z88"; */
+"T3z-vF-Z88.text" = "隐藏密码";
+
+/* Class = "UITableViewSection"; footerTitle = "e.g. https://nextcloud.com/remote.php/dav/files/username/"; ObjectID = "Tvz-Yq-NGE"; */
+"Tvz-Yq-NGE.footerTitle" = "e.g. https://nextcloud.com/remote.php/dav/files/username/";
+
+/* Class = "UITableViewSection"; headerTitle = "URL or Server"; ObjectID = "Tvz-Yq-NGE"; */
+"Tvz-Yq-NGE.headerTitle" = "URL or Server";
+
+/* Class = "UITableViewSection"; footerTitle = "Automatically close an open database after the selected timeout."; ObjectID = "ViH-4F-NKK"; */
+"ViH-4F-NKK.footerTitle" = "在选定的超时后自动关闭一个开放的数据库。";
+
+/* Class = "UITableViewSection"; headerTitle = "Close Database on Timeout"; ObjectID = "ViH-4F-NKK"; */
+"ViH-4F-NKK.headerTitle" = "在超时时关闭数据库";
+
+/* Class = "UILabel"; text = "Clear Timeout"; ObjectID = "WPB-ze-mX6"; */
+"WPB-ze-mX6.text" = "清除超时";
+
+/* Class = "UITableViewSection"; footerTitle = "The string encoding used for passwords when converting them to database keys."; ObjectID = "WTf-Ma-R7l"; */
+"WTf-Ma-R7l.footerTitle" = "将密码转换为数据库密钥时使用的字符串编码。";
+
+/* Class = "UITableViewSection"; headerTitle = "Password Encoding"; ObjectID = "WTf-Ma-R7l"; */
+"WTf-Ma-R7l.headerTitle" = "密码编码";
+
+/* Class = "UILabel"; text = "Encoding"; ObjectID = "Wyv-5A-xwb"; */
+"Wyv-5A-xwb.text" = "编码";
+
+/* Class = "UITableViewSection"; footerTitle = "Prevent unauthorized access to KeePassMini with a PIN."; ObjectID = "XnM-JR-qTX"; */
+"XnM-JR-qTX.footerTitle" = "用PIN码防止对KeePassMini的非法访问。";
+
+/* Class = "UITableViewSection"; headerTitle = "PIN Protection"; ObjectID = "XnM-JR-qTX"; */
+"XnM-JR-qTX.headerTitle" = "密码保护";
+
+/* Class = "UITableViewSection"; footerTitle = "Select your Provider Type"; ObjectID = "ZSj-bs-JXH"; */
+"ZSj-bs-JXH.footerTitle" = "选择您的供应商类型";
+
+/* Class = "UITableViewSection"; headerTitle = "Cloud Provider"; ObjectID = "ZSj-bs-JXH"; */
+"ZSj-bs-JXH.headerTitle" = "Cloud 供应商";
+
+/* Class = "UITableViewSection"; footerTitle = "Switch between an integrated web browser and Safari."; ObjectID = "ZbJ-mR-6o9"; */
+"ZbJ-mR-6o9.footerTitle" = "在集成网络浏览器和Safari浏览器之间切换。";
+
+/* Class = "UITableViewSection"; headerTitle = "Web Browser"; ObjectID = "ZbJ-mR-6o9"; */
+"ZbJ-mR-6o9.headerTitle" = "Web Browser";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "ZmO-Ci-csI"; */
+"ZmO-Ci-csI.title" = "设置";
+
+/* Class = "UITableViewSection"; footerTitle = "Switch ON / OFF Cloud  Backup"; ObjectID = "Zs3-9b-0kG"; */
+"Zs3-9b-0kG.footerTitle" = "开启/关闭云备份";
+
+/* Class = "UITableViewSection"; headerTitle = "Cloud Backup"; ObjectID = "Zs3-9b-0kG"; */
+"Zs3-9b-0kG.headerTitle" = "云备份";
+
+/* Class = "UILabel"; text = "Search Title only"; ObjectID = "bYX-rB-JtD"; */
+"bYX-rB-JtD.text" = "仅搜索标题";
+
+/* Class = "UITableViewSection"; footerTitle = "Delete all files and passwords after too many failed attempts."; ObjectID = "bnl-fj-Wky"; */
+"bnl-fj-Wky.footerTitle" = "在尝试失败太多次后，删除所有文件和密码。";
+
+/* Class = "UITableViewSection"; headerTitle = "Delete All Data on PIN Failure"; ObjectID = "bnl-fj-Wky"; */
+"bnl-fj-Wky.headerTitle" = "密码失败时删除所有数据";
+
+/* Class = "UITableViewSection"; footerTitle = "Supports the IOS Autfoill Credential Provider"; ObjectID = "bqX-8v-ds6"; */
+"bqX-8v-ds6.footerTitle" = "支持IOS的自动填充凭证提供者";
+
+/* Class = "UITableViewSection"; headerTitle = "IOS AutoFill"; ObjectID = "bqX-8v-ds6"; */
+"bqX-8v-ds6.headerTitle" = "IOS 自动填表";
+
+/* Class = "UITableViewSection"; footerTitle = "Sort Groups and Entries Alphabetically"; ObjectID = "dcw-Ls-OVy"; */
+"dcw-Ls-OVy.footerTitle" = "按字母顺序排列组和条目";
+
+/* Class = "UITableViewSection"; headerTitle = "Sorting"; ObjectID = "dcw-Ls-OVy"; */
+"dcw-Ls-OVy.headerTitle" = "分拣";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "drK-Tr-LS6"; */
+"drK-Tr-LS6.text" = "已启用";
+
+/* Class = "UITableViewSection"; footerTitle = "Search Title only (default: search all fields)"; ObjectID = "f3o-MT-xbh"; */
+"f3o-MT-xbh.footerTitle" = "只搜索标题（默认：搜索所有字段）。";
+
+/* Class = "UITableViewSection"; headerTitle = "Searching"; ObjectID = "f3o-MT-xbh"; */
+"f3o-MT-xbh.headerTitle" = "搜索";
+
+/* Class = "UILabel"; text = "Account"; ObjectID = "f3w-NO-BCi"; */
+"f3w-NO-BCi.text" = "帐户";
+
+/* Class = "UILabel"; text = "Enable Cloud Backup"; ObjectID = "fKY-md-m8c"; */
+"fKY-md-m8c.text" = "启用云备份";
+
+/* Class = "UITableViewSection"; footerTitle = "most username or emailadress"; ObjectID = "iA3-jd-szQ"; */
+"iA3-jd-szQ.footerTitle" = "大多数的用户名或电子邮件地址";
+
+/* Class = "UITableViewSection"; headerTitle = "Accountname or USERNAME"; ObjectID = "iA3-jd-szQ"; */
+"iA3-jd-szQ.headerTitle" = "帐户名称";
+
+/* Class = "UILabel"; text = "Attempts"; ObjectID = "iK4-cj-HRD"; */
+"iK4-cj-HRD.text" = "企图";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "kQ7-wA-XNa"; */
+"kQ7-wA-XNa.text" = "已启用";
+
+/* Class = "UILabel"; text = "Dark Enabled"; ObjectID = "moz-B7-WUb"; */
+"moz-B7-WUb.text" = "启用了黑暗";
+
+/* Class = "UILabel"; text = "PIN Enabled"; ObjectID = "p28-N6-qWa"; */
+"p28-N6-qWa.text" = "启用了PIN码";
+
+/* Class = "UITextField"; placeholder = "Accountname"; ObjectID = "q2V-oj-sug"; */
+"q2V-oj-sug.placeholder" = "帐户名称";
+
+/* Class = "UITableViewSection"; footerTitle = "Use your fingerprint or Camera and your Face as an alternative to entering a PIN if supported."; ObjectID = "vH4-cT-PCz"; */
+"vH4-cT-PCz.footerTitle" = "如果支持的话，使用你的指纹或相机和你的脸来替代输入密码。";
+
+/* Class = "UITableViewSection"; headerTitle = "Touch ID / Face ID"; ObjectID = "vH4-cT-PCz"; */
+"vH4-cT-PCz.headerTitle" = "Touch ID / Face ID";
+
+/* Class = "UILabel"; text = "Enabled"; ObjectID = "xMv-gl-Kfq"; */
+"xMv-gl-Kfq.text" = "已启用";

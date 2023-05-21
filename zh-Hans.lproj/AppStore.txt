@@ -1,0 +1,34 @@
+#
+# Copyright 2014 Jason Rush and John Flanagan. All rights reserved.
+#
+# This file contains translations used in the App Store. As a convention, lines
+# that start with a # should be in English. All other lines should be
+# translated into the respective language.
+#
+
+# App Name:
+MinKeePassMini — 安全的密码管理应用
+
+# Description:
+您iOS设备上的安全密码储存应用，与KeePass兼容
+
+- 查看、编辑和创建KeePass 1.x 和 2.x 文件
+- 在上级群组中方便地搜索条目，与邮件搜索类似
+- 支持使用密钥文件打开数据库
+- 借助Dropbox或其他云储存应用导入文件至MinKeePassMini，或导出文件至云端
+- 将密码拷贝至剪切板以方便使用
+- 在Safari中打开网站时，MinKeePassMini软件仍可在后台保持运行
+- 使用PIN码阻止对MinKeePassMini应用的非法访问
+- 使用iCloud 钥匙串储存数据库密码
+- 在支持后台任务的设备上，可以在指定时间后自动清空剪切板中储存的信息
+- 使用密码生成器自动生成新密码
+- 软件中内置可以自动录入用户名和密码的浏览器
+
+MinKeePassMini的源代码在Github上共享，可供安全性审查，同时欢迎大家协作此项目。
+
+# Keywords:
+MinKeePassMini,KeePass,Kee Pass,KeyPass,KeePassX,密码,密码管理,安全
+
+# What's New in this Version:
+# Version 1.6.3
+修复漏洞并增加了新的翻译

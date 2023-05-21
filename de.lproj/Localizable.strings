@@ -1,0 +1,199 @@
+/*
+ * Copyright 2011 Jason Rush and John Flanagan. All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+"Files" = "Dateien";
+"Databases" = "Datenbanken";
+"Key File" = "Schlüsseldatei";
+"Key Files" = "Schlüsseldateien";
+"Groups" = "Gruppen";
+"Entries" = "Einträge";
+"Group" = "Gruppe";
+"Entry" = "Eintrag";
+"New Database" = "Neue Datenbank";
+"New Group" = "Neue Gruppe";
+"New Entry" = "Neuer Eintrag";
+"Edit Group" = "Gruppe ändern";
+"Edit Entry" = "Eintrag ändern";
+"Title" = "Titel";
+"Image" = "Bild";
+"Images" = "Bilder";
+"Username" = "Benutzer";
+"Password" = "Passwort";
+"Confirm Password" = "Passwort bestätigen";
+"URL" = "URL";
+"Comments" = "Kommentare (tap zum editieren)";
+"Comments_Edit" = "Kommentare (tap zum editieren)";
+"Accept" = "Aktzeptiert";
+"OK" = "OK";
+"Cancel" = "Abbrechen";
+"Add" = "Hinzufügen";
+"Search" = "Suchen";
+"Help" = "Hilfe";
+"Version 1.x" = "Version 1.x";
+"Version 2.x" = "Version 2.x";
+"None" = "Keine";
+"Name" = "Name";
+"Value" = "Wert";
+"Delete" = "Löschen";
+"Move" = "Bewegen";
+"Rename" = "Ändern";
+"Database Name" = "Datenbankname";
+"Last Modified" = "Zuletzt geändert";
+"Copied" = "Kopiert";
+"In Memory Protection" = "In Memory Schutz";
+"Custom Field" = "Benutzerdefiniert";
+"Custom Fields" = "Benutzerdefiniert";
+"Add new…" = "Hinzufügen…";
+"Choose Group" = "Gruppe auswählen";
+"Backup" = "Backup";
+"Not Supported" = "Nicht Unterstützt";
+"Attachments" = "Anhänge";
+"Save" = "Speichern";
+"Default" = "Standard";
+"AutoFill Request" = "AutoFill Nachfrage";
+"Recycle bin" = "Papierkorb";
+"I hereby confirm that my passwords in this DB will be made available to the IOS Autofill mechanism." = "Hiermit bestätige ich das meine Kennwörter in dieser DB dem IOS Autofill Mechanismus zur Verfügung gestellt werden";
+"Shareing" = "Teilen";
+"Notify from KeePassMini" = "Meldung von KeePassMini";
+"New Default DB is selected Name:" = "Neue standard DB 🚀 wurde gewählt:";
+"This Database is" = "Diese KeePass DB is jetzt ihr Standard wenn Sie starten wird diese Automatisch geöffnet 📲";
+ "now" = "Jetzt";
+"Notify from KeePassMini" = "Nachricht von KeePassMini";
+"Your Files Folder is empty 📂" = "Das Dateverzeichniss ist leer 📂";
+"Need Cloud Backup ⚠️" = "Backup in die Cloud ⚠️";
+"Copy WebDav Backup ⚠️" = "Kopiere WebDav Backup ⚠️";
+"Unsupported Feature ⚠️" = "Nicht untertstütze Features ⚠️";
+"Please use + Button for create a new empty KeePassDB or using Import Button to get your actual KeePass DB from your Sharepoints ⚙️" = "Bitte benutze den + Button zum erzeugen einer leeren KeePass DB oder den Import Button zum einbinden einer aktuellen KeePass DB aus deinem Netzwerk⚙️";
+"Sorry WebDav temporarily not available" = "Entschuldige WebDav ist zur zeit nicht verfügbar ";
+"Sorry Cloud temporarily not reachable:" = "Entschuldige deine ist nicht erreichbar:";
+"Newer KeePass File ℹ️" = "Neue KeePass Datei ℹ️";
+"Newer Keepass file found on your Cloud Storage, please use Cloud sync procedure to syncing to newest content"="Neuere Keepass Datei in deinem Cloud Speicher gefunden, zum Syncronisieren bitte die SYNC funktion benutzen";
+"Sorry Cloud connection temporarily not reachable:" = "Icher Verbindung zur Cloud ist temporär nicht erreihbar:";
+"At the moment we don´t support OneDrive or iCloud, please use a WebDav supported System like OwnCloud or Nextcloud over an secure SSL connection" = "Zur zeit unterstützen wir leider kein OneDrive oder iCloud, bitte benutze das WebDAv Protokoll zu deiner private Cloud wie OwnCloud oder Nextcloud über eine sichere SSL verbindung";
+"Create Cloud Infrastructure ⚠️" = "Erstell Cloud Infrastruktur ⚠️";
+"Createing Directorys on Cloud please try it again ✅" = "Erstelle Verzeichnisse in der Cloud bitte wiederholen sie das speichern ✅";
+"Important note about KeePassMini !" = "Wichtiger Hinweis zu KeePassMini !";
+"I understand!" = "Habe ich verstanden!";
+"Unfortunately, we can not offer IOSKeePass" = "Leider können wir IOSKeePass nicht mehr mit dem Zusatz IOS über den Apple App Store ausrollen, da wir mit dem zusatz gegen die Richtlinen vom Apple App Store verstoßen. Leider hängt an diesem namen auch die sichere Schlüsselbundverwaltung welche IOS anbietet und wir im Quellcode benutzen.
+Aus diesem Grund sollten Sie zunächst die alte APP mit dem Appnamen
+IOSKeePass behalten, bis alle Ihre KeePass DB´s und KEYS mit den Endnungen
+.kdb und .kdbx sowie die .key und keyx Dateien über den Import Button (unten mitte rechts) vom Verzeichniss IOSKeePass in das neue Verzeichniss mit dem namen KeePassMini migriert haben, und ggf. mittels Face/TouchId den neuen
+Schlüsselbund angelernt haben. Wenn sie alle KeePass DBs migriert haben,
+können Sie die IOSKeePass ohne Datenverlust von Ihrem Apple gerät entfernen.";
+
+// General Messages
+"This is an KDB in Verion 1, and has no support for One Time Passwords" = "Dies ist die KDB in Verion 1, diese hat keine Unterstützung für Zeit basierte Einmal passwörter";
+"Align QR code within frame to scan" = "Richten Sie den zu scannenden QR-Code aus";
+"Enter your PIN to unlock" = "Geben Sie zum Entsperren Ihre PIN ein";
+"Unlock MinKeePassMini" = "Unlock MinKeePassMini"; // FIXME
+"Enter the password and/or select the keyfile for the %@ database." = "Geben Sie das Passwort ein oder wählen Sie die Schlüsseldatei für die Datenbank %@ aus.";
+"Enter a new name for the password database. The correct file extension will automatically be appended." = "Geben Sie einen neuen Namen für die Datenbank ein. Die korrekte Dateiendung wird automatisch hinzugefügt.";
+"Do not forget your database password, it cannot be recovered." = "Vergessen Sie niemals das Passwort für die Datenbank. Es kann nicht wiederhergestellt werden.";
+
+// Error Messages
+"Error" = "Fehler";
+"New name is invalid" = "Der neue Name ist ungültig";
+"Name cannot be empty" = "Der Name darf nicht leer sein";
+"Database name is required" = "Für die Datenbank wird ein Name benötigt";
+"Passwords do not match" = "Passwörter stimmen nicht überein";
+"Password is required" = "Passwort wird benötigt";
+"Incorrect PIN" = "Ungültige PIN";
+"Attempts Remaining" = "Verbleibende Versuche";
+"Filename is invalid" = "Der Dateiname ist ungültig";
+"A file already exists with this name" = "Eine Datei mit diesem Namen existiert bereits";
+"There are no applications installed capable of importing KeePass files" = "Es gibt keine installierten Programme, die KeePass Datenbanken importieren können";
+"Tap the + button to add a new KeePass file." = "Drücken Sie den + Button um neue KeePass Dateien hinzuzufügen.";
+"No password or keyfile specified" = "Es wurde weder ein Passwort oder noch eine Schlüsseldatei angegeben";
+"Error Checking PIN" = "Error Checking PIN"; // FIXME
+
+// Settings Page
+"Settings" = "Einstellungen";
+"PIN Enabled" = "PIN aktiviert";
+"Touch ID" = "Touch ID"; // FIXME
+"Use your fingerprint as an alternative to entering a PIN if supported." = "Use your fingerprint as an alternative to entering a PIN if supported."; // FIXME
+"Lock Timeout" = "Sperrzeit";
+"Immediately" = "Sofort";
+"30 Seconds" = "30 Sekunden";
+"1 Minute" = "1 Minute";
+"2 Minutes" = "2 Minuten";
+"3 Minutes" = "3 Minuten";
+"5 Minutes" = "5 Minuten";
+"Enabled" = "Aktiviert";
+"Attempts" = "Versuche";
+"Close Enabled" = "Schließen aktiviert";
+"Close Timeout" = "Close Timeout";
+"Hide Passwords" = "Passwörter verstecken";
+"Sorting" = "Sortierung";
+"Sort Groups and Entries Alphabetically" = "Gruppen und Einträge alphabetisch sortiern";
+"Encoding" = "Encoding";
+"UTF-8" = "UTF-8";
+"UTF-16 Big Endian" = "UTF-16 Big Endian";
+"UTF-16 Little Endian" = "UTF-16 Little Endian";
+"Latin 1 (ISO/IEC 8859-1)" = "Latin 1 (ISO/IEC 8859-1)";
+"Latin 2 (ISO/IEC 8859-2)" = "Latin 2 (ISO/IEC 8859-2)";
+"7-Bit ASCII" = "7-Bit ASCII";
+"Japanese EUC" = "Japanese EUC";
+"ISO-2022-JP" = "ISO-2022-JP";
+"PIN Protection" = "PIN Schutz";
+"Delete All Data on PIN Failure" = "Alle Daten bei falscher PIN löschen";
+"Close Database on Timeout" = "Datenbank bei Zeitüberschreitung schließen";
+"Remember Database Passwords" = "Datenbank Passwörter merken";
+"Hide Passwords" = "Passwörter verstecken";
+"Password Encoding" = "Passwort Encoding";
+"Clear Clipboard on Timeout" = "Zwischenablage bei Zeitüberschreitung löschen";
+"Clear Timeout" = "Clear Timeout";
+"Prevent unauthorized access to MinKeePassMini with a PIN." = "Vor unerlaubtem Zugang zu MinKeePassMini mit einer PIN schützen.";
+"Delete all files and passwords after too many failed attempts." = "Alle Dateien und Passwörter nach zu vielen ungültigen Versuchen löschen.";
+"Automatically close an open database after the selected timeout." = "Eine geöffnete Datenbank automatisch nach Ablauf der Zeit schließen.";
+"Stores remembered database passwords in the devices's secure keychain." = "Gespeicherte Datenbankpasswörter in der sicheren Keychain des Gerätes speichern.";
+"Hides passwords when viewing a password entry." = "Passwörter beim Ansehen eines Eintrages verstecken.";
+"The string encoding used for passwords when converting them to database keys." = "Das Encoding welches für Passwörter während der Konvertierung verwendet wird.";
+"Clear the contents of the clipboard after a given timeout upon performing a copy." = "Inhalt der Zwischenablage nach Zeitübeschreitung löschen nachdem kopiert wurde.";
+"Close Timeout" = "Close Timeout";
+"Clear Clipboard Timeout" = "Timeout zum Löschen der Zwischenablage";
+"Exclude from backup" = "Backups deaktivieren";
+"iCloud/iTunes Backup" = "iCloud/iTunes Backup";
+"Exclude databases and key files from iTunes/iCloud backups." = "Datenbank- und Schlüsseldateien vom iTunes/iCloud Backup ausschließen";
+"Web Browser" = "Web Browser";
+"Integrated" = "Integriert";
+"Switch between an integrated web browser and Safari." = "Wechseln Sie zwischen einem integrierten Web Browser und Safari.";
+"Set PIN" = "PIN setzen";
+"Confirm PIN" = "PIN bestätigen";
+"PINs did not match. Try again" = "PINs stimmen nicht überein. Bitte erneut versuchen.";
+"MinKeePassMini version %@" = "MinKeePassMini Version %@";
+
+// Help Titles
+"iTunes Import/Export" = "iTunes Im- und Export";
+"Dropbox Import/Export" = "Dropbox Im- und Export";
+"Safari/Email Import" = "Safari und E-Mail Import";
+"Create New Database" = "Neue Datenbank erstellen";
+
+// Password Generator
+"Generator" = "Generator";
+"Length" = "Länge";
+"Character Sets" = "Zeichensatz";
+"Upper Case" = "Großbuchstaben";
+"Lower Case" = "Kleinbuchstaben";
+"Upper" = "Groß";
+"Lower" = "Klein";
+"Digits" = "Zahlen";
+"Minus" = "Minus";
+"Underline" = "Unterstrich";
+"Space" = "Leerzeichen";
+"Special" = "Spezielle";
+"Brackets" = "Klammern";
+"None Selected" = "Keine ausgewählt";
