@@ -267,3 +267,5 @@ e2ab614121d135dd3f31ca8a06272577991a69fe
 2c4407fc26873c1d227fa2d2b278c80ede1a0a56
 95a5ca061002bbb13c01f38a87924ed81d43744c
 ```
+
+Credits to `DerEchteJoghurt` for helping in restoring the original commits. I added them into the `backup` branch.
